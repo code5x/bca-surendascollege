@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found</title>
+
+
+
+<style>
+/* Always dark */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ===== RESET / BASE FIX ===== */
+html, body {
+  height: 100%;     
+  margin: 0;       
+  padding: 0;     
+  color:#e6e9ef;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;    
+}
+
+/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+body.bg-app {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  color: #e6e9ef;
+
+  /* Default desktop background */
+  background: url("/src/background.webp") no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* Mobile background */
+@media (max-width: 768px) {
+  body.bg-app {
+    background: url("/src/background-mobile.webp") no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+/* Black overlay */
+body.bg-app::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* 80% black overlay */
+  z-index: -1; /* keeps overlay behind all content */
+}
+
+
+/* container */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px;
+  box-sizing: border-box;
+
+  display: flex;              /* make it a flexbox */
+  flex-direction: column;     /* stack title + svg vertically */
+  align-items: center;        /* center horizontally */
+  justify-content: center;    /* center vertically if needed */
+  text-align: center;         /* center text inside */
+
+}
+
+/* Header */
+
+header {
+  background: #302233; 
+  padding: 6px 10px;
+  display: flex;
+/*  justify-content: space-between;
+  align-items: center;  */
+  position: relative;   /* stays visible */
+  top: 0;
+  left: 0;
+  width: 100%;       /* full width */
+  z-index: 1000;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  border-radius: 0 0 8px 8px;
+}
+
+
+.back-btn {
+  display: flex;    
+/*  align-items: center;
+  gap: 10px;*/
+  padding: 6px 10px;
+  text-decoration: none;   
+  font-weight: 700;
+  cursor: pointer;
+  border: transparent;
+  color: #e0c1e3;;
+  background: transparent;
+}
+
+.head-title1 {
+  width: 100%;
+  color: #f0cef2;
+  text-align: center;
+  margin: 10px auto 0;
+  font-size: 1.9rem;
+}
+
+.head-title2 {
+  width: 100%;
+  color: #f0cef2; 
+  text-align: center;
+  margin: 0 auto 10px;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.lead {
+  display: block;
+  margin: 5px auto;
+  text-align: justify;
+  color: #fff;
+  position: relative;
+  z-index: 5;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.lead2 {
+  display: block;
+  margin: 5px auto;
+  text-align: justify;
+  color: #d3d8f5;
+  position: relative;
+  z-index: 5;
+  font-size: 0.9rem;                                              
+  line-height: 1.4;
+}
+
+
+.home-btn {
+  background: #753678;
+  color: #fff;
+  max-width: 160px;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid #b088b5;
+  padding: 8px 15px;
+  margin: 17px auto;
+  cursor: pointer;
+  text-decoration: none; /* removes underline */
+  display: block; /* makes it behave like your old div */
+}
+
+    svg {
+      width: 310px;
+      height: 200px;     
+   }
+
+    .main-box {
+      fill: rgba(255,255,255,0.08);
+      stroke: #ad7bb0;
+      stroke-width: 2;
+    }
+
+    .bar-1 { fill: #6092e0; }
+    .bar-2 { fill: #4e9937; }
+    .bar-3 { fill: #e060ad; }
+    .bar-4 { fill: #3c4b80; }
+
+
+/* ===== FOOTER ===== */
+footer {
+    background: #111;
+    text-align: center;
+    padding: 1px;
+    color: #aaa;
+     font-size: 0.85rem;
+    border-top: 1px solid #333;
+    border-radius: 20px 20px 0 0;
+    margin-top: auto;
+}
+@media (min-width: 769px) {
+  footer {
+    font-size: 1.25rem;
+  }
+  .container { padding: 40px; }
+
+}
+footer a {
+    color: #f7c2d9;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+
+
+</head>
+
+<header>
+
+  <button class="back-btn" onclick="history.back()" aria-label="Go back">
+                ← Go back
+   </button>
+
+  </header>
+<body class="bg-app">
+ <main class="container" id="main">
+<!--  <h1 class="head-title">! 404 !</h1>  -->
+  <h1 class="head-title1">Page Not Found</h1>
+
+
+
+<svg viewBox="10 0 300 175" xmlns="http://www.w3.org/2000/svg">
+  <rect x="25" y="18" width="274" height="142" rx="8" class="main-box"/>
+
+  <rect x="38" y="38" width="130" height="18" rx="3" class="bar-1"/>
+  <rect x="175" y="38" width="105" height="18" rx="3" class="bar-1"/>
+
+  <rect x="38" y="70" width="95" height="15" rx="3" class="bar-2"/>
+  <rect x="140" y="70" width="70" height="15" rx="3" class="bar-2"/>
+
+  <rect x="38" y="100" width="70" height="15" rx="3" class="bar-3"/>
+  <rect x="115" y="100" width="95" height="15" rx="3" class="bar-3"/>
+
+  <rect x="38" y="130" width="105" height="16" rx="3" class="bar-2"/>
+  <rect x="150" y="130" width="130" height="16" rx="3" class="bar-2"/>
+
+  <rect x="217" y="70" width="63" height="45" rx="3" class="bar-4"/>
+
+  <!-- Add text inside the last line -->
+  <text x="222" y="102" font-size="28" font-weight="900" fill="yellow" font-family="monospace">404</text>
+</svg>
+
+  <h2 class="head-title2">Oh no!&nbsp; we can’t find that page</h2>
+
+<p class="lead">The page may have moved, been renamed, or no longer exists. Try going back to the homepage or use the button below.</p>
+
+<a class="home-btn" href="http://localhost:8080/index.html">Goto Homepage</a>
+
+<p class="lead2">
+Tip: Check the URL for typos or use the homepage to continue.
+</p>
+
+
+</main>
+
+<footer>
+    <p>© 2025 Student Community Portal - Suren Das College<br>
+       All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>External links</title>
+
+
+
+<style>
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ===== Background with overlay ===== */
+body.bg-app {
+  background: url("/src/background.webp") no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  color: #f7c2d9;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  padding: 0; /* 20px; */
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  body.bg-app {
+    background: url("/src/background-mobile.webp") no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+body.bg-app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* black overlay */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.content-box {
+  width: 90%;
+  margin: 20px auto;
+  background: rgba(0, 0, 0, 0.0);
+  border-radius: 5px;
+  z-index: 1;
+  position: relative;
+}
+
+
+/* ===== HEADER ===== */
+header {
+    background: #0b2a6b; /* dark blue */
+    padding: 4px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.8s ease;  
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+/* Navigation */
+header nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;   /* enable horizontal scroll */
+    white-space: nowrap; /* keep links in a single line */
+    scrollbar-width: none; /* hide scrollbar (Firefox) */
+}
+
+header nav::-webkit-scrollbar {
+    display: none; /* hide scrollbar (Chrome, Edge, Safari) */
+}
+
+header nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 450;
+    padding: 3px 13px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background: transparent;
+    flex-shrink: 0; /* prevent shrinking of links */
+    border:1px solid #323d8a;
+}
+
+
+@media (min-width: 769px) {
+ header nav a {
+   font-size: 1rem;
+   font-weight: 500;
+   padding: 8px 13px;
+ }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+
+/* ===== Text Elements ===== */
+.head-title {
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  margin: 30px auto 10px;
+}
+
+.head2-title {
+  width: 100%;
+  color: #fff;
+  text-align: left;
+  margin: 35px auto auto;
+}
+
+.lead {
+  display: block;
+  margin: 5px auto;
+  text-align: justify;
+  color: #cfd3fa;
+  position: relative;
+  z-index: 5;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
+  .sdc-box {
+    width: 70%;
+    max-width: 450px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;       /* center the text inside */
+    align-items: center;           /* vertically center */
+    background: #1c1c1c;
+    border-radius: 12px;
+    border: 2px solid #a07ba6;
+    padding: 15px 20px;
+    position: relative;
+    z-index: 2;
+    color: #a094a1;                   /* text color */
+    text-decoration: none;         /* remove underline from link */
+    transition: all 0.3s ease;     /* smooth hover */
+  }
+
+
+  /* Hover effect only for text */
+  .sdc-box .head-title:hover {
+    text-decoration: underline;
+    color: #debfe0;
+  }
+
+  .sdc-box .head-title {
+    margin: 0;
+    font-size: 17px;
+    font-family: Arial, sans-serif;
+  }
+
+
+  .link-box {
+    width: 90%;
+    max-width: 600px;
+/*    aspect-ratio: 3 / 1;  3:1 ratio */
+    background: #1c1c1c;
+    border-radius: 15px;
+/*    box-shadow: 0 4px 12px rgba(0,0,0,0.6);  */
+    border: 1px solid #a07ba6;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+  }
+
+
+  .title-row {
+    text-align: center;
+    margin-bottom: 7px;
+  }
+
+  .title-row h3 {
+    display: inline-block;
+    font-size: 1.2em;
+    color: #f7c2d9;
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  .visit-row {
+    text-align: center;
+    margin-bottom: 3px;
+  }
+  .visit-row button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #f7c2d9;
+    color: #0b2a6b;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .visit-row button:hover {
+    background: #ff9ac6;
+  }
+
+  .desc-row {
+    text-align: justify;
+    font-size: 0.9em;
+    margin: 10px 0;
+    color: #ddd;
+    line-height: 1.4;
+  }
+
+  .search-row {
+/*    padding: 0 10px;  */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+  }
+  .search-row input {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+.search-row button {
+  background: #f7c2d9;
+  border: none;
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-row button svg {
+  width: 20px;
+  height: 20px;
+  fill: #0b2a6b; /* dark blue */
+}
+
+
+/* ===== FOOTER ===== */
+footer {
+    background: #111;
+    text-align: center;
+    padding: 0.1px;
+    margin-top: 5px;
+    color: #aaa;
+    font-size: 0.85rem;
+    border-top: 1px solid #333;
+    border-radius: 20px 20px 0 0;
+
+    z-index: 1;
+    position: relative;
+}
+
+
+footer a {
+    color: #f7c2d9;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+
+
+</head>
+
+<body class="bg-app">
+
+ <header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="study-material.html">Study Material</a>
+        <a href="upload.html">Upload</a>
+        <a href="courses.html">Course</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html">Feedback</a>
+    </nav>
+  </header>
+
+ <main class="content-box">
+
+  <h2 class="head-title">External Study Resources</h2>
+
+  <p class="lead">Explore a wide collection of trusted digital libraries, academic repositories, and open-access book platforms. This page brings together resources for study, research, and self-learning, including our college library and well-known global archives. Access textbooks, research papers, and eBooks all in one place.</p>
+
+<a href="http://sdcdigitallibrary.com/" target="_blank" class="sdc-box">
+  <h4 class="head-title">Visit SDC Digital Library</h4>
+</a>
+
+  <h3 class="head2-title">1. Official Academic & Research Repositories</h3>
+
+<p class="lead">Trusted portals supported by universities and government bodies. Great for authentic learning, theses, and structured courses.</p>
+
+
+<div class="link-box" 
+     data-site="https://egyankosh.ac.in/" 
+     data-search="https://egyankosh.ac.in/simple-search?query=QUERY">
+  <div class="title-row">
+    <h3>E-GyanKosh</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+    A digital repository by IGNOU that provides free access to study materials and course modules. Very useful for students in distance and higher education.
+  </div>
+  <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within E-GyanKosh">
+  <button class="search-btn"></button>
+ </div>
+</div>
+
+
+<div class="link-box" 
+     data-site="https://epgp.inflibnet.ac.in/" 
+     data-search="https://www.google.com/search?q=site%3Aepgp.inflibnet.ac.in+QUERY">
+  <div class="title-row">
+    <h3>e-PG Pathshala</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+An initiative by INFLIBNET offering high-quality postgraduate level content. A valuable platform for advanced learners and researchers.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within e-PG Pathshala in google">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+<div class="link-box" 
+     data-site="https://shodhganga.inflibnet.ac.in/" 
+     data-search="https://shodhganga.inflibnet.ac.in/simple-search?query=QUERY">
+  <div class="title-row">
+    <h3>Shodhganga</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+A large collection of Indian theses and dissertations. A rich resource for research scholars looking for original academic work.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Shodhganga">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+
+<div class="link-box"
+     data-site="https://ndl.iitkgp.ac.in/"
+     data-search="https://ndl.iitkgp.ac.in/he_search?key=QUERY">
+  <div class="title-row">
+    <h3>National Digital Library of India</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+A one-stop digital library with millions of books, journals, and resources for all age groups. Very helpful for both students and researchers.
+  </div>
+  <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within National Digital Library of India">
+  <button class="search-btn"></button>
+ </div>
+</div>
+
+
+
+<h3 class="head2-title">2. Open Access Books & Textbooks</h3>
+<p class="lead">Completely free and legal collections of books, textbooks, and classics for study and self-learning.</p>
+
+
+<div class="link-box"
+     data-site="https://www.doabooks.org/"
+     data-search="https://directory.doabooks.org/discover?query=QUERY">
+  <div class="title-row">
+    <h3>Directory of Open Access Books</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+Provides thousands of peer-reviewed academic books. A reliable source for quality scholarly reading.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Directory of Open Access Books">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+
+<div class="link-box"
+     data-site="https://open.umn.edu/opentextbooks"
+     data-search="https://open.umn.edu/opentextbooks/textbooks?q=QUERY">
+  <div class="title-row">
+    <h3>Open Textbook Library</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+Offers free textbooks for various subjects, written and reviewed by experts. Great for students looking for affordable learning resources.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Open Textbook Library">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+
+<div class="link-box"
+     data-site="https://www.gutenberg.org/"
+     data-search="https://www.gutenberg.org/ebooks/search/?query=QUERY">
+  <div class="title-row">
+    <h3>Project Gutenberg</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+One of the oldest digital libraries with classic literature and public domain books. A treasure for those who love reading timeless works.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Project Gutenberg">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+
+<h3 class="head2-title">3. Community Digital Libraries</h3>
+<p class="lead">Large collections shared by global communities. While some are unofficial, they help learners access knowledge that may otherwise be hard to find.</p>
+
+
+<div class="link-box"
+     data-site="https://libgen.li/"
+     data-search="https://libgen.li/index.php?req=QUERY">
+  <div class="title-row">
+    <h3>Library Genesis</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+A massive archive of books and research papers from all fields. Very helpful when students need quick access to study material.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Library Genesis">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+
+<div class="link-box"
+     data-site="https://welib.org/"
+     data-search="https://welib.org/search?q=QUERY">
+  <div class="title-row">
+    <h3>WeLib</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+A community-driven digital library with a variety of books. It supports learning by making resources widely available.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within WeLib">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+
+
+<div class="link-box"
+     data-site="https://archive.org/"
+     data-search="https://archive.org/search?query=QUERY">
+  <div class="title-row">
+    <h3>Internet Archive</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+A nonprofit digital library that offers books, websites, music, videos, and software. It preserves cultural and historical materials and makes them free to access or borrow.
+  </div>                                                                                           
+   <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Internet Archive">
+  <button class="search-btn"></button>
+</div>                                                                                               
+</div>
+
+
+
+<div class="link-box"
+     data-site="https://annas-archive.org/"
+     data-search="https://annas-archive.org/search?q=QUERY">
+  <div class="title-row">
+    <h3>Anna’s Archive</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+A global search engine for digital books and articles. Useful for discovering hard-to-find study material.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Anna’s Archive">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+
+<div class="link-box"
+     data-site="https://en.zlibrary.to/"
+     data-search="https://en.zlibrary.to/top-QUERY-books">
+  <div class="title-row">
+    <h3>Z-Library</h3>
+  </div>
+  <div class="visit-row">
+    <button class="visit-btn">Visit</button>
+  </div>
+  <div class="desc-row">
+One of the largest free eBook collections covering textbooks, research works, and novels. A convenient platform for readers and learners worldwide.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Z-Library">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+
+</main>
+
+
+<footer>
+    <p>© 2025 Student Community Portal - Suren Das College<br>
+       All Rights Reserved. <a href="about.html">  About Us</a></p>
+  </footer>
+
+
+
+<script>
+document.querySelectorAll('.link-box').forEach(box => {
+  const site = box.dataset.site;
+  const searchTemplate = box.dataset.search;
+
+  // Visit button
+  box.querySelector('.visit-btn').addEventListener('click', () => {
+    window.open(site, '_blank');   // open in new tab
+  });
+
+  // Search button
+  box.querySelector('.search-btn').addEventListener('click', () => {
+    const query = box.querySelector('.search-input').value.trim();
+    if(query) {
+      const url = searchTemplate.replace("QUERY", encodeURIComponent(query));
+      window.open(url, '_blank');   // open in new tab
+    }
+  });
+
+  // Replace all search buttons with your custom SVG
+  document.querySelectorAll('.search-btn').forEach(btn => {
+    btn.innerHTML = `
+      <svg fill="#0b2a6b" height="20px" width="20px" version="1.1"
+           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53.627 53.627">
+        <path d="M53.627,49.385L37.795,33.553C40.423,30.046,42,25.709,42,21C42,9.42,32.58,0,21,0S0,9.42,0,21s9.42,21,21,21
+                 c4.709,0,9.046-1.577,12.553-4.205l15.832,15.832L53.627,49.385z M2,21C2,10.523,10.523,2,21,2s19,8.523,19,19s-8.523,19-19,19
+                 S2,31.477,2,21z M35.567,36.093c0.178-0.172,0.353-0.347,0.525-0.525c0.146-0.151,0.304-0.29,0.445-0.445l14.262,14.262
+                 l-1.415,1.415L35.123,36.537C35.278,36.396,35.416,36.238,35.567,36.093z"/>
+      </svg>`;
+  });
+
+  // Enter key
+  box.querySelector('.search-input').addEventListener('keypress', e => {
+    if(e.key === "Enter") {
+      box.querySelector('.search-btn').click();
+    }
+  });
+});
+
+</script>
+
+
+
+</body>
+</html>

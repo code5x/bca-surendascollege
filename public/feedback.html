@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback page</title>
+
+
+
+<style>
+/* Always dark */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+body.bg-app {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  color: #e6e9ef;
+
+  /* Default desktop background */
+  background: url("/src/background.webp") no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* Mobile background */
+@media (max-width: 768px) {
+  body.bg-app {
+    background: url("/src/background-mobile.webp") no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+/* Black overlay */
+body.bg-app::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
+
+/* Optional wrapper padding for content  */
+.overlay {
+  padding: 2rem;
+}
+
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+header {
+  background: black;
+  padding: 7px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  z-index: 1000;
+}
+
+header nav {
+  display: flex;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  background: transparent;
+  flex-shrink: 0;
+  border: 1px solid #323d8a;
+}
+
+@media (max-width: 768px) {
+  header nav a {
+    font-size: 0.9rem;
+    font-weight: 450;
+    padding: 6px 13px;
+  }
+}
+
+/* ✅ Hamburger styles */
+.hamburger {
+  display: flex;              /* hidden on desktop */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 18px;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #544253;  /* force pure white */
+  border-radius: 2px;
+
+  color-scheme: light dark;        /* tell browser both modes are supported */
+  forced-color-adjust: none;
+}
+
+.main-content {
+  flex: 1 0 auto;                                             
+  display: flex;
+  flex-direction: column;
+  align-items: center;                             
+  width: 100%;                                                  
+  max-width: 1100px; 
+}
+
+.title-box { padding: 0 20px; align-item: center; margin: 0;}
+
+.page-title {
+  color: white;
+  text-align: center;
+}
+
+.page-subtitle {
+  line-height: 1.4;
+  color: #cfd3fa;
+  text-align: justify;
+}
+
+
+/* Container */
+.feedback-form {
+
+    width: 80%;
+    margin: 20px auto;
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+ /*   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.9); */
+
+}
+
+@media (min-width: 769px) {
+  .page-subtitle { margin: 0 30px; }
+  .feedback-form { width: 70%; }
+}
+
+
+/* Labels */
+.feedback-form label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: #d5bdd9; /* light pink */
+    font-size: 1.0rem;
+}
+
+/* Input & Textarea */
+.feedback-form input[type="text"],
+.feedback-form input[type="email"],
+.feedback-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #2a2a30;
+    color: #fff;
+    transition: all 0.3s ease;
+
+    box-sizing: border-box;
+}
+
+
+.feedback-form textarea {
+ font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+    border-color: #f7c2d9;
+    outline: none;
+ 
+}
+
+/* Checkbox group */
+.checkbox-group {
+    margin-top: 15px;    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+}
+
+.checkbox-group label {
+    font-weight: normal;
+    background: #2a2a30;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #ddd;
+    font-size: 0.85rem;
+    transition: background 0.3s ease, color 0.3s ease; 
+
+  display: flex; 
+  align-items: center;  /*  align checkbox with text */
+  margin: 0;   /*           remove extra margin */
+}
+
+.checkbox-group input {
+    margin-right: 6px;
+}
+
+
+/* Upload box styling */
+.upload-box {
+  border: 2px dashed #75457d;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 15px 0;
+  cursor: pointer;
+  transition: border 0.3s ease;
+}
+
+.upload-box:hover {
+  border-color: #ff99c8;
+}
+
+/* Show the input as clickable but make it styled */
+.upload-box input[type="file"] {
+  width: 100%;
+  padding: 40px 0; /* bigger clickable area */
+  opacity: 0; /* invisible but clickable */
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.upload-box p {
+  color: #ddd;
+  font-size: 14px;
+  margin: 0;
+  pointer-events: none; /* so clicking text still clicks input */
+}
+
+/* Ensure container can position input */
+.upload-box {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Preview images */
+.preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.preview-img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #f7c2d9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+
+/* Button */
+.feedback-form button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #d777e6, #f2b6fc);
+    color: #0b2a6b;
+    font-size: 1.05rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.feedback-form button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #f7c2d9, #ffb6d9);
+}
+
+/* Success message */
+#responseMessage {
+    margin-top: 20px;
+    padding: 12px;
+    background: transparent;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+
+    /* Minimal fallback styles for the modal and progress bar in case CSS isn't ready */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex;                                                                                    
+      align-items: center;
+      justify-content: center;                                                                           
+      z-index: 9999; 
+  margin: auto 15px;
+ }
+    .modal-panel {
+      background: #332331;                                                                               
+      color: #d8c3d9;
+      padding: 18px 18px 40px;
+      border-radius: 8px;
+      width: min(680px, 94%);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .progress-bar {
+      background: rgba(255,255,255,0.08);
+      border-radius: 7px;
+      height: 18px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: rgba(247,194,217,0.85);
+      transition: width 200ms linear;
+    }
+    .progress-info {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      opacity: 0.98;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:center;
+    }
+    .hidden { display: none !important; }
+
+
+footer {
+    background: #111;
+    text-align: center;
+    padding: 0.1px;  
+    margin-top: 5px;
+    color: #aaa;
+    font-size: 0.85rem;
+    border-top: 1px solid #333;
+    border-radius: 20px 20px 0 0;
+
+flex-shrink: 0;
+}                         
+  footer a {
+    color: #f7c2d9;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+.hidden {
+    display: none;
+}
+
+</style>
+
+
+
+</head>
+<body class="bg-app">
+  <!-- Header -->
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+    </nav>
+    <div class="hamburger" id="hamburgerBtn" aria-hidden="true">
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <main class="main-content" role="main">
+      <div class="title-box">
+        <h2 class="page-title">Feedback</h2>
+        <p class="page-subtitle">
+          We value your suggestions and opinions. Your feedback helps us create a better learning environment,
+          and solve problems faster. Please share your thoughts, whether it is a suggestion, an issue, or just
+          an idea — every message matters to us.
+        </p>
+      </div>
+
+      <!-- Feedback Form -->
+      <!-- data attributes: change here if you want different limits -->
+      <section class="feedback-form">
+        <form id="feedbackForm">
+
+          <label for="name">Name (required)</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+
+          <label for="email">Email (optional)</label>
+          <input type="email" id="email" name="email" placeholder="Email address">
+
+          <label>Feedback Type (choose one or more) <span aria-hidden="true"></span>:</label>
+          <div class="checkbox-group" id="checkboxGroup" role="group" aria-labelledby="feedback-type-label">
+            <!-- HTML trick: mark the first checkbox as required (browser will require at least one checked) -->
+            <label><input class="feedback-type" type="checkbox" name="type" value="Issue"> Bug / Issue</label>
+            <label><input class="feedback-type" type="checkbox" name="type" value="Improvement"> Suggestion / Improvement</label>
+            <label><input class="feedback-type" type="checkbox" name="type" value="Feature"> Feature Request</label>
+            <label><input class="feedback-type" type="checkbox" name="type" value="Content"> Content Feedback</label>
+            <label><input class="feedback-type" type="checkbox" name="type" value="Compliment"> Compliment / Positive Feedback</label>
+            <label><input class="feedback-type" type="checkbox" name="type" value="Other"> Other</label>
+          </div>
+
+          <!-- Upload Screenshot -->
+          <label for="screenshots">Upload Screenshot (optional):</label>
+          <div class="upload-box" id="uploadBox">
+            <!-- include data attributes for JS to read limits quickly -->
+            <input type="file"
+                   id="screenshots"
+                   name="screenshots"
+                   accept="image/*"
+                   multiple
+                   aria-describedby="uploadHint"
+            <p id="uploadHint">Click to select images. Max 5 images. Max size per image: 2 MB.</p>
+            <div class="preview-container" id="previewContainer" aria-live="polite"></div>
+          </div>
+
+          <label for="message">Your Feedback (required)</label>
+          <textarea id="message" name="message" rows="9" placeholder="Write your feedback here..." required></textarea>
+
+          <button type="submit" id="submitBtn">Submit Feedback</button>
+        </form>
+
+        <p id="responseMessage" class="hidden" role="status">Thank you for your feedback!</p>
+      </section>
+  </main>
+
+  <!-- Progress modal / overlay shown during upload -->
+  <div id="uploadModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="uploadTitle" aria-hidden="true">
+    <div class="modal-panel" id="modalPanel">
+      <h3 id="uploadTitle" style="font-weight:500;" >Sending feedback - Please don't close this tab</h3>
+      <p id="modalMessage">Preparing to send....</p> 
+
+      <!-- Visual progress bar -->
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="uploadTitle">
+        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+      </div>
+
+      <div class="progress-info" aria-hidden="false">
+        <div><strong id="progressPercent">0%</strong></div>
+        <div id="progressBytes">0 / 0 MB</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Student Community Portal - Suren Das College<br>
+      All Rights Reserved. <a href="about.html">About Us</a></p>
+  </footer>
+
+
+
+<script>
+// --------------------
+// CONFIG (change here if you want different limits)
+// --------------------
+const MAX_FILES = 5;
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB in bytes
+const UPLOAD_ENDPOINT = '/api/feedback/upload';
+const TEXT_ENDPOINT = '/api/feedback/text';
+const COMPLETE_ENDPOINT = '/api/feedback/complete';
+
+// --------------------
+// DOM refs
+// --------------------
+const form = document.getElementById('feedbackForm');
+const screenshotsInput = document.getElementById('screenshots');
+const previewContainer = document.getElementById('previewContainer');
+const responseMessage = document.getElementById('responseMessage');
+const uploadModal = document.getElementById('uploadModal');
+const progressFill = document.getElementById('progressFill');
+const progressPercent = document.getElementById('progressPercent');
+const progressBytes = document.getElementById('progressBytes');
+const modalMessage = document.getElementById('modalMessage');
+const submitBtn = document.getElementById('submitBtn');
+
+// State for sendBeacon fallback
+let textSaved = false;
+let pendingTextPayload = null;
+
+// --------------------
+// Helpers
+// --------------------
+function formatMB(bytes) {
+  return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
+
+function uniqueFileName(originalName, serial = 0) {
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const y = now.getFullYear();
+  const m = pad(now.getMonth() + 1);
+  const d = pad(now.getDate());
+  const hh = pad(now.getHours());
+  const mm = pad(now.getMinutes());
+  const ss = pad(now.getSeconds());
+  const ts = `${y}${m}${d}_${hh}${mm}${ss}`;
+  const dot = originalName.lastIndexOf('.') >= 0 ? originalName.lastIndexOf('.') : originalName.length;
+  const ext = originalName.slice(dot);
+  const base = originalName.slice(0, dot).replace(/[^a-zA-Z0-9-_]/g, '_').slice(0, 40);
+  return `${ts}_${serial}_${base}${ext}`;
+}
+
+function showModal() {
+  uploadModal.classList.remove('hidden');
+  uploadModal.setAttribute('aria-hidden', 'false');
+}
+function hideModal() {
+  uploadModal.classList.add('hidden');
+  uploadModal.setAttribute('aria-hidden', 'true');
+}
+
+function updateProgressUI(uploadedBytes, totalBytes) {
+  const pct = totalBytes === 0 ? 100 : Math.round((uploadedBytes / totalBytes) * 100);
+  progressFill.style.width = pct + '%';
+  progressPercent.textContent = pct + '%';
+  progressBytes.textContent = `${formatMB(uploadedBytes)} / ${formatMB(totalBytes)}`;
+  const progressbar = document.querySelector('[role="progressbar"]');
+  if (progressbar) progressbar.setAttribute('aria-valuenow', String(pct));
+}
+
+function resetFormUI(name) {
+  form.reset();
+  previewContainer.innerHTML = '';
+  responseMessage.classList.remove('hidden');
+  responseMessage.textContent = `Thank you! ${name} Your feedback was submitted.`;
+}
+
+function isAtLeastOneCheckboxChecked() {
+  const checked = document.querySelectorAll('input.feedback-type:checked');
+  return checked && checked.length > 0;
+}
+
+// --------------------
+// Preview logic (keeps behavior you had previously)
+// --------------------
+screenshotsInput.addEventListener('change', function () {
+  previewContainer.innerHTML = '';
+  const files = Array.from(this.files);
+
+  if (files.length > MAX_FILES) {
+    alert(`You can only upload up to ${MAX_FILES} images.`);
+    this.value = '';
+    return;
+  }
+
+  for (const file of files) {
+    if (!file.type.startsWith('image/')) {
+      alert('Only image files are allowed!');
+      this.value = '';
+      previewContainer.innerHTML = '';
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      alert(`Image file exceed the ${formatMB(MAX_FILE_SIZE)} limit. Please choose smaller files.`);
+      this.value = '';
+      previewContainer.innerHTML = '';
+      return;
+    }
+  }
+
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.classList.add('preview-img');
+      previewContainer.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+// SendBeacon fallback on unload
+window.addEventListener('beforeunload', function () {
+  if (!textSaved && pendingTextPayload) {
+    try {
+      const blob = new Blob([JSON.stringify(pendingTextPayload)], { type: 'application/json' });
+      navigator.sendBeacon(TEXT_ENDPOINT, blob);
+    } catch (e) {
+      // silent
+    }
+  }
+});
+
+// Helper: POST JSON
+async function postJSON(url, data) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) {
+    const txt = await res.text();
+    const err = new Error(`Server error (${res.status}): ${txt}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+}
+
+// Upload file to server endpoint using XHR so we get progress events
+function uploadFileToServerXHR(feedbackId, file, uniqueName, onProgress) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const url = `${UPLOAD_ENDPOINT}?feedback_id=${encodeURIComponent(feedbackId)}&filename=${encodeURIComponent(uniqueName)}`;
+    xhr.open('POST', url, true);
+
+    xhr.upload.onprogress = function (event) {
+      if (event.lengthComputable) onProgress(event.loaded);
+    };
+
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const json = JSON.parse(xhr.responseText || '{}');
+          resolve(json);
+        } catch (e) {
+          resolve({});
+        }
+      } else {
+        reject(new Error('Upload failed with status ' + xhr.status + ': ' + xhr.responseText));
+      }
+    };
+
+    xhr.onerror = function () {
+      reject(new Error('Network error during file upload'));
+    };
+
+    const formData = new FormData();
+    formData.append('file', file, uniqueName);
+    xhr.send(formData);
+  });
+}
+
+// --------------------
+// Form submit handler
+// --------------------
+form.addEventListener('submit', async function (event) {
+  event.preventDefault();
+
+  // gather values
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const types = Array.from(document.querySelectorAll("input[name='type']:checked")).map(cb => cb.value);
+  const files = Array.from(screenshotsInput.files || []);
+
+  // validate
+  if (!name || !message) {
+    alert('Please fill in your name and feedback message.');
+    return;
+  }
+  if (!isAtLeastOneCheckboxChecked()) {
+    alert('Please select at least one feedback type.');
+    return;
+  }
+  if (files.length > MAX_FILES) {
+    alert(`You can upload a maximum of ${MAX_FILES} images.`);
+    return;
+  }
+  for (const f of files) {
+    if (!f.type.startsWith('image/')) {
+      alert('Only image files are allowed!');
+      return;
+    }
+    if (f.size > MAX_FILE_SIZE) {
+      alert(`File ${f.name} is too large. Max allowed size per file is ${formatMB(MAX_FILE_SIZE)}.`);
+      return;
+    }
+  }
+
+  // UI
+  submitBtn.disabled = true;
+  showModal();
+  modalMessage.textContent = 'Saving text...';
+
+  // prepare text payload
+  const payload = { name, email, types, message, created_at: new Date().toISOString() };
+  pendingTextPayload = payload;
+
+  let feedbackId;
+  try {
+    const textResp = await postJSON(TEXT_ENDPOINT, payload);
+    if (!textResp || (!textResp.feedback_id && !textResp.id)) throw new Error('Invalid response from server when saving text');
+    feedbackId = textResp.feedback_id || textResp.id;
+    textSaved = true;
+    pendingTextPayload = null;
+    modalMessage.textContent = 'Text saved — starting image uploads (if any).';
+  } catch (err) {
+    console.error('Error saving text:', err);
+    alert('Failed to save feedback text. Try again later.');
+    hideModal();
+    submitBtn.disabled = false;
+    return;
+  }
+
+  // if no files, finalize immediately
+  if (files.length === 0) {
+    try {
+      await postJSON(COMPLETE_ENDPOINT, { feedback_id: feedbackId, images: [] });
+    } catch (err) {
+      console.warn('Complete endpoint failed (no images):', err);
+    }
+    resetFormUI(name);
+    hideModal();
+    submitBtn.disabled = false;
+    return;
+  }
+
+  // upload files with progress
+  const totalBytes = files.reduce((s, f) => s + f.size, 0);
+  let uploadedBytes = 0;
+  updateProgressUI(0, totalBytes);
+
+  const uploadedPublicPaths = [];
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const uniqueName = uniqueFileName(file.name, i + 1);
+    modalMessage.textContent = `Uploading image ${i + 1} of ${files.length}...`;
+
+    try {
+      const result = await uploadFileToServerXHR(feedbackId, file, uniqueName, (fileLoaded) => {
+        const prevFilesBytes = files.slice(0, i).reduce((s, f2) => s + f2.size, 0);
+        uploadedBytes = prevFilesBytes + fileLoaded;
+        updateProgressUI(uploadedBytes, totalBytes);
+      });
+
+      // On success, server should return publicPath or storage path
+      const publicPath = result && (result.publicPath || result.public_url || result.url);
+      if (publicPath) uploadedPublicPaths.push(publicPath);
+
+      // ensure uploadedBytes reflects completion of this file
+      uploadedBytes = files.slice(0, i + 1).reduce((s, f2) => s + f2.size, 0);
+      updateProgressUI(uploadedBytes, totalBytes);
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('An error occurred while uploading images. Please try again.');
+      hideModal();
+      submitBtn.disabled = false;
+      return;
+    }
+  }
+
+  // finalize by sending list of image public URLs/paths to server
+  try {
+    await postJSON(COMPLETE_ENDPOINT, { feedback_id: feedbackId, images: uploadedPublicPaths });
+  } catch (err) {
+    console.warn('Failed to finalize feedback with image paths:', err);
+    alert('Images uploaded, but we could not update the database with image links. Contact admin if links are missing.');
+    hideModal();
+    submitBtn.disabled = false;
+    return;
+  }
+
+  // success
+  updateProgressUI(totalBytes, totalBytes);
+  modalMessage.textContent = 'Upload complete!';
+  hideModal();
+  resetFormUI(name);
+  submitBtn.disabled = false;
+});
+
+// EOF
+
+</script>
+
+
+
+</body>
+</html>
+
