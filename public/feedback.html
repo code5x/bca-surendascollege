@@ -491,9 +491,11 @@ footer a:hover {
 // --------------------
 const MAX_FILES = 5;
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB in bytes
-const UPLOAD_ENDPOINT = '/api/feedback/upload';
-const TEXT_ENDPOINT = '/api/feedback/text';
-const COMPLETE_ENDPOINT = '/api/feedback/complete';
+
+// NOTE: These endpoints must match the Cloudflare Functions filenames you deployed
+const TEXT_ENDPOINT = '/api/feedback_text';            // create text row -> returns feedback_id
+const SIGN_URL_ENDPOINT = '/api/feedback_sign_url';    // request signed upload URL for a file
+const COMPLETE_ENDPOINT = '/api/feedback_complete';    // finalize feedback by attaching image paths
 
 // --------------------
 // DOM refs
@@ -634,12 +636,14 @@ async function postJSON(url, data) {
   return res.json();
 }
 
-// Upload file to server endpoint using XHR so we get progress events
-function uploadFileToServerXHR(feedbackId, file, uniqueName, onProgress) {
+// Upload file to a signed URL using XHR so we get progress events.
+// uploadUrl must be a direct PUT target (signed upload URL from Supabase).
+function uploadToSignedUrlXHR(uploadUrl, file, onProgress) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    const url = `${UPLOAD_ENDPOINT}?feedback_id=${encodeURIComponent(feedbackId)}&filename=${encodeURIComponent(uniqueName)}`;
-    xhr.open('POST', url, true);
+    xhr.open('PUT', uploadUrl, true);
+    // Important: do not set Content-Type header here if Supabase signed URL expects it set as provided earlier.
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
 
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) onProgress(event.loaded);
@@ -647,12 +651,7 @@ function uploadFileToServerXHR(feedbackId, file, uniqueName, onProgress) {
 
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
-        try {
-          const json = JSON.parse(xhr.responseText || '{}');
-          resolve(json);
-        } catch (e) {
-          resolve({});
-        }
+        resolve({ ok: true });
       } else {
         reject(new Error('Upload failed with status ' + xhr.status + ': ' + xhr.responseText));
       }
@@ -662,14 +661,12 @@ function uploadFileToServerXHR(feedbackId, file, uniqueName, onProgress) {
       reject(new Error('Network error during file upload'));
     };
 
-    const formData = new FormData();
-    formData.append('file', file, uniqueName);
-    xhr.send(formData);
+    xhr.send(file);
   });
 }
 
 // --------------------
-// Form submit handler
+// Form submit handler (uses signed-upload flow)
 // --------------------
 form.addEventListener('submit', async function (event) {
   event.preventDefault();
@@ -743,30 +740,42 @@ form.addEventListener('submit', async function (event) {
     return;
   }
 
-  // upload files with progress
+  // upload files with progress using signed URLs
   const totalBytes = files.reduce((s, f) => s + f.size, 0);
   let uploadedBytes = 0;
   updateProgressUI(0, totalBytes);
 
-  const uploadedPublicPaths = [];
+  const uploadedPaths = [];
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const uniqueName = uniqueFileName(file.name, i + 1);
-    modalMessage.textContent = `Uploading image ${i + 1} of ${files.length}...`;
+    modalMessage.textContent = `Requesting upload URL for image ${i + 1} of ${files.length}...`;
 
+    // 1) Request signed upload URL for this file (server returns { uploadUrl, filePath })
+    let signResp;
     try {
-      const result = await uploadFileToServerXHR(feedbackId, file, uniqueName, (fileLoaded) => {
+      signResp = await postJSON(SIGN_URL_ENDPOINT, { feedback_id: feedbackId, filename: uniqueName, size: file.size });
+      if (!signResp || !signResp.uploadUrl || !signResp.filePath) throw new Error('Invalid sign URL response');
+    } catch (err) {
+      console.error('Error getting signed URL:', err);
+      alert('Failed to get upload URL for one of the images. Try again later.');
+      hideModal();
+      submitBtn.disabled = false;
+      return;
+    }
+
+    // 2) Upload to signed URL using PUT (XHR to get progress)
+    modalMessage.textContent = `Uploading image ${i + 1} of ${files.length}...`;
+    try {
+      await uploadToSignedUrlXHR(signResp.uploadUrl, file, (fileLoaded) => {
         const prevFilesBytes = files.slice(0, i).reduce((s, f2) => s + f2.size, 0);
         uploadedBytes = prevFilesBytes + fileLoaded;
         updateProgressUI(uploadedBytes, totalBytes);
       });
-
-      // On success, server should return publicPath or storage path
-      const publicPath = result && (result.publicPath || result.public_url || result.url);
-      if (publicPath) uploadedPublicPaths.push(publicPath);
-
-      // ensure uploadedBytes reflects completion of this file
+      // collect path returned by sign endpoint (server expects these in finalize call)
+      uploadedPaths.push(signResp.filePath);
+      // update uploadedBytes to full file size when done
       uploadedBytes = files.slice(0, i + 1).reduce((s, f2) => s + f2.size, 0);
       updateProgressUI(uploadedBytes, totalBytes);
     } catch (err) {
@@ -778,9 +787,9 @@ form.addEventListener('submit', async function (event) {
     }
   }
 
-  // finalize by sending list of image public URLs/paths to server
+  // finalize by sending list of image storage paths to server
   try {
-    await postJSON(COMPLETE_ENDPOINT, { feedback_id: feedbackId, images: uploadedPublicPaths });
+    await postJSON(COMPLETE_ENDPOINT, { feedback_id: feedbackId, images: uploadedPaths });
   } catch (err) {
     console.warn('Failed to finalize feedback with image paths:', err);
     alert('Images uploaded, but we could not update the database with image links. Contact admin if links are missing.');
@@ -796,9 +805,6 @@ form.addEventListener('submit', async function (event) {
   resetFormUI(name);
   submitBtn.disabled = false;
 });
-
-// EOF
-
 </script>
 
 
