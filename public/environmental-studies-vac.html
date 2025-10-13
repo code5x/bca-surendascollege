@@ -802,7 +802,7 @@ document.body.addEventListener("click", (e) => {
   <h2 class="head-title">Study Material<br>⬇<br>Environmental Studies (VAC)</h2>
 
   <p class="lead">All the important resources for this subject are collected here with more organized. You can upload and share study materials to help everyone learn better together.</p>
-  <p class="lead" style="font-size:0.9rem">[ Note: If download not working, refresh the page and try again. ]</p>
+  <p class="lead" style="font-size:0.9rem">Note: The following information has been gathered from multiple sources, including user submissions and AI-generated content. If you notice any inaccuracies or misinformation, please provide <a href="feedback.html" style="text-decoration: none;">feedback</a> to help us improve the content.</p>
 
 
 
@@ -841,7 +841,6 @@ document.body.addEventListener("click", (e) => {
   <div class="divider"><div class="lines"><div class="divider-line"></div></div></div>
    <h3 class="head2-title">Study Notes, E-Books</h3>
    <div class="sub-box"><script>
-    addPdfBox("Environmental Studies - Water and Food Resources (slides) . 4 MB . 50 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/notes/Environmental%20Studies%20-%20Water%20and%20Food%20Resources%20(slides).pdf", "default", document.currentScript.parentElement, { noLegal: false });
     addPdfBox("Environmental Studies (EVS) Notes . 3 MB . 73 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/notes/Environmental%20Studies%20(EVS)%20Notes.pdf", "default", document.currentScript.parentElement, { noLegal: false });
     addPdfBox("Environmental Studies Lecture Notes . 1 MB . 155 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/notes/Environmental%20Studies%20Lecture%20Notes.pdf", "default", document.currentScript.parentElement, { noLegal: false });
     addPdfBox("Introduction to Environmental Studies (slides) . 1 MB . 24 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/notes/Introduction%20to%20Environmental%20Studies%20(slides).pdf", "default", document.currentScript.parentElement, { noLegal: false });
@@ -867,10 +866,10 @@ document.body.addEventListener("click", (e) => {
   <div class="divider"><div class="lines"><div class="divider-line"></div></div></div>
    <h3 class="head2-title">Model Question-Answers & MCQs</h3>
    <div class="sub-box"><script>
+    addPdfBox("Model Question Answers - Environmental Studies (VAC) (Important) . 36 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/model/Model%20Question%20Answers%20-%20Environmental%20Studies%20(VAC).pdf", "default", document.currentScript.parentElement, { noLegal: false });
+    addPdfBox("Answers of old papers - Environmental Studies (VAC) (Important) . 32 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/model/Answers%20of%20old%20papers%20-%20Environmental%20Studies%20(VAC).pdf", "default", document.currentScript.parentElement, { noLegal: false });
     addPdfBox("Environmental Studies 100 MCQs . 1 MB . 20 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/model/Environmental%20Studies%20100%20MCQs.pdf", "default", document.currentScript.parentElement, { noLegal: false });
-    addPdfBox("Environmental Studies MCQs 490 . 45 pages", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/model/Environmental%20Studies%20MCQs%20490.pdf", "default", document.currentScript.parentElement, { noLegal: false });
     addPdfBox("Environmental Studies model MCQs 250 . 32 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/model/Environmental%20Studies%20model%20MCQs%20250.pdf", "default", document.currentScript.parentElement, { noLegal: false });
-    addPdfBox("Environmental Studies Model Questions . 20 page", "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/environmental-studies-vac/model/Environmental%20Studies%20Model%20Questions.pdf", "default", document.currentScript.parentElement, { noLegal: false });
   </script> </div>
 </section>
 
@@ -901,12 +900,249 @@ document.body.addEventListener("click", (e) => {
 </section>
 
 
+
+<div class="divider"><div class="lines"><div class="divider-line"></div></div></div>
+    <section class="yt-wrapper" id="yt-wrapper">
+      <!-- Toggle button -->
+      <button class="yt-toggle-btn" id="yt-toggle-btn" aria-expanded="false" aria-controls="yt-drawer"> 
+        YouTube Tutorials Video/Playlist  
+    </button> 
+       <!-- Drawer: initially hidden --> 
+       <div class="yt-drawer" id="yt-drawer" aria-hidden="true">
+        <div class="yt-drawer-inner" id="yt-drawer-inner">                                                  
+          <!-- List of items will be rendered here -->   
+     <div id="yt-list" class="yt-list"></div>
+      </div>                                                                                                 
+     </div>
+</section>
+
+
+
 </main>
 
 <footer>
     <p>© 2025 Student Community Portal - Suren Das College<br>
        All Rights Reserved. <a href="about.html">  About Us</a></p>
   </footer>
+
+<script>
+
+/* All functions and variables use yt- prefix to avoid conflicts. */
+
+const ytItems = [
+  'https://youtube.com/playlist?list=PL3qvHcrYGy1u2egw2tipHWODV6elVC2Gg'
+];
+
+/* Parse url -> {type:'video'|'playlist', id:'...'} or null */
+function ytParseUrl(url) {
+  try {
+    const u = new URL(url);
+    const listId = u.searchParams.get('list');
+    if (listId) return { type: 'playlist', id: listId };
+    const v = u.searchParams.get('v');
+    if (v) return { type: 'video', id: v };
+    if (u.hostname.includes('youtu.be')) {
+      const id = u.pathname.slice(1);
+      if (id) return { type: 'video', id: id };
+    }
+    const parts = u.pathname.split('/');
+    const embedIndex = parts.indexOf('embed');
+    if (embedIndex >= 0 && parts[embedIndex+1]) return { type: 'video', id: parts[embedIndex+1] };
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+/* oEmbed fetch */
+async function ytFetchOEmbed(url) {
+  try {
+    const ep = 'https://www.youtube.com/oembed?url=' + encodeURIComponent(url) + '&format=json';
+    const res = await fetch(ep);
+    if (!res.ok) throw new Error('oEmbed failed: ' + res.status);
+    return await res.json(); // {title, author_name, thumbnail_url}
+  } catch (err) {
+    console.warn('ytFetchOEmbed error for', url, err);
+    return null;
+  }
+}
+
+/* Fallback thumbnail */
+function ytFallbackThumb(url, type) {
+  try {
+    if (type === 'video') {
+      const u = new URL(url);
+      const v = u.searchParams.get('v') || (u.hostname.includes('youtu.be') ? u.pathname.slice(1) : '');
+      return v ? `https://i.ytimg.com/vi/${v}/hqdefault.jpg` : '';
+    } else {
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="270">
+           <rect width="100%" height="100%" fill="#11131a"/>
+           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f7c2d9" font-size="20">Playlist</text>
+         </svg>`
+      );
+    }
+  } catch (e) {
+    return '';
+  }
+}
+
+/* Create DOM row for one item */
+function ytCreateRow(url, data) {
+  const parsed = ytParseUrl(url);
+  const type = parsed?.type || 'video';
+
+  const item = document.createElement('div');
+  item.className = 'yt-item';
+
+  const a = document.createElement('a');
+  a.className = 'yt-card-link';
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+
+  const thumb = document.createElement('div');
+  thumb.className = 'yt-thumb';
+  const img = document.createElement('img');
+  img.src = data?.thumbnail_url || ytFallbackThumb(url, type);
+  img.alt = data?.title ? `Thumbnail for ${data.title}` : 'YouTube thumbnail';
+  thumb.appendChild(img);
+
+  if (type === 'playlist') {
+    const badge = document.createElement('div');
+    badge.className = 'yt-badge';
+    badge.textContent = 'Playlist';
+    thumb.appendChild(badge);
+  }
+
+  const meta = document.createElement('div');
+  meta.className = 'yt-meta';
+  const title = document.createElement('h3');
+  title.className = 'yt-title';
+  title.textContent = data?.title || '(No title)';
+  const sub = document.createElement('p');
+  sub.className = 'yt-sub';
+  sub.textContent = data?.author_name ? `By ${data.author_name}` : (type === 'playlist' ? 'Playlist' : 'YouTube');
+
+  meta.appendChild(title);
+  meta.appendChild(sub);
+
+  a.appendChild(thumb);
+  a.appendChild(meta);
+  item.appendChild(a);
+  return item;
+}
+
+/* Render list into yt-list element. This returns the inner element so caller can measure height. */
+async function ytRenderList(containerEl) {
+  containerEl.innerHTML = '';
+  for (const url of ytItems) {
+    // create a small placeholder for perceived speed
+    const placeholder = document.createElement('div');
+    placeholder.className = 'yt-item';
+    placeholder.innerHTML = `
+      <div class="yt-thumb" style="background:#111"></div>
+      <div class="yt-meta">
+        <h3 class="yt-title">Loading…</h3>
+        <p class="yt-sub">Fetching info…</p>
+      </div>
+    `;
+    containerEl.appendChild(placeholder);
+
+    // fetch metadata and replace placeholder
+    const data = await ytFetchOEmbed(url);
+    const row = ytCreateRow(url, data);
+    containerEl.replaceChild(row, placeholder);
+  }
+
+  return containerEl;
+}
+
+/* Drawer toggle logic */
+(function ytInitDrawer() {
+  const ytToggleBtn = document.getElementById('yt-toggle-btn');
+  const ytDrawer = document.getElementById('yt-drawer');
+  const ytDrawerInner = document.getElementById('yt-drawer-inner');
+  const ytList = document.getElementById('yt-list');
+
+  let ytIsOpen = false;
+  let ytHasRendered = false;
+
+  // Helper to open
+  async function ytOpenDrawer() {
+    if (ytIsOpen) return;
+    // Render list first time
+    if (!ytHasRendered) {
+      // Render into yt-list (inside drawer)
+      await ytRenderList(ytList);
+      ytHasRendered = true;
+    }
+
+    // measure content height
+    // ensure drawer is visible so we can measure (temporarily remove height constraint)
+    ytDrawer.classList.add('yt-open');
+    ytDrawer.style.height = 'auto';
+    const contentHeight = ytDrawerInner.offsetHeight;
+    // set explicit height for transition
+    ytDrawer.style.height = contentHeight + 'px';
+    ytDrawer.setAttribute('aria-hidden', 'false');
+    ytToggleBtn.setAttribute('aria-expanded', 'true');
+    ytIsOpen = true;
+
+    // after transition, set height to auto so content can reflow if window resizes
+    ytDrawer.addEventListener('transitionend', function ytOpenTransitionEnd(e) {
+      if (e.propertyName === 'height') {
+        ytDrawer.style.height = 'auto';
+        ytDrawer.removeEventListener('transitionend', ytOpenTransitionEnd);
+      }
+    });
+  }
+
+  // Helper to close
+  function ytCloseDrawer() {
+    if (!ytIsOpen) return;
+    // measure current height
+    const contentHeight = ytDrawerInner.offsetHeight;
+    // set fixed height then trigger height -> 0 transition
+    ytDrawer.style.height = contentHeight + 'px';
+    // force reflow to ensure transition runs
+    void ytDrawer.offsetHeight;
+    // close
+    ytDrawer.style.height = '0px';
+    ytDrawer.setAttribute('aria-hidden', 'true');
+    ytToggleBtn.setAttribute('aria-expanded', 'false');
+
+    // when transition ends, remove open class to hide visibility
+    ytDrawer.addEventListener('transitionend', function ytCloseTransitionEnd(e) {
+      if (e.propertyName === 'height') {
+        ytDrawer.classList.remove('yt-open');
+        // remove inline height so that open calculates fresh later
+        ytDrawer.style.height = '';
+        ytDrawer.removeEventListener('transitionend', ytCloseTransitionEnd);
+      }
+    });
+
+    ytIsOpen = false;
+  }
+
+  // Toggle on button click
+  ytToggleBtn.addEventListener('click', function (ev) {
+    if (ytIsOpen) ytCloseDrawer();
+    else ytOpenDrawer();
+  });
+
+  // Optional: handle Esc key to close when open
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape' && ytIsOpen) {
+      ytCloseDrawer();
+    }
+  });
+
+  // If user refreshes, drawer remains closed (default). Nothing else to do.
+})();
+
+
+</script>
 
 
 </body>
