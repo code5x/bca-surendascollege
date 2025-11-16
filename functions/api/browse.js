@@ -1,9 +1,9 @@
-import { parseBooks } from "../_indcatutils.js";
+import { parseBooks, UNIVERSITY_CODE } from "../_indcatutils.js";
 
-export async function onRequestPost({ request }) {
+export async function onRequestPost(context) {
   try {
-    const { type = "subject", query = "", limits = "20", cPageNo = "" } =
-      await request.json();
+    const body = await context.request.json();
+    const { type = "subject", query = "", limits = "20", cPageNo = "" } = body;
 
     const fieldMap = {
       author: "author",
@@ -11,46 +11,48 @@ export async function onRequestPost({ request }) {
       year: "publishDate",
       publisher: "publisher",
       place: "place_text",
-      catalogue: "catalogue",
+      catalogue: "catalogue"
     };
 
     const field = fieldMap[type] || "topic";
 
-    const tokenRes = await fetch("https://indcat.inflibnet.ac.in/index.php/main/book");
-    const cookies = tokenRes.headers.get("set-cookie") || "";
-    const html = await tokenRes.text();
+    // Get CSRF
+    const r1 = await fetch("https://indcat.inflibnet.ac.in/index.php/main/book", {
+      headers: { "User-Agent": "Mozilla/5.0" }
+    });
 
-    const csrf = html.match(/name="csrf_test_name" value="([^"]+)"/)?.[1];
+    const cookies = r1.headers.get("set-cookie") || "";
+    const html = await r1.text();
+    const csrf = html.match(/name="csrf_test_name"\s+value="([^"]+)"/)?.[1];
 
-    const form = new URLSearchParams({
+    const payload = new URLSearchParams({
       csrf_test_name: csrf,
       search_type: "simple",
-      part_uni: "SUDC_781102",
+      part_uni: UNIVERSITY_CODE,
       title: query,
       field,
       submit: "Search",
       opt: "exact",
       limits,
-      cPageNo,
+      cPageNo
     });
 
-    const res2 = await fetch("https://indcat.inflibnet.ac.in/index.php/search/checkuniv", {
+    const r2 = await fetch("https://indcat.inflibnet.ac.in/index.php/search/checkuniv", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": "Mozilla/5.0",
         Cookie: cookies,
+        Referer: "https://indcat.inflibnet.ac.in/index.php/main/book"
       },
-      body: form,
+      body: payload
     });
 
-    const html2 = await res2.text();
-    const { results, stats } = parseBooks(html2);
+    const browseHTML = await r2.text();
+    const { results, stats } = parseBooks(browseHTML);
 
-    return new Response(JSON.stringify({ success: true, stats, results }), {
-      headers: { "Content-Type": "application/json" },
-    });
-
+    return Response.json({ success: true, results, stats });
   } catch (err) {
-    return new Response(JSON.stringify({ success: false, error: err.message }));
+    return Response.json({ success: false, error: err.message });
   }
 }

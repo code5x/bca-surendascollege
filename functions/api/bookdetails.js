@@ -1,23 +1,23 @@
 import { parseBookDetails } from "../_indcatutils.js";
 
-export async function onRequestGet({ request }) {
+export async function onRequestGet(context) {
   try {
-    const url = new URL(request.url).searchParams.get("url");
+    const url = new URL(context.request.url).searchParams.get("url");
     if (!url)
-      return new Response(
-        JSON.stringify({ success: false, error: "Missing URL" })
-      );
+      return Response.json({ success: false, error: "URL missing" });
 
-    const res = await fetch(url);
-    const html = await res.text();
-
-    const book = parseBookDetails(html);
-
-    return new Response(JSON.stringify({ success: true, book }), {
-      headers: { "Content-Type": "application/json" },
+    const r = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0" }
     });
 
+    const html = await r.text();
+    const book = parseBookDetails(html);
+
+    if (!book.title)
+      return Response.json({ success: false, error: "Failed to parse details" });
+
+    return Response.json({ success: true, book });
   } catch (err) {
-    return new Response(JSON.stringify({ success: false, error: err.message }));
+    return Response.json({ success: false, error: err.message });
   }
 }
