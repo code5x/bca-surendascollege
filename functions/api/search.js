@@ -1,103 +1,79 @@
-export async function onRequestPost({ request }) {
-  const UNIVERSITY_CODE = "SUDC_781102";
+export async function onRequestPost(context) {
   try {
-    const body = await request.json();
-    const {
-      query,
-      opt = "exact",
-      limits = "20",
-      field = "title",
-      cPageNo = ""
-    } = body;
+    const body = await context.request.json();
+    const query = body.query?.trim();
+    if (!query) {
+      return new Response(JSON.stringify({ success: false, error: "No query" }), { status: 400 });
+    }
 
-    // STEP 1 — GET CSRF TOKEN + COOKIE
-    const tokenRes = await fetch(
-      "https://indcat.inflibnet.ac.in/index.php/main/book",
-      { headers: { "User-Agent": "Mozilla/5.0" } }
-    );
-    const cookies = tokenRes.headers.get("set-cookie");
-    const html = await tokenRes.text();
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    const csrf = doc.querySelector("input[name='csrf_test_name']")?.value;
+    const url = `https://sdcopac.informindia.co.in/cgi-bin/koha/opac-search.pl?idx=ti&q=${encodeURIComponent(query)}`;
 
-    // STEP 2 — SEND SEARCH REQUEST
-    const payload = new URLSearchParams({
-      csrf_test_name: csrf,
-      search_type: "simple",
-      part_uni: UNIVERSITY_CODE,
-      title: query,
-      field,
-      submit: "Search",
-      opt,
-      limits,
-      cPageNo
-    });
+    const resp = await fetch(url);
+    const html = await resp.text();
 
-    const searchRes = await fetch(
-      "https://indcat.inflibnet.ac.in/index.php/search/checkuniv",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "User-Agent": "Mozilla/5.0",
-          Referer: "https://indcat.inflibnet.ac.in/index.php/main/book",
-          Cookie: cookies
+    let books = [];
+    let current = null;
+
+    const rewriter = new HTMLRewriter()
+      .on(".box1", {
+        element(el) {
+          let hasDetailLink = false;
+
+          el.querySelectorAll("a").forEach(a => {
+            if (a.getAttribute("href")?.includes("getDetails")) {
+              hasDetailLink = true;
+              current = {
+                title: "",
+                url: "",
+                author: "",
+                publication: "",
+                callno: "",
+                holdings: "",
+                doctype: "",
+                availability: ""
+              };
+              current.url = "https://sdcopac.informindia.co.in" + a.getAttribute("href");
+              current.title = a.textContent.trim();
+            }
+          });
+
+          if (!hasDetailLink) return;
         },
-        body: payload
-      }
-    );
+        text(txt) {
+          if (!current) return;
 
-    const searchHTML = await searchRes.text();
-    const data = parseBooks(searchHTML);
+          let t = txt.text.trim();
 
-    return new Response(JSON.stringify({ success: true, ...data }), {
+          if (t.startsWith("Author")) {
+            current.author = t.replace("Author :", "").trim();
+          }
+          else if (t.startsWith("Publication Details")) {
+            current.publication = t.replace("Publication Details :", "").trim();
+          }
+          else if (t.startsWith("Call Number")) {
+            current.callno = t.replace("Call Number :", "").trim();
+          }
+          else if (t.startsWith("Total Holdings")) {
+            current.holdings = t.replace("Total Holdings :", "").trim();
+          }
+          else if (t.startsWith("Document Type")) {
+            current.doctype = t.replace("Document Type :", "").trim();
+          }
+          else if (t.startsWith("Availability")) {
+            current.availability = t.replace("Availability :", "").trim();
+            books.push(current);
+            current = null;
+          }
+        }
+      });
+
+    await rewriter.transform(new Response(html)).text();
+
+    return new Response(JSON.stringify({ success: true, books }), {
       headers: { "Content-Type": "application/json" }
     });
 
   } catch (err) {
-    return new Response(JSON.stringify({ success: false, error: err.message }), {
-      status: 500
-    });
+    return new Response(JSON.stringify({ success: false, error: err.message }), { status: 500 });
   }
-}
-
-
-// ------------------- Helper: parse Books -------------------
-function parseBooks(html) {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  const results = [];
-  const stats = {};
-
-  // Extract stats from raw text
-  const text = doc.body.textContent;
-
-  const uniqueMatch = text.match(/Unique\s*Records\s*:\s*(\d+)/i);
-  const holdingsMatch = text.match(/Holdings\s*:\s*(\d+)/i);
-  const totalMatch = text.match(/Total\s+(\d+)\s+Records\s+found/i);
-
-  if (uniqueMatch) stats.uniqueRecords = uniqueMatch[1];
-  if (holdingsMatch) stats.holdings = holdingsMatch[1];
-  if (totalMatch) stats.totalRecords = parseInt(totalMatch[1]);
-
-  // Parse each book box
-  const boxes = doc.querySelectorAll(".box1");
-  boxes.forEach((box) => {
-    const a = box.querySelector("a[href*='book_search?getDetails']");
-    if (!a) return;
-
-    const title = a.textContent.trim().replace(/\s+/g, " ");
-    const bookUrl = a.getAttribute("href");
-
-    const bottom = box.querySelector(".checkbox_bottomText");
-    const authorText = bottom?.querySelector("p")?.textContent || "";
-    const author = /Author\s*:\s*(.*)/i.exec(authorText)?.[1] || "";
-
-    const pubText = bottom?.querySelector("div.col-md-8")?.textContent.trim() || "";
-    const year = /\b(19\d{2}|20\d{2})\b/.exec(pubText)?.[0] || "";
-    const publisher = pubText.split(",").slice(0, -1).join(", ");
-
-    results.push({ title, author, publisher, year, bookUrl });
-  });
-
-  return { results, stats };
 }

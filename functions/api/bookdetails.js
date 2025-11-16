@@ -1,66 +1,75 @@
-export async function onRequestGet({ request }) {
-  const url = new URL(request.url).searchParams.get("url");
-  if (!url)
-    return new Response(
-      JSON.stringify({ success: false, error: "Missing URL" }),
-      { status: 400 }
-    );
-
+export async function onRequestPost(context) {
   try {
-    const pageRes = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
-    const html = await pageRes.text();
-    const doc = new DOMParser().parseFromString(html, "text/html");
+    const body = await context.request.json();
+    const url = body.url;
+    if (!url) {
+      return new Response(JSON.stringify({ success: false, error: "Missing URL" }), { status: 400 });
+    }
 
-    const book = {};
-    const getVal = (label) => {
-      const cell = Array.from(doc.querySelectorAll("td.detailpage-title"))
-        .find((td) => td.textContent.includes(label));
-      return cell?.nextElementSibling?.textContent.trim() || "";
+    const resp = await fetch(url);
+    const html = await resp.text();
+
+    let data = {
+      title: "",
+      author: "",
+      publication: "",
+      callno: "",
+      subject: "",
+      abstract: "",
+      language: "",
+      holdings: []
     };
 
-    book.title = doc.querySelector("h1.underline")?.textContent.trim() || getVal("Title :-");
-    book.author = getVal("Author :-");
-    book.edition = getVal("Edition :-");
-    book.isbn = getVal("ISBN :-");
-    book.publisher = getVal("Place & Publisher :-");
-    book.year = getVal("Date of Publication :-");
-    book.pages = getVal("Pages :-");
-    book.subjects = getVal("Subject Descriptors:-");
-    book.language = getVal("Language :-");
-    book.classNo = getVal("Class no:");
-    book.catalogue = getVal("Catalogue Agency :-");
+    let currentField = null;
+    let collectingAbstract = false;
 
-    // holdings
-    const holdings = [];
-    const rows = doc.querySelectorAll("table.bookdetail-bottom-table tr");
-    rows.forEach((row, i) => {
-      if (i === 0) return;
-      const tds = row.querySelectorAll("td");
-      if (tds.length >= 3) {
-        const copyNo = tds[0].textContent.trim();
-        const accession = tds[1].textContent.trim();
-        const shelving = tds[2].textContent.trim();
-        const key = `${copyNo}-${accession}-${shelving}`;
-        if (!holdings.some((h) => `${h.copyNo}-${h.accession}-${h.shelving}` === key)) {
-          holdings.push({ copyNo, accession, shelving });
+    const rewriter = new HTMLRewriter()
+      .on("strong", {
+        text(txt) {
+          const t = txt.text.trim();
+
+          if (t.startsWith("Author")) currentField = "author";
+          else if (t.startsWith("Publication")) currentField = "publication";
+          else if (t.startsWith("Call Number")) currentField = "callno";
+          else if (t.startsWith("Subject Descriptor")) currentField = "subject";
+          else if (t.startsWith("Abstract")) { currentField = "abstract"; collectingAbstract = true; }
+          else if (t.startsWith("Language")) currentField = "language";
         }
-      }
-    });
+      })
+      .on("td", {
+        text(txt) {
+          if (currentField === "abstract" && collectingAbstract) {
+            data.abstract += txt.text.trim() + " ";
+          }
+        }
+      })
+      .on("tbody tr", {
+        element(el) {
+          // holdings table rows: Copy No, Acc No, Location
+          let row = [];
+          el.querySelectorAll("td").forEach(td => row.push(td.textContent.trim()));
+          if (row.length === 3 && /^\d+$/.test(row[0])) {
+            data.holdings.push({
+              copy: row[0],
+              acc: row[1],
+              location: row[2]
+            });
+          }
+        }
+      })
+      .on("title", {
+        text(txt) {
+          data.title = txt.text.trim();
+        }
+      });
 
-    book.holdings = holdings;
+    await rewriter.transform(new Response(html)).text();
 
-    if (!book.title)
-      return new Response(
-        JSON.stringify({ success: false, error: "Failed to fetch book details" }),
-        { status: 200 }
-      );
-
-    return new Response(JSON.stringify({ success: true, book }), {
+    return new Response(JSON.stringify({ success: true, book: data }), {
       headers: { "Content-Type": "application/json" }
     });
+
   } catch (err) {
-    return new Response(JSON.stringify({ success: false, error: err.message }), {
-      status: 500
-    });
+    return new Response(JSON.stringify({ success: false, error: err.message }), { status: 500 });
   }
 }
