@@ -1,5 +1,3 @@
-import cheerio from "cheerio";
-
 export const UNIVERSITY_CODE = "SUDC_781102";
 
 // ------------------------- PARSE SEARCH/BROWSE -----------------------------
