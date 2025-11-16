@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Suren Das College Library Catalog - OPAC</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ===== RESET / BASE FIX ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color:#e6e9ef;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+body.bg-app {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  color: #e6e9ef;
+
+  /* Default desktop background */
+  background: url("/src/background.webp") no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* Mobile background */
+@media (max-width: 768px) {
+  body.bg-app {
+    background: url("/src/background-mobile.webp") no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+/* Black overlay */
+body.bg-app::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1; /* keeps overlay behind all content */
+}
+
+/* Optional wrapper padding for content */
+.overlay {
+  padding: 2rem;
+}
+
+/* container */
+.container {
+  max-width: 1100px;
+  margin: 50px 0 0;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 769px) { .container { padding: 35px; }}
+
+/* Header */
+
+header {
+  background: #0b2a6b;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;   /* stays visible */
+  top: 0;
+  left: 0;
+  width: 100%;       /* full width */
+  z-index: 1000;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  animation: slideDown 1s ease;
+}
+
+
+/* Navigation */
+header nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto; /* enable horizontal scroll */
+  white-space: nowrap; /* keep links in a single line */
+  scrollbar-width: none; /* hide scrollbar (Firefox) */
+}
+
+header nav::-webkit-scrollbar {
+  display: none; /* hide scrollbar (Chrome, Edge, Safari) */
+}
+
+header nav a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 450;
+  padding: 6px 13px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  background: transparent;
+  flex-shrink: 0; /* prevent shrinking of links */
+  border: 1px solid #6974c7;
+}
+
+
+header nav a:hover {
+  background: #0b5ed7;
+}
+
+@media (min-width: 769px) {
+  header nav a {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 13px;
+  }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+    /* ---------- PHEAD ---------- */
+    .phead {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    h1 {
+      font-size: 21px;
+      margin: 0;
+    }
+    p.lead {
+      margin: 0;
+      color: #a9b9d4;
+      font-size: 14px;
+      text-align: justify;
+      line-height: 1.3;
+    }
+    .meta {
+      margin-top: 6px;
+      color: #cfd3fa;
+      font-size: 16px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* ---------- SEARCH SECTION ---------- */
+    .search {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 800px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      align-items: center;
+    }	
+
+    .selector-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .selector-group {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .selector-group label {
+      font-size: 15px;
+      font-weight: 400;
+      color: #bfc8d6;
+      white-space: nowrap;
+    }
+    .selector-group select {
+      padding: 7px;
+      border-radius: 7px;
+      border: 1px solid #636163;
+      font-size: 14px;
+      background: #2d2c2e;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      width: 250px;
+    }
+    .selector-group select:hover { border-color: #611b70; }
+
+    /* ---------- INPUT + BUTTON ---------- */
+    .search-input-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 0px;
+      width: 100%;
+      max-width: 600px;
+    }
+    .search-input-row input {
+      flex: 1;
+      padding: 9px;
+      border-radius: 7px 0 0 7px;
+      border: 1px solid #4b4e6b;
+      font-size: 15px;
+      background: #2d2c2e;
+      outline: none;
+      font-weight: 400;
+    }
+    .search-input-row button {
+      padding: 10px;
+      border-radius: 0 7px 7px 0;
+      background: #294691;
+      color: white;
+      border: none;
+      font-weight: 450;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .search-input-row button:hover {
+      background: #103287;
+    }
+
+    /* ---------- RESULTS + CARDS ---------- */
+    .results {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 15px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .card {
+      background: #333333;
+      border-radius: 7px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.04);
+      border: 1px solid #5a5e78;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.06);
+    }
+
+    .info h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: #0b3a8a;
+    }
+
+    .chip {
+      font-size: 13px;
+      margin: 5px auto;
+    }
+
+    .desc {
+      margin-top: 8px;
+      color: #cfd3fa;
+      font-size: 17px;
+      line-height: 1.25;
+      text-align: justify;
+    }
+
+    .placeholder {
+      text-align: center;
+      padding: 40px 12px;
+      color: #cfd3fa;
+      font-size: 17px;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+    .pagination button {
+      margin: 0 3px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #4b4e6b;
+      background: #2d2c2e;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .pagination button.active {
+      background: #1f6feb;
+      color: #fff;
+    }
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+
+
+
+footer {
+    background: #111;
+    text-align: center;
+    padding: 1px;
+    color: #aaa;
+     font-size: 0.85rem;
+ /*   font-size: clamp(0.85rem, 1vw, 2rem);  */
+    border-top: 1px solid #333;
+    border-radius: 20px 20px 0 0;
+    margin-top: auto;
+}
+
+@media (min-width: 769px) {
+  footer {
+    font-size: 1.25rem;
+  }
+}
+
+
+footer a {
+    color: #f7c2d9;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+    @media (max-width: 600px) {
+      .selector-group select {
+        width: 200px;
+      }
+      .search-input-row {
+        flex-direction: row;
+        max-width: 100%;
+      }
+/*      .search-input-row input {
+        width: 100%;
+      }
+      .search-input-row button {
+        width: 100%;
+      }  */
+    }
+  </style>
+</head>
+
+
+<header>
+    <nav>
+        <a href="index.html">🏠 Home</a>
+        <a href="#" id="shareBtn">🔗 Share</a>
+        <a href="study-material.html">📚 Study Material</a>
+        <a href="links.html">🌐 External Source</a>
+        <a href="about.html">ℹ️ About</a>
+        <a href="feedback.html">💬 Feedback</a>
+    </nav>
+</header>
+
+
+
+<body class="bg-app">
+  <main class="container" id="main">
+
+  <div class="phead">
+    <h1>Suren Das College Library Catalog (OPAC)</h1>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <section class="search">
+    <p class="lead">
+      Search and explore books available in the Suren Das College Library.
+    Find titles by author, subject, or keywords using the simple search below.
+    </p>
+
+    <div class="selector-row">
+      <div class="selector-group">
+        <label for="opt">Search Option:</label>
+        <select id="opt">
+          <option value="exact" selected>Exact Search</option>
+          <option value="free">Free Search</option>
+        </select>
+      </div>
+
+      <div class="selector-group">
+        <label for="limits">&nbsp;&nbsp;Page Limits:&nbsp;&nbsp;</label>
+        <select id="limits">
+          <option value="10">10</option>
+          <option value="20" selected>20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      <div class="selector-group">
+        <label for="field">&nbsp;Search Field:&nbsp;&nbsp;</label>
+        <select id="field">
+          <option value="allfields">All</option>
+          <option value="title" selected>Title</option>
+          <option value="author">Author</option>
+          <option value="topic">Subject</option>
+          <option value="publisher">Publisher</option>
+          <option value="place_text">Place</option>
+          <option value="publishDate">Year</option>
+          <option value="isbn">ISBN</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="search-input-row">
+      <input id="query" type="text" placeholder="Search for book..." />
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <p id="total" style="margin:7px 0 7px auto;font-size:16px;"></p>
+
+    <div id="spinner" style="display:none; color:#cfd3fa; text-align:center; margin:30px auto; font-size: 17px;">
+      Searching…
+    </div>
+  </section>
+
+  <main id="resultsArea">
+    <div class="placeholder" id="placeholder"></div>
+    <div class="results" id="results" style="display:none"></div>
+  </main>
+
+  <div id="pagination" class="pagination" style="display:block"></div>
+
+  <p class="lead" style="margin:15px auto;">
+    The search results shown here are fetched through the INFLIBNET IndCat system, which provides access to
+    library records from colleges and universities across India. This page filters and displays those records
+    that belong to Suren Das College Library. It helps quickly find book details such as title, author,
+    publisher and more, just like the library OPAC system.
+  </p>
+
+</main>
+
+<footer>
+    <p>© 2025 Student Community Portal - Suren Das College<br>
+       All Rights Reserved. <a href="about.html">  About Us</a></p>
+  </footer>
+
+<script>
+const qEl=document.getElementById("query"),
+      btn=document.getElementById("searchBtn"),
+      spinner=document.getElementById("spinner"),
+      resultsEl=document.getElementById("results"),
+      placeholder=document.getElementById("placeholder"),
+      metaEl=document.getElementById("meta"),
+      optSel=document.getElementById("opt"),
+      limitSel=document.getElementById("limits"),
+      fieldSel=document.getElementById("field"),
+      paginationEl=document.getElementById("pagination");
+
+document.getElementById("shareBtn").addEventListener("click", async (event) => {
+  event.preventDefault(); // stop the link from reloading page
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: document.title,
+        text: "Suren Das College Library Catalog - OPAC ",
+        url: window.location.href,
+      });
+      console.log("Page shared successfully!");
+    } catch (err) {
+      console.error("Share failed:", err.message);
+    }
+   } else {
+    alert("Sharing not supported in this browser.");
+  }
+});
+
+function norm(s){return(s||"").replace(/\s+/g," ").trim();}
+
+function parseIndcatHtmlToRecords(html){
+  const doc=new DOMParser().parseFromString(html,"text/html");
+  const boxes=[...doc.querySelectorAll(".box1")];
+  const recs=[];
+  for(const b of boxes){
+    const a=b.querySelector("a[href*='book_search?getDetails']");
+    if(!a)continue;
+    const title=norm(a.textContent);
+    const url=a.href;
+    const bottom=b.querySelector(".checkbox_bottomText");
+    let author="",publisher="",year="",pubDetails="";
+    if(bottom){
+      // try multiple formats for author text
+      const possibleTexts=[bottom.querySelector("p"),bottom];
+      for(const el of possibleTexts){
+        if(!el)continue;
+        const m=el.textContent.match(/Author\s*[:\-]\s*(.+?)(?:Publisher|$)/i);
+        if(m){author=norm(m[1]);break;}
+      }
+      const div=bottom.querySelector("div");
+      if(div){
+        pubDetails=norm(div.textContent);
+        const y=pubDetails.match(/\b(19\d{2}|20\d{2})\b/);if(y)year=y[0];
+        const parts=pubDetails.split(",").map(s=>s.trim());
+        if(parts.length>1)publisher=parts.slice(0,-1).join(", ");
+      }
+    }
+    if(title)recs.push({title,author,publisher,year,pubDetails,url});
+  }
+  return recs;
+}
+
+function renderRecords(records){
+  resultsEl.innerHTML="";
+  if(!records.length){ 
+    placeholder.style.display="block";placeholder.textContent="No Records Found";return;
+  }
+  placeholder.style.display="none";resultsEl.style.display="grid";
+  for(const r of records){
+    const card=document.createElement("div");
+    card.className="card";
+    card.onclick=()=>{window.location.href=`library-opac-book.html?url=${encodeURIComponent(r.url)}`;};
+    card.innerHTML=`<div class="info">
+      <h3>${r.title}</h3>
+      <div class="meta-row">
+        ${r.author?`<div class='chip'>Author: ${r.author}</div>`:""}
+        ${r.publisher?`<div class='chip'>${r.publisher}</div>`:""}
+        ${r.year?`<div class='chip'>Year: ${r.year}</div>`:""}
+      </div>
+    </div>`;
+    resultsEl.appendChild(card);
+  }
+}
+
+function renderPagination(totalRecords, limit, currentPage){
+  paginationEl.innerHTML="";
+  const totalPages=Math.ceil(totalRecords/limit);
+  const createBtn=(label,page,disabled=false,active=false)=>{
+    const btn=document.createElement("button");
+    btn.textContent=label;
+    if(active)btn.classList.add("active");
+    btn.disabled=disabled;
+    btn.onclick=()=>runSearch(qEl.value,false,page);
+    paginationEl.appendChild(btn);
+  };
+  createBtn("❮",currentPage-1,currentPage===1);
+  for(let i=1;i<=totalPages;i++){
+    if(i>5 && Math.abs(i-currentPage)>2 && i!==totalPages){if(i===currentPage+3)paginationEl.append("...");continue;}
+    createBtn(i,i,false,i===currentPage);
+  }
+  createBtn("❯",currentPage+1,currentPage===totalPages);
+}
+
+async function runSearch(query,auto=false,page=1){
+  const opt=optSel.value, limits=limitSel.value, field=fieldSel.value;
+  spinner.style.display="flex";btn.disabled=true;
+  try{
+    const res=await fetch("/api/search",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,opt,limits,field,cPageNo:String(page)})});
+    const data=await res.json();
+    if(!data.success){placeholder.style.display="block";placeholder.textContent="Failed to Load Records";return;}
+    metaEl.innerHTML=`Unique: ${data.stats.uniqueRecords||"—"}&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;Holdings: ${data.stats.holdings||"—"}`;
+    const recs=parseIndcatHtmlToRecords(data.html||"");
+    document.getElementById("total").innerHTML = 
+    `Total <strong>${data.stats.totalRecords}</strong> Records found`;
+    renderRecords(recs);
+    const total=parseInt(data.stats.totalRecords||recs.length||0);
+    renderPagination(total,parseInt(limits),page);
+  }catch(e){placeholder.textContent="Error: "+e.message;}
+  finally{spinner.style.display="none";btn.disabled=false;}
+}
+
+btn.onclick=()=>{const q=qEl.value.trim();if(!q)return;runSearch(q);};
+qEl.addEventListener("keydown",e=>{if(e.key==="Enter")btn.click();});
+window.addEventListener("load",()=>runSearch("",true));
+</script>
+</body>
+</html>

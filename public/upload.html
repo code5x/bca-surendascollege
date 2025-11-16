@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Upload Study Resources - Notes</title>
+  <title>Upload Study Resources, Notes, Images</title>
 
 
 
@@ -104,13 +104,13 @@ header {
   transition: all 0.3s ease;
   background: transparent;
   flex-shrink: 0;
-  border: 1px solid #323d8a;
+  border: 1px solid #6974c7;
 }
+
 .nav1 a:hover {
-  background: #f7c2d9; /* light pink */
-  color: #0b2a6b;
-  transform: scale(1.01);
+  background: #0b5ed7;
 }
+
 @media (min-width: 769px) {
   .nav1 a {
     font-size: 1rem;
@@ -121,7 +121,7 @@ header {
 /* second row nav */
 .site-header {
   border-top: 1px solid #888888;
-  background: #4d3246;
+  background: rgba(50, 30, 80, 1);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -131,7 +131,7 @@ header {
 
 .nav2 {
   display: flex;
-/*  gap: 2px;               little gap between buttons */
+/*  gap: 0;               little gap between buttons */
   width: 100%;
   padding: 0;        /* small margin inside */
 
@@ -140,17 +140,21 @@ header {
 .nav2 a {
   flex: 1;               /* equal width */
   text-align: center;
-  color: #fff;
+  color: rgba(255,255,255,0.6);
   text-decoration: none;
   padding: 8px 4px;
 /*  border: 1px solid #f7c2d9; */
   border-radius: 10px; /* bottom only */
   transition: all 0.3s ease;
   font-size:0.92rem;
+  font-weight: 550;
 }
 
 .nav2 a.active {
-  background: linear-gradient(180deg, #2f3cd4, #275b8a);
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
 }
 
 @keyframes slideDown {
@@ -286,7 +290,7 @@ font-weight:500; color:#eaf0ff; overflow:hidden; text-overflow:ellipsis; white-s
   width:100%;
   padding:9px 11px;
   border-radius:8px;
-  border:1px solid #e6cfe5;
+  border:1px solid #1d6591;
   background: #2d2d30;
   color:#e6e9ef;
   font-size:0.92rem;
@@ -300,7 +304,6 @@ font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 .meta-form input:focus, 
 .meta-form textarea:focus {
   outline: none;
-  border: 2px solid #e6cfe5;
   transform: scale(1.01);
 }
 
@@ -541,19 +544,20 @@ footer a:hover {
 <header>
   <div class="main-header">
     <nav class="nav1">
-      <a href="index.html">Home</a>
-      <a href="study-material.html">Study Material</a>
-      <a href="courses.html">Courses</a>
-      <a href="links.html">External Source</a>
-      <a href="about.html">About</a>
-      <a href="feedback.html">Feedback</a>
+      <a href="index.html">🏠 Home</a>
+      <a href="#" id="shareBtn">🔗 Share</a>
+      <a href="study-material.html">📚 Study Material</a>
+      <a href="courses.html">🎓 Courses</a>
+      <a href="links.html">🌐 External Source</a>
+      <a href="about.html">ℹ️ About</a>
+      <a href="feedback.html">💬 Feedback</a>
     </nav>
   </div>
 
   <div class="site-header">
     <nav class="nav2">
-      <a href="#resources" class="nav2-link">Upload Study Resources</a>
-      <a href="#class-notes" class="nav2-link">Upload Class Notes</a>
+      <a href="#resources" class="nav2-link">Upload Resources</a>
+      <a href="#class-notes" class="nav2-link">Upload as Image</a>
     </nav>
   </div>
 </header>
@@ -563,7 +567,7 @@ footer a:hover {
     <section id="resources" class="section card">
       <h2>Upload Study Resources</h2>
       <p class="lead">
-        This platform allows you to share useful resources like eBooks, study notes, old question papers, syllabus, assignments, practical files, class routines, and more. Every upload is a valuable contribution that makes studying easier and more accessible for everyone. By sharing materials, you directly support fellow students and strengthen the learning community.<br>
+        This platform allows you to share useful resources like eBooks, study notes, old question papers, syllabus, assignments, practical files, and more. Every upload is a valuable contribution that makes studying easier and more accessible for everyone.<br>
         <strong>Note:</strong> All uploads will be verified and may be modified for accuracy and quality before appearing on this site.
       </p>
 
@@ -616,9 +620,8 @@ footer a:hover {
 
     <!-- Section: Upload Class Notes -->
     <section id="class-notes" class="section card" aria-labelledby="classNotesTitle" hidden>
-      <h2 id="classNotesTitle">Upload Class Notes</h2>
-      <p class="lead">
-        Students are encouraged to upload their daily class notes on this platform to provide valuable support for others. Missing notes should also be shared to ensure completeness of study material. Notes can be uploaded as clear images from notebooks or saved image files, arranged in the correct order for easy reading and reference.<br>
+      <h2 id="classNotesTitle">Upload Image File</h2>
+      <p class="lead">Upload study materials as image files such as eBooks, notes, question papers, assignments, and more. Also share any missing notes to keep the collection complete. Make sure the images are clear and arranged in the right order for easy reading and reference.<br>
         <strong>Note:</strong> All uploads will be verified and may be modified for accuracy and quality before appearing on this site.
       </p>
 
@@ -657,13 +660,13 @@ footer a:hover {
           <input id="uploaderNameNotes" type="text" placeholder="Your name or about yourself..." />
         </label>
         <label class="field">
-          <span class="field-label">About Notes (optional)</span>
-          <textarea id="aboutImages" rows="2" placeholder="subjects, course, types..."></textarea>
+          <span class="field-label">About files (optional)</span>
+          <textarea id="aboutImages" rows="2" placeholder="Subject, course, types..."></textarea>
         </label>
         <label class="field">
           <span class="field-label">Date (optional)</span>
           <small class="hint" style="display:block; margin:0 0 10px; color:gray; font-size: 0.85rem;">
-            (At which date class notes received)
+            (When file was created or received)
           </small>
           <input id="imageDate" type="date" />
         </label>
@@ -703,6 +706,25 @@ footer a:hover {
 
 
 <script>
+
+document.getElementById("shareBtn").addEventListener("click", async (event) => {
+  event.preventDefault(); // stop the link from reloading page
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: document.title,
+        text: "Upload Study Resources, Notes, Images ",
+        url: window.location.href,
+      });
+      console.log("Page shared successfully!");
+    } catch (err) {
+      console.error("Share failed:", err.message);
+    }                                                                                   
+   } else {
+    alert("Sharing not supported in this browser.");
+  }
+});
+
 
 (function () {
   'use strict';

@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Browse Books — Suren Das College Library (OPAC)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ===== RESET / BASE FIX ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color:#e6e9ef;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+body.bg-app {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  color: #e6e9ef;
+
+  /* Default desktop background */
+  background: url("/src/background.webp") no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* Mobile background */
+@media (max-width: 768px) {
+  body.bg-app {
+    background: url("/src/background-mobile.webp") no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+/* Black overlay */
+body.bg-app::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1; /* keeps overlay behind all content */
+}
+
+/* Optional wrapper padding for content */
+.overlay {
+  padding: 2rem;
+}
+
+/* container */
+.container {
+  max-width: 1100px;
+  margin: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 769px) { .container { padding: 35px; }}
+
+
+
+
+.header1 {
+  display: flex;
+  background: #0b2a6b;
+  gap: 1px;
+  margin: 0;
+  border-radius: 0 0 7px 7px;
+}
+
+
+.header1 button {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 450;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid #6974c7;
+  margin: 5px 0 5px 17px;
+}
+
+
+
+
+h1 {
+      font-size: 21px;
+      margin: 10px 0;
+    }
+    p.lead {
+      margin: 0;
+      color: #a9b9d4;
+      font-size: 14px;
+      text-align: justify;
+      line-height: 1.3;
+    }
+
+.results {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 15px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .card {
+      background: #333333;
+      border-radius: 7px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.04);
+      border: 1px solid #5a5e78;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.06);
+    }
+
+.card h3 {
+      font-size: 16px;
+      color: #0b3a8a;
+      margin: 0;
+}
+.meta{color:#fff;font-size:13px;margin:5px auto;line-height:1.5;}
+
+
+button{
+  background:#1f6feb;
+  color:white;border:none;
+  border-radius:7px;
+  padding:7px;
+  font-weight:500;
+  cursor:pointer;
+}
+button:hover{background:#0b5ed7;}
+.header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:2px;
+}
+.selector{
+      padding: 5px;
+      border-radius: 7px;
+      border: 1px solid #636163;
+      font-size: 14px;
+      background: #2d2c2e;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      width: 100px;
+    }
+.selector:hover { border-color: #611b70; }
+
+
+
+.status{
+  text-align: center;
+      padding: 40px 12px;
+      color: #cfd3fa;
+      font-size: 17px;
+  margin-top:30px;
+}
+
+.pagination {
+      text-align: center;
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }     
+.pagination button {
+      margin: 0 3px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #4b4e6b;
+      background: #2d2c2e;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .pagination button.active {
+      background: #1f6feb;
+      color: #fff;
+    }
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+footer {
+    background: #111;
+    text-align: center;
+    padding: 1px;
+    color: #aaa;
+     font-size: 0.85rem;
+ /*   font-size: clamp(0.85rem, 1vw, 2rem);  */
+    border-top: 1px solid #333;
+    border-radius: 20px 20px 0 0;
+    margin-top: auto;
+}
+
+@media (min-width: 769px) {
+  footer {
+    font-size: 1.25rem;
+  }
+}
+
+
+footer a {
+    color: #f7c2d9;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
+
+<div class="header1">
+        <button onclick="history.back()">← Back</button>
+        <a href="index.html"><button>🏠 Home</button></a>
+</div>
+
+
+
+<body class="bg-app">
+  <main class="container" id="main">
+
+<div class="header-row">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <h1 id="title">Loading...</h1>
+  </div>
+  <div>
+    <label for="limitSel" style="font-size: 15px; font-weight: 400; color: #bfc8d6;margin-right:6px;">Page limit:</label>
+    <select id="limitSel" class="selector">
+      <option value="10">10</option>
+      <option value="20" selected>20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+  </div>
+  <p id="total" style="margin:10px 0 5px auto;font-size:16px;"></p>
+</div>
+
+<div id="status" class="status">Searching book records…</div>
+<div class="results" id="results"></div>
+<div id="pagination" class="pagination" style="display:block;"></div>
+
+  <p class="lead" style="margin:20px auto;">
+    The search results shown here are fetched through the INFLIBNET IndCat system, which provides access to
+    library records from colleges and universities across India. This page filters and displays those records
+    that belong to Suren Das College Library. It helps quickly find book details such as title, author,
+    publisher and more, just like the library OPAC system.
+  </p>
+
+
+</main>
+
+<footer>
+    <p>© 2025 Student Community Portal - Suren Das College<br>
+       All Rights Reserved. <a href="about.html">  About Us</a></p>
+  </footer>
+
+<script>
+const resultsEl=document.getElementById("results");
+const titleEl=document.getElementById("title");
+const statusEl=document.getElementById("status");
+const limitSel=document.getElementById("limitSel");
+const paginationEl=document.getElementById("pagination");
+
+async function loadBrowse(page=1){
+  const params=new URLSearchParams(window.location.search);
+  const query=params.get("query")||"";
+  const type=params.get("type")||"subject";
+  const limits=limitSel.value;
+
+  if(!query){titleEl.textContent="No query specified.";return;}
+
+  const displayType={
+    author:"Author",
+    subject:"Subject",
+    year:"Publication Year",
+    publisher:"Publisher",
+    place:"Place",
+    catalogue:"Catalogue Agency"
+  }[type]||"Subject";
+
+  titleEl.textContent=`Books under ${displayType}: ${query}`;
+  statusEl.style.display="block";
+  statusEl.textContent="Searching book records…";
+  resultsEl.innerHTML="";
+
+  try{
+    const res=await fetch("/api/browse",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({type,query,limits,cPageNo:String(page)})
+    });
+    const data=await res.json();
+
+    if(!data.success || !data.results.length){
+      statusEl.textContent="Failed to load data. Refresh the page to see again.";
+      return;
+    }
+
+    statusEl.style.display="none";
+    const recs=data.results;
+    resultsEl.innerHTML="";
+    for(const r of recs){
+      const card=document.createElement("div");
+      card.className="card";
+      card.onclick=()=>{window.location.href=`library-opac-book.html?url=${encodeURIComponent(r.bookUrl)}`;};
+      card.innerHTML=`<h3>${r.title}</h3>
+        <div class="meta">
+          ${r.author?`Author: ${r.author}<br>`:""}
+          ${r.publisher?`${r.publisher}`:""}
+          ${r.year?`<br>Year: ${r.year}`:""}
+        </div>`;
+      resultsEl.appendChild(card);
+    }
+
+    // --- Pagination ---
+    const total=parseInt(data.stats.totalRecords||recs.length||0);
+    renderPagination(total,parseInt(limits),page,query,type);
+    document.getElementById("total").innerHTML = 
+    `Total <strong>${data.stats.totalRecords}</strong> Records found`;
+
+  }catch(e){
+    statusEl.textContent="Error: "+e.message;
+  }
+}
+
+function renderPagination(totalRecord, limit, currentPage, query, type){
+  paginationEl.innerHTML="";
+  const totalPages=Math.ceil(totalRecord/limit);
+
+  const createBtn=(label,page,disabled=false,active=false)=>{
+    const btn=document.createElement("button");
+    btn.textContent=label;
+    if(active)btn.classList.add("active");
+    btn.disabled=disabled;
+    btn.onclick=()=>loadBrowse(page);
+    paginationEl.appendChild(btn);
+  };
+
+  createBtn("❮",currentPage-1,currentPage===1);
+  for(let i=1;i<=totalPages;i++){
+    if(i>5 && Math.abs(i-currentPage)>2 && i!==totalPages){
+      if(i===currentPage+3)paginationEl.append("...");continue;
+    }
+    createBtn(i,i,false,i===currentPage);
+  }
+  createBtn("❯",currentPage+1,currentPage===totalPages);
+}
+
+// Reload when limit changes
+limitSel.addEventListener("change",()=>loadBrowse(1));
+
+window.addEventListener("load",()=>loadBrowse());
+</script>
+</body>
+</html>

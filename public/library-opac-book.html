@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Book details - Suren Das College Library (OPAC)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ===== RESET / BASE FIX ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color:#e6e9ef;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+body.bg-app {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  color: #e6e9ef;
+
+  /* Default desktop background */
+  background: url("/src/background.webp") no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* Mobile background */
+@media (max-width: 768px) {
+  body.bg-app {
+    background: url("/src/background-mobile.webp") no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+/* Black overlay */
+body.bg-app::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1; /* keeps overlay behind all content */
+}
+
+/* Optional wrapper padding for content */
+.overlay {
+  padding: 2rem;
+}
+
+/* container */
+.container {
+  max-width: 1100px;
+  margin: 10px;
+  padding: 10px 10px 50px 10px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 769px) { .container { padding: 35px; }}
+
+
+
+
+.header1 {
+  display: flex;
+  background: #0b2a6b;
+  gap: 1px;
+  margin: 0;
+  border-radius: 0 0 7px 7px;
+}
+
+
+.header1 button {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 450;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid #6974c7;
+  margin: 5px 0 5px 13px;
+}
+
+
+
+.phead{
+  display:flex;
+  justify-content:center; 
+  text-align: center;
+  align-items:center;
+  margin-bottom:20px;
+  line-height: 1.3;
+}
+h1{margin:0;font-size:20px;color:#fff}
+button, a.button{
+  background:#1f6feb;
+  border:none;
+  border-radius:7px;
+  color:white;
+  font-weight:500;
+  padding:7px;
+  text-decoration:none;
+  cursor:pointer;
+  transition:.2s;
+}
+button:hover, a.button:hover{background:#0b5ed7;}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 769px) {
+table {width: 80%;}
+}
+td,th{
+  border:1px solid #fff;
+  padding:10px 12px;
+  font-size:14px;
+  background: rgba(25,25,25,0.9);
+}
+th{background:rgba(50,50,50,0.9);text-align:left;color:#1d2939; font-weight:500;}
+.meta p{margin:4px 0;font-size:15px}
+h2{margin-top:30px;font-size:18px;color:#f2d7fa}
+.loading{text-align:center;margin:60px 0;color:#fff; font-size:16x;}
+</style>
+</head>
+
+
+
+<div class="header1">
+        <button onclick="history.back()">← Back</button>
+        <a href="index.html"><button>🏠 Home</button></a>
+        <a href="#" id="shareBtn"><button>🔗 Share</button></a>
+</div>
+
+
+
+<body class="bg-app">
+  <main class="container" id="main">
+
+  <div class="phead">
+   <h1 id="bookTitle">Loading book details...</h1>
+ </div>
+
+  <div id="bookMeta" class="meta"></div>
+  <h2>Holdings</h2>
+  <table id="holdingsTable" style="display:none">
+    <thead>
+      <tr><th>Copy No.</th><th>Accession No.</th><th>Shelving Location</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="loading" id="loading">Fetching book details...</div>
+</main>
+
+<script>
+async function loadBookDetails() {
+  const params = new URLSearchParams(window.location.search);
+  const url = params.get("url");
+  const loadingEl = document.getElementById("loading");
+  const metaEl = document.getElementById("bookMeta");
+  const titleEl = document.getElementById("bookTitle");
+  const holdingsTable = document.getElementById("holdingsTable");
+  const tbody = holdingsTable.querySelector("tbody");
+  const downloadBtn = document.getElementById("downloadBtn");
+
+  if(!url) {
+    loadingEl.textContent = "No book URL provided.";
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/bookdetails?url=${encodeURIComponent(url)}`);
+    const data = await res.json();
+
+    if(!data.success) {
+      loadingEl.textContent = "Failed to fetch book details. Refresh the page to see again.";
+      return;
+    }
+
+    const b = data.book;
+    titleEl.textContent = b.title || "Untitled";
+
+document.getElementById("shareBtn").addEventListener("click", async (event) => {
+  event.preventDefault(); // stop the link from reloading page
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: document.title,
+        text: b.title || " ",
+        url: window.location.href,
+      });
+      console.log("Page shared successfully!");
+    } catch (err) {
+      console.error("Share failed:", err.message);
+    }
+   } else {
+    alert("Sharing not supported in this browser.");
+  }
+});
+
+const details = [
+  ["Title", b.title],
+  ["Author", b.author ? `<a href="library-opac-browse.html?type=author&query=${encodeURIComponent(b.author)}" 
+      style="color:#0b5ed7;text-decoration:none;">${b.author}</a>` : ""],
+  ["Edition", b.edition],
+  ["ISBN", b.isbn],
+  ["Place & Publisher", (() => {
+      if (!b.publisher) return "";
+      const parts = b.publisher.split(/[,;]+/).map(x => x.trim()).filter(Boolean);
+      if (parts.length === 1) {
+        const pub = parts[0];
+        return `<a href="library-opac-browse.html?type=publisher&query=${encodeURIComponent(pub)}"
+                  style="color:#0b5ed7;text-decoration:none;">${pub}</a>`;
+      } else {
+        const place = parts[0];
+        const publisher = parts.slice(1).join(", ");
+        return `
+          <a href="library-opac-browse.html?type=place&query=${encodeURIComponent(place)}"
+             style="color:#0b5ed7;text-decoration:none;">${place}</a>,
+          <a href="library-opac-browse.html?type=publisher&query=${encodeURIComponent(publisher)}"
+             style="color:#0b5ed7;text-decoration:none;">${publisher}</a>`;
+      }
+  })()],
+  ["Date of Publication", b.year ? `<a href="library-opac-browse.html?type=year&query=${encodeURIComponent(b.year)}" 
+      style="color:#0b5ed7;text-decoration:none;">${b.year}</a>` : ""],
+  ["Pages", b.pages],
+  ["Subject Descriptors", b.subjects
+    ? b.subjects.split(/[,;]+/).map(s => 
+        `<a href="library-opac-browse.html?type=subject&query=${encodeURIComponent(s.trim())}" 
+           style="color:#0b5ed7;text-decoration:none;">${s.trim()}</a>`).join(", ")
+    : ""],
+  ["Language", b.language],
+  ["Class No.", b.classNo],
+  ["Catalogue Agency", b.catalogue]
+
+    ].filter(row => row[1] && row[1].trim() !== "");
+
+    if(details.length) {
+      const table = document.createElement("table");
+      let html = "<tbody>";
+      for(const [k,v] of details) {
+        html += `<tr><td style="width:30%;font-weight:500;">${k}</td><td>${v}</td></tr>`;
+      }
+      html += "</tbody>";
+      table.innerHTML = html;
+      metaEl.appendChild(table);
+    }
+
+    if(Array.isArray(b.holdings) && b.holdings.length){
+      tbody.innerHTML = b.holdings.map(h =>
+        `<tr>
+          <td>${h.copyNo||""}</td>
+          <td>${h.accession||""}</td>
+          <td>${h.shelving||""}</td>
+        </tr>`
+      ).join("");
+      holdingsTable.style.display="table";
+    } else {
+      holdingsTable.style.display="none";
+    }
+
+    loadingEl.style.display="none";
+  } catch(err) {
+    loadingEl.textContent = "Error fetching details: " + err.message;
+  }
+}
+
+window.addEventListener("load", loadBookDetails);
+
+</script>
+</body>
+</html>
