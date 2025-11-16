@@ -1,94 +1,84 @@
-// functions/api/bookdetails.js
-import { parse } from "node-html-parser";
-
-/**
- * Cloudflare Pages Function for /api/bookdetails
- * Accepts GET with query param `url`
- * Returns JSON { success, book }
- */
-
-function getValFromDoc(root, label) {
-  // tries to find a td.detailpage-title that contains label, then the next td
-  // We will search for any element text containing label and try to take sibling
-  const candidates = root.querySelectorAll("td.detailpage-title");
-  for (const td of candidates) {
-    const txt = (td.text || "").trim();
-    if (txt.includes(label)) {
-      const next = td.nextElementSibling;
-      if (next) return (next.text || "").trim();
-    }
-  }
-  // fallback: search by text nodes
-  const allText = root.text;
-  const m = allText.match(new RegExp(label.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&") + "\\s*[:\\-]?\\s*(.*?)\\n", "i"));
-  if (m) return (m[1] || "").trim();
-  return "";
-}
-
-export default async function (request) {
+// /functions/api/bookdetails.js
+// GET handler that expects ?url=<full detail page URL>
+export async function onRequestGet(context) {
   try {
-    const url = new URL(request.url);
-    const bookUrl = url.searchParams.get("url");
-    if (!bookUrl) {
-      return new Response(JSON.stringify({ success: false, error: "Missing URL" }), { status: 400, headers: { "Content-Type": "application/json" } });
+    const url = new URL(context.request.url).searchParams.get("url");
+    if (!url) {
+      return new Response(JSON.stringify({ success: false, error: "Missing URL" }), { status: 400, headers: { "Content-Type": "application/json" }});
     }
 
-    const pageRes = await fetch(bookUrl, { headers: { "User-Agent": "Mozilla/5.0" } });
+    const pageRes = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
     const html = await pageRes.text();
-    const root = parse(html);
 
-    const book = {};
+    // Extract title via <h1 class="underline"> or the detail table
+    const h1Match = html.match(/<h1[^>]*class=['"]underline['"][^>]*>([\s\S]*?)<\/h1>/i);
+    const title = h1Match ? h1Match[1].replace(/<[^>]*>/g," ").trim() : "";
 
-    const getVal = (label) => getValFromDoc(root, label);
+    // Extract label/value pairs from rows like:
+    // <td class="detailpage-title">Title :-</td><td>value</td>
+    const labelRegex = /<td[^>]*class=['"]detailpage-title['"][^>]*>([\s\S]*?)<\/td>\s*<td[^>]*>([\s\S]*?)<\/td>/gi;
+    const details = {};
+    let lm;
+    while ((lm = labelRegex.exec(html)) !== null) {
+      const label = lm[1].replace(/<[^>]*>/g,"").trim().replace(/\s+$/,"");
+      const val = lm[2].replace(/<[^>]*>/g," ").trim().replace(/\s+/g," ");
+      details[label] = val;
+    }
 
-    book.title = (root.querySelector("h1.underline") ? root.querySelector("h1.underline").text.trim() : "") || getVal("Title :-");
-    book.author = getVal("Author :-");
-    book.edition = getVal("Edition :-");
-    book.isbn = getVal("ISBN :-");
-    book.publisher = getVal("Place & Publisher :-");
-    book.year = getVal("Date of Publication :-");
-    book.pages = getVal("Pages :-");
-    book.subjects = getVal("Subject Descriptors:-");
-    book.language = getVal("Language :-");
-    book.classNo = getVal("Class no:");
-    book.catalogue = getVal("Catalogue Agency :-");
+    // normalized keys to match previous server.js expectations
+    const b = {
+      title: title || details["Title :-"] || details["Title - :"] || "",
+      author: details["Author :-"] || "",
+      edition: details["Edition :-"] || "",
+      isbn: details["ISBN :-"] || "",
+      publisher: details["Place & Publisher :-"] || "",
+      year: details["Date of Publication :-"] || "",
+      pages: details["Pages :-"] || "",
+      subjects: details["Subject Descriptors:-"] || details["Subject Descriptors :-"] || "",
+      language: details["Language :-"] || "",
+      classNo: details["Class no:"] || "",
+      catalogue: details["Catalogue Agency :-"] || "",
+      holdings: []
+    };
 
-    // Extract holdings rows from table.bookdetail-bottom-table
-    const holdings = [];
-    const table = root.querySelector("table.bookdetail-bottom-table");
-    if (table) {
-      const rows = table.querySelectorAll("tr");
-      for (let i = 1; i < rows.length; i++) {
-        const tds = rows[i].querySelectorAll("td");
+    // Extract holdings table rows inside <table class="bookdetail-bottom-table">...</table>
+    const tableMatch = html.match(/<table[^>]*class=['"][^'"]*bookdetail-bottom-table[^'"]*['"][^>]*>([\s\S]*?)<\/table>/i);
+    if (tableMatch) {
+      const tableHtml = tableMatch[1];
+      const trRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+      let first = true;
+      let trm;
+      while ((trm = trRegex.exec(tableHtml)) !== null) {
+        // skip header row if present (common)
+        if (first) { first = false; continue; }
+        const row = trm[1];
+        // get all td values
+        const tdRegex = /<td[^>]*>([\s\S]*?)<\/td>/gi;
+        const tds = [];
+        let tdm;
+        while ((tdm = tdRegex.exec(row)) !== null) {
+          tds.push(tdm[1].replace(/<[^>]*>/g," ").trim().replace(/\s+/g," "));
+        }
         if (tds.length >= 3) {
-          const copyNo = (tds[0].text || "").trim();
-          const accession = (tds[1].text || "").trim();
-          const shelving = (tds[2].text || "").trim();
-          const key = `${copyNo}-${accession}-${shelving}`;
-          if (!holdings.some(h => `${h.copyNo}-${h.accession}-${h.shelving}` === key)) {
-            holdings.push({ copyNo, accession, shelving });
-          }
+          b.holdings.push({ copyNo: tds[0]||"", accession: tds[1]||"", shelving: tds[2]||"" });
         }
       }
     }
 
-    book.holdings = holdings;
-
-    if (!book.title) {
+    if (!b.title) {
       return new Response(JSON.stringify({ success: false, error: "Failed to fetch book details." }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json; charset=utf-8" },
       });
     }
 
-    return new Response(JSON.stringify({ success: true, book }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
+    return new Response(JSON.stringify({ success: true, book: b }), {
+      headers: { "Content-Type": "application/json; charset=utf-8" },
     });
+
   } catch (err) {
     return new Response(JSON.stringify({ success: false, error: String(err) }), {
       status: 500,
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json; charset=utf-8" },
     });
   }
 }

@@ -139,7 +139,7 @@ h1 {
 
 .card h3 {
       font-size: 16px;
-      color: #0b3a8a;
+      color: #95a8c9;
       margin: 0;
 }
 .meta{color:#fff;font-size:13px;margin:5px auto;line-height:1.5;}
@@ -197,10 +197,10 @@ button:hover{background:#0b5ed7;}
       background: #2d2c2e;
       cursor: pointer;
       font-size: 13px;
+      color: #fff;
     }
     .pagination button.active {
       background: #1f6feb;
-      color: #fff;
     }
     .pagination button:disabled {
       opacity: 0.5;
@@ -282,6 +282,8 @@ footer a:hover {
        All Rights Reserved. <a href="about.html">  About Us</a></p>
   </footer>
 
+
+
 <script>
 const resultsEl=document.getElementById("results");
 const titleEl=document.getElementById("title");
@@ -289,6 +291,71 @@ const statusEl=document.getElementById("status");
 const limitSel=document.getElementById("limitSel");
 const paginationEl=document.getElementById("pagination");
 
+/* -------------------------
+   Client-side HTML parser
+   (copy of parseIndcatHtmlToRecords from library-opac.html)
+   ------------------------- */
+function norm(s){return (s||"").replace(/\s+/g," ").trim();}
+
+function parseIndcatHtmlToRecords(html){
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const boxes = [...doc.querySelectorAll(".box1")];
+  const recs = [];
+  for (const b of boxes) {
+    const a = b.querySelector("a[href*='book_search?getDetails']");
+    if (!a) continue;
+    const title = norm(a.textContent);
+    // normalize href to absolute (if relative)
+    let url = a.getAttribute("href") || "";
+    try {
+      if (!/^https?:\/\//i.test(url)) url = new URL(url, "https://indcat.inflibnet.ac.in").href;
+    } catch(e) { /* keep as-is if weird */ }
+
+    const bottom = b.querySelector(".checkbox_bottomText");
+    let author = "", publisher = "", year = "", pubDetails = "";
+    if (bottom) {
+      // try multiple formats for author text
+      const possibleTexts = [bottom.querySelector("p"), bottom];
+      for (const el of possibleTexts) {
+        if (!el) continue;
+        const m = el.textContent.match(/Author\s*[:\-]\s*(.+?)(?:Publisher|$)/i);
+        if (m) { author = norm(m[1]); break; }
+      }
+      // publication info — try several places (col-md-8, any div, fallback to bottom text)
+      const colDiv = bottom.querySelector("div.col-md-8");
+      if (colDiv) pubDetails = norm(colDiv.textContent);
+      else {
+        const firstDiv = bottom.querySelector("div");
+        if (firstDiv) pubDetails = norm(firstDiv.textContent);
+        else pubDetails = norm(bottom.textContent);
+      }
+
+      const y = pubDetails.match(/\b(19\d{2}|20\d{2})\b/);
+      if (y) year = y[0];
+
+      // publisher heuristics: comma tokens, drop trailing token if it's a year/place
+      const parts = pubDetails.split(",").map(s=>s.trim()).filter(Boolean);
+      if (parts.length > 1) {
+        // if last token is a year, drop it
+        if (/\b(19\d{2}|20\d{2})\b/.test(parts[parts.length-1])) {
+          publisher = parts.slice(0,-1).join(", ");
+        } else {
+          // prefer tokens with publisher-like words or join everything except last
+          publisher = parts.slice(0,-1).join(", ");
+        }
+      } else {
+        // single token: remove year-like part
+        publisher = pubDetails.replace(/\b(19\d{2}|20\d{2})\b/,"").trim();
+      }
+    }
+    recs.push({ title, author, publisher, year, pubDetails, bookUrl: url });
+  }
+  return recs;
+}
+
+/* -------------------------
+   Modified loadBrowse(): parse data.html first
+   ------------------------- */
 async function loadBrowse(page=1){
   const params=new URLSearchParams(window.location.search);
   const query=params.get("query")||"";
@@ -319,18 +386,39 @@ async function loadBrowse(page=1){
     });
     const data=await res.json();
 
-    if(!data.success || !data.results.length){
+    if(!data.success){
       statusEl.textContent="Failed to load data. Refresh the page to see again.";
       return;
     }
 
+    // Prefer parsing the returned HTML (more tolerant). Fallback to server results.
+    let recs = [];
+    if (data.html) {
+      recs = parseIndcatHtmlToRecords(data.html);
+    }
+    // If parse returned nothing, fallback to server-side 'results' (older behavior)
+    if ((!recs || recs.length === 0) && Array.isArray(data.results) && data.results.length) {
+      // normalize field names from server to match rendering code
+      recs = data.results.map(r => ({
+        title: r.title || "",
+        author: r.author || "",
+        publisher: r.publisher || "",
+        year: r.year || "",
+        bookUrl: r.bookUrl || r.bookUrl || ""
+      }));
+    }
+
+    if(!recs.length){
+      statusEl.textContent="No records found.";
+      return;
+    }
+
     statusEl.style.display="none";
-    const recs=data.results;
     resultsEl.innerHTML="";
     for(const r of recs){
       const card=document.createElement("div");
       card.className="card";
-      card.onclick=()=>{window.location.href=`library-opac-book.html?url=${encodeURIComponent(r.bookUrl)}`;};
+      card.onclick=()=>{ window.location.href = `library-opac-book.html?url=${encodeURIComponent(r.bookUrl)}`; };
       card.innerHTML=`<h3>${r.title}</h3>
         <div class="meta">
           ${r.author?`Author: ${r.author}<br>`:""}
@@ -341,10 +429,10 @@ async function loadBrowse(page=1){
     }
 
     // --- Pagination ---
-    const total=parseInt(data.stats.totalRecords||recs.length||0);
+    const total=parseInt((data.stats && data.stats.totalRecords) || recs.length || 0);
     renderPagination(total,parseInt(limits),page,query,type);
-    document.getElementById("total").innerHTML = 
-    `Total <strong>${data.stats.totalRecords}</strong> Records found`;
+    document.getElementById("total").innerHTML =
+      `Total <strong>${(data.stats && data.stats.totalRecords) || recs.length}</strong> Records found`;
 
   }catch(e){
     statusEl.textContent="Error: "+e.message;
@@ -379,5 +467,7 @@ limitSel.addEventListener("change",()=>loadBrowse(1));
 
 window.addEventListener("load",()=>loadBrowse());
 </script>
+
+
 </body>
 </html>

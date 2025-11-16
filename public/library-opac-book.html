@@ -134,12 +134,12 @@ table{
 table {width: 80%;}
 }
 td,th{
-  border:1px solid #fff;
+  border:1px solid #a6a1a6;
   padding:10px 12px;
   font-size:14px;
-  background: rgba(25,25,25,0.9);
+  background: rgba(25,25,25,0.85);
 }
-th{background:rgba(50,50,50,0.9);text-align:left;color:#1d2939; font-weight:500;}
+th{background:rgba(50,50,50,0.85);text-align:left;color:#a2bbdb; font-weight:500;}
 .meta p{margin:4px 0;font-size:15px}
 h2{margin-top:30px;font-size:18px;color:#f2d7fa}
 .loading{text-align:center;margin:60px 0;color:#fff; font-size:16x;}
@@ -224,7 +224,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 const details = [
   ["Title", b.title],
   ["Author", b.author ? `<a href="library-opac-browse.html?type=author&query=${encodeURIComponent(b.author)}" 
-      style="color:#0b5ed7;text-decoration:none;">${b.author}</a>` : ""],
+      style="color:#4b7bc4;text-decoration:none;">${b.author}</a>` : ""],
   ["Edition", b.edition],
   ["ISBN", b.isbn],
   ["Place & Publisher", (() => {
@@ -233,24 +233,24 @@ const details = [
       if (parts.length === 1) {
         const pub = parts[0];
         return `<a href="library-opac-browse.html?type=publisher&query=${encodeURIComponent(pub)}"
-                  style="color:#0b5ed7;text-decoration:none;">${pub}</a>`;
+                  style="color:#4b7bc4;text-decoration:none;">${pub}</a>`;
       } else {
         const place = parts[0];
         const publisher = parts.slice(1).join(", ");
         return `
           <a href="library-opac-browse.html?type=place&query=${encodeURIComponent(place)}"
-             style="color:#0b5ed7;text-decoration:none;">${place}</a>,
+             style="color:#4b7bc4;text-decoration:none;">${place}</a>,
           <a href="library-opac-browse.html?type=publisher&query=${encodeURIComponent(publisher)}"
-             style="color:#0b5ed7;text-decoration:none;">${publisher}</a>`;
+             style="color:#4b7bc4;text-decoration:none;">${publisher}</a>`;
       }
   })()],
   ["Date of Publication", b.year ? `<a href="library-opac-browse.html?type=year&query=${encodeURIComponent(b.year)}" 
-      style="color:#0b5ed7;text-decoration:none;">${b.year}</a>` : ""],
+      style="color:#4b7bc4;text-decoration:none;">${b.year}</a>` : ""],
   ["Pages", b.pages],
   ["Subject Descriptors", b.subjects
     ? b.subjects.split(/[,;]+/).map(s => 
         `<a href="library-opac-browse.html?type=subject&query=${encodeURIComponent(s.trim())}" 
-           style="color:#0b5ed7;text-decoration:none;">${s.trim()}</a>`).join(", ")
+           style="color:#4b7bc4;text-decoration:none;">${s.trim()}</a>`).join(", ")
     : ""],
   ["Language", b.language],
   ["Class No.", b.classNo],
