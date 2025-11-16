@@ -1,59 +1,55 @@
-// functions/api/browse.js
-import { fetchCsrfAndCookies, parseBooksHtml, UNIVERSITY_CODE } from "../_indcatutils.js";
+import { parseBooks } from "../_indcatutils.js";
 
 export async function onRequestPost(context) {
+  const UNIVERSITY_CODE = "SUDC_781102";
+  const req = await context.request.json();
+
+  const { type = "topic", query = "", limits = "20", cPageNo = "" } = req;
+
+  const fieldMap = {
+    author: "author",
+    subject: "topic",
+    year: "publishDate",
+    publisher: "publisher",
+    place: "place_text",
+    catalogue: "catalogue",
+  };
+  const field = fieldMap[type] || "topic";
+
   try {
-    const body = await context.request.json().catch(() => ({}));
-    const type = body.type || "topic";
-    const query = body.query || "";
-    const limits = body.limits || "20";
-    const cPageNo = body.cPageNo || "";
+      const tokenRes = await fetch("https://indcat.inflibnet.ac.in/index.php/main/book");
+      const cookies = tokenRes.headers.get("set-cookie") || "";
+      const pageHTML = await tokenRes.text();
 
-    const fieldMap = {
-      author: "author",
-      subject: "topic",
-      year: "publishDate",
-      publisher: "publisher",
-      place: "place_text",
-      catalogue: "catalogue",
-    };
-    const field = fieldMap[type] || "topic";
+      const csrf = (pageHTML.match(/name="csrf_test_name" value="([^"]+)"/) || [])[1];
 
-    const { csrf, cookie } = await fetchCsrfAndCookies();
+      const payload = new URLSearchParams({
+        csrf_test_name: csrf,
+        search_type: "simple",
+        part_uni: UNIVERSITY_CODE,
+        title: query,
+        field,
+        submit: "Search",
+        opt: "exact",
+        limits,
+        cPageNo,
+      });
 
-    const payload = new URLSearchParams();
-    payload.append("csrf_test_name", csrf);
-    payload.append("search_type", "simple");
-    payload.append("part_uni", UNIVERSITY_CODE);
-    payload.append("title", query);
-    payload.append("field", field);
-    payload.append("submit", "Search");
-    payload.append("opt", "exact");
-    payload.append("limits", limits);
-    payload.append("cPageNo", cPageNo);
+      const res2 = await fetch("https://indcat.inflibnet.ac.in/index.php/search/checkuniv", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Cookie: cookies,
+        },
+        body: payload
+      });
 
-    const res = await fetch("https://indcat.inflibnet.ac.in/index.php/search/checkuniv", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": "Mozilla/5.0",
-        Referer: "https://indcat.inflibnet.ac.in/index.php/main/book",
-        Cookie: cookie || "",
-      },
-      body: payload.toString(),
-    });
+      const html = await res2.text();
+      const data = parseBooks(html);
 
-    const html = await res.text();
-    const { results, stats } = parseBooksHtml(html);
+      return Response.json({ success: true, ...data });
 
-    return new Response(JSON.stringify({ success: true, stats, results, html }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
   } catch (err) {
-    return new Response(JSON.stringify({ success: false, error: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+      return Response.json({ success: false, error: err.message }, { status: 500 });
   }
 }
