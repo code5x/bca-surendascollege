@@ -1,9 +1,13 @@
-import { parseBooks, UNIVERSITY_CODE } from "../_indcatutils.js";
+// functions/api/browse.js
+import { fetchCsrfAndCookies, parseBooksHtml, UNIVERSITY_CODE } from "../_indcatutils.js";
 
 export async function onRequestPost(context) {
   try {
-    const body = await context.request.json();
-    const { type = "subject", query = "", limits = "20", cPageNo = "" } = body;
+    const body = await context.request.json().catch(() => ({}));
+    const type = body.type || "topic";
+    const query = body.query || "";
+    const limits = body.limits || "20";
+    const cPageNo = body.cPageNo || "";
 
     const fieldMap = {
       author: "author",
@@ -11,48 +15,45 @@ export async function onRequestPost(context) {
       year: "publishDate",
       publisher: "publisher",
       place: "place_text",
-      catalogue: "catalogue"
+      catalogue: "catalogue",
     };
-
     const field = fieldMap[type] || "topic";
 
-    // Get CSRF
-    const r1 = await fetch("https://indcat.inflibnet.ac.in/index.php/main/book", {
-      headers: { "User-Agent": "Mozilla/5.0" }
-    });
+    const { csrf, cookie } = await fetchCsrfAndCookies();
 
-    const cookies = r1.headers.get("set-cookie") || "";
-    const html = await r1.text();
-    const csrf = html.match(/name="csrf_test_name"\s+value="([^"]+)"/)?.[1];
+    const payload = new URLSearchParams();
+    payload.append("csrf_test_name", csrf);
+    payload.append("search_type", "simple");
+    payload.append("part_uni", UNIVERSITY_CODE);
+    payload.append("title", query);
+    payload.append("field", field);
+    payload.append("submit", "Search");
+    payload.append("opt", "exact");
+    payload.append("limits", limits);
+    payload.append("cPageNo", cPageNo);
 
-    const payload = new URLSearchParams({
-      csrf_test_name: csrf,
-      search_type: "simple",
-      part_uni: UNIVERSITY_CODE,
-      title: query,
-      field,
-      submit: "Search",
-      opt: "exact",
-      limits,
-      cPageNo
-    });
-
-    const r2 = await fetch("https://indcat.inflibnet.ac.in/index.php/search/checkuniv", {
+    const res = await fetch("https://indcat.inflibnet.ac.in/index.php/search/checkuniv", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent": "Mozilla/5.0",
-        Cookie: cookies,
-        Referer: "https://indcat.inflibnet.ac.in/index.php/main/book"
+        Referer: "https://indcat.inflibnet.ac.in/index.php/main/book",
+        Cookie: cookie || "",
       },
-      body: payload
+      body: payload.toString(),
     });
 
-    const browseHTML = await r2.text();
-    const { results, stats } = parseBooks(browseHTML);
+    const html = await res.text();
+    const { results, stats } = parseBooksHtml(html);
 
-    return Response.json({ success: true, results, stats });
+    return new Response(JSON.stringify({ success: true, stats, results, html }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (err) {
-    return Response.json({ success: false, error: err.message });
+    return new Response(JSON.stringify({ success: false, error: err.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
