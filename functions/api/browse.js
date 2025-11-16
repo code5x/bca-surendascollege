@@ -1,76 +1,59 @@
+// functions/api/browse.js
+import { fetchCsrfAndCookies, parseBooksHtml, UNIVERSITY_CODE } from "../_indcatutils.js";
+
 export async function onRequestPost(context) {
+  const body = await context.request.json().catch(() => ({}));
+  const type = body.type || "topic";
+  const query = body.query || "";
+  const limits = body.limits || "20";
+  const cPageNo = body.cPageNo || "";
+
+  const fieldMap = {
+    author: "author",
+    subject: "topic",
+    year: "publishDate",
+    publisher: "publisher",
+    place: "place_text",
+    catalogue: "catalogue",
+  };
+  const field = fieldMap[type] || "topic";
+
   try {
-    const body = await context.request.json();
-    const { field, query } = body;
+    const { csrf, cookie } = await fetchCsrfAndCookies();
 
-    const url = `https://sdcopac.informindia.co.in/cgi-bin/koha/opac-search.pl?idx=${field}&q=${encodeURIComponent(query)}`;
+    const payload = new URLSearchParams();
+    payload.append("csrf_test_name", csrf);
+    payload.append("search_type", "simple");
+    payload.append("part_uni", UNIVERSITY_CODE);
+    payload.append("title", query);
+    payload.append("field", field);
+    payload.append("submit", "Search");
+    payload.append("opt", "exact");
+    payload.append("limits", limits);
+    payload.append("cPageNo", cPageNo);
 
-    const resp = await fetch(url);
-    const html = await resp.text();
-
-    let books = [];
-    let current = null;
-
-    const rewriter = new HTMLRewriter()
-      .on(".box1", {
-        element(el) {
-          let hasDetailLink = false;
-
-          el.querySelectorAll("a").forEach(a => {
-            if (a.getAttribute("href")?.includes("getDetails")) {
-              hasDetailLink = true;
-              current = {
-                title: "",
-                url: "",
-                author: "",
-                publication: "",
-                callno: "",
-                holdings: "",
-                doctype: "",
-                availability: ""
-              };
-              current.url = "https://sdcopac.informindia.co.in" + a.getAttribute("href");
-              current.title = a.textContent.trim();
-            }
-          });
-
-          if (!hasDetailLink) return;
-        },
-        text(txt) {
-          if (!current) return;
-
-          let t = txt.text.trim();
-
-          if (t.startsWith("Author")) {
-            current.author = t.replace("Author :", "").trim();
-          }
-          else if (t.startsWith("Publication Details")) {
-            current.publication = t.replace("Publication Details :", "").trim();
-          }
-          else if (t.startsWith("Call Number")) {
-            current.callno = t.replace("Call Number :", "").trim();
-          }
-          else if (t.startsWith("Total Holdings")) {
-            current.holdings = t.replace("Total Holdings :", "").trim();
-          }
-          else if (t.startsWith("Document Type")) {
-            current.doctype = t.replace("Document Type :", "").trim();
-          }
-          else if (t.startsWith("Availability")) {
-            current.availability = t.replace("Availability :", "").trim();
-            books.push(current);
-            current = null;
-          }
-        }
-      });
-
-    await rewriter.transform(new Response(html)).text();
-
-    return new Response(JSON.stringify({ success: true, books }), {
-      headers: { "Content-Type": "application/json" }
+    const res = await fetch("https://indcat.inflibnet.ac.in/index.php/search/checkuniv", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": "Mozilla/5.0",
+        Referer: "https://indcat.inflibnet.ac.in/index.php/main/book",
+        Cookie: cookie || "",
+      },
+      body: payload.toString(),
     });
 
+    const html = await res.text();
+    const { results, stats } = parseBooksHtml(html);
+
+    return new Response(JSON.stringify({ success: true, stats, results, html }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (err) {
-    return new Response(JSON.stringify({ success: false, error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ success: false, error: err.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }

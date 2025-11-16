@@ -1,78 +1,54 @@
-export async function onRequestPost({ request }) {
-  let body;
+// functions/api/search.js
+import { fetchCsrfAndCookies, parseBooksHtml, UNIVERSITY_CODE } from "../_indcatutils.js";
 
-  try {
-    body = await request.json();
-  } catch {
-    return json({
-      success: false,
-      error: "Invalid JSON",
-      debug: { received: null }
-    });
-  }
-
-  // query must exist (even empty string allowed)
-  if (body.query === undefined) {
-    return json({
-      success: false,
-      error: "No query",
-      debug: { received: body }
-    });
-  }
-
-  const query = body.query;
+export async function onRequestPost(context) {
+  const { request, env } = context;
+  const body = await request.json().catch(() => ({}));
+  const query = body.query || "";
   const opt = body.opt || "exact";
   const limits = body.limits || "20";
   const field = body.field || "title";
-  const page = body.cPageNo || "1";
+  const cPageNo = body.cPageNo || "";
 
-  // Build URL
-  const url =
-    `https://indcat.inflibnet.ac.in/index.php/search/searchResult?` +
-    `search_option=${encodeURIComponent(opt)}` +
-    `&search_field=${encodeURIComponent(field)}` +
-    `&search_text=${encodeURIComponent(query)}` +
-    `&page_length=${encodeURIComponent(limits)}` +
-    `&cPageNo=${encodeURIComponent(page)}`;
+  try {
+    // fetch csrf and cookies
+    const { csrf, cookie } = await fetchCsrfAndCookies();
 
-  // Fetch from IndCat
-  const resp = await fetch(url);
-  const html = await resp.text();
+    // build form payload
+    const payload = new URLSearchParams();
+    payload.append("csrf_test_name", csrf);
+    payload.append("search_type", "simple");
+    payload.append("part_uni", UNIVERSITY_CODE);
+    // INFLIBNET expects different fields; to mimic your original server, put query into 'title'
+    payload.append("title", query);
+    payload.append("field", field);
+    payload.append("submit", "Search");
+    payload.append("opt", opt);
+    payload.append("limits", limits);
+    payload.append("cPageNo", cPageNo);
 
-  // Extract stats with HTMLRewriter
-  const stats = {
-    totalRecords: null,
-    uniqueRecords: null,
-    holdings: null
-  };
-
-  const rewriter = new HTMLRewriter()
-    .on(".search_Result_SUM", {
-      text(textChunk) {
-        const t = textChunk.text().replace(/\s+/g, " ");
-
-        const m1 = t.match(/Total\s+(\d+)/i);
-        if (m1) stats.totalRecords = parseInt(m1[1]);
-
-        const m2 = t.match(/Unique\s+(\d+)/i);
-        if (m2) stats.uniqueRecords = parseInt(m2[1]);
-
-        const m3 = t.match(/Holdings\s+(\d+)/i);
-        if (m3) stats.holdings = parseInt(m3[1]);
-      }
+    const res = await fetch("https://indcat.inflibnet.ac.in/index.php/search/checkuniv", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": "Mozilla/5.0",
+        Referer: "https://indcat.inflibnet.ac.in/index.php/main/book",
+        Cookie: cookie || "",
+      },
+      body: payload.toString(),
     });
 
-  const out = await rewriter.transform(new Response(html)).text();
+    const html = await res.text();
+    const { results, stats } = parseBooksHtml(html);
 
-  return json({
-    success: true,
-    html: out,
-    stats
-  });
-}
-
-function json(obj) {
-  return new Response(JSON.stringify(obj), {
-    headers: { "Content-Type": "application/json" }
-  });
+    return new Response(JSON.stringify({ success: true, stats, results, html }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (err) {
+    return new Response(JSON.stringify({ success: false, error: err.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }
