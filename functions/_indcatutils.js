@@ -1,108 +1,90 @@
-export function extractBetween(html, start, end) {
-  const s = html.indexOf(start);
-  if (s === -1) return "";
-  const e = html.indexOf(end, s + start.length);
-  if (e === -1) return "";
-  return html.substring(s + start.length, e).trim();
-}
+import cheerio from "cheerio";
 
-/* ------------------ PARSE SEARCH/BROWSE RESULTS ------------------ */
+export const UNIVERSITY_CODE = "SUDC_781102";
 
+// ------------------------- PARSE SEARCH/BROWSE -----------------------------
 export function parseBooks(html) {
+  const $ = cheerio.load(html);
   const results = [];
   const stats = {};
 
-  const uniqueMatch = html.match(/Unique\s*Records\s*:\s*(\d+)/i);
-  const holdingsMatch = html.match(/Holdings\s*:\s*(\d+)/i);
-  const totalMatch = html.match(/Total\s+(\d+)\s+Records\s+found/i);
-
-  if (uniqueMatch) stats.uniqueRecords = uniqueMatch[1];
-  if (holdingsMatch) stats.holdings = holdingsMatch[1];
+  // Stats
+  const text = $("body").text();
+  const totalMatch = text.match(/Total\s+(\d+)\s+Records\s+found/i);
   if (totalMatch) stats.totalRecords = parseInt(totalMatch[1]);
 
-  const boxes = html.split('<div class="box1"');
+  // Record cards
+  $(".box1").each((_, card) => {
+    const a = $(card).find("a[href*='book_search?getDetails']").first();
+    if (!a.length) return;
 
-  for (let i = 1; i < boxes.length; i++) {
-    const block = boxes[i];
+    const title = a.text().trim();
+    const bookUrl = a.attr("href");
 
-    // Title + URL
-    const linkMatch = block.match(/<a[^>]+href="([^"]+)"[^>]*>(.*?)<\/a>/);
-    if (!linkMatch) continue;
-    const bookUrl = linkMatch[1];
-    const rawTitle = linkMatch[2].replace(/<[^>]+>/g, "").trim();
+    // Fix: author is usually inside <p>Author : xyz</p>
+    const pText = $(card).find(".checkbox_bottomText p").text().trim();
+    const authorMatch = pText.match(/Author\s*:\s*(.*)/i);
+    const author = authorMatch ? authorMatch[1].trim() : "";
 
-    // Author
-    const authMatch = block.match(/Author\s*:\s*([^<]+)/i);
-    const author = authMatch ? authMatch[1].trim() : "";
+    // Fix: publisher + year inside <div class="col-md-8">
+    const pubBlock = $(card).find(".checkbox_bottomText .col-md-8").text().trim();
 
-    // Publisher + Year block
-    let pub = "";
+    let publisher = "";
     let year = "";
 
-    const pubMatch = block.match(/<div class="col-md-8">([\s\S]*?)<\/div>/);
-    if (pubMatch) {
-      const txt = pubMatch[1].replace(/<[^>]+>/g, "").trim();
-      const yearMatch = txt.match(/\b(19\d{2}|20\d{2})\b/);
-      if (yearMatch) year = yearMatch[0];
-      pub = txt.replace(year, "").replace(/,\s*$/, "").trim();
+    const yearMatch = pubBlock.match(/\b(19|20)\d{2}\b/);
+    if (yearMatch) year = yearMatch[0];
+
+    if (pubBlock.includes(",")) {
+      const parts = pubBlock.split(",");
+      publisher = parts.slice(0, -1).join(",").trim();
+    } else {
+      publisher = pubBlock;
     }
 
-    results.push({
-      title: rawTitle,
-      author,
-      publisher: pub,
-      year,
-      bookUrl,
-    });
-  }
+    results.push({ title, author, publisher, year, bookUrl });
+  });
 
   return { results, stats };
 }
 
 
-/* ------------------ PARSE BOOK DETAILS PAGE ------------------ */
-
+// ------------------------- PARSE BOOK DETAILS -----------------------------
 export function parseBookDetails(html) {
-  function get(label) {
-    const pattern = new RegExp(`${label}\\s*</td>\\s*<td[^>]*>(.*?)<`, "i");
-    const m = html.match(pattern);
-    return m ? m[1].trim() : "";
-  }
-
+  const $ = cheerio.load(html);
   const book = {};
 
-  // Title
-  const h1Match = html.match(/<h1[^>]*>(.*?)<\/h1>/);
-  book.title = h1Match ? h1Match[1].trim() : get("Title :-");
+  const getVal = (label) =>
+    $(`td.detailpage-title:contains('${label}')`).next("td").text().trim();
 
-  book.author = get("Author :-");
-  book.edition = get("Edition :-");
-  book.isbn = get("ISBN :-");
-  book.publisher = get("Place & Publisher :-");
-  book.year = get("Date of Publication :-");
-  book.pages = get("Pages :-");
-  book.subjects = get("Subject Descriptors:-");
-  book.language = get("Language :-");
-  book.classNo = get("Class no:");
-  book.catalogue = get("Catalogue Agency :-");
+  book.title = $("h1.underline").text().trim() || getVal("Title :-");
+  book.author = getVal("Author :-");
+  book.edition = getVal("Edition :-");
+  book.isbn = getVal("ISBN :-");
+  book.publisher = getVal("Place & Publisher :-");
+  book.year = getVal("Date of Publication :-");
+  book.pages = getVal("Pages :-");
+  book.subjects = getVal("Subject Descriptors:-");
+  book.language = getVal("Language :-");
+  book.classNo = getVal("Class no:");
+  book.catalogue = getVal("Catalogue Agency :-");
 
-  /* ----- Holdings table ----- */
+  // ------- FIXED HOLDINGS PARSER ----------
   const holdings = [];
+  $("table.bookdetail-bottom-table tr").each((i, row) => {
+    if (i === 0) return; // skip header
 
-  const rows = html.split("<tr>");
-  for (let r of rows) {
-    const cols = [...r.matchAll(/<td[^>]*>(.*?)<\/td>/g)].map(m =>
-      m[1].replace(/<[^>]+>/g, "").trim()
-    );
+    const cells = $(row).find("td");
+    if (cells.length < 3) return;
 
-    if (cols.length >= 3 && /^\d+$/.test(cols[0])) {
-      holdings.push({
-        copyNo: cols[0],
-        accession: cols[1],
-        shelving: cols[2],
-      });
-    }
-  }
+    const copyNo = $(cells[0]).text().trim();
+    const accession = $(cells[1]).text().trim();
+    const shelving = $(cells[2]).text().trim();
+
+    if (!copyNo || !accession) return;
+
+    holdings.push({ copyNo, accession, shelving });
+  });
 
   book.holdings = holdings;
 
