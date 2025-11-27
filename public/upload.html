@@ -719,7 +719,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
       console.log("Page shared successfully!");
     } catch (err) {
       console.error("Share failed:", err.message);
-    }                                                                                   
+    }                  
    } else {
     alert("Sharing not supported in this browser.");
   }
@@ -803,7 +803,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
   // limits (use dataset on HTML or fallbacks)
   const RESOURCES_MAX_FILES = dropZone ? parseInt(dropZone.dataset.maxFiles || '20', 10) : 20;
   const RESOURCES_MAX_FILE_SIZE = dropZone ? parseInt(dropZone.dataset.maxFileSize || String(300*1024*1024), 10) : 300*1024*1024;
-  const RESOURCES_MAX_TOTAL = dropZone ? parseInt(dropZone.dataset.maxTotalSize || String(1024*1024*1024), 10) : 1024*1024*1024;
+  const RESOURCES_MAX_TOTAL = dropZone ? parseInt(dropZone.dataset.maxTotalSize || String(500*1024*1024), 10) : 500*1024*1024;
 
   const NOTES_MAX_IMAGES = dropZoneImages ? parseInt(dropZoneImages.dataset.maxImages || '40', 10) : 40;
   const NOTES_MAX_IMAGE_SIZE = dropZoneImages ? parseInt(dropZoneImages.dataset.maxImageSize || String(5*1024*1024), 10) : 5*1024*1024;
