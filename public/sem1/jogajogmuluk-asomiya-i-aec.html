@@ -682,6 +682,19 @@ button:focus-visible {
 </section>
 
 
+<!-- YOUTUBE TUTORIALS -->
+<section class="yt-wrapper doc-section" id="yt-wrapper" data-section="yt">
+  <button class="section-toggle yt-toggle-btn" aria-expanded="false" aria-controls="drawer-yt">
+    YouTube Tutorials Video/Playlist
+  </button>
+
+  <div id="drawer-yt" class="section-drawer yt-drawer" aria-hidden="true">
+    <div class="section-content yt-drawer-inner">
+      <div id="yt-list" class="yt-list"></div>
+    </div>
+  </div>
+</section>
+
 
   <p class="lead"">Note: The above information has been gathered from multiple sources, including user submissions and AI-generated content.
  If you notice any inaccuracies or misinformation, please provide <a href="../feedback.html" style="text-decoration: none;">feedback</a> to help us improve the content.</p>
@@ -1155,13 +1168,7 @@ if (uploadNotes) {
 /* ====== YOUTUBE RENDERING LOGIC (oEmbed) ====== */
 
 const ytItems = [
-  'https://youtube.com/playlist?list=PLxCxO_FWPIhtWs0utLrv-qWIKB_KbC2tS',
-  'https://youtube.com/playlist?list=PLVbRFL6i5RVJIy_M1NKgMoVpDNXiKzDaQ',
-  'https://youtu.be/kYam6NoxbFE',
-  'https://youtube.com/playlist?list=PLxCzCOWd7aiFOet6KEEqDff1aXEGLdUzn',
-  'https://youtube.com/playlist?list=PL3a9YXWgRykP0quKyX4ejYPr6i0Wl6lDx',
-  'https://youtu.be/MUkvVLGz89k',
-  'https://youtube.com/playlist?list=PLqleLpAMfxGCUpDRFUnLKeDrgBsPOwTQK'
+   'https://youtu.be/fZCIwCsf7rs'
 ];
 
 function ytParseUrl(url) {
