@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Study Materials</title>
+  <title>Study Materials - SDC</title>
 
 
 
@@ -61,7 +61,7 @@ body.bg-app::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* 80% black overlay */
+  background: rgba(0, 0, 0, 0.77);
   z-index: -1; /* keeps overlay behind all content */
 }
 
@@ -358,7 +358,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
     try {
       await navigator.share({
         title: document.title,
-        text: "Study Materials ",
+        text: " ",
         url: window.location.href,
       });
       console.log("Page shared successfully!");
