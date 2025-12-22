@@ -340,10 +340,10 @@ label.field:has(#imageDate:valid) .hint {
 .submit-message {
   margin-top:10px;	
   background: transparent;
-  color: #faa2fa;
+  color: #abfaa2;
   font-weight:450;
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 
@@ -1366,7 +1366,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
         progressBytes.textContent = `${formatBytes(sum)} / ${formatBytes(sum)}`;
         setTimeout(hideOverlay, 700);
 
-        submitMessage.style.color = '#faa2fa';
+        submitMessage.style.color = '#abfaa2';
   //      submitMessage.textContent = 'Upload complete. Thank you!';
         submitMessage.textContent = `Resources upload successfully. Thank you ${uploaderName.value.trim() || ''}`;
 

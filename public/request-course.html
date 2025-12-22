@@ -328,7 +328,7 @@ button.submit-btn:disabled {
 </div>
 
 <script>
-/* ================================
+/* ===============================
    ELEMENT REFERENCES
 ================================ */
 const fileInput = document.getElementById('fileInput');
@@ -343,31 +343,30 @@ const semesterInput = document.getElementById('semesterInput');
 const courseInput = document.getElementById('courseInput');
 const paperInput = document.getElementById('paperInput');
 
-/* Overlay elements */
 const uploadOverlay = document.getElementById('uploadOverlay');
 const progressFill = document.getElementById('progressFill');
 const progressPercent = document.getElementById('progressPercent');
 const progressBytes = document.getElementById('progressBytes');
 
-/* ================================
+/* ===============================
    LIMITS
 ================================ */
 const MIN_FILES = 3;
 const MAX_FILES = 20;
-const MAX_EACH_FILE = 300 * 1024 * 1024; // 300 MB
-const MAX_TOTAL_SIZE = 500 * 1024 * 1024; // 500 MB
+const MAX_EACH = 300 * 1024 * 1024;
+const MAX_TOTAL = 500 * 1024 * 1024;
 
-/* ================================
+/* ===============================
    STATE
 ================================ */
 let selectedFiles = [];
 let totalSize = 0;
 
-/* ================================
+/* ===============================
    HELPERS
 ================================ */
 function formatBytes(bytes) {
-  const units = ['B', 'KB', 'MB', 'GB'];
+  const units = ['B','KB','MB','GB'];
   let i = 0;
   while (bytes >= 1024 && i < units.length - 1) {
     bytes /= 1024;
@@ -392,152 +391,158 @@ function updateSummary() {
     !paperInput.value.trim();
 }
 
-/* ================================
+/* ===============================
    FILE RENDER
 ================================ */
-function renderSelectedFiles() {
+function renderFiles() {
   fileListEl.innerHTML = '';
 
-  selectedFiles.forEach((entry) => {
-    const file = entry.file;
-
+  selectedFiles.forEach(entry => {
     const item = document.createElement('div');
     item.className = 'file-item';
-    item.dataset.id = entry.id;
 
     const meta = document.createElement('div');
 
-    const fname = document.createElement('div');
-    fname.className = 'file-name';
-    fname.textContent = file.name;
+    const name = document.createElement('div');
+    name.className = 'file-name';
+    name.textContent = entry.file.name;
 
-    const finfo = document.createElement('div');
-    finfo.className = 'file-info';
-    finfo.textContent =
-      (file.type || 'unknown') + ' • ' + formatBytes(file.size);
+    const info = document.createElement('div');
+    info.className = 'file-info';
+    info.textContent = formatBytes(entry.file.size);
 
-    meta.appendChild(fname);
-    meta.appendChild(finfo);
+    meta.appendChild(name);
+    meta.appendChild(info);
 
-    const removeBtn = document.createElement('button');
-    removeBtn.className = 'file-remove';
-    removeBtn.type = 'button';
-    removeBtn.textContent = 'Remove';
-
-    removeBtn.addEventListener('click', () => {
-      totalSize -= file.size;
+    const remove = document.createElement('button');
+    remove.className = 'file-remove';
+    remove.textContent = 'Remove';
+    remove.onclick = () => {
+      totalSize -= entry.file.size;
       selectedFiles = selectedFiles.filter(f => f.id !== entry.id);
-      renderSelectedFiles();
+      renderFiles();
       updateSummary();
-      showError('');
-    });
+    };
 
     item.appendChild(meta);
-    item.appendChild(removeBtn);
+    item.appendChild(remove);
     fileListEl.appendChild(item);
   });
 }
 
-/* ================================
-   FILE INPUT HANDLER
+/* ===============================
+   FILE INPUT
 ================================ */
 fileInput.addEventListener('change', () => {
   showError('');
 
-  const files = Array.from(fileInput.files);
-
-  for (const file of files) {
+  for (const file of fileInput.files) {
     if (selectedFiles.length >= MAX_FILES) {
-      showError('Maximum 20 files are allowed.');
+      showError('Maximum 20 files allowed.');
       break;
     }
 
-    if (file.size > MAX_EACH_FILE) {
-      showError('One or more files exceed 300 MB.');
+    if (file.size > MAX_EACH) {
+      showError('One file exceeds 300 MB.');
       continue;
     }
 
-    if (totalSize + file.size > MAX_TOTAL_SIZE) {
-      showError('Total file size must not exceed 500 MB.');
+    if (totalSize + file.size > MAX_TOTAL) {
+      showError('Total file size exceeds 500 MB.');
       break;
     }
 
-    selectedFiles.push({
-      id: crypto.randomUUID(),
-      file
-    });
-
+    selectedFiles.push({ id: crypto.randomUUID(), file });
     totalSize += file.size;
   }
 
-  renderSelectedFiles();
+  renderFiles();
   updateSummary();
   fileInput.value = '';
 });
 
-/* ================================
-   FORM INPUT WATCHERS
-================================ */
-[nameInput, semesterInput, courseInput, paperInput].forEach(el => {
-  el.addEventListener('input', updateSummary);
-});
+[nameInput, semesterInput, courseInput, paperInput]
+  .forEach(el => el.addEventListener('input', updateSummary));
 
-/* ================================
-   OVERLAY CONTROL
+/* ===============================
+   OVERLAY
 ================================ */
-function showOverlay(totalBytes) {
+function showOverlay() {
+  uploadOverlay.classList.add('active');
   progressFill.style.width = '0%';
   progressPercent.textContent = '0%';
-  progressBytes.textContent = '0 B / ' + formatBytes(totalBytes);
-
-  uploadOverlay.classList.add('active');
+  progressBytes.textContent = '0 B / ' + formatBytes(totalSize);
 }
 
 function hideOverlay() {
   uploadOverlay.classList.remove('active');
 }
 
-/* ================================
-   SUBMIT HANDLER (FRONTEND DEMO)
+/* ===============================
+   SUBMIT & UPLOAD
 ================================ */
 submitBtn.addEventListener('click', async () => {
   showError('');
 
-  if (selectedFiles.length < MIN_FILES) {
-    showError('Please upload at least 3 files.');
-    return;
+  showOverlay();
+
+  try {
+    /* ---- STEP 1: REQUEST SIGNED URLs ---- */
+    const metaRes = await fetch('/api/request_new_subject', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: nameInput.value.trim(),
+        semester: Number(semesterInput.value),
+        course: courseInput.value,
+        paper: paperInput.value.trim(),
+        filenames: selectedFiles.map(f => f.file.name),
+        sizes: selectedFiles.map(f => f.file.size)
+      })
+    });
+
+    const metaData = await metaRes.json();
+    if (!metaData.ok) throw new Error(metaData.message);
+
+    const uploadUrls = metaData.uploadUrls;
+
+    /* ---- STEP 2: UPLOAD FILES ---- */
+    let uploadedBytes = 0;
+
+    for (let i = 0; i < uploadUrls.length; i++) {
+      const file = selectedFiles[i].file;
+      const url = uploadUrls[i].signedUrl;
+
+      await fetch(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type || 'application/octet-stream' },
+        body: file
+      });
+
+      uploadedBytes += file.size;
+
+      const percent = Math.round((uploadedBytes / totalSize) * 100);
+      progressFill.style.width = percent + '%';
+      progressPercent.textContent = percent + '%';
+      progressBytes.textContent =
+        formatBytes(uploadedBytes) + ' / ' + formatBytes(totalSize);
+    }
+
+    /* ---- DONE ---- */
+    hideOverlay();
+    alert('Upload completed successfully.');
+
+    // Reset form
+    selectedFiles = [];
+    totalSize = 0;
+    renderFiles();
+    updateSummary();
+    fileInput.value = '';
+
+  } catch (err) {
+    hideOverlay();
+    showError(err.message || 'Upload failed.');
   }
-
-  /* Show overlay */
-  showOverlay(totalSize);
-
-  /* Fake progress (for frontend only) */
-  let uploaded = 0;
-  const total = totalSize;
-
-  const timer = setInterval(() => {
-    uploaded += total / 30;
-
-    if (uploaded >= total) {
-      uploaded = total;
-    }
-
-    const percent = Math.round((uploaded / total) * 100);
-
-    progressFill.style.width = percent + '%';
-    progressPercent.textContent = percent + '%';
-    progressBytes.textContent =
-      formatBytes(uploaded) + ' / ' + formatBytes(total);
-
-    if (uploaded >= total) {
-      clearInterval(timer);
-
-      setTimeout(() => {
-        hideOverlay();
-        alert('Frontend validation completed. Ready for backend upload.');
-      }, 500);
-    }
-  }, 120);
 });
 </script>
 
