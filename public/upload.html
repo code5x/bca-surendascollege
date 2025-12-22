@@ -1440,7 +1440,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 
       try {
         showOverlay(sum);
-        const resp = await postMetadata('/api/create_notes_upload', payload);
+        const resp = await postMetadata('/api/create_resource_image_upload', payload);
         if (!resp || !resp.ok || !Array.isArray(resp.uploadUrls) || resp.uploadUrls.length !== renamedFiles.length) {
           throw new Error('Server did not return valid upload URLs for images');
         }
