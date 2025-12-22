@@ -343,7 +343,7 @@ label.field:has(#imageDate:valid) .hint {
   color: #faa2fa;
   font-weight:450;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 
@@ -593,24 +593,38 @@ footer a:hover {
         </div>
       </div>
 
-      <!-- Info form -->
-      <form id="metaForm" class="meta-form">
-        <label class="field">
-          <span class="field-label">Name (optional)</span>
-          <input id="uploaderName" type="text" placeholder="Your name or about yourself..." />
-        </label>
-        <label class="field">
-          <span class="field-label">About files (optional)</span>
-          <textarea id="aboutFiles" rows="2" placeholder="Subject, course, semester..."></textarea>
-        </label>
-        <label class="field">
-          <span class="field-label">Date (optional)</span>
-          <small class="hint" style="display:block; margin:0 0 10px; color:gray; font-size: 0.85rem;">
-            (When file was created or received)
-          </small>
-          <input id="fileDate" type="date" />
-        </label>
-      </form>
+<!-- Info form -->
+<form id="metaForm" class="meta-form">
+
+  <label class="field">
+    <span class="field-label">Name</span>
+    <input
+      id="uploaderName"
+      type="text"
+      placeholder="Your Name..."
+      required
+    />
+  </label>
+
+  <label class="field">
+    <span class="field-label">About files</span>
+    <textarea
+      id="aboutFiles"
+      rows="2"
+      placeholder="Semester, Course, Subject"
+      required
+    ></textarea>
+  </label>
+
+  <label class="field">
+    <span class="field-label">Date (optional)</span>
+    <small class="hint" style="display:block; margin:0 0 10px; color:gray; font-size: 0.85rem;">
+      (When file was created or received)
+    </small>
+    <input id="fileDate" type="date" />
+  </label>
+
+</form>
 
       <div class="actions">
         <button id="submitBtn" type="button" class="btn" disabled>Submit</button>
@@ -653,24 +667,38 @@ footer a:hover {
         </div>
       </div>
 
-      <!-- Info form for class notes -->
-      <form id="notesMetaForm" class="meta-form">
-        <label class="field">
-          <span class="field-label">Name (optional)</span>
-          <input id="uploaderNameNotes" type="text" placeholder="Your name or about yourself..." />
-        </label>
-        <label class="field">
-          <span class="field-label">About files (optional)</span>
-          <textarea id="aboutImages" rows="2" placeholder="Subject, course, semester..."></textarea>
-        </label>
-        <label class="field">
-          <span class="field-label">Date (optional)</span>
-          <small class="hint" style="display:block; margin:0 0 10px; color:gray; font-size: 0.85rem;">
-            (When file was created or received)
-          </small>
-          <input id="imageDate" type="date" />
-        </label>
-      </form>
+<!-- Info form for class notes -->
+<form id="notesMetaForm" class="meta-form">
+
+  <label class="field">
+    <span class="field-label">Name</span>
+    <input
+      id="uploaderNameNotes"
+      type="text"
+      placeholder="Your Name..."
+      required
+    />
+  </label>
+
+  <label class="field">
+    <span class="field-label">About files</span>
+    <textarea
+      id="aboutImages"
+      rows="2"
+      placeholder="Semester, Course, Subject"
+      required
+    ></textarea>
+  </label>
+
+  <label class="field">
+    <span class="field-label">Date (optional)</span>
+    <small class="hint" style="display:block; margin:0 0 10px; color:gray; font-size: 0.85rem;">
+      (When file was created or received)
+    </small>
+    <input id="imageDate" type="date" />
+  </label>
+
+</form>
 
       <div class="actions">
         <button id="submitImagesBtn" type="button" class="btn" disabled>Submit</button>
@@ -1280,6 +1308,18 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
     submitBtn.addEventListener('click', async function () {
       submitBtn.disabled = true;
       submitMessage.textContent = '';
+
+     // ✅ NEW VALIDATION (Name + About)
+    const nameValue = uploaderName.value.trim();
+    const aboutValue = aboutFiles.value.trim();
+
+    if (nameValue === '' || aboutValue === '') {
+      submitMessage.textContent = 'Please fill Name and About files.';
+      submitMessage.style.color = 'red';
+      submitBtn.disabled = false;
+      return;
+    }
+
       showFileError('');
       if (selectedFiles.length === 0) {
         showFileError('Please select files to upload.');
@@ -1360,6 +1400,19 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
     submitImagesBtn.addEventListener('click', async function () {
       submitImagesBtn.disabled = true;
       if (submitImagesMessage) { submitImagesMessage.style.display = 'none'; submitImagesMessage.textContent = ''; }
+
+          // ✅ NEW VALIDATION (Name + About)
+    const nameValue = uploaderNameNotes.value.trim();
+    const aboutValue = aboutImages.value.trim();
+
+    if (nameValue === '' || aboutValue === '') {
+      submitImagesMessage.textContent = 'Please fill Name and About files.';
+      submitImagesMessage.style.color = 'red';
+      submitImagesMessage.style.display = 'block';
+      submitImagesBtn.disabled = false;
+      return;
+    }
+
       showImageError('');
       if (selectedImages.length === 0) {
         showImageError('Please select images to upload.');

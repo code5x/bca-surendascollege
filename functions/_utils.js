@@ -33,7 +33,7 @@ export async function countTodayUploads(supabase, bucketName) {
   if (t2.data) for (const r of t2.data) if (Array.isArray(r.file_link)) total += r.file_link.length
 
   // class_notes -> file_link (array)
-  const t3 = await supabase.from('class_notes').select('file_link,created_at').gte('created_at', since)
+  const t3 = await supabase.from('study_materials_image').select('file_link,created_at').gte('created_at', since)
   if (t3.error) throw t3.error
   if (t3.data) for (const r of t3.data) if (Array.isArray(r.file_link)) total += r.file_link.length
 

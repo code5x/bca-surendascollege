@@ -23,9 +23,9 @@ export async function onRequestPost({ request, env }) {
       }
     }
 
-    const folder = `upload_notes/${timestampFolder()}/`
+    const folder = `upload_resources_image/${timestampFolder()}/`
     const file_links = filenames.map(f => folder + sanitizeFilename(f))
-    const { data: insertData, error: insertError } = await supabase.from('class_notes').insert({
+    const { data: insertData, error: insertError } = await supabase.from('study_materials_image').insert({
       name, about_notes, date, file_link: file_links, created_at: new Date().toISOString()
     }).select().single()
     if (insertError) throw insertError

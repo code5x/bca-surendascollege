@@ -29,7 +29,7 @@ export async function onRequest({ request, env }) {
     }
 
     const safeName = sanitizeFilename(filename)
-    const filePath = `feedback_screenshots/${safeName}`
+    const filePath = `feedback_images/${safeName}`
 
     const { data, error } = await supabase.storage.from(env.BUCKET_NAME).createSignedUploadUrl(filePath, 3600)
     if (error) throw error

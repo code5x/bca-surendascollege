@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Request New Subject</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ---------------- Base / Mobile First ---------------- */
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f6fb;
+  color: #333;
+}
+
+.container {
+  max-width: 100%;
+  padding: 16px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+h1 {
+  font-size: 24px;
+  margin-top: 0;
+}
+
+p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+select:disabled {
+  background: #eee;
+}
+
+/* ---------------- File Upload ---------------- */
+
+.file-area {
+  border: 2px dashed #4a6cff;
+  border-radius: 6px;
+  padding: 18px;
+  background: #f9fbff;
+}
+
+.drop-zone {
+  display: block;
+  border: 2px dashed #8a3ffc;
+  border-radius: 6px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.drop-text {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.drop-sub {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.summary {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.file-error {
+  margin-top: 8px;
+  color: #d93025;
+  font-size: 14px;
+}
+
+.file-list {
+  margin-top: 14px;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.file-name {
+  font-size: 14px;
+  font-weight: bold;
+  word-break: break-word;
+}
+
+.file-info {
+  font-size: 12px;
+  color: #666;
+}
+
+.file-remove {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* ---------------- Submit ---------------- */
+
+button.submit-btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background: #4a6cff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.submit-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* ---------------- Upload Overlay ---------------- */
+
+.upload-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  display: none; /* 🔴 hide by default */
+}
+
+.upload-overlay.active {
+  display: flex; /* ✅ show only when needed */
+}
+
+.upload-panel {
+  background: #fff;
+  width: 90%;
+  max-width: 380px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 18px;
+  background: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #4a6cff;
+}
+
+/* ---------------- Desktop ---------------- */
+
+@media (min-width: 769px) {
+  .container {
+    max-width: 900px;
+    margin: 30px auto;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <h1>Request New Subject</h1>
+
+    <p>
+      If a subject or paper is not available on this website, you can request it here.
+      Please provide correct details and upload useful study materials.
+      This helps us prepare complete course content for students.
+    </p>
+
+    <!-- Name -->
+    <div class="form-group">
+      <label>Enter Your Name</label>
+      <input type="text" id="nameInput" required>
+    </div>
+
+    <!-- Semester -->
+    <div class="form-group">
+      <label>Select Semester</label>
+      <select id="semesterInput" required>
+        <option value="" disabled selected>Select semester</option>
+        <option value="1">Semester 1</option>
+        <option value="2" disabled>Semester 2</option>
+        <option value="3" disabled>Semester 3</option>
+        <option value="4" disabled>Semester 4</option>
+        <option value="5" disabled>Semester 5</option>
+        <option value="6" disabled>Semester 6</option>
+        <option value="7" disabled>Semester 7</option>
+        <option value="8" disabled>Semester 8</option>
+      </select>
+    </div>
+
+    <!-- Course -->
+    <div class="form-group">
+      <label>Select Course</label>
+      <select id="courseInput" required>
+        <option value="" disabled selected>Select course</option>
+
+        <optgroup label="Core Courses">
+          <option value="SDC_BSc">Bachelor of Science (SDC-BSc)</option>
+          <option value="SDC_BA">Bachelor of Arts (SDC-BA)</option>
+          <option value="SDC_BCA">Bachelor of Computer Application (SDC-BCA)</option>
+          <option value="SDC_BVoc_MLT">Bachelor of Vocation (SDC-BVoc-MLT)</option>
+        </optgroup>
+
+        <optgroup label="Common Courses">
+          <option value="SDC_SEC">Skill Enhancement Course (SDC-SEC)</option>
+          <option value="SDC_MDC">Multi-Disciplinary Course (SDC-MDC)</option>
+          <option value="SDC_VAC">Value Added Course (SDC-VAC)</option>
+          <option value="SDC_AEC">Ability Enhancement Course (SDC-AEC)</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <!-- Paper -->
+    <div class="form-group">
+      <label>Enter The Paper Name</label>
+      <input type="text" id="paperInput" required>
+    </div>
+
+    <p>
+      Upload at least three files related to this paper.
+      You may include notes, eBooks, syllabus, question papers,
+      assignments, or any useful references.
+    </p>
+
+    <!-- File Upload -->
+    <div class="file-area">
+      <input id="fileInput" type="file" hidden multiple>
+
+      <label for="fileInput" class="drop-zone">
+        <div class="drop-text">Click to select files</div>
+        <div class="drop-sub">Or drag and drop files</div>
+        <div class="drop-sub">Minimum 3 • Maximum 20 files</div>
+      </label>
+
+      <div class="summary">
+        Selected: <span id="fileCount">0</span> files ·
+        Total size: <span id="fileSize">0 B</span>
+      </div>
+
+      <div id="fileError" class="file-error"></div>
+
+      <div id="fileList" class="file-list"></div>
+    </div>
+
+    <button id="submitBtn" class="submit-btn" disabled>
+      Submit Request
+    </button>
+
+  </div>
+</div>
+
+<!-- Upload Overlay (hidden by default) -->
+<div id="uploadOverlay" class="upload-overlay" hidden>
+  <div class="upload-panel">
+    <h3>Uploading... please wait...</h3>
+
+    <div class="progress-bar">
+      <div id="progressFill" class="progress-fill"></div>
+    </div>
+
+    <div id="progressPercent">0%</div>
+    <div id="progressBytes">0 B / 0 B</div>
+
+    <p>Do not close this tab while upload is in progress.</p>
+  </div>
+</div>
+
+<script>
+/* ================================
+   ELEMENT REFERENCES
+================================ */
+const fileInput = document.getElementById('fileInput');
+const fileListEl = document.getElementById('fileList');
+const fileCountEl = document.getElementById('fileCount');
+const fileSizeEl = document.getElementById('fileSize');
+const fileErrorEl = document.getElementById('fileError');
+const submitBtn = document.getElementById('submitBtn');
+
+const nameInput = document.getElementById('nameInput');
+const semesterInput = document.getElementById('semesterInput');
+const courseInput = document.getElementById('courseInput');
+const paperInput = document.getElementById('paperInput');
+
+/* Overlay elements */
+const uploadOverlay = document.getElementById('uploadOverlay');
+const progressFill = document.getElementById('progressFill');
+const progressPercent = document.getElementById('progressPercent');
+const progressBytes = document.getElementById('progressBytes');
+
+/* ================================
+   LIMITS
+================================ */
+const MIN_FILES = 3;
+const MAX_FILES = 20;
+const MAX_EACH_FILE = 300 * 1024 * 1024; // 300 MB
+const MAX_TOTAL_SIZE = 500 * 1024 * 1024; // 500 MB
+
+/* ================================
+   STATE
+================================ */
+let selectedFiles = [];
+let totalSize = 0;
+
+/* ================================
+   HELPERS
+================================ */
+function formatBytes(bytes) {
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let i = 0;
+  while (bytes >= 1024 && i < units.length - 1) {
+    bytes /= 1024;
+    i++;
+  }
+  return bytes.toFixed(2) + ' ' + units[i];
+}
+
+function showError(msg) {
+  fileErrorEl.textContent = msg || '';
+}
+
+function updateSummary() {
+  fileCountEl.textContent = selectedFiles.length;
+  fileSizeEl.textContent = formatBytes(totalSize);
+
+  submitBtn.disabled =
+    selectedFiles.length < MIN_FILES ||
+    !nameInput.value.trim() ||
+    !semesterInput.value ||
+    !courseInput.value ||
+    !paperInput.value.trim();
+}
+
+/* ================================
+   FILE RENDER
+================================ */
+function renderSelectedFiles() {
+  fileListEl.innerHTML = '';
+
+  selectedFiles.forEach((entry) => {
+    const file = entry.file;
+
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.dataset.id = entry.id;
+
+    const meta = document.createElement('div');
+
+    const fname = document.createElement('div');
+    fname.className = 'file-name';
+    fname.textContent = file.name;
+
+    const finfo = document.createElement('div');
+    finfo.className = 'file-info';
+    finfo.textContent =
+      (file.type || 'unknown') + ' • ' + formatBytes(file.size);
+
+    meta.appendChild(fname);
+    meta.appendChild(finfo);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'file-remove';
+    removeBtn.type = 'button';
+    removeBtn.textContent = 'Remove';
+
+    removeBtn.addEventListener('click', () => {
+      totalSize -= file.size;
+      selectedFiles = selectedFiles.filter(f => f.id !== entry.id);
+      renderSelectedFiles();
+      updateSummary();
+      showError('');
+    });
+
+    item.appendChild(meta);
+    item.appendChild(removeBtn);
+    fileListEl.appendChild(item);
+  });
+}
+
+/* ================================
+   FILE INPUT HANDLER
+================================ */
+fileInput.addEventListener('change', () => {
+  showError('');
+
+  const files = Array.from(fileInput.files);
+
+  for (const file of files) {
+    if (selectedFiles.length >= MAX_FILES) {
+      showError('Maximum 20 files are allowed.');
+      break;
+    }
+
+    if (file.size > MAX_EACH_FILE) {
+      showError('One or more files exceed 300 MB.');
+      continue;
+    }
+
+    if (totalSize + file.size > MAX_TOTAL_SIZE) {
+      showError('Total file size must not exceed 500 MB.');
+      break;
+    }
+
+    selectedFiles.push({
+      id: crypto.randomUUID(),
+      file
+    });
+
+    totalSize += file.size;
+  }
+
+  renderSelectedFiles();
+  updateSummary();
+  fileInput.value = '';
+});
+
+/* ================================
+   FORM INPUT WATCHERS
+================================ */
+[nameInput, semesterInput, courseInput, paperInput].forEach(el => {
+  el.addEventListener('input', updateSummary);
+});
+
+/* ================================
+   OVERLAY CONTROL
+================================ */
+function showOverlay(totalBytes) {
+  progressFill.style.width = '0%';
+  progressPercent.textContent = '0%';
+  progressBytes.textContent = '0 B / ' + formatBytes(totalBytes);
+
+  uploadOverlay.classList.add('active');
+}
+
+function hideOverlay() {
+  uploadOverlay.classList.remove('active');
+}
+
+/* ================================
+   SUBMIT HANDLER (FRONTEND DEMO)
+================================ */
+submitBtn.addEventListener('click', async () => {
+  showError('');
+
+  if (selectedFiles.length < MIN_FILES) {
+    showError('Please upload at least 3 files.');
+    return;
+  }
+
+  /* Show overlay */
+  showOverlay(totalSize);
+
+  /* Fake progress (for frontend only) */
+  let uploaded = 0;
+  const total = totalSize;
+
+  const timer = setInterval(() => {
+    uploaded += total / 30;
+
+    if (uploaded >= total) {
+      uploaded = total;
+    }
+
+    const percent = Math.round((uploaded / total) * 100);
+
+    progressFill.style.width = percent + '%';
+    progressPercent.textContent = percent + '%';
+    progressBytes.textContent =
+      formatBytes(uploaded) + ' / ' + formatBytes(total);
+
+    if (uploaded >= total) {
+      clearInterval(timer);
+
+      setTimeout(() => {
+        hideOverlay();
+        alert('Frontend validation completed. Ready for backend upload.');
+      }, 500);
+    }
+  }, 120);
+});
+</script>
+
+
+</body>
+</html>
