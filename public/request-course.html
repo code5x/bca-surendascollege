@@ -1,64 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<title>Request New Subject</title>
+<title>Request New Subject (Paper)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 /* ---------------- Base / Mobile First ---------------- */
 
-* {
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+/* Always dark */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ===== RESET / BASE FIX ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color:#e6e9ef;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+body.bg-app {
   margin: 0;
-  background: #f4f6fb;
-  color: #333;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  color: #e6e9ef;
+
+  /* Default desktop background */
+  background: url("/src/background.webp") no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
 }
 
+/* Mobile background */
+@media (max-width: 768px) {
+  body.bg-app {
+    background: url("/src/background-mobile.webp") no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+
+/* Black overlay */
+body.bg-app::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.77);
+  z-index: -1; /* keeps overlay behind all content */
+}
+
+/* Optional wrapper padding for content */
+.overlay {
+  padding: 2rem;
+}
+
+/* container */
 .container {
-  max-width: 100%;
-  padding: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 70px 5px;
+  box-sizing: border-box;
 }
 
-.card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+@media (min-width: 769px) { .container { padding: 35px; }}
+
+/* Header */
+
+header {
+  background: #0b2a6b;
+  padding: 4px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;   /* stays visible */
+  top: 0;
+  left: 0;
+  width: 100%;       /* full width */
+  z-index: 1000;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  animation: slideDown 1s ease;
 }
 
-h1 {
-  font-size: 24px;
-  margin-top: 0;
+
+/* Navigation */
+header nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto; /* enable horizontal scroll */
+  white-space: nowrap; /* keep links in a single line */
+  scrollbar-width: none; /* hide scrollbar (Firefox) */
 }
 
-p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #555;
+header nav::-webkit-scrollbar {
+  display: none; /* hide scrollbar (Chrome, Edge, Safari) */
 }
+
+header nav a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 450;
+  padding: 6px 13px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  background: transparent;
+  flex-shrink: 0; /* prevent shrinking of links */
+  border: 1px solid #6974c7;
+}
+
+
+header nav a:hover {
+  background: #0b5ed7;
+}
+
+
+@media (min-width: 769px) {
+  header nav a {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 13px;
+  }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.4rem;
+  color: white;
+}
+
+.container p {
+  color: #cfd3fa;
+  margin: 25px 13px;
+  line-height: 1.5;
+  text-align: justify;
+  font-size: 0.98rem;
+}
+
+
 
 .form-group {
   margin-bottom: 18px;
 }
+.form-group input {
+ border:1px solid #84b0a9;
+}
+.form-group input:focus {
+ outline: none; 
+ transform: scale(1.01);
+}
 
 label {
   display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
-  font-size: 14px;
+  margin-bottom: 7px;
+  font-weight: 480;
+  font-size: 16px;
 }
 
 input[type="text"],
 select {
   width: 100%;
   padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border-radius: 10px;
   font-size: 14px;
 }
 
@@ -66,73 +189,96 @@ select:disabled {
   background: #eee;
 }
 
+.inputDetail {
+ border-radius: 10px;
+ background: rgba(14, 13, 33, 0.9);
+ padding: 15px;
+ border: 2px solid #23524c;
+ margin: auto 5px;
+}
+
+
 /* ---------------- File Upload ---------------- */
 
 .file-area {
-  border: 2px dashed #4a6cff;
-  border-radius: 6px;
-  padding: 18px;
-  background: #f9fbff;
+  border: 1px solid #23524c;
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(14, 13, 33, 0.9);
+  margin: auto 12px;
 }
 
 .drop-zone {
   display: block;
-  border: 2px dashed #8a3ffc;
-  border-radius: 6px;
-  padding: 20px;
+  border: 3px dashed #84b0a9;
+  border-radius: 10px;
+  padding: 20px 10px;
   text-align: center;
   cursor: pointer;
+  background: #27365e;
+  margin: 20px 25px 10px;
 }
 
 .drop-text {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 450;
+  color: white;
 }
 
 .drop-sub {
-  font-size: 13px;
-  color: #666;
-  margin-top: 4px;
+  font-size: 14px;
+  color: #cfd3fa;;
+  margin-top: 8px;
+  font-weight: 400;
 }
 
 .summary {
   margin-top: 10px;
   font-size: 14px;
+  color: #65eb96;
+  text-align: center;
+  display: none;
 }
 
 .file-error {
   margin-top: 8px;
   color: #d93025;
-  font-size: 14px;
+  font-size: 17px;
+  text-align: center;
 }
 
 .file-list {
   margin-top: 14px;
 }
 
+
 .file-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ddd;
   padding: 8px;
   border-radius: 5px;
   margin-bottom: 8px;
+  background: #154a29;
 }
 
 .file-name {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 450;
   word-break: break-word;
 }
 
 .file-info {
-  font-size: 12px;
-  color: #666;
+  font-size: 13px;
+  color: #bbbbbb;
+  margin-top: 5px;
+  word-break: break-word;
 }
 
+
+
 .file-remove {
-  background: #e53935;
+  background: #572919;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -144,19 +290,21 @@ select:disabled {
 /* ---------------- Submit ---------------- */
 
 button.submit-btn {
-  width: 100%;
-  margin-top: 22px;
-  padding: 12px;
+  width: 40%;
+  margin: 22px auto;
+  display: block;
+  padding: 10px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 16px;
   background: #4a6cff;
   color: #fff;
   cursor: pointer;
+  font-weight: bold;
 }
 
 button.submit-btn:disabled {
-  background: #aaa;
+  background: #526a87;
   cursor: not-allowed;
 }
 
@@ -165,62 +313,176 @@ button.submit-btn:disabled {
 .upload-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.4);
   align-items: center;
   justify-content: center;
   z-index: 9999;
   display: none; /* 🔴 hide by default */
 }
 
+.upload-overlay p { margin-bottom: 15px; color:#cfd3fa; }
+.upload-overlay h3 { margin: 10px auto; color: #f7c2d9; }
+
 .upload-overlay.active {
   display: flex; /* ✅ show only when needed */
 }
 
 .upload-panel {
-  background: #fff;
+  background: #221f4d;
   width: 90%;
-  max-width: 380px;
-  padding: 20px;
-  border-radius: 8px;
+  max-width: 600px;
+  padding: 24px;
+  border-radius: 12px;
   text-align: center;
 }
 
 .progress-bar {
   width: 100%;
-  height: 18px;
-  background: #ddd;
-  border-radius: 10px;
+  height: 14px;
+  background: #999;
+  border-radius: 8px;
   overflow: hidden;
-  margin: 10px 0;
+  margin: 20px auto;
+  max-width: 640px;
 }
 
 .progress-fill {
   height: 100%;
   width: 0%;
-  background: #4a6cff;
+  background: #1761b0;
+  height:14px;
+  transition: width 0.2s linear;
 }
 
 /* ---------------- Desktop ---------------- */
 
-@media (min-width: 769px) {
-  .container {
-    max-width: 900px;
-    margin: 30px auto;
-  }
 
-  h1 {
-    font-size: 28px;
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+  font-size: 18px;
+}
+
+.dropdown-selected {
+  background: #404040;
+  padding: 10px;
+  border: 1px solid #84b0a9;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.dropdown-options {
+  display: none;
+  position: absolute;
+  width: 100%;
+  background: #404040;
+  border-radius: 10px;
+  margin-top: 5px;
+  max-height: 260px;
+  overflow-y: auto;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  z-index: 999;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.dropdown-options li {
+  position: relative;
+  padding: 12px 10px 12px 26px;
+  cursor: pointer;
+  border-bottom: 1px solid #808080;
+}
+
+.dropdown-options li::before {
+  content: "⦿";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+}
+
+.dropdown-options li:hover {
+  background: #303030;
+}
+
+.dropdown-options li.disabled {
+  color: #999;
+  background: #404040;
+  pointer-events: none;
+}
+
+.dropdown-options li.optgroup {
+  font-weight: bold;
+  background: #404040;
+  cursor: default;
+  padding-left: 10px;
+}
+
+.dropdown-options li.optgroup::before {
+  content: "";
+}
+
+@media (max-width: 768px) {
+  .dropdown-selected,
+  .dropdown-options li {
+    font-size: 15px;
   }
 }
+
+
+
+
+footer {
+    background: #111;
+    text-align: center;
+    padding: 1px;
+/*    margin-top: 5px;  */
+    color: #aaa;                                                       
+    font-size: 0.85rem;
+ /*   font-size: clamp(0.85rem, 1vw, 2rem);  */
+    border-top: 1px solid #333;                                        
+    border-radius: 20px 20px 0 0;
+    margin-top: auto;
+}
+
+@media (min-width: 769px) {                                            
+ footer {
+    font-size: 1.25rem;
+  }
+}
+
+
+footer a {
+    color: #f7c2d9;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;                                      
+}
+
+
 </style>
 </head>
 
-<body>
+<header>
+    <nav>
+        <a href="index.html">🏠 Home</a>
+        <a href="#" id="shareBtn">🔗 Share</a>
+        <a href="study-material.html">📚 Available papers</a>
+        <a href="library-opac.html">🏛️ Library OPAC</a>
+        <a href="links.html">🌐 External Source</a>
+        <a href="about.html">ℹ️ About</a>
+        <a href="feedback.html">💬 Feedback</a>
+    </nav>
+</header>
 
-<div class="container">
-  <div class="card">
+<body class="bg-app">
+  <main class="container" id="main">
 
-    <h1>Request New Subject</h1>
+    <h2>Request New Subject</h2>
 
     <p>
       If a subject or paper is not available on this website, you can request it here.
@@ -228,17 +490,18 @@ button.submit-btn:disabled {
       This helps us prepare complete course content for students.
     </p>
 
+<div class="inputDetail">
     <!-- Name -->
     <div class="form-group">
       <label>Enter Your Name</label>
-      <input type="text" id="nameInput" required>
+      <input type="text" id="nameInput" placeholder="Your Name..." required>
     </div>
 
     <!-- Semester -->
     <div class="form-group">
       <label>Select Semester</label>
-      <select id="semesterInput" required>
-        <option value="" disabled selected>Select semester</option>
+      <select id="semesterInput" hidden required>
+        <option value="" disabled selected>Select Semester</option>
         <option value="1">Semester 1</option>
         <option value="2" disabled>Semester 2</option>
         <option value="3" disabled>Semester 3</option>
@@ -248,35 +511,74 @@ button.submit-btn:disabled {
         <option value="7" disabled>Semester 7</option>
         <option value="8" disabled>Semester 8</option>
       </select>
+
+
+<div class="custom-dropdown" data-select="semesterInput">
+  <div class="dropdown-selected">Select Semester</div>
+  <ul class="dropdown-options">
+    <li data-value="1">Semester 1</li>
+    <li class="disabled">Semester 2</li>
+    <li class="disabled">Semester 3</li>
+    <li class="disabled">Semester 4</li>
+    <li class="disabled">Semester 5</li>
+    <li class="disabled">Semester 6</li>
+    <li class="disabled">Semester 7</li>
+    <li class="disabled">Semester 8</li>
+  </ul>
+</div>
+
+
     </div>
 
     <!-- Course -->
     <div class="form-group">
       <label>Select Course</label>
-      <select id="courseInput" required>
-        <option value="" disabled selected>Select course</option>
+      <select id="courseInput" hidden required>
+        <option value="" disabled selected>Select Course</option>
 
         <optgroup label="Core Courses">
-          <option value="SDC_BSc">Bachelor of Science (SDC-BSc)</option>
-          <option value="SDC_BA">Bachelor of Arts (SDC-BA)</option>
-          <option value="SDC_BCA">Bachelor of Computer Application (SDC-BCA)</option>
-          <option value="SDC_BVoc_MLT">Bachelor of Vocation (SDC-BVoc-MLT)</option>
+          <option value="SDC_BSc">Bachelor of Science (BSc)</option>
+          <option value="SDC_BA">Bachelor of Arts (BA)</option>
+          <option value="SDC_BCA">Bachelor of Computer Application (BCA)</option>
+          <option value="SDC_BVoc_MLT">Bachelor of Vocation (BVoc MLT)</option>
         </optgroup>
 
         <optgroup label="Common Courses">
-          <option value="SDC_SEC">Skill Enhancement Course (SDC-SEC)</option>
-          <option value="SDC_MDC">Multi-Disciplinary Course (SDC-MDC)</option>
-          <option value="SDC_VAC">Value Added Course (SDC-VAC)</option>
-          <option value="SDC_AEC">Ability Enhancement Course (SDC-AEC)</option>
+          <option value="SDC_SEC">Skill Enhancement Course (SEC)</option>
+          <option value="SDC_MDC">Multi-Disciplinary Course (MDC)</option>
+          <option value="SDC_VAC">Value Added Course (VAC)</option>
+          <option value="SDC_AEC">Ability Enhancement Course (AEC)</option>
         </optgroup>
       </select>
-    </div>
+
+
+<div class="custom-dropdown" data-select="courseInput">
+  <div class="dropdown-selected">Select Course</div>
+  <ul class="dropdown-options">
+
+    <li class="optgroup">Core Courses:</li>
+    <li data-value="SDC_BSc">Bachelor of Science (BSc)</li>
+    <li data-value="SDC_BA">Bachelor of Arts (BA)</li>
+    <li data-value="SDC_BCA">Bachelor of Computer Application (BCA)</li>
+    <li data-value="SDC_BVoc_MLT">Bachelor of Vocation (BVoc MLT)</li>
+
+    <li class="optgroup">Common Courses:</li>
+    <li data-value="SDC_SEC">Skill Enhancement Course (SEC)</li>
+    <li data-value="SDC_MDC">Multi-Disciplinary Course (MDC)</li>
+    <li data-value="SDC_VAC">Value Added Course (VAC)</li>
+    <li data-value="SDC_AEC">Ability Enhancement Course (AEC)</li>
+
+  </ul>
+</div>
+
+</div>
 
     <!-- Paper -->
     <div class="form-group">
       <label>Enter The Paper Name</label>
-      <input type="text" id="paperInput" required>
+      <input type="text" id="paperInput" placeholder="Subject or Paper Name..." required>
     </div>
+</div>
 
     <p>
       Upload at least three files related to this paper.
@@ -289,12 +591,12 @@ button.submit-btn:disabled {
       <input id="fileInput" type="file" hidden multiple>
 
       <label for="fileInput" class="drop-zone">
-        <div class="drop-text">Click to select files</div>
-        <div class="drop-sub">Or drag and drop files</div>
+        <div class="drop-text">Click here to select files</div>
+        <div class="drop-sub">Or drag and drop files each 300 MB</div>
         <div class="drop-sub">Minimum 3 • Maximum 20 files</div>
       </label>
 
-      <div class="summary">
+      <div class="summary"  id="showSummary">
         Selected: <span id="fileCount">0</span> files ·
         Total size: <span id="fileSize">0 B</span>
       </div>
@@ -305,13 +607,17 @@ button.submit-btn:disabled {
     </div>
 
     <button id="submitBtn" class="submit-btn" disabled>
-      Submit Request
+      Submit
     </button>
 
-    <div id="formMessage" style="margin-top:12px;font-size:14px;"></div>
+    <div id="formMessage" style="margin-top:15px;font-size:17px; text-align:center;"></div>
 
-  </div>
-</div>
+</main>
+
+<footer>
+    <p>© 2025 Student Community Portal - Suren Das College<br>
+       All Rights Reserved. <a href="about.html">  About Us</a></p>
+</footer>
 
 <!-- Upload Overlay (hidden by default) -->
 <div id="uploadOverlay" class="upload-overlay" hidden>
@@ -322,12 +628,73 @@ button.submit-btn:disabled {
       <div id="progressFill" class="progress-fill"></div>
     </div>
 
+ <div style="display:flex; justify-content:space-between; margin:15px auto; color:#e6e6e6;">
     <div id="progressPercent">0%</div>
     <div id="progressBytes">0 B / 0 B</div>
+ </div>
 
     <p>Do not close this tab while upload is in progress.</p>
   </div>
 </div>
+
+
+
+<script>
+  document.querySelectorAll(".custom-dropdown").forEach(dropdown => {
+
+    const selected = dropdown.querySelector(".dropdown-selected");
+    const options = dropdown.querySelector(".dropdown-options");
+    const selectId = dropdown.getAttribute("data-select");
+    const hiddenSelect = document.getElementById(selectId);
+
+    selected.addEventListener("click", () => {
+      document.querySelectorAll(".dropdown-options").forEach(o => {
+        if (o !== options) o.style.display = "none";
+      });
+      options.style.display = options.style.display === "block" ? "none" : "block";
+    });
+
+    options.querySelectorAll("li[data-value]").forEach(option => {
+      option.addEventListener("click", () => {
+        const value = option.getAttribute("data-value");
+        hiddenSelect.value = value;
+        selected.textContent = option.textContent;
+        options.style.display = "none";
+        updateSubmitState();
+      });
+    });
+
+  });
+
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".custom-dropdown")) {
+      document.querySelectorAll(".dropdown-options").forEach(o => o.style.display = "none");
+    }
+  });
+
+
+document.getElementById("shareBtn").addEventListener("click", async (event) => {
+  event.preventDefault(); // stop the link from reloading page
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: document.title,
+        text: " ",
+        url: window.location.href,   
+     });
+      console.log("Page shared successfully!");
+    } catch (err) {    
+   console.error("Share failed:", err.message);
+    }
+   } else {
+    alert("Sharing not supported in this browser.");
+  }
+});
+
+</script>
+
+
+
 
 <script>
 /* ================= ELEMENTS ================= */
@@ -338,11 +705,16 @@ const fileSizeEl = document.getElementById('fileSize');
 const fileErrorEl = document.getElementById('fileError');
 const submitBtn = document.getElementById('submitBtn');
 const formMessage = document.getElementById('formMessage');
+const showFileSummary = document.getElementById('showSummary');
 
 const nameInput = document.getElementById('nameInput');
 const semesterInput = document.getElementById('semesterInput');
 const courseInput = document.getElementById('courseInput');
 const paperInput = document.getElementById('paperInput');
+
+[nameInput, paperInput].forEach(input => {
+  input.addEventListener("input", updateSubmitState);
+});
 
 const uploadOverlay = document.getElementById('uploadOverlay');
 const progressFill = document.getElementById('progressFill');
@@ -370,11 +742,14 @@ function formatBytes(bytes) {
   return bytes.toFixed(2) + ' ' + u[i];
 }
 
+
+
+
 function showMessage(msg, type = 'info') {
   formMessage.textContent = msg;
   formMessage.style.color =
     type === 'error' ? '#d93025' :
-    type === 'success' ? '#188038' : '#333';
+    type === 'success' ? '#1fab49' : '#fff';
 }
 
 function resetForm() {
@@ -400,7 +775,7 @@ function updateSubmitState() {
     !semesterInput.value ||
     !courseInput.value ||
     !paperInput.value.trim() ||
-    selectedFiles.length < MIN_FILES;
+    selectedFiles.length < 1;
 }
 
 /* ================= FILE UI ================= */
@@ -412,9 +787,12 @@ function renderFiles() {
     item.className = 'file-item';
 
     const meta = document.createElement('div');
-    meta.innerHTML =
-      `<div class="file-name">${entry.file.name}</div>
-       <div class="file-info">${formatBytes(entry.file.size)}</div>`;
+    meta.innerHTML = `
+      <div class="file-name">${entry.file.name}</div>
+      <div class="file-info">
+        ${entry.file.type || 'unknown'} • ${formatBytes(entry.file.size)}
+      </div>
+    `;
 
     const btn = document.createElement('button');
     btn.className = 'file-remove';
@@ -431,9 +809,16 @@ function renderFiles() {
     fileListEl.appendChild(item);
   });
 
+  /* ✅ SUMMARY VISIBILITY — CORRECT PLACE */
+  if (showFileSummary) {
+    showFileSummary.style.display =
+      selectedFiles.length === 0 ? 'none' : 'block';
+  }
+
   fileCountEl.textContent = selectedFiles.length;
   fileSizeEl.textContent = formatBytes(totalSize);
 }
+
 
 /* ================= FILE INPUT ================= */
 fileInput.addEventListener('change', () => {
@@ -546,7 +931,7 @@ submitBtn.addEventListener('click', async () => {
     }
 
     hideOverlay();
-    showMessage('Upload completed successfully.', 'success');
+    showMessage(`Upload successful. Thank you ${nameInput.value.trim()}`, 'success');
     resetForm();
 
   } catch (err) {

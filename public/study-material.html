@@ -460,7 +460,7 @@ function loadSemesterData() {
 
   if (semester === "1" && data && (data.main?.length || data.other?.length)) {
     if (data.main && data.main.length) {
-      renderSection(grid, "— Main Course (BCA) —", data.main);
+      renderSection(grid, "— Core Course (BCA) —", data.main);
     }
     if (data.other && data.other.length) {
       renderSection(grid, "— Common Course —", data.other);
