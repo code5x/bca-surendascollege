@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Study Materials - SDC</title>
 
-
-
 <style>
 /* Always dark */
 html[data-theme="dark"] {
@@ -195,9 +193,6 @@ header nav a:hover {
   border: 1px solid #e6cfe5;
 }
 
-
-
-
 /* ===== MATERIAL GRID ===== */
 .material-grid {
   display: grid;
@@ -259,10 +254,6 @@ header nav a:hover {
   justify-content: center;
 }
 
-
-
-
-
 .card:hover {
   transform: scale(1.05);
 }
@@ -275,7 +266,6 @@ header nav a:hover {
   position: relative;
 }
 
-
 /* ===== NO DATA MESSAGE ===== */
 .no-data {
   grid-column: 1 / -1;  /* span full width of grid */
@@ -284,7 +274,6 @@ header nav a:hover {
   color: white;
   padding: 2rem 0;
 }
-
 
 footer {
     background: #111;
@@ -305,7 +294,6 @@ footer {
   }
 }
 
-
 footer a {
     color: #f7c2d9;
     text-decoration: none;
@@ -315,10 +303,7 @@ footer a:hover {
 }
 
 </style>
-
-
-
- </head>
+</head>
 
 <header>
     <nav>
@@ -352,6 +337,8 @@ footer a:hover {
       <option value="4">Semester 4</option>
       <option value="5">Semester 5</option>
       <option value="6">Semester 6</option>
+      <option value="6">Semester 7</option>
+      <option value="6">Semester 8</option>
     </select>
   </div>
 </div>
@@ -359,7 +346,7 @@ footer a:hover {
     <section id="materialGrid" class="material-grid" aria-live="polite">
       <!-- JS will populate cards here -->
     </section>
-   <h3 style="margin:10px auto 40px; text-decoration:underline; text-underline-offset: 5px; color:#52cceb; text-align: center;">
+   <h3 style="margin:10px auto 40px; text-decoration:underline; text-underline-offset: 5px; color:#52cceb; text-align: center; display:none;" id="ShowRequest">
      <a href="request-course.html">I Want Another Subject (Paper)</a>
    </h3>
 
@@ -370,9 +357,9 @@ footer a:hover {
        All Rights Reserved. <a href="about.html">  About Us</a></p>
   </footer>
 
-
-
 <script>
+
+const ShowRequest = document.getElementById('ShowRequest');
 
 document.getElementById("shareBtn").addEventListener("click", async (event) => {
   event.preventDefault(); // stop the link from reloading page
@@ -395,20 +382,19 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 const materialData = {
   "1": {
 
-    main: [      
+    bca1: [      
       { subject: "Introduction to C Programming (BCA)", link: "sem1/c-programming.html", image: "/src/c.webp" }, 
       { subject: "Mathematics -I (BCA)", link: "sem1/mathematics-i.html", image: "/src/maths.webp" }  
     ],
-    other: [                                                                                                          
-      { subject: "Computer Application (SEC/BCA)", link: "sem1/computer-application-sec-bca.html", image: "/src/sec.webp" },
+    common1: [                                                                                                          
+      { subject: "Computer Application (SEC)", link: "sem1/computer-application-sec-bca.html", image: "/src/sec.webp" },
       { subject: "Environmental Studies (VAC)", link: "sem1/environmental-studies-vac.html", image: "/src/vac.webp" },
       { subject: "Library & Information Science (MDC)", link: "sem1/library-information-science-mdc.html", image: "/src/mdc.webp" },
       { subject: "Jogajogmuluk Asomiya (AEC)", link: "sem1/jogajogmuluk-asomiya-i-aec.html", image: "/src/aec.webp" }  
     ]
 
-
   },
-  "2": null, "3": null, "4": null, "5": null, "6": null
+  "2": null, "3": null, "4": null, "5": null, "6": null, "7": null, "8": null
 };
 
 function createCardElement(item) {
@@ -461,13 +447,15 @@ function loadSemesterData() {
   history.replaceState(null, "", "#sem" + semester);
 
   const data = materialData[semester];
+  ShowRequest.style.display = 'none';
 
-  if (semester === "1" && data && (data.main?.length || data.other?.length)) {
-    if (data.main && data.main.length) {
-      renderSection(grid, "— Core Course (BCA) —", data.main);
+  if (semester === "1" && data && (data.bca1?.length || data.common1?.length)) {
+      ShowRequest.style.display = 'block';
+    if (data.bca1 && data.bca1.length) {
+      renderSection(grid, "— Core Course (BCA) —", data.bca1);
     }
-    if (data.other && data.other.length) {
-      renderSection(grid, "— Common Course —", data.other);
+    if (data.common1 && data.common1.length) {
+      renderSection(grid, "— Common Course —", data.common1);
     }
     return;
   }
@@ -496,8 +484,6 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
-
-
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();

@@ -157,8 +157,6 @@ h2 {
   font-size: 0.98rem;
 }
 
-
-
 .form-group {
   margin-bottom: 18px;
 }
@@ -275,8 +273,6 @@ select:disabled {
   word-break: break-word;
 }
 
-
-
 .file-remove {
   background: #572919;
   color: #fff;
@@ -317,14 +313,14 @@ button.submit-btn:disabled {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  display: none; /* 🔴 hide by default */
+  display: none; /* hide by default */
 }
 
 .upload-overlay p { margin-bottom: 15px; color:#cfd3fa; }
 .upload-overlay h3 { margin: 10px auto; color: #f7c2d9; }
 
 .upload-overlay.active {
-  display: flex; /* ✅ show only when needed */
+  display: flex; /* show only when needed */
 }
 
 .upload-panel {
@@ -355,8 +351,6 @@ button.submit-btn:disabled {
 }
 
 /* ---------------- Desktop ---------------- */
-
-
 .custom-dropdown {
   position: relative;
   width: 100%;
@@ -432,9 +426,6 @@ button.submit-btn:disabled {
   }
 }
 
-
-
-
 footer {
     background: #111;
     text-align: center;
@@ -462,7 +453,6 @@ footer a {
 footer a:hover {
     text-decoration: underline;                                      
 }
-
 
 </style>
 </head>
@@ -525,10 +515,8 @@ footer a:hover {
     <li class="disabled">Semester 7</li>
     <li class="disabled">Semester 8</li>
   </ul>
+ </div>
 </div>
-
-
-    </div>
 
     <!-- Course -->
     <div class="form-group">
@@ -593,7 +581,7 @@ footer a:hover {
 
       <label for="fileInput" class="drop-zone">
         <div class="drop-text">Click here to select files</div>
-        <div class="drop-sub">Or drag and drop files each 300 MB</div>
+        <div class="drop-sub">Or drag and drop files max 300 MB</div>
         <div class="drop-sub">Minimum 3 • Maximum 20 files</div>
       </label>
 
@@ -637,8 +625,6 @@ footer a:hover {
     <p>Do not close this tab while upload is in progress.</p>
   </div>
 </div>
-
-
 
 <script>
   document.querySelectorAll(".custom-dropdown").forEach(dropdown => {
@@ -694,9 +680,6 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 
 </script>
 
-
-
-
 <script>
 /* ================= ELEMENTS ================= */
 const fileInput = document.getElementById('fileInput');
@@ -742,9 +725,6 @@ function formatBytes(bytes) {
   }
   return bytes.toFixed(2) + ' ' + u[i];
 }
-
-
-
 
 function showMessage(msg, type = 'info') {
   formMessage.textContent = msg;
@@ -810,7 +790,7 @@ function renderFiles() {
     fileListEl.appendChild(item);
   });
 
-  /* ✅ SUMMARY VISIBILITY — CORRECT PLACE */
+  /* SUMMARY VISIBILITY — CORRECT PLACE */
   if (showFileSummary) {
     showFileSummary.style.display =
       selectedFiles.length === 0 ? 'none' : 'block';
@@ -941,7 +921,6 @@ submitBtn.addEventListener('click', async () => {
   }
 });
 </script>
-
 
 </body>
 </html>

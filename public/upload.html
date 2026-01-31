@@ -5,13 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Upload Study Resources, Notes, Images</title>
 
-
-
 <style>
 html[data-theme="dark"] {
   color-scheme: dark;
 }
-
 
 html {
   scroll-behavior: smooth;
@@ -510,8 +507,6 @@ label.field:has(#imageDate:valid) .hint {
  margin-bottom: 15px;
 }
 
-
-
 /* ===== FOOTER ===== */
 footer {
     background: #111;
@@ -537,11 +532,7 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
-
-
 </style>
-
-
 
 </head>
 <header>
@@ -733,8 +724,6 @@ footer a:hover {
 
     </div>
   </div>
-
-
 
 <script>
 
@@ -1312,7 +1301,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
       submitBtn.disabled = true;
       submitMessage.textContent = '';
 
-     // ✅ NEW VALIDATION (Name + About)
+     // NEW VALIDATION (Name + About)
     const nameValue = uploaderName.value.trim();
     const aboutValue = aboutFiles.value.trim();
 
@@ -1404,7 +1393,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
       submitImagesBtn.disabled = true;
       if (submitImagesMessage) { submitImagesMessage.style.display = 'none'; submitImagesMessage.textContent = ''; }
 
-          // ✅ NEW VALIDATION (Name + About)
+          // NEW VALIDATION (Name + About)
     const nameValue = uploaderNameNotes.value.trim();
     const aboutValue = aboutImages.value.trim();
 
@@ -1534,8 +1523,6 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 })();
 
 </script>
-
-
 
 </body>
 </html>

@@ -7,8 +7,6 @@
   <meta name="description" content="Welcome to the Computer Science Department of Suren Das College. Access study resources, notes, courses for semester 1 and beyond" />
   <link rel="icon" href="/src/college-logo.png">
 
-
-
   <!-- Styles -->
   <style>
 /* Always dark */
@@ -553,8 +551,6 @@ header nav a:hover {
   .brand-title{font-size:1rem}
 }
 
-
-
 /* focus states */
 input:focus, textarea:focus, button:focus{box-shadow:0 0 0 4px rgba(127,167,255,0.10);border-color:#7fa7ff;outline:none}
 
@@ -571,7 +567,6 @@ footer {
     border-radius: 20px 20px 0 0;
 }
 
-
 footer a {
     color: #f7c2d9;
     text-decoration: none;
@@ -579,21 +574,17 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
-
-
 .hidden{display:none}
 
-
-  </style>
+</style>
  
-
-
   <!-- small critical CSS inline to avoid flash on slow networks -->
   <style>
     html[data-theme="dark"]{color-scheme:dark}
     body{margin:0;background:#070914;color:#e6e9ef;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
     .container{max-width:1100px;margin:0 auto;padding:18px}
   </style>
+
 </head>
 <body class="bg-app">
     <div class="banner">
@@ -647,7 +638,7 @@ footer a:hover {
 
 <a class="cards" data-index="0" href="sem1/c-programming.html" style="background-image:url('/src/c.webp')"><span class="title">Introduction to C Programming (BCA)</span></a>
 <a class="cards" data-index="1" href="sem1/mathematics-i.html" style="background-image:url('/src/maths.webp')"><span class="title">Mathematics -I (BCA)</span></a>
-<a class="cards" data-index="2" href="sem1/computer-application-sec-bca.html" style="background-image:url('/src/sec.webp')"><span class="title">Computer Application (SEC/BCA)</span></a>
+<a class="cards" data-index="2" href="sem1/computer-application-sec-bca.html" style="background-image:url('/src/sec.webp')"><span class="title">Computer Application (SEC)</span></a>
 <a class="cards" data-index="3" href="sem1/environmental-studies-vac.html" style="background-image:url('/src/vac.webp')"><span class="title">Environmental Studies (VAC)</span></a>
 <a class="cards" data-index="4" href="sem1/library-information-science-mdc.html" style="background-image:url('/src/mdc.webp')"><span class="title">Library & Information Science (MDC) </span></a>
 <a class="cards" data-index="5" href="sem1/jogajogmuluk-asomiya-i-aec.html" style="background-image:url('/src/aec.webp')"><span class="title">Jogajogmuluk Asomiya -I (AEC)</span></a>
@@ -689,7 +680,6 @@ footer a:hover {
  </aside>
 </section>
 
-
  <section class="section external-links">
       <h3 class="section-title">External Links</h3>
       <div class="card">
@@ -709,9 +699,6 @@ footer a:hover {
        All Rights Reserved. <a href="about.html">About Us</a></p>
   </footer>
 
-
-
-<!--  <script src="search.js"></script>  -->
 <script>
 
 document.getElementById("shareBtn").addEventListener("click", async (event) => {
@@ -743,13 +730,11 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
   const device = (!isMobile || width >= 800) ? 'desktop' : 'mobile';
   document.body.dataset.device = device;
 
-
 const sampleAnnouncements = [
   { id: 1, title: 'Holiday List', body: 'Click Here to See the Official Holiday List for 2025.', url: 'https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Holiday%20List%202025.pdf' },
   { id: 2, title: 'Class Routine', body: 'Check Class routine page for latest timetable.', url: 'class-routine.html' },
   { id: 3, title: 'Exam Notice', body: 'Check Final Examination Routine For First Semester 2025.', url: 'https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Final%20Examination%20routine%20-%201st%20sem%20-%202025%20-%20BA,%20BSc,%20BCA,%20BVoc.pdf' }
 ];
-
 
 const annList = document.getElementById('annList');
 if (annList) {
@@ -760,7 +745,6 @@ if (annList) {
 
   // add a spacer at the end of first set
   const itemsWithSpacer = items + `<li class="spacer"></li>`;
-
 
   // duplicate for smooth infinite loop
   annList.innerHTML = `<div class="scroll-wrapper">${itemsWithSpacer}${itemsWithSpacer}</div>`;
@@ -773,7 +757,6 @@ if (annList) {
     });
   });
 }
-
 
   // sample recent notes
   const recentNotes = document.getElementById('recentNotes');
@@ -985,8 +968,6 @@ if (annList) {
   btnNext.addEventListener('click', (e) => { e.stopPropagation(); gotoIndex(currentOriginalIndex() + 1); });
   btnPrev.addEventListener('click', (e) => { e.stopPropagation(); gotoIndex(currentOriginalIndex() - 1); });
 
-
-
   // on resize re-center on the visible center original
   window.addEventListener('resize', () => {
     const centercards = scroller.querySelector('.cards.is-center') || centerCopyElementForIndex(0);
@@ -995,9 +976,7 @@ if (annList) {
 
 })();
 
-
-  // Dataset for searching (or load from JSON file)
-
+// Dataset for searching (or load from JSON file)
 const data = [
 
 { title: "Homepage", url: "index.html" }, 
@@ -1029,12 +1008,11 @@ const data = [
 { title: "Mathematics -I (BCA)", url: "sem1/mathematics-i.html" },
 { title: "Content Syllabus Mathematics -I", url: "sem1/mathematics-i.html#content" },
 { title: "Reference Books Mathematics -I", url: "sem1/mathematics-i.html#reference" },
-{ title: "Shared Notes Mathematics -I", url: "sem1/mathematics-i.html#shared" },
 { title: "Notes plus Exercise Mathematics -I", url: "sem1/mathematics-i.html#notes" },
 { title: "Old Question Paper Mathematics -I", url: "sem1/mathematics-i.html#paper" },
 { title: "Youtube Tutorials Mathematics -I", url: "sem1/mathematics-i.html#yt-wrapper" },
 
-{ title: "Computer Application SEC BCA", url: "sem1/computer-application-sec-bca.html" },
+{ title: "Computer Application SEC", url: "sem1/computer-application-sec-bca.html" },
 { title: "Content Syllabus Computer Application", url: "sem1/computer-application-sec-bca.html#content" },
 { title: "Reference Books Computer Application", url: "sem1/computer-application-sec-bca.html#reference" },
 { title: "Class Notes (college) Computer Application", url: "sem1/computer-application-sec-bca.html#class-notes" },
@@ -1071,10 +1049,7 @@ const data = [
 { title: "Assignment Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#assignment" },
 { title: "Youtube Tutorials Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#yt-wrapper" }
 
-
 ];
-
-
 
   const searchInput = document.getElementById("searchInput");
   const searchResults = document.getElementById("searchResults");
@@ -1114,8 +1089,6 @@ const data = [
   });
 
 </script>
-
-
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();

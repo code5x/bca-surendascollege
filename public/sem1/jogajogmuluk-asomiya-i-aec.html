@@ -4,8 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Jogajogmuluk Asomiya -I (AEC) - First Semester</title>
-  <!-- Link to CSS (you asked for CSS in next response) 
-  <link rel="stylesheet" href="styles.css">  -->
 
 <style>
 
@@ -470,7 +468,7 @@ button:focus-visible {
   </header>
 
   <main class="container" id="main" role="main" tabindex="-1">
-    <h2 class="head-title">Study Material<br>⬇<br>Jogajogmuluk Asomiya -I (AEC)</h2>
+    <h2 class="head-title">Study Material (Semester 1)<br>⬇<br>Jogajogmuluk Asomiya -I (AEC)</h2>
 
     <p class="lead">All the important resources for this subject are collected here and organized.
       You can upload and share study materials to help everyone learn better together.</p>
@@ -545,15 +543,6 @@ button:focus-visible {
 }
         ]
       </script>
-
-
-      <div class="upload-notes">          
-       <p class="lead">Upload class notes, book pages, e-books, Or share missing notes
-                       to keep the collection complete. Just click the button below -
-        </p>
-        <a href="../upload.html#resources" class="upload-btn">Upload Notes</a>
-      </div>
-
 
     </div>
   </div>
@@ -651,7 +640,19 @@ button:focus-visible {
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/Assamese%20(AEC)%20-%20Sessional%20Exam%202023.pdf",
             "logo": "default",
             "options": {"noLegal": false}
-          }
+          },
+{
+"title": "AEC Assamese (Sessional exam 2025)",
+"file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/AEC%20Assamese%20(Sessional%20exam%202025).pdf",
+"logo": "default",
+"options": {"noLegal": false}
+},
+{
+"title": "AEC0100204 (2025)",
+"file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/AEC0100204%20(2025).pdf",
+"logo": "default",
+"options": {"noLegal": false}
+}
         ]
       </script>
     </div>
@@ -697,7 +698,7 @@ button:focus-visible {
 
 
   <p class="lead"">Note: The above information has been gathered from multiple sources, including user submissions and AI-generated content.
- If you notice any inaccuracies or misinformation, please provide <a href="../feedback.html" style="text-decoration: none;">feedback</a> to help us improve the content.</p>
+ If you notice any inaccuracies or misinformation, please provide a <a href="../feedback.html" style="text-decoration: underline;">feedback</a> to help us improve the content.</p>
 
 
   </main>
@@ -707,15 +708,12 @@ button:focus-visible {
       All Rights Reserved. <a href="../about.html">About Us</a></p>
   </footer>
 
-  <!-- Overlay for PDF viewer (kept same as before so your JS can use it) -->
   <div id="overlay">
     <div class="overlay-content">
       <button class="close-btn" onclick="closePDF()" aria-label="Close PDF viewer">X</button>
       <iframe id="pdfFrame" title="PDF Viewer"></iframe>
     </div>
   </div>
-
-<!--  <script src="scripts.js" defer></script>  -->
 
 <script>
 
@@ -1138,8 +1136,6 @@ function animateCloseDrawer(drawer, toggleBtn) {
 
 <!--      addPdfBox(title, file, logo, parent, options);  Replace this part to place upload-notes at bottom -->
 
-
-
 const uploadNotes = parent.querySelector(".upload-notes");
 
 if (uploadNotes) {
@@ -1154,10 +1150,6 @@ if (uploadNotes) {
 } else {
   addPdfBox(title, file, logo, parent, options);
 }
-
-
-
-
     });
 
     // remove script block to avoid re-parsing
@@ -1371,7 +1363,6 @@ document.addEventListener("click", (ev) => {
 });
 
 /* End of scripts.js */
-
 
 </script>
 
