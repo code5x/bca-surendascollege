@@ -25,7 +25,7 @@ The site mainly supports BCA and Computer Science students, but it also includes
 
 ## ✅ Project Status
 
-Currently, most content is available for first-semester students. 
+Currently, most content is available upto second semester. 
 Materials for higher semesters will be added gradually.
 
 ---

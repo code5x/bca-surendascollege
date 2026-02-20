@@ -150,7 +150,7 @@ header nav a:hover {
 }
 
 .lead1 {color:#cfd3fa;margin:8px 0 14px 0;font-size:0.97rem; text-align:justify; line-height: 1.5;}
-.lead2 {color:#cfd3fa;margin:8px 0 14px 0;font-size:1.1rem; text-align:center;}
+.lead2 {color:#fff;margin:8px 0 14px 0;font-size:1.1rem; text-align:center;}
 
 
 /* ===== SEMESTER SELECTOR ===== */
@@ -167,6 +167,7 @@ header nav a:hover {
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  border: 1px solid #50ab93;
 }
 
 /* Style for label */
@@ -181,7 +182,7 @@ header nav a:hover {
 .selector-box select {
   padding: 0.8rem 1.2rem;
   font-size: 1.1rem;
-  border: none;
+  border: 1px solid #80558a;
   border-radius: 8px;
   background: #222;
   color: #fce8fc;
@@ -323,13 +324,15 @@ footer a:hover {
   <main class="container" id="main">
     <section class="page-title">
       <h2 class="page-title-text">Study Material</h2>
-      <p class="lead1">Discover a comprehensive collection of resources thoughtfully organized for easy access. The materials are grouped semester by semester, divided into subjects, and further organized into different types such as notes, ebooks, exam papers, Assignments, youtube videos, and other useful references. While the focus is on BCA with the first semester already available, common courses also appear, useful for other departments.</p>
-      <p class="lead2">Browse resources organized by<br>semester → subject → type.</p>
+      <p class="lead1">Discover a comprehensive collection of resources thoughtfully organized for easy access. The materials are grouped semester by semester, divided into subjects, and further organized into different types such as notes, ebooks, exam papers, Assignments, youtube videos, and other useful references.</p>
+      <p class="lead2">Browse resources organized by<br>Semester → Subject → Type</p>
     </section>
 
 <div class="semester-selector">
   <div class="selector-box">
-    <label for="semester">Select Semester:</label>
+
+<!--
+    <label for="semester"></label>
     <select id="semester" onchange="loadSemesterData()">
       <option value="1">Semester 1</option>
       <option value="2">Semester 2</option>
@@ -340,6 +343,20 @@ footer a:hover {
       <option value="6">Semester 7</option>
       <option value="6">Semester 8</option>
     </select>
+-->
+
+<select id="semester">
+  <option value="" selected disabled>Select Semester</option>
+  <option value="1">Semester 1</option>
+  <option value="2">Semester 2</option>
+  <option value="3">Semester 3</option>
+  <option value="4">Semester 4</option>
+  <option value="5">Semester 5</option>
+  <option value="6">Semester 6</option>
+  <option value="7">Semester 7</option>
+  <option value="8">Semester 8</option>
+</select>
+
   </div>
 </div>
 
@@ -347,14 +364,14 @@ footer a:hover {
       <!-- JS will populate cards here -->
     </section>
    <h3 style="margin:10px auto 40px; text-decoration:underline; text-underline-offset: 5px; color:#52cceb; text-align: center; display:none;" id="ShowRequest">
-     <a href="request-course.html">I Want Another Subject (Paper)</a>
+     <a href="request-course.html">Request New Subject (Paper)</a>
    </h3>
 
   </main>
 
 <footer>
-    <p>© 2025 Student Community Portal - Suren Das College<br>
-       All Rights Reserved. <a href="about.html">  About Us</a></p>
+    <p>© 2026 Student Community Portal - Suren Das College<br>
+      <a href="about.html">About Us</a></p>
   </footer>
 
 <script>
@@ -382,11 +399,11 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 const materialData = {
   "1": {
 
-    bca1: [      
+    bca: [      
       { subject: "Introduction to C Programming (BCA)", link: "sem1/c-programming.html", image: "/src/c.webp" }, 
       { subject: "Mathematics -I (BCA)", link: "sem1/mathematics-i.html", image: "/src/maths.webp" }  
     ],
-    common1: [                                                                                                          
+    common: [                                                                                                          
       { subject: "Computer Application (SEC)", link: "sem1/computer-application-sec-bca.html", image: "/src/sec.webp" },
       { subject: "Environmental Studies (VAC)", link: "sem1/environmental-studies-vac.html", image: "/src/vac.webp" },
       { subject: "Library & Information Science (MDC)", link: "sem1/library-information-science-mdc.html", image: "/src/mdc.webp" },
@@ -394,7 +411,19 @@ const materialData = {
     ]
 
   },
-  "2": null, "3": null, "4": null, "5": null, "6": null, "7": null, "8": null
+  "2": {
+
+    bca: [
+      { subject: "Data Structure and Algorithms (BCA)", link: "sem2/dsa.html", image: "/src/dsa.webp" },
+      { subject: "Digital Logic Fundamentals (BCA)", link: "sem2/digital-logic.html", image: "/src/dlf.webp" },
+      { subject: "Mathematics -II (BCA)", link: "sem2/mathematics-ii.html", image: "/src/maths.webp" }
+    ],
+    common: [
+      { subject: "Information Sources and Services (MDC)", link: "sem2/information-source-service-mdc.html", image: "/src/mdc.webp" }
+    ]      
+
+  },
+"3": null, "4": null, "5": null, "6": null, "7": null, "8": null
 };
 
 function createCardElement(item) {
@@ -441,46 +470,52 @@ function renderSection(parent, title, items) {
 function loadSemesterData() {
   const semester = document.getElementById("semester").value;
   const grid = document.getElementById("materialGrid");
+
   grid.innerHTML = "";
+  ShowRequest.style.display = "none";
 
-  // Replace hash without adding a new history entry
-  history.replaceState(null, "", "#sem" + semester);
-
-  const data = materialData[semester];
-  ShowRequest.style.display = 'none';
-
-  if (semester === "1" && data && (data.bca1?.length || data.common1?.length)) {
-      ShowRequest.style.display = 'block';
-    if (data.bca1 && data.bca1.length) {
-      renderSection(grid, "— Core Course (BCA) —", data.bca1);
-    }
-    if (data.common1 && data.common1.length) {
-      renderSection(grid, "— Common Course —", data.common1);
-    }
+  // If no semester selected → do nothing
+  if (!semester) {
+    history.replaceState(null, "", window.location.pathname);
     return;
   }
 
-  grid.innerHTML = `<div class="no-data">No data available for this semester</div>`;
+  // Add hash only when selected
+  history.replaceState(null, "", "#sem" + semester);
+
+  const data = materialData[semester];
+
+  if (!data) {
+    grid.innerHTML = `<div class="no-data">No data available for this semester</div>`;
+    return;
+  }
+
+  ShowRequest.style.display = "block";
+
+  if (data.bca && data.bca.length) {
+    renderSection(grid, "— Core Course (BCA) —", data.bca);
+  }
+
+  if (data.common && data.common.length) {
+    renderSection(grid, "— Common Course —", data.common);
+  }
 }
 
-// Load semester from hash on page load
 window.addEventListener("DOMContentLoaded", () => {
   const select = document.getElementById("semester");
   const hash = window.location.hash;
 
+  // If URL has #semX then only load it
   if (hash.startsWith("#sem")) {
     const sem = hash.replace("#sem", "");
     if (select.querySelector(`option[value="${sem}"]`)) {
       select.value = sem;
+      loadSemesterData();
     }
   }
 
-  loadSemesterData();
-
-  // Attach change event
-  select.addEventListener("change", () => {
-    loadSemesterData();
-  });
+  // Change event
+  select.addEventListener("change", loadSemesterData);
 });
 
 </script>

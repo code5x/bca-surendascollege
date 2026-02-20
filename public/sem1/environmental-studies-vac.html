@@ -468,11 +468,7 @@ button:focus-visible {
   </header>
 
   <main class="container" id="main" role="main" tabindex="-1">
-    <h2 class="head-title">Study Material (Semester 1)<br>⬇<br>Environmental Studies (VAC)</h2>
-
-    <p class="lead">All the important resources for this subject are collected here and organized.
-      You can upload and share study materials to help everyone learn better together.</p>
-
+    <h2 class="head-title">Semester 1<br>⬇<br>Environmental Studies (VAC)</h2>
 
       <div class="divider"><div class="lines"><div class="divider-line"></div></div></div>
 
@@ -738,14 +734,14 @@ button:focus-visible {
 
 
   <p class="lead"">Note: The above information has been gathered from multiple sources, including user submissions and AI-generated content.
- If you notice any inaccuracies or misinformation, please provide a <a href="../feedback.html" style="text-decoration: underline;">feedback</a> to help us improve the content.</p>
+ If you see any mistakes or wrong information, please provide a <a href="../feedback.html" style="text-decoration: underline;">feedback</a> to help us improve the content.</p>
 
 
   </main>
 
   <footer>
-    <p>© 2025 Student Community Portal - Suren Das College<br>
-      All Rights Reserved. <a href="../about.html">About Us</a></p>
+    <p>© 2026 Student Community Portal - Suren Das College<br>
+      <a href="../about.html">About Us</a></p>
   </footer>
 
   <div id="overlay">
@@ -889,7 +885,7 @@ function openPDF(pdfFile) {
   }
 
   // Use pdf.js viewer with encoded file URL
-  pdfFrame.src = "https://mozilla.github.io/pdf.js/web/viewer.html?file=" + encodeURIComponent(pdfFile);
+  pdfFrame.src = "https://mozilla.github.io/pdf.js/legacy/web/viewer.html?file=" + encodeURIComponent(pdfFile);
   overlay.style.display = "block";
 
   pdfViewerOpen = true;
@@ -1110,7 +1106,14 @@ function animateCloseDrawer(drawer, toggleBtn) {
         }
         await animateOpenDrawer(ytDrawer, ytBtn);
         // scroll & focus
-        ytBtn.scrollIntoView({ block: 'start', behavior: 'smooth' });
+
+const offset = 80;
+const top = ytBtn.getBoundingClientRect().top + window.pageYOffset - offset;
+window.scrollTo({
+  top: top,
+  behavior: 'smooth'
+});
+
         try { ytBtn.focus({ preventScroll: true }); } catch(e) {}
         return;
       }
@@ -1127,7 +1130,14 @@ function animateCloseDrawer(drawer, toggleBtn) {
         if (d.getAttribute('aria-hidden') === 'false') animateCloseDrawer(d, otherBtn).catch(()=>{});
       });
       await animateOpenDrawer(entry.drawerEl, entry.toggleBtn);
-      entry.toggleBtn.scrollIntoView({ block: 'start', behavior: 'smooth' });
+
+const offset = 80;
+const top = entry.toggleBtn.getBoundingClientRect().top + window.pageYOffset - offset;
+window.scrollTo({
+  top: top,
+  behavior: 'smooth'
+});
+
       try { entry.toggleBtn.focus({ preventScroll: true }); } catch(e) {}
     } else {
       // if there is a section element with that id, try to focus it
