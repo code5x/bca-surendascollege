@@ -83,7 +83,6 @@ header nav {
   white-space: nowrap;
   scrollbar-width: none;
 }
-header nav::-webkit-scrollbar { display: none; }
 header nav a {
   text-decoration: none;
   color: #fff;
@@ -445,6 +444,23 @@ button:focus-visible {
   border-radius: 8px;
 }
 */
+
+@media (max-width: 768px) {
+    /* Hide scrollbar for Chrome, Safari and Edge */
+    *::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    * {
+        scrollbar-width: none;
+    }
+
+    /* Hide scrollbar for IE and old Edge */
+    * {
+        -ms-overflow-style: none;
+    }
+}
 
 /* End of stylesheet */
 

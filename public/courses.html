@@ -79,10 +79,6 @@ header nav {
     scrollbar-width: none; /* hide scrollbar (Firefox) */
 }
 
-header nav::-webkit-scrollbar {
-    display: none; /* hide scrollbar (Chrome, Edge, Safari) */
-}
-
 header nav a {
     text-decoration: none;
     color: #fff;
@@ -338,6 +334,24 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+    /* Hide scrollbar for Chrome, Safari and Edge */
+    *::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    * {
+        scrollbar-width: none;
+    }
+
+    /* Hide scrollbar for IE and old Edge */
+    * {
+        -ms-overflow-style: none;
+    }
+}
+
 </style>
 
 </head>

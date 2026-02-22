@@ -1,6 +1,6 @@
 // functions/api/feedback_sign_url.js
 import { createAdmin } from '../_supabase.js'
-import { countTodayUploads, sanitizeFilename } from '../_utils.js'
+import { sanitizeFilename } from '../_utils.js'
 import { corsHeaders, handleOptions } from '../_cors.js'
 
 export async function onRequest({ request, env }) {
@@ -16,17 +16,16 @@ export async function onRequest({ request, env }) {
       return new Response(JSON.stringify({ error: 'feedback_id and filename required' }), { status: 400, headers: corsHeaders() })
     }
 
-    const MAX_SIZE = Number(env.MAX_FILE_SIZE_BYTES || 3145728)
-    if (size && size > MAX_SIZE) {
-      return new Response(JSON.stringify({ error: `file too large; max ${MAX_SIZE} bytes` }), { status: 413, headers: corsHeaders() })
-    }
+const MAX_FILE_SIZE = 4 * 1024 * 1024 // 4MB
+
+if (size && size > MAX_FILE_SIZE) {
+  return new Response(JSON.stringify({
+    error: `file too large; max ${MAX_FILE_SIZE} bytes`
+  }), { status: 413, headers: corsHeaders() })
+}
+
 
     const supabase = createAdmin(env)
-    const dailyCap = Number(env.DAILY_CAP || 50)
-    const used = await countTodayUploads(supabase, env.BUCKET_NAME)
-    if (used + 1 > dailyCap) {
-      return new Response(JSON.stringify({ error: `daily upload cap ${dailyCap} reached` }), { status: 429, headers: corsHeaders() })
-    }
 
     const safeName = sanitizeFilename(filename)
     const filePath = `feedback_images/${safeName}`

@@ -107,10 +107,6 @@ header nav {
   scrollbar-width: none; /* hide scrollbar (Firefox) */
 }
 
-header nav::-webkit-scrollbar {
-  display: none; /* hide scrollbar (Chrome, Edge, Safari) */
-}
-
 header nav a {
   text-decoration: none;
   color: #fff;
@@ -389,6 +385,10 @@ button.submit-btn:disabled {
   border-bottom: 1px solid #808080;
 }
 
+.dropdown-options li:last-child {
+  border-bottom: none;
+}
+
 .dropdown-options li::before {
   content: "⦿";
   position: absolute;
@@ -452,6 +452,23 @@ footer a {
 }
 footer a:hover {
     text-decoration: underline;                                      
+}
+
+@media (max-width: 768px) {
+    /* Hide scrollbar for Chrome, Safari and Edge */
+    *::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    * {
+        scrollbar-width: none;
+    }
+
+    /* Hide scrollbar for IE and old Edge */
+    * {
+        -ms-overflow-style: none;
+    }
 }
 
 </style>
@@ -577,7 +594,7 @@ footer a:hover {
 
     <!-- File Upload -->
     <div class="file-area">
-      <input id="fileInput" type="file" hidden multiple>
+      <input id="fileInput" type="file" accept="image/*,application/*" hidden multiple>
 
       <label for="fileInput" class="drop-zone">
         <div class="drop-text">Click here to select files</div>
@@ -806,14 +823,25 @@ fileInput.addEventListener('change', () => {
   fileErrorEl.textContent = '';
 
   for (const file of fileInput.files) {
+
+    if (
+      !file.type.startsWith('image/') &&
+      !file.type.startsWith('application/')
+    ) {
+      fileErrorEl.textContent = 'Invalid file format';
+      break;
+    }
+
     if (selectedFiles.length >= MAX_FILES) {
       fileErrorEl.textContent = 'Maximum 20 files allowed.';
       break;
     }
+
     if (file.size > MAX_EACH) {
       fileErrorEl.textContent = 'One file exceeds 300 MB.';
       continue;
     }
+
     if (totalSize + file.size > MAX_TOTAL) {
       fileErrorEl.textContent = 'Total size exceeds 500 MB.';
       break;
@@ -827,6 +855,7 @@ fileInput.addEventListener('change', () => {
   updateSubmitState();
   fileInput.value = '';
 });
+
 
 /* ================= OVERLAY ================= */
 function showOverlay() {

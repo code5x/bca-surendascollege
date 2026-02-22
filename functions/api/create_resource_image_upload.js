@@ -1,6 +1,6 @@
 // functions/api/create_notes_upload.js
 import { createAdmin } from '../_supabase.js'
-import { timestampFolder, countTodayUploads, sanitizeFilename } from '../_utils.js'
+import { timestampFolder, sanitizeFilename } from '../_utils.js'
 
 export async function onRequestPost({ request, env }) {
   try {
@@ -10,18 +10,28 @@ export async function onRequestPost({ request, env }) {
     }
 
     const supabase = createAdmin(env)
-    const dailyCap = Number(env.DAILY_CAP || 50)
-    const used = await countTodayUploads(supabase, env.BUCKET_NAME)
-    if (used + filenames.length > dailyCap) {
-      return new Response(JSON.stringify({ ok: false, message: `daily upload cap ${dailyCap} would be exceeded` }), { status: 429 })
-    }
 
-    const MAX_SIZE = Number(env.MAX_FILESize_BYTES || 3145728)
-    if (Array.isArray(sizes)) {
-      for (const s of sizes) if (s && s > MAX_SIZE) {
-        return new Response(JSON.stringify({ ok: false, message: `one file exceeds max size ${MAX_SIZE}` }), { status: 413 })
-      }
+const MAX_IMAGES = 50
+const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+
+if (filenames.length > MAX_IMAGES) {
+  return new Response(JSON.stringify({
+    ok: false,
+    message: `You can upload max ${MAX_IMAGES} images at a time`
+  }), { status: 400 })
+}
+
+if (Array.isArray(sizes)) {
+  for (const s of sizes) {
+    if (s && s > MAX_FILE_SIZE) {
+      return new Response(JSON.stringify({
+        ok: false,
+        message: `One file exceeds max size ${MAX_FILE_SIZE}`
+      }), { status: 413 })
     }
+  }
+}
+
 
     const folder = `upload_resources_image/${timestampFolder()}/`
     const file_links = filenames.map(f => folder + sanitizeFilename(f))

@@ -140,9 +140,6 @@ header nav {
     white-space: nowrap; 
     scrollbar-width: none;
 }
-header nav::-webkit-scrollbar {
-    display: none; 
-}
 header nav a {
     text-decoration: none;
     color: #fff;
@@ -176,10 +173,204 @@ header nav a:hover {
 .page-title{color:#fff;margin:25px 0 11px;font-size:1.6rem}
 .lead{color:#cfd3fa;margin:8px 0 14px 0;font-size:0.96rem; text-align:justify; line-height: 1.6}
 
-/* search form */
-.global-search{display:flex;gap:8px;margin-top:1px;margin-bottom:5px;}
-.global-search input[type=search]{flex:1;padding:8px 12px;background:#0b1120;border:1px solid #7a6679;color:#e6e9ef;border-radius:8px}
-.global-search button{padding:10px 14px;background:#f7c2d9;font-weight:bold;color:#1a1221;border:0;border-radius:8px;cursor:pointer}
+
+/* ================= SEARCH BAR ================= */
+.sa-search-wrapper {
+  position: relative;
+  margin: 0 auto;
+}
+.sa-search-bar {
+  display: flex;
+  align-items: center;
+}
+/* Filter button */
+.sa-filter-btn {
+  background: #222;
+  color: #dddddd;
+  border: 1px solid #927094;
+  width: 37px;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 6px;
+}
+/* Space between filter and input */
+.sa-search-bar input {
+  margin-left: 2px;
+}
+/* Input */
+#saSearchInput {
+  flex: 1;
+  height: 35px;
+  border: 1px solid #927094;
+  border-right: none;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
+  border-radius: 6px 0 0 6px;
+}
+/* Search icon (right side) */
+.sa-search-icon {
+  width: 37px;
+  height: 37px;
+  background: #927094;
+  color: white;
+  border-radius: 0 6px 6px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* No space between input and search icon */
+.sa-search-bar input + .sa-search-icon {
+  margin-left: 0;
+}
+/* ================= SEARCH RESULTS ================= */
+.sa-search-results {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  background: #333;
+  border: 1px solid #121212;
+  max-height: 400px;
+  min-height: 200px;
+  overflow-y: auto;
+
+  z-index: 50;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+}
+.sa-result-item {
+  padding: 8px;
+  border: 1px solid #999;
+  margin: 12px 6px;
+  border-radius: 5px;
+}
+
+.sa-message {
+  border: none !important;
+  margin: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  text-align: center;
+  color: #ccc;
+  opacity: 0.8;
+  font-size: 16px;
+}
+
+.sa-result-item a {
+  text-decoration: none;
+  color: #ccc;
+  font-weight: 410;
+}
+/* Labels */
+.sa-labels {
+  margin-top: 5px;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.sa-label {
+  font-size: 12px;
+  padding: 2px 6px;
+  background: #555;
+  border-radius: 4px;
+}
+.sa-highlight {
+  background: rgba(146, 112, 148, 0.4);
+  color: #ccc;
+}
+
+/* ================= FILTER POPUP ================= */
+.sa-filter-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: none;
+  z-index: 500;
+}
+.sa-filter-popup {
+  background: #333;
+  width: 300px;
+  padding: 10px;
+  margin: 170px auto auto 15px;
+  border-radius: 7px;
+  border: 1px solid #666666;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (min-width:769px){ 
+  .sa-filter-popup { width:350px; margin: 210px auto auto 30px; }
+}
+
+.sa-filter-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-weight: 600;
+
+  width: 100%;
+}
+.sa-filter-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+/* ================= CUSTOM SELECTOR ================= */
+.sa-selector {
+  position: relative;
+  margin-bottom: 15px;
+
+  flex: 1;
+  min-width: 120px;   /* controls minimum width */
+}
+.sa-selector-selected {
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.sa-selector-options {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #303030;
+  border: 1px solid #888;
+  z-index: 10;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.sa-selector-options div {
+  padding: 6px;
+  cursor: pointer;
+  border-bottom: 1px solid #888;
+}
+.sa-selector-options div:hover {
+  background: #f1f1f1;
+}
+/* Active filter color */
+.sa-filter-active {
+  color: #42b858 !important;
+}
+.sa-selector-options div:last-child {
+  border-bottom: none;
+}
+#saSelectorSecondary {
+  display: none;
+}
 
 
   /* spacing: mobile 10px each side, desktop 30px each side */
@@ -221,7 +412,6 @@ header nav a:hover {
     scrollbar-width:none;
     scroll-behavior:smooth; /* smooth when script scrolls */
   }
-  .scroller::-webkit-scrollbar{ display:none; }
 
   /* cards (boxA) smaller than before, keeps 5:4 ratio */
   .cards{
@@ -501,50 +691,6 @@ header nav a:hover {
 }
 
 
-  .search-results {
-    position: absolute;
-    background: #111;
-    border: 1px solid #444;
-    border-radius: 4px;
-    width: 87%;
-    max-width: 700px;  
-    min-height: 180px;
-    max-height: 300px;
-    margin-top: 0;
-    z-index: 999;
-    display: none; /* hidden until results appear */
-    padding: 7px;    
-    overflow-y: auto;
-  }
-
-@media (min-width:769px){
-.search-results { max-height: 500px; }
-}
-
-  .search-results .result {
-    padding: 8px;
-    border: 1px solid #333;
-    border-radius: 4px;
-    margin: 5px 0;
-    cursor: pointer;
-    
-  }
-
-  .search-results .result:hover {
-    background: #222;
-  }
-
-  .search-results a {
-    text-decoration: none;
-    color: #74abf7;
-    font-size: 0.83rem;
-  }
-
-  .search-results a:hover {
-    color: #f7c2d9;
-  }
-
-
 /* responsive */
 @media (max-width:980px){
   .hero{grid-template-columns:1fr}
@@ -552,9 +698,6 @@ header nav a:hover {
   .nav{overflow:auto;padding-bottom:8px}
   .brand-title{font-size:1rem}
 }
-
-/* focus states */
-input:focus, textarea:focus, button:focus{box-shadow:0 0 0 4px rgba(127,167,255,0.10);border-color:#7fa7ff;outline:none}
 
 
 /* ===== FOOTER ===== */
@@ -577,6 +720,23 @@ footer a:hover {
     text-decoration: underline;
 }
 .hidden{display:none}
+
+@media (max-width: 768px) {
+    /* Hide scrollbar for Chrome, Safari and Edge */
+    *::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    * {
+        scrollbar-width: none;
+    }
+
+    /* Hide scrollbar for IE and old Edge */
+    * {
+        -ms-overflow-style: none;
+    }
+}
 
 </style>
  
@@ -616,13 +776,69 @@ footer a:hover {
     <section class="hero">
       <div class="hero-left">
 
-<form id="searchForm" class="global-search" role="search" aria-label="Search site" onsubmit="return false;">
-  <input id="searchInput" type="search" placeholder="Search any topic, resources, subjects, study Material..." autocomplete="off" aria-label="Search">
-  <button type="submit" aria-label="Search">Search</button>
-</form>
+<!-- ================= SEARCH AREA ================= -->
+<div class="sa-search-wrapper">
+  <div class="sa-search-bar">
+    <!-- Filter Button -->
+<button class="sa-filter-btn" id="saFilterBtn">
+  <svg viewBox="0 0 22 20" width="22" height="22">
+    <path 
+      d="M20 0H0l8 9.46V16l4 2V9.46z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</button>
+    <!-- Search Input -->
+    <input type="text" id="saSearchInput" placeholder="Search..." autocomplete="off">
+    <!-- Search Icon (Design only) -->
 
-<!-- Search results dropdown -->
-<div id="searchResults" class="search-results"></div>
+<div class="sa-search-icon">
+  <svg viewBox="0 0 48 48" width="22" height="22">
+    <path
+      d="M46.599 40.236L36.054 29.691C37.89 26.718 39 23.25 39 19.5 39 8.73 30.27 0 19.5 0S0 8.73 0 19.5 8.73 39 19.5 39c3.75 0 7.218-1.11 10.188-2.943l10.548 10.545a4.501 4.501 0 0 0 6.363-6.366zM19.5 33C12.045 33 6 26.955 6 19.5S12.045 6 19.5 6 33 12.045 33 19.5 26.955 33 19.5 33z"
+      fill="currentColor"
+    />
+  </svg>
+</div>
+
+  </div>
+  <!-- Search Result -->
+  <div class="sa-search-results" id="saSearchResults"></div>
+</div>
+<!-- ================= FILTER POPUP ================= -->
+<div class="sa-filter-overlay" id="saFilterOverlay">
+  <div class="sa-filter-popup">
+    <div class="sa-filter-header">
+      <span>Filter</span>
+      <button class="sa-filter-close" id="saFilterClose">✕</button>
+    </div>
+    <!-- First Selector -->
+    <div class="sa-selector" id="saSelectorPrimary">
+      <div class="sa-selector-selected">All</div>
+      <div class="sa-selector-options">
+        <div data-value="all">All</div>
+        <div data-value="pages">Pages</div>
+        <div data-value="semester">Semester</div>
+        <div data-value="course">Course</div>
+        <div data-value="type">Type</div>
+      </div>
+    </div>
+    <!-- Second Selector -->
+    <div class="sa-selector" id="saSelectorSecondary" >
+      <div class="sa-selector-selected">All</div>
+      <div class="sa-selector-options"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 
         <h2 class="page-title">Welcome to Suren Das College - Computer Science Department</h2>
 
@@ -699,6 +915,7 @@ footer a:hover {
        <a href="about.html">About Us</a></p>
   </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
 <script>
 
 document.getElementById("shareBtn").addEventListener("click", async (event) => {
@@ -765,23 +982,6 @@ if (annList) {
     featured.innerHTML = `<h4 class="muted">No featured resource</h4><p class="muted">Add a featured ebook or question paper from the admin area to show here.</p>`;
   }
 
-  // helper to escape HTML
-  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-
-  // wire search form: require at least 3 characters
-  const searchForm = document.getElementById('searchForm');
-  if (searchForm) {
-    searchForm.addEventListener('submit', function(e){
-      const q = (document.getElementById('searchInput')||{}).value || '';
-      if (q.trim().length < 3) {
-        e.preventDefault();
-        alert('Type 3 or more characters to search.');
-      }
-      // otherwise default form submit to /search.html?q=...
-    });
-  }
-
-  // set a11y role for dynamic lists if needed (already have aria-live)
 })();
 
 
@@ -961,147 +1161,450 @@ if (annList) {
 
 })();
 
-// Dataset for searching (or load from JSON file)
-const data = [
 
-{ title: "Homepage", url: "index.html" }, 
-{ title: "Study Material", url: "study-material.html" }, 
-{ title: "Class Routine", url: "class-routine.html" },
-{ title: "Courses CS Department", url: "courses.html" },
-{ title: "External Study Resources", url: "links.html" },
-{ title: "College Library OPAC", url: "library-opac.html" },
-{ title: "Feedback", url: "feedback.html" },
-{ title: "About Suren Das College", url: "about.html#about-college" },
-{ title: "About CS Department", url: "about.html#cs-department" },
-{ title: "About this Website", url: "about.html#about-website" },
-{ title: "About Admin", url: "about.html#about-admin" },
-{ title: "Upload Study Resources", url: "upload.html#resources" },
-{ title: "Upload Resources as Image", url: "upload.html#class-notes" },
-{ title: "Get Holiday List 2025", url: "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Holiday%20List%202025.pdf" },
-{ title: "Get Final exam routine 1st sem 2025", url: "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Final%20Examination%20routine%20-%201st%20sem%20-%202025%20-%20BA,%20BSc,%20BCA,%20BVoc.pdf" },
-{ title: "Request New Subject Paper", url: "request-course.html" },
+/* ===============================
+   SEARCH CORE SYSTEM
+================================ */
 
+let saData = [];
+let saFuse = null;
 
-{ title: "C Programming (BCA)", url: "sem1/c-programming.html" }, 
-{ title: "Content Syllabus C Programming", url: "sem1/c-programming.html#content" },
-{ title: "Reference Books C Programming", url: "sem1/c-programming.html#reference" },    
-{ title: "Class Notes (college) C Programming", url: "sem1/c-programming.html#class-notes" },
-{ title: "Study Notes E-Books C Programming", url: "sem1/c-programming.html#notes" },
-{ title: "Model Question-Answer MCQs C Programming", url: "sem1/c-programming.html#model" },
-{ title: "Old Question Paper C Programming", url: "sem1/c-programming.html#paper" },
-{ title: "Youtube Tutorials C Programming", url: "sem1/c-programming.html#yt-wrapper" },
+let saRecentlyClosedFilter = false;
 
-{ title: "Mathematics -I (BCA)", url: "sem1/mathematics-i.html" },
-{ title: "Content Syllabus Mathematics -I", url: "sem1/mathematics-i.html#content" },
-{ title: "Reference Books E-books Mathematics -I", url: "sem1/mathematics-i.html#reference" },
-{ title: "Notes Exercise Mathematics -I", url: "sem1/mathematics-i.html#notes" },
-{ title: "Old Question Paper Mathematics -I", url: "sem1/mathematics-i.html#paper" },
-{ title: "Youtube Tutorials Mathematics -I", url: "sem1/mathematics-i.html#yt-wrapper" },
+const saSearchInput = document.getElementById("saSearchInput");
+const saSearchResults = document.getElementById("saSearchResults");
 
-{ title: "Computer Application (SEC)", url: "sem1/computer-application-sec-bca.html" },
-{ title: "Content Syllabus Computer Application", url: "sem1/computer-application-sec-bca.html#content" },
-{ title: "Reference Books Computer Application", url: "sem1/computer-application-sec-bca.html#reference" },
-{ title: "Class Notes (college) Computer Application", url: "sem1/computer-application-sec-bca.html#class-notes" },
-{ title: "Study Notes E-Books Computer Application", url: "sem1/computer-application-sec-bca.html#notes" },
-{ title: "Model Question-Answer MCQs Computer Application", url: "sem1/computer-application-sec-bca.html#model" },
-{ title: "Old Question Paper Computer Application", url: "sem1/computer-application-sec-bca.html#paper" },
-{ title: "Youtube Tutorials Computer Application", url: "sem1/computer-application-sec-bca.html#yt-wrapper" },
+/* ===============================
+   LOAD JSON DATA
+================================ */
 
-{ title: "Environmental Studies (VAC)", url: "sem1/environmental-studies-vac.html" },
-{ title: "Content Syllabus Environmental Studies", url: "sem1/environmental-studies-vac.html#content" },
-{ title: "Reference Books Environmental Studies", url: "sem1/environmental-studies-vac.html#reference" },
-{ title: "Study Notes E-Books Environmental Studies", url: "sem1/environmental-studies-vac.html#notes" },
-{ title: "Shared Notes Model Environmental Studies", url: "sem1/environmental-studies-vac.html#shared" },
-{ title: "Model Question-Answer MCQs Environmental Studies", url: "sem1/environmental-studies-vac.html#model" },
-{ title: "Old Question Paper Environmental Studies", url: "sem1/environmental-studies-vac.html#paper" },
-{ title: "Assignments Environmental Studies", url: "sem1/environmental-studies-vac.html#assignment" },
-{ title: "Youtube Tutorials Environmental Studies", url: "sem1/environmental-studies-vac.html#yt-wrapper" },
+fetch("search-data.json")
+  .then(res => res.json())
+  .then(data => {
+    saData = data;
 
-{ title: "Library & Information Science (MDC)", url: "sem1/library-information-science-mdc.html" },
-{ title: "Content Syllabus Library Information Science", url: "sem1/library-information-science-mdc.html#content" },
-{ title: "Reference Books E-books Notes Library Information Science", url: "sem1/library-information-science-mdc.html#reference" },
-{ title: "Shared Notes Library Information Science", url: "sem1/library-information-science-mdc.html#shared" },
-{ title: "Model Question-Answer MCQs Library Information Science", url: "sem1/library-information-science-mdc.html#model" },
-{ title: "Old Question Paper Library Information Science", url: "sem1/library-information-science-mdc.html#paper" },
-{ title: "Assignments Library Information Science", url: "sem1/library-information-science-mdc.html#assignment" },
-
-{ title: "Jogajogmuluk Asomiya -I (AEC)", url: "sem1/jogajogmuluk-asomiya-i-aec.html" },
-{ title: "Content Syllabus Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#content" },
-{ title: "Reference Books E-Books Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#reference" },
-{ title: "Class Notes (college) Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#class-notes" },
-{ title: "Shared Contents Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#shared" },
-{ title: "Model Question Answers Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#model" },
-{ title: "Old Question Paper Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#paper" },
-{ title: "Assignment Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#assignment" },
-{ title: "Youtube Tutorials Jogajogmuluk Asomiya", url: "sem1/jogajogmuluk-asomiya-i-aec.html#yt-wrapper" },
+    saFuse = new Fuse(saData, {
+      keys: ["t"],          // search only in title
+      threshold: 0.3,       // strict fuzzy
+      ignoreLocation: true,
+      minMatchCharLength: 2
+    });
+  });
 
 
-{ title: "Data Structure and Algorithms (BCA)", url: "sem2/dsa.html" },
-{ title: "Content Syllabus Data Structure and Algorithms (BCA)", url: "sem2/dsa.html#content" },
-{ title: "Reference Books Data Structure and Algorithms", url: "sem2/dsa.html#reference" },
-{ title: "Study Notes E-books Data Structure and Algorithms", url: "sem2/dsa.html#notes" },
-{ title: "Old Question Paper Data Structure and Algorithms", url: "sem2/dsa.html#paper" },
-{ title: "Youtube Tutorials Data Structure and Algorithms", url: "sem2/dsa.html#yt-wrapper" },
+/* ===============================
+   REAL TIME SEARCH
+================================ */
 
-{ title: "Digital Logic Fundamentals (BCA)", url: "sem2/digital-logic.html" },
-{ title: "Content Syllabus Digital Logic Fundamentals", url: "sem2/digital-logic.html#content" },
-{ title: "Reference Books Digital Logic Fundamentals", url: "sem2/digital-logic.html#reference" },
-{ title: "Study Notes E-Books Digital Logic Fundamentals", url: "sem2/digital-logic.html#notes" },
-{ title: "Old Question Paper Digital Logic Fundamentals", url: "sem2/digital-logic.html#paper" },
-{ title: "Youtube Tutorials Digital Logic Fundamentals", url: "sem2/digital-logic.html#yt-wrapper" },
+saSearchInput.addEventListener("input", function () {
 
-{ title: "Mathematics -II (BCA)", url: "sem2/mathematics-ii.html" },
-{ title: "Content Syllabus Mathematics -II", url: "sem2/mathematics-ii.html#content" },
-{ title: "Reference Books Mathematics -II", url: "sem2/mathematics-ii.html#reference" },
-{ title: "Study Notes E-Books Mathematics -II", url: "sem2/mathematics-ii.html#notes" },
-{ title: "Old Question Paper Mathematics -II", url: "sem2/mathematics-ii.html#paper" },
-{ title: "Youtube Tutorials Mathematics -II", url: "sem2/mathematics-ii.html#yt-wrapper" },
+  const saValue = this.value.trim();
 
-{ title: "Information Sources & Services (MDC)", url: "sem2/information-source-service-mdc.html" },
-{ title: "Content Syllabus Information Sources Services", url: "sem2/information-source-service-mdc.html#content" },
-{ title: "Reference Books E-books Information Sources Services", url: "sem2/information-source-service-mdc.html#reference" },
-{ title: "Shared Notes Information Sources Services", url: "sem2/information-source-service-mdc.html#shared" },
-{ title: "Old Question Paper Information Sources Services", url: "sem2/information-source-service-mdc.html#paper" },
-{ title: "Youtube Tutorials Information Sources Services", url: "sem2/information-source-service-mdc.html#yt-wrapper" }
+  if (saValue.length === 0) {
+    saSearchResults.style.display = "none";
+    return;
+  }
 
-];
+  saSearchResults.style.display = "block";
+  saApplySearch();
+});
 
-  const searchInput = document.getElementById("searchInput");
-  const searchResults = document.getElementById("searchResults");
+/* ===============================
+   APPLY SEARCH + FILTER
+================================ */
 
-  searchInput.addEventListener("input", function() {
-    const query = this.value.toLowerCase().trim();
-    searchResults.innerHTML = ""; // clear old results
+function saApplySearch() {
 
-    if (query.length < 3) {
-      searchResults.style.display = "none";
-      return;
+  const saQuery = saSearchInput.value.trim();
+
+  if (saQuery.length === 0) {
+    saSearchResults.style.display = "none";
+    return;
+  }
+
+  saSearchResults.innerHTML = "";
+  saSearchResults.style.display = "block";
+
+if (saQuery.length < 3) {
+  saSearchResults.innerHTML =
+    `<div class="sa-result-item sa-message">Keep typing...</div>`;
+  return;
+}
+
+  if (!saFuse) return;
+
+  const saWords = saQuery.split(/\s+/);
+
+  let saResults = saFuse.search(saQuery);
+
+  saResults = saResults.map(r => r.item);
+
+  // Apply filter
+  saResults = saResults.filter(item => {
+
+    if (saFilterCategory === "pages") {
+      return !item.u.includes("#");
     }
 
-    const results = data.filter(item =>
-      item.title.toLowerCase().includes(query)
+    if (saFilterCategory === "semester") {
+      if (saFilterValue === "all") return item.sem !== undefined;
+      return item.sem == saFilterValue;
+    }
+
+    if (saFilterCategory === "course") {
+      if (saFilterValue === "all") return item.course;
+      return item.course === saFilterValue;
+    }
+
+/* TYPE FILTER IMPROVED */
+
+if (saFilterCategory === "type") {
+
+  if (saFilterValue === "all") return item.type;
+
+  if (!item.type) return false;
+
+  // syllabus = content
+  if (saFilterValue === "syllabus") {
+    return item.type === "content";
+  }
+
+  // reference group
+  if (saFilterValue === "reference") {
+    return ["reference", "notes", "shared", "class-notes"]
+      .includes(item.type);
+  }
+
+  return item.type === saFilterValue;
+}
+
+    return true;
+  });
+
+  if (saResults.length === 0) {
+    saSearchResults.innerHTML =
+      `<div class="sa-result-item sa-message">No search result found</div>`;
+    return;
+  }
+  saRenderResults(saResults, saQuery);
+}
+
+
+/* ===============================
+   HIDE SEARCH RESULT ON OUTSIDE CLICK
+================================ */
+
+document.addEventListener("click", function (e) {
+
+  const saClickedInsideSearch =
+    saSearchInput.contains(e.target) ||
+    saSearchResults.contains(e.target);
+
+  const saFilterOpen =
+    saFilterOverlay &&
+    saFilterOverlay.style.display === "block";
+
+  if (
+    !saClickedInsideSearch &&
+    !saFilterOpen &&
+    !saRecentlyClosedFilter
+  ) {
+    saSearchResults.style.display = "none";
+  }
+
+});
+
+
+/* ===============================
+   RENDER RESULTS
+================================ */
+
+function saRenderResults(saItems, saQuery) {
+
+  saSearchResults.innerHTML = "";
+
+  saItems.forEach(item => {
+
+    const saDiv = document.createElement("div");
+    saDiv.className = "sa-result-item";
+
+    const saHighlightedTitle = saHighlight(item.t, saQuery);
+
+    let saLabelsHTML = "";
+
+    // Semester Label
+if (item.sem !== undefined) {
+  saLabelsHTML += `<span class="sa-label">semester ${item.sem}</span>`;
+}
+
+    // Course Label
+    if (item.course) {
+      saLabelsHTML += `<span class="sa-label">${item.course}</span>`;
+    }
+
+    // Type Label
+    if (item.type) {
+      saLabelsHTML += `<span class="sa-label">${item.type}</span>`;
+    }
+
+    /* FILE TYPE LABEL (AUTO DETECT) */
+    if (item.u) {
+      const saUrlLower = item.u.toLowerCase();
+      if (saUrlLower.endsWith(".pdf")) {
+        saLabelsHTML += `<span class="sa-label">PDF</span>`;
+      }
+    }
+
+
+    saDiv.innerHTML = `
+      <a href="${item.u}">
+        ${saHighlightedTitle}
+      </a>
+      <div class="sa-labels">
+        ${saLabelsHTML}
+      </div>
+    `;
+
+    saSearchResults.appendChild(saDiv);
+  });
+}
+
+
+/* ===============================
+   ESCAPE HTML (REQUIRED)
+================================ */
+
+function escapeHtml(saString) {
+  return String(saString).replace(/[&<>"']/g, function (m) {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[m];
+  });
+}
+
+
+/* ===============================
+   HIGHLIGHT FUNCTION
+================================ */
+
+function saHighlight(saText, saQuery) {
+
+  // Escape first (very important)
+  let saSafeText = escapeHtml(saText);
+
+  const saWords = saQuery
+    .split(/\s+/)
+    .filter(w => w.length >= 2); // ignore 1 letter words
+
+  saWords.forEach(word => {
+
+    const saRegex = new RegExp(
+      `(${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+      "gi"
     );
 
-    if (results.length > 0) {
-      results.forEach(r => {
-        const div = document.createElement("div");
-        div.className = "result";
-        div.innerHTML = `<a href="${r.url}">${r.title}</a>`;
-        searchResults.appendChild(div);
-      });
-      searchResults.style.display = "block";
-    } else {
-      searchResults.innerHTML = "<div class='result'>No results found</div>";
-      searchResults.style.display = "block";
-    }
+    saSafeText = saSafeText.replace(
+      saRegex,
+      "<mark class='sa-highlight'>$1</mark>"
+    );
   });
 
-  // Hide results when clicking outside
-  document.addEventListener("click", function(e) {
-    if (!searchResults.contains(e.target) && e.target !== searchInput) {
-      searchResults.style.display = "none";
+  return saSafeText;
+}
+
+/* ===============================
+   FILTER STATE
+================================ */
+
+let saFilterCategory = "all";
+let saFilterValue = "all";
+
+const saFilterBtn = document.getElementById("saFilterBtn");
+const saFilterOverlay = document.getElementById("saFilterOverlay");
+const saFilterClose = document.getElementById("saFilterClose");
+
+const saSelectorPrimary = document.getElementById("saSelectorPrimary");
+const saSelectorSecondary = document.getElementById("saSelectorSecondary");
+
+/* ===============================
+   FILTER POPUP CONTROL
+================================ */
+
+saFilterBtn.addEventListener("click", function () {
+  saFilterOverlay.style.display = "block";
+});
+
+saFilterClose.addEventListener("click", function (e) {
+
+  saFilterOverlay.style.display = "none";
+
+  saRecentlyClosedFilter = true;
+
+  setTimeout(() => {
+    saRecentlyClosedFilter = false;
+  }, 100);
+
+});
+
+// Close when clicking outside popup
+saFilterOverlay.addEventListener("click", function (e) {
+
+  if (e.target === saFilterOverlay) {
+
+    saFilterOverlay.style.display = "none";
+
+    saRecentlyClosedFilter = true;
+
+    setTimeout(() => {
+      saRecentlyClosedFilter = false;
+    }, 100);
+
+  }
+
+});
+
+/* ===============================
+   CUSTOM SELECTOR OPEN / CLOSE
+================================ */
+
+document.querySelectorAll(".sa-selector").forEach(selector => {
+
+  const saSelected = selector.querySelector(".sa-selector-selected");
+  const saOptions = selector.querySelector(".sa-selector-options");
+
+saSelected.addEventListener("click", function (e) {
+
+  const saIsOpen = saOptions.style.display === "block";
+
+  // Close all selectors first
+  document.querySelectorAll(".sa-selector-options")
+    .forEach(opt => opt.style.display = "none");
+
+  // Toggle only if it was closed
+  if (!saIsOpen) {
+    saOptions.style.display = "block";
+  }
+
+  e.stopPropagation();
+});
+
+  saOptions.addEventListener("click", function (e) {
+
+    if (e.target.dataset.value) {
+
+      saSelected.textContent = e.target.textContent;
+      saOptions.style.display = "none";
+
+      if (selector.id === "saSelectorPrimary") {
+        saHandlePrimaryChange(e.target.dataset.value);
+      }
+
+      if (selector.id === "saSelectorSecondary") {
+        saFilterValue = e.target.dataset.value;
+        saApplySearch();
+      }
     }
   });
+});
+
+/* ===============================
+   PRIMARY SELECTOR LOGIC
+================================ */
+
+function saHandlePrimaryChange(saValue) {
+
+  saFilterCategory = saValue;
+  saFilterValue = "all";
+
+  const saSecondary = saSelectorSecondary;
+  const saSecondarySelected =
+    saSecondary.querySelector(".sa-selector-selected");
+  const saSecondaryOptions =
+    saSecondary.querySelector(".sa-selector-options");
+
+  saSecondarySelected.textContent = "All";
+  saSecondaryOptions.innerHTML = "";
+
+  if (saValue === "all" || saValue === "pages") {
+    saSecondary.style.display = "none";
+  } else {
+    saSecondary.style.display = "block";
+  }
+
+  if (saValue === "semester") {
+
+    saSecondaryOptions.innerHTML = `
+      <div data-value="all">All</div>
+      <div data-value="1">Semester 1</div>
+      <div data-value="2">Semester 2</div>
+    `;
+
+  } else if (saValue === "course") {
+
+    saSecondaryOptions.innerHTML = `
+      <div data-value="all">All</div>
+      <div data-value="BCA">BCA</div>
+      <div data-value="SEC">SEC</div>
+      <div data-value="VAC">VAC</div>
+      <div data-value="MDC">MDC</div>
+      <div data-value="AEC">AEC</div>
+    `;
+
+  } else if (saValue === "type") {
+
+    saSecondaryOptions.innerHTML = `
+      <div data-value="all">All</div>
+      <div data-value="syllabus">Syllabus</div>
+      <div data-value="reference">Reference & Notes</div>
+      <div data-value="model">Model Question & MCQ</div>
+      <div data-value="paper">Question Paper</div>
+      <div data-value="videos">Youtube Tutorials</div>
+      <div data-value="assignment">Assignment</div>
+    `;
+  }
+
+  saUpdateFilterIcon();
+  saApplySearch();
+}
+
+saHandlePrimaryChange("all");
+
+/* ===============================
+   FILTER ICON COLOR
+================================ */
+
+function saUpdateFilterIcon() {
+
+  if (saFilterCategory !== "all") {
+    saFilterBtn.classList.add("sa-filter-active");
+  } else {
+    saFilterBtn.classList.remove("sa-filter-active");
+  }
+}
+
+/* ===============================
+   CLOSE SELECTOR WHEN CLICK OUTSIDE
+================================ */
+
+document.addEventListener("click", function (e) {
+
+  const saSelectors = document.querySelectorAll(".sa-selector");
+
+  saSelectors.forEach(selector => {
+
+    if (!selector.contains(e.target)) {
+      const saOptions =
+        selector.querySelector(".sa-selector-options");
+      saOptions.style.display = "none";
+    }
+
+  });
+
+});
 
 </script>
 

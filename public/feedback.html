@@ -364,9 +364,25 @@ footer a:hover {
     text-decoration: underline;
 }
 
-
 .hidden {
     display: none;
+}
+
+@media (max-width: 768px) {
+    /* Hide scrollbar for Chrome, Safari and Edge */
+    *::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    * {
+        scrollbar-width: none;
+    }
+
+    /* Hide scrollbar for IE and old Edge */
+    * {
+        -ms-overflow-style: none;
+    }
 }
 
 </style>
@@ -422,7 +438,7 @@ footer a:hover {
                    accept="image/*"
                    multiple
                    aria-describedby="uploadHint"
-            <p id="uploadHint">Click to select images. Max 5 images. Max size per image: 2 MB.</p>
+            <p id="uploadHint">Click to select images. Max 5 images. Max size per image: 4 MB.</p>
             <div class="preview-container" id="previewContainer" aria-live="polite"></div>
           </div>
 
@@ -466,7 +482,7 @@ footer a:hover {
 // CONFIG (change here if you want different limits)
 // --------------------
 const MAX_FILES = 5;
-const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB in bytes
+const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB in bytes
 
 // NOTE: These endpoints must match the Cloudflare Functions filenames you deployed
 const TEXT_ENDPOINT = '/api/feedback_text';            // create text row -> returns feedback_id

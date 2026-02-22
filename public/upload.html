@@ -89,7 +89,6 @@ header {
   white-space: nowrap;
   scrollbar-width: none;
 }
-.nav1::-webkit-scrollbar { display: none; }
 
 .nav1 a {
   text-decoration: none;
@@ -532,6 +531,24 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+    /* Hide scrollbar for Chrome, Safari and Edge */
+    *::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    * {
+        scrollbar-width: none;
+    }
+
+    /* Hide scrollbar for IE and old Edge */
+    * {
+        -ms-overflow-style: none;
+    }
+}
+
 </style>
 
 </head>
@@ -568,9 +585,8 @@ footer a:hover {
       <!-- File select / drop zone -->
       <!-- data attributes: use JS to read these limits -->
       <div class="file-area">
-        <input id="fileInput" type="file" multiple hidden />
-        <label id="dropZone" for="fileInput" class="drop-zone" tabindex="0"
-               data-max-files="20" data-max-file-size="314572800" data-max-total-size="1073741824">
+        <input id="fileInput" type="file" accept="image/*,application/*" multiple hidden />
+        <label id="dropZone" for="fileInput" class="drop-zone" tabindex="0">
           <div class="drop-text">Click here to select the files</div>
           <div class="drop-sub">Or drag & drop up to 20 files</div>
           <div class="drop-sub">(max 300 MB per file)</div>
@@ -636,10 +652,9 @@ footer a:hover {
       <!-- Image select / capture box -->
       <div class="file-area">
         <input id="imageInputNotes" type="file" accept="image/*" multiple hidden />
-        <label id="dropZoneImages" for="imageInputNotes" class="drop-zone" tabindex="0"
-               data-max-images="40" data-max-image-size="5242880">
+        <label id="dropZoneImages" for="imageInputNotes" class="drop-zone" tabindex="0">
           <div class="drop-text">Click here to select the image</div>
-          <div class="drop-sub">Or drag & drop up to 40 images</div>
+          <div class="drop-sub">Or drag & drop up to 50 images</div>
           <div class="drop-sub">(max 5 MB per file)</div>
         </label>
 
@@ -821,12 +836,12 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
   const classNotesSection = $('#class-notes');
 
   // limits (use dataset on HTML or fallbacks)
-  const RESOURCES_MAX_FILES = dropZone ? parseInt(dropZone.dataset.maxFiles || '20', 10) : 20;
-  const RESOURCES_MAX_FILE_SIZE = dropZone ? parseInt(dropZone.dataset.maxFileSize || String(300*1024*1024), 10) : 300*1024*1024;
-  const RESOURCES_MAX_TOTAL = dropZone ? parseInt(dropZone.dataset.maxTotalSize || String(500*1024*1024), 10) : 500*1024*1024;
+  const RESOURCES_MAX_FILES = 20;
+  const RESOURCES_MAX_FILE_SIZE = 300 * 1024 * 1024;
+  const RESOURCES_MAX_TOTAL = 500 * 1024 * 1024;
 
-  const NOTES_MAX_IMAGES = dropZoneImages ? parseInt(dropZoneImages.dataset.maxImages || '40', 10) : 40;
-  const NOTES_MAX_IMAGE_SIZE = dropZoneImages ? parseInt(dropZoneImages.dataset.maxImageSize || String(5*1024*1024), 10) : 5*1024*1024;
+  const NOTES_MAX_IMAGES = 50;
+  const NOTES_MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
   // ------------------------
   // internal state arrays
@@ -1085,6 +1100,14 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
       return;
     }
     for (const f of incoming) {
+      if (
+        !f.type.startsWith('image/') &&
+        !f.type.startsWith('application/')
+      ) {
+        showFileError("Invalid file format");
+        return;
+      }
+
       if (f.size > RESOURCES_MAX_FILE_SIZE) {
         showFileError(`"${f.name}" is too big (${formatBytes(f.size)}). Max per file is ${formatBytes(RESOURCES_MAX_FILE_SIZE)}.`);
         return;
