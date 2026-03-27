@@ -4,471 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Foundation of Library and Information Science (MDC) - First Semester</title>
-
-<style>
-
-/* =========================
-   STUDY MATERIAL - styles.css
-   ========================= */
-
-/* Always dark */
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
-
-/* ===== RESET / BASE ===== */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  color: #e6e9ef;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* { box-sizing: border-box; }
-
-/* Body layout */
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Background image with overlay */
-body.bg-app {
-  background: url("../src/mdc.webp") no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
-  color: #e6e9ef;
-}
-
-/* dark overlay behind content */
-body.bg-app::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: -1;
-}
-
-/* Container */
-.container {
-  max-width: 1100px;
-  margin: 50px auto 1px; /* leave space for fixed header */
-  padding: 10px;
-}
-@media (min-width: 769px) { .container { padding: 35px; } }
-
-/* Header */
-header {
-  background: #0b2a6b;
-  padding: 6px 12px;
-  display: flex;
-  align-items: center;
-  position: fixed;
-  top: 0; left: 0; width: 100%;
-  z-index: 1000;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
-  animation: slideDown 350ms ease;
-}
-@keyframes slideDown { from { transform: translateY(-100%); opacity:0 } to { transform: translateY(0); opacity:1 }}
-
-/* Nav */
-header nav {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;
-}
-header nav a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: transparent;
-  border: 1px solid #6974c7;
-  flex-shrink: 0;
-  transition: all 180ms ease;
-}
-header nav a:hover {
-  background: #0b5ed7;
-}
-
-/* Headings and intro text */
-.head-title {
-  width: 100%;
-  color: #fff;
-  text-align: center;
-  margin: 10px auto 20px;
-}
-.head2-title {
-  margin: 0;
-  color: #fff;
-  font-weight: 600;
-  font-size: 1.05rem;
-}
-
-.lead {
-  color: #cfd3fa;
-  margin: 6px 0;
-  line-height: 1.45;
-  text-align: justify;
-  z-index: 5;
-}
-
-/* Divider */
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 24px 0;
-}
-.lines { flex: 1; height: 3px; display:flex; align-items:center; }
-.divider-line { width: 100%; height: 3px; background: #595963; border-radius: 2px; }
-
-/* Sub-box (card container) */
-.sub-box {
-  width: 100%;
-  max-width: 900px;
-  margin: 12px auto;
-  padding: 6px;
-  background: rgba(0,0,0,0.5);
-  border-radius: 12px;
-  border: 1px solid #89718a;
-  position: relative;
-  z-index: 2;
-}
-
-/* Upload notes */
-.upload-notes {
-  width: 100%;
-/*  max-width: 700px; */
-  margin: 12px auto;
-  padding: 10px;
-  background: transparent;
-  
-  border-radius: 10px;
-  text-align: center;
-}
-.upload-btn {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 8px 14px;
-  background: #743c78;
-  color: #ffffff;
-  border-radius: 6px;
-  font-weight: 700;
-  text-decoration: none;
-  border: 1px solid #fff;
-}
-.upload-btn:hover { background: #fff; color: #0b2a6b; }
-
-/* PDF box (existing visual)  */
-.pdf-box {
-  width: 100%;
-  display: flex;
-  gap: 8px;
-  margin: 10px 0;
-  background: rgba(62,63,69,0.5);
-  border-radius: 10px;
-  padding: 5px;
-  align-items: center;
-  z-index: 1;
-  border: 1px solid rgba(255,255,255,0.03);
-}
-.box-left { flex: 0 0 85px; display:flex; align-items:center; justify-content:center; }
-.box-left img { width: 100%; height: auto; border-radius: 8px; object-fit: cover; }
-.box-right { flex: 1 1 auto; display:flex; flex-direction:column; gap:8px; }
-.button-row { display:flex; gap:12px; align-items:center; }
-button, .pdf-box button {
-  background: #743c78;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-  border: 1px solid #fff;
-}
-button:hover, .pdf-box button:hover { background: #fff; color: #0b2a6b; }
-
-.file-title { font-size: 14px; color: #fff; }
-
-@media (min-width: 769px) {
-  .pdf-box { gap: 20px; padding: 12px; }
-  .box-left { flex-basis: 160px; }
-  .file-title { font-size: 16px; }
-  button { padding: 10px 18px; border-width: 2px; }
-}
-
-/* =========================
-   SECTION DRAWER / TABLE-LIKE HEADERS
-   ========================= */
-
-.doc-section {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.section-toggle {
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  gap: 12px;
-  cursor: pointer;
-  padding: 10px 12px;
-  background: #261b57;
-  border: 1px solid #876c87;
-  border-radius: 10px;
-  color: #fff;
-  text-align: left;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: transform 160ms ease, background 160ms ease;
-  outline: none;
-}
-.section-toggle:hover { transform: translateY(1px); background: #261b57;}
-
-.section-drawer {
-  width: 100%;
-  max-width: 500px;
-  margin-bottom: 60px;
-  overflow: hidden;
-  height: 0;
-  visibility: hidden;
-  transition: height 320ms cubic-bezier(.2,.8,.2,1), visibility 0s linear 320ms;
-  border-radius: 0 0 10px 10px;
-  border: 1px solid #876c87;
-  background: rgba(38, 27, 87, 0.7);
-}
-
-.section-drawer.open,
-.section-drawer[aria-hidden="false"] {
-  visibility: visible;
-  transition: height 380ms cubic-bezier(.2,.8,.2,1);
-}
-
-.section-content {
-  padding: 5px;
-  box-sizing: border-box;
-}
-
-/* Help text inside section content 
-.section-content .lead {
-  margin: 5px 0;
-}
-*/
-/* Make sure nested upload-notes keep original look */
-.section-content .upload-notes { margin: 5px 0; }
-
-/* If you want a compact view, pdf boxes inside drawers stack */
-.section-content .pdf-box { margin: 8px 0; }
-
-/* Allow nested custom content (paragraphs, lists, buttons) */
-.section-content p { margin: 8px 0; color: #cfd3fa; }
-.section-content a { color: #f7c2d9; }
-
-/* Small helper: show a visual divider inside content */
-.section-content .inner-divider { height: 1px; background: rgba(255,255,255,0.04); margin: 12px 0; border-radius: 2px; }
-
-/* =========================
-   YouTube drawer (keeps original style)
-   ========================= */
-
-/* Wrapper centers the button */
-.yt-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 500px;
-}
-.yt-toggle-btn {
-  width: 100%;
-  max-width: 500px;
-  height: 40px;
-  background: #261b57;
-  color: #fff;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #89718a;
-  transition: transform 150ms ease;
-}
-.yt-toggle-btn:hover { transform: translateY(1px); color: #fff;}
-
-.yt-drawer { /* this will be used for the YouTube specific drawer */
-  max-width: 500px;
-  border-radius: 0 0 10px 10px;
-  overflow: hidden;
-  height: 0;
-  visibility: hidden;
-  transition: height 300ms ease, visibility 0s linear 300ms;
-  background: rgba(38, 27, 87, 0.7);
-  border: 1px solid #89718a;
-}
-
-.yt-drawer.yt-open,
-.yt-drawer[aria-hidden="false"] {
-  visibility: visible;
-  transition: height 380ms ease;
-}
-.yt-drawer-inner { padding: 3px; }
-
-
-@media (min-width: 769px) {
-.doc-section , .section-toggle , .section-drawer , .yt-wrapper , .yt-toggle-btn , .yt-drawer {
-  max-width: 800px;
-}
-.box-left { flex: 0 0 90px; }
-}
-
-
-/* YouTube list items (keeps your previous look) */
-.yt-list { display:flex; flex-direction:column; gap:10px; }
-.yt-item { display:flex; gap:10px; align-items:center; background: rgba(62,63,69,0.5); padding:6px; border-radius:8px; min-height:86px; overflow:hidden; }
-.yt-card-link { display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit; width:100%; }
-.yt-thumb { width:140px; height:78px; border-radius:6px; overflow:hidden; background:#111; position:relative; flex:0 0 140px; }
-.yt-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-.yt-badge { position:absolute; left:6px; top:6px; background:rgba(0,0,0,0.45); color:#fff; font-size:11px; padding:4px 6px; border-radius:4px; }
-.yt-meta { display:flex; flex-direction:column; flex:1 1 auto; min-width:0; }
-.yt-title { margin:0; font-size:14px; color:#d4d4d4; line-height:1.2; font-weight: 500;}
-.yt-sub { margin:0; color:#bcd0ea; font-size:13px; }
-
-/* Responsive adjustments */
-@media (min-width: 769px) {
-  .yt-item { padding: 12px; }
-  .yt-card-link { gap: 15px; }
-  .yt-badge { padding: 7px 10px; }
-  .yt-thumb { width:160px; height:90px; flex:0 0 160px; }
-  .yt-title { font-size:15px; }
-  .yt-drawer-inner { padding: 10px; }
-}
-
-/* =========================
-   Overlay / PDF viewer / Legal popup
-   ========================= */
-
-#overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.85);
-  z-index: 9999;
-}
-.overlay-content {
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  position: relative;
-}
-.close-btn {
-    position: absolute;
-    top: 32px;
-    right: 0;
-    margin: 0;
-    background: #262323;
-    color: white;
-    border: none;
-    padding: 7px 10px;
-    font-size: 20px;
-    cursor: pointer;
-    border-radius: 2px;
-    z-index: 1000;
-}
-#pdfFrame { width: 100%; height: 100%; border: none; }
-
-/* No-legal popup */
-.legal-popup-overlay {
-  position: fixed; inset: 0;
-  display:flex; align-items:center; justify-content:center;
-  background: rgba(0,0,0,0.45);
-  z-index: 10000;
-}
-.legal-popup {
-  width: 320px;
-  max-width: calc(100% - 40px);
-  background: #a891a8; color: #111;
-  border-radius: 8px;
-  padding: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  position: relative;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-}
-.legal-popup h3 { margin: 0 0 8px 0; font-size: 18px; }
-.legal-popup p { margin: 0; line-height: 1.4; color: #111; }
-.legal-popup-close {
-  position: absolute; top: 8px; right: 10px;
-  background: transparent; border: none; font-size: 22px; cursor:pointer; color:#111;
-}
-
-/* =========================
-   Footer
-   ========================= */
-footer {
-  background: #111;
-  text-align: center;
-  padding: 6px 10px;
-  color: #aaa;
-  font-size: 0.85rem;
-  border-top: 1px solid #333;
-  margin-top: auto;
-  border-radius: 18px 18px 0 0;
-}
-footer a { color: #f7c2d9; text-decoration:none; }
-footer a:hover { text-decoration: underline; }
-
-/* Small utility helpers */
-.hidden { display:none !important; }
-.center { display:flex; align-items:center; justify-content:center; }
-
-/* Accessibility: focus outline for keyboard users */
-:focus { outline: none; }
-/* .section-toggle:focus-visible,
-.yt-toggle-btn:focus-visible,
-.upload-btn:focus-visible,
-button:focus-visible {
-  box-shadow: 0 0 0 4px rgba(151,129,172,0.18);
-  border-radius: 8px;
-}
-*/
-
-@media (max-width: 768px) {
-    /* Hide scrollbar for Chrome, Safari and Edge */
-    *::-webkit-scrollbar {
-        display: none;
-    }
-
-    /* Hide scrollbar for Firefox */
-    * {
-        scrollbar-width: none;
-    }
-
-    /* Hide scrollbar for IE and old Edge */
-    * {
-        -ms-overflow-style: none;
-    }
-}
-
-/* End of stylesheet */
-
-</style>
+  <link rel="stylesheet" href="../src/subject.css">
 
 </head>
 
-<body class="bg-app">
+<body class="bg-app" style="background: url('../src/mdc.webp') no-repeat center center fixed; background-size: cover;">
+<!-- Overlay -->
+ <div style=" position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: -1;"> </div>
+
   <header>
     <nav>
       <a href="../study-material.html">←</a>
@@ -502,7 +45,9 @@ button:focus-visible {
             "title": "Contents of Syllabus - Foundation of Library and Information Science (MDC)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/Contents%20-%20Foundations%20of%20Library%20and%20Information%20Science%20(MDC).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 150 KB",
+            "label2": "page: 1"
           }
         ]
       </script>
@@ -521,22 +66,28 @@ button:focus-visible {
       <script type="application/json" class="pdf-data">
         [
           {
-            "title": "Foundation of Library and Information Science - BLIS-01 . 1 MB . 242 page",
+            "title": "Foundation of Library and Information Science - BLIS-01",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/reference/Foundation%20of%20Library%20and%20Information%20Science%20-%20BLIS-01.pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 1 MB",
+            "label2": "page: 242 KB"
           },
           {
-            "title": "Foundation of Library and Information Science (Lovely Professional University) . 5 MB . 301 page",
+            "title": "Foundation of Library and Information Science (LPU)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/reference/Foundation%20of%20Library%20and%20Information%20Science%20%20(Lovely%20Professional%20University).pdf",
             "logo": "data:image/jpeg;base64,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",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 5 MB",
+            "label2": "page: 301"
           },
           {
-            "title": "Fundamentals of Library and Information Science (Arulmigu Palaniandavar Arts College) . 1 MB . 61 page",
+            "title": "Fundamentals of Library and Information Science (APAC)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/reference/Fundamentals%20of%20Library%20and%20Information%20Science%20(Arulmigu%20Palaniandavar%20Arts%20College).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 1 MB",
+            "label2": "page: 61"
           }
         ]
       </script>
@@ -556,16 +107,20 @@ button:focus-visible {
       <script type="application/json" class="pdf-data">
         [
           {
-            "title": "Library and Information Science (Assamese Medium) . 10 MB . 53 page",
+            "title": "Library and Information Science (Assamese Medium)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/shared/Library%20and%20Information%20Science%20(Assamese%20Medium).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 10 MB",
+            "label2": "page: 53"
           },
           {
-            "title": "Notes - Unit 4 Library and Information Related Regulations . 5 page",
+            "title": "Notes - Unit 4 Library and Information Related Regulations",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/shared/Notes%20-%20Unit%204%20Library%20and%20Information%20Related%20Regulations.pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 500 KB",
+            "label2": "page: 5"
           }
         ]
       </script>
@@ -584,22 +139,28 @@ button:focus-visible {
       <script type="application/json" class="pdf-data">
         [
           {
-            "title": "Model Question Answer - Library and Information Science (MDC) . 60 page",
+            "title": "Model Question Answer - Library and Information Science (MDC)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/model/Model%20Question%20Answer%20-%20Library%20and%20Information%20Science%20(MDC).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 820 KB",
+            "label2": "page: 60"
           },
           {
-            "title": "Model Question Answer - Library and Information Science (MDC) (sessional) . 42 page",
+            "title": "Model Question Answer - Library and Information Science (MDC) (sessional)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/model/Model%20Question%20Answer%20-%20Library%20and%20Information%20Science%20(MDC)%20(sessional).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 620 KB",
+            "label2": "page: 42"
           },
           {
-            "title": "Answer of old paper - Library and Information Science (MDC) . 34 page",
+            "title": "Answer of old paper - Library and Information Science (MDC)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/model/Answer%20of%20old%20paper%20-%20Library%20and%20Information%20Science%20(MDC).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 660 KB",
+            "label2": "page: 34"
           }
         ]
       </script>
@@ -621,43 +182,57 @@ button:focus-visible {
             "title": "MDC0100303 (2023) (BA)01",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100303%20(2023)%20(BA)01.pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 370 KB",
+            "label2": "page: 3"
           },
           {
             "title": "MDC0100303 (2023) (BA)02",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100303%20(2023)%20(BA)02.pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 100 KB",
+            "label2": "page: 3"
           },
           {
             "title": "MDC0100303 (2023)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100303%20(2023).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 520 KB",
+            "label2": "page: 3"
           },
           {
             "title": "MDC0100303 NEP (2024)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100303%20NEP%20(2024).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 130 KB",
+            "label2": "page: 4"
           },
           {
             "title": "MTDC010103 (2024)",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MTDC010103%20(2024).pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 300 KB",
+            "label2": "page: 3"
           },
 {
 "title": "MDC Library & Information Science (Sessional exam 2025)",
 "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC%20Library%20&%20Information%20Science%20(Sessional%20exam%202025).pdf",
 "logo": "default",
-"options": {"noLegal": false}
+"options": {"noLegal": false},
+"label1": "size: 1 MB",
+"label2": "page: 1"
 },
 {
 "title": "MDC0100503 (2025)",
 "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100503%20(2025).pdf",
 "logo": "default",
-"options": {"noLegal": false}
+"options": {"noLegal": false},
+"label1": "size: 800 KB",
+"label2": "page: 5"
 }
         ]
       </script>
@@ -679,13 +254,17 @@ button:focus-visible {
             "title": "Assignment 1 - Short note on S.R. Ranganathan",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/assignment/Assignment%20-%20Short%20note%20on%20S.R.%20Ranganathan.pdf",
             "logo": "default",
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 300 KB",
+            "label2": "page: 3"
           },
           {               
             "title": "Assignment 2 - Library definition, types, functions, RRRLF, LC",
             "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/assignment/Assignment%20-%20Library%20definition,%20types,%20functions,%20RRRLF,%20LC.pdf",
             "logo": "default",     
-            "options": {"noLegal": false}
+            "options": {"noLegal": false},
+            "label1": "size: 300 KB",
+            "label2": "page: 4"
           }
         ]
       </script>
@@ -710,660 +289,6 @@ button:focus-visible {
     </div>
   </div>
 
-<script>
-
-document.getElementById("shareBtn").addEventListener("click", async (event) => {
-  event.preventDefault(); // stop the link from reloading page
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: document.title,
-        text: " ",
-        url: window.location.href,
-      });
-      console.log("Page shared successfully!");
-    } catch (err) {
-      console.error("Share failed:", err.message);
-    }
-  } else {
-    alert("Sharing not supported in this browser.");
-  }
-});
-
-
-/* ===== DEFAULT LOGO (SVG data URI) ===== */
-const defaultLogo = "data:image/png;base64,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";
-
-/* ====== INSTANT "NO-LEGAL" POPUP ====== */
-function showNoLegalPopup(message = "This file is not available due to copyright issue") {
-  if (document.querySelector(".legal-popup-overlay")) return;
-
-  const overlay = document.createElement("div");
-  overlay.className = "legal-popup-overlay";
-  overlay.setAttribute("role", "dialog");
-  overlay.setAttribute("aria-modal", "true");
-
-  const popup = document.createElement("div");
-  popup.className = "legal-popup";
-
-  popup.innerHTML = `
-    <button class="legal-popup-close" aria-label="Close">&times;</button>
-    <div class="legal-popup-body">
-      <h3>Notice</h3>
-      <p>${message}</p>
-    </div>
-  `;
-
-  overlay.appendChild(popup);
-  document.body.appendChild(overlay);
-
-  overlay.querySelector(".legal-popup-close").addEventListener("click", () => {
-    document.body.removeChild(overlay);
-  });
-
-  overlay.addEventListener("click", (ev) => {
-    if (ev.target === overlay) {
-      document.body.removeChild(overlay);
-    }
-  });
-}
-
-function addPdfBox(title, filePath, logo = "default", parent = document.body, options = {}) {
-  // compatibility: if parent is actually an options object
-  if (parent && typeof parent === "object" && parent.nodeType !== 1) {
-    options = parent;
-    parent = document.body;
-  }
-  if (!parent || !(parent instanceof Element)) parent = document.body;
-
-  options = options || {};
-  const noLegal = options.noLegal === true || options.noLegal === "no-legal" || options === "no-legal";
-
-  const logoSrc = (logo === "default") ? defaultLogo : logo;
-
-  const box = document.createElement("div");
-  box.className = "pdf-box";
-  box.innerHTML = `
-    <div class="box-left">
-      <img src="${logoSrc}" alt="Thumbnail">
-    </div>
-    <div class="box-right">
-      <div class="card-actions button-row" role="group" aria-label="Actions" data-file="${filePath}">
-        <button class="view-btn" type="button">View</button>
-        <button class="download-btn" type="button">Download</button>
-      </div>
-      <div class="file-title">${title}</div>
-    </div>
-  `;
-
-  parent.appendChild(box);
-
-  const viewBtn = box.querySelector(".view-btn");
-  const downloadBtn = box.querySelector(".download-btn");
-
-  viewBtn.addEventListener("click", (e) => {
-    if (noLegal) {
-      showNoLegalPopup();
-      return;
-    }
-    openPDF(filePath);
-  });
-
-  downloadBtn.addEventListener("click", (e) => {
-    if (noLegal) {
-      showNoLegalPopup();
-      return;
-    }
-    const a = document.createElement("a");
-    a.href = filePath || "#";
-    if (!filePath) {
-      showNoLegalPopup("This file cannot be downloaded.");
-      return;
-    }
-    a.setAttribute("download", (title || "file") + ".pdf");
-    // some browsers require anchor to be in DOM
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  });
-}
-
-/* ====== PDF overlay viewer + history/back handling ====== */
-let pdfViewerOpen = false;
-let fakeStatePushed = false;
-
-function openPDF(pdfFile) {
-  if (pdfViewerOpen) return;
-
-  const overlay = document.getElementById("overlay");
-  const pdfFrame = document.getElementById("pdfFrame");
-
-  if (!overlay || !pdfFrame) {
-    console.error("Overlay or PDF frame not found.");
-    return;
-  }
-
-  // Use pdf.js viewer with encoded file URL
-  pdfFrame.src = "https://mozilla.github.io/pdf.js/legacy/web/viewer.html?file=" + encodeURIComponent(pdfFile);
-  overlay.style.display = "block";
-
-  pdfViewerOpen = true;
-
-  if (!fakeStatePushed) {
-    try {
-      history.pushState({ pdfOpen: true }, "", location.href);
-      fakeStatePushed = true;
-    } catch (e) {
-      // ignore browsers that block pushState
-    }
-  }
-}
-
-function closePDF() {
-  if (!pdfViewerOpen) return;
-
-  // If we pushed fake state, going back will trigger popstate to close
-  if (fakeStatePushed) {
-    try {
-      history.back();
-      return;
-    } catch (e) {
-      // fallback to manual close
-    }
-  }
-
-  // fallback manual close (in case history.back didn't run)
-  const overlay = document.getElementById("overlay");
-  const pdfFrame = document.getElementById("pdfFrame");
-  if (overlay) overlay.style.display = "none";
-  if (pdfFrame) pdfFrame.src = "";
-  pdfViewerOpen = false;
-  fakeStatePushed = false;
-}
-
-/* popstate: if PDF open then close it on back */
-window.addEventListener("popstate", (event) => {
-  if (pdfViewerOpen) {
-    const overlay = document.getElementById("overlay");
-    const pdfFrame = document.getElementById("pdfFrame");
-    if (overlay) overlay.style.display = "none";
-    if (pdfFrame) pdfFrame.src = "";
-    pdfViewerOpen = false;
-    fakeStatePushed = false;
-    return;
-  }
-  // otherwise, hashchange handler will open/close sections
-});
-
-/* Close overlay close button */
-document.body.addEventListener("click", (e) => {
-  if (e.target.classList && e.target.classList.contains("close-btn")) {
-    closePDF();
-  }
-});
-
-/* ====== GENERIC DRAWER OPEN/CLOSE UTILITIES ====== */
-function animateOpenDrawer(drawer, toggleBtn) {
-  if (!drawer || drawer._isAnimating) return Promise.resolve();
-  drawer._isAnimating = true;
-
-  return new Promise((resolve) => {
-    // Make sure aria and classes reflect opening
-    drawer.classList.add("open");
-    drawer.setAttribute("aria-hidden", "false");
-    if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "true");
-
-    // allow content to render and then measure
-    // set height auto to measure scrollHeight
-    drawer.style.height = "auto";
-    const measured = drawer.scrollHeight;
-
-    // animate from 0 to measured
-    drawer.style.height = "0px";
-    // force reflow
-    void drawer.offsetHeight;
-    drawer.style.height = measured + "px";
-
-    if (toggleBtn) toggleBtn.style.borderRadius = "10px 10px 0 0";
-
-    function onEnd(e) {
-      if (e.propertyName !== "height") return;
-      // set height to auto after transition so it can reflow on resize
-      drawer.style.height = "auto";
-      drawer._isAnimating = false;
-      drawer.removeEventListener("transitionend", onEnd);
-      resolve();
-    }
-    drawer.addEventListener("transitionend", onEnd);
-
-    // Safety fallback: if transition doesn't end (some edge cases), clear flag after timeout
-    setTimeout(() => {
-      if (drawer._isAnimating) {
-        drawer.style.height = "auto";
-        drawer._isAnimating = false;
-        resolve();
-      }
-    }, 1200);
-  });
-}
-
-function animateCloseDrawer(drawer, toggleBtn) {
-  if (!drawer || drawer._isAnimating) return Promise.resolve();
-  drawer._isAnimating = true;
-
-  return new Promise((resolve) => {
-    // measure current full height
-    const cur = drawer.scrollHeight;
-    drawer.style.height = cur + "px";
-    // force reflow
-    void drawer.offsetHeight;
-    // animate to 0
-    drawer.style.height = "0px";
-    drawer.setAttribute("aria-hidden", "true");
-    if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "false");
-
-    if (toggleBtn) toggleBtn.style.borderRadius = "10px";
-
-    function onEnd(e) {
-      if (e.propertyName !== "height") return;
-      // cleanup
-      drawer.classList.remove("open");
-      drawer._isAnimating = false;
-      drawer.removeEventListener("transitionend", onEnd);
-      resolve();
-    }
-    drawer.addEventListener("transitionend", onEnd);
-
-    // Safety fallback
-    setTimeout(() => {
-      if (drawer._isAnimating) {
-        drawer.classList.remove("open");
-        drawer._isAnimating = false;
-        resolve();
-      }
-    }, 1200);
-  });
-}
-
-/* ====== INIT SECTIONS: attach handlers to section-toggle buttons */
-(function initSections() {
-  const toggles = Array.from(document.querySelectorAll(".section-toggle"));
-  // Map of drawerId -> {toggleBtn, drawerEl}
-  const drawerMap = new Map();
-
-  toggles.forEach(btn => {
-    const controlId = btn.getAttribute("aria-controls");
-    if (!controlId) return;
-    const drawer = document.getElementById(controlId);
-    if (!drawer) return;
-    drawerMap.set(controlId, { toggleBtn: btn, drawerEl: drawer });
-
-    // initialize closed state
-    drawer.style.height = "0px";
-    drawer.setAttribute("aria-hidden", "true");
-    btn.setAttribute("aria-expanded", "false");
-
-    // If this button is the YouTube toggle, skip attaching the generic handler.
-    // We'll wire YouTube separately so there is a single, correct handler.
-    if (btn.classList.contains("yt-toggle-btn")) {
-      return;
-    }
-
-    // Attach toggle behavior (generic)
-    btn.addEventListener("click", async (ev) => {
-      ev.preventDefault();
-      // If drawer currently open, close. Otherwise open.
-      const isOpen = drawer.getAttribute("aria-hidden") === "false";
-      if (isOpen) {
-        await animateCloseDrawer(drawer, btn);
-      } else {
-        // Before opening, close any other open drawers (optional behavior: keep only one open)
-        // If you prefer multiple open simultaneously, comment out this forEach block.
-        document.querySelectorAll(".section-drawer").forEach(d => {
-          if (d === drawer) return;
-          if (d.getAttribute("aria-hidden") === "false") {
-            const otherBtn = document.querySelector(`.section-toggle[aria-controls="${d.id}"]`);
-            // close without waiting to keep click snappy; it's okay to await too
-            animateCloseDrawer(d, otherBtn).catch(()=>{});
-          }
-        });
-
-        await animateOpenDrawer(drawer, btn);
-      }
-    });
-
-    // keyboard support Enter/Space
-    btn.addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter" || ev.key === " ") {
-        ev.preventDefault();
-        btn.click();
-      }
-    });
-  });
-
-
-  // ===== Hash handling: open drawer on load or when hash changes =====
-  async function openDrawerForHash(hash) {
-    if (!hash) return;
-    const id = hash.replace(/^#/, '');
-
-    // Special-case YouTube wrapper id 'yt-wrapper'
-    if (id === 'yt-wrapper') {
-      // prefer explicit drawer id 'drawer-yt', fall back to generic '.yt-drawer'
-      const ytDrawer = document.getElementById('drawer-yt') || document.querySelector('.yt-drawer');
-      const ytBtn = document.querySelector('.yt-toggle-btn');
-      if (ytDrawer && ytBtn) {
-        // close other drawers first
-        document.querySelectorAll('.section-drawer').forEach(d => {
-          if (d === ytDrawer) return;
-          const otherBtn = document.querySelector(`.section-toggle[aria-controls="${d.id}"]`);
-          if (d.getAttribute('aria-hidden') === 'false') animateCloseDrawer(d, otherBtn).catch(()=>{});
-        });
-        // ensure YT list is rendered (if your ytEnsureRendered exists)
-        if (typeof ytEnsureRendered === 'function') {
-          try { await ytEnsureRendered(); } catch(e) { /* ignore */ }
-        }
-        await animateOpenDrawer(ytDrawer, ytBtn);
-        // scroll & focus
-
-const offset = 80;
-const top = ytBtn.getBoundingClientRect().top + window.pageYOffset - offset;
-window.scrollTo({
-  top: top,
-  behavior: 'smooth'
-});
-
-        try { ytBtn.focus({ preventScroll: true }); } catch(e) {}
-        return;
-      }
-    }
-
-    // Normal sections: look for drawer with id `drawer-<id>`
-    const drawerId = 'drawer-' + id;
-    const entry = drawerMap.get(drawerId); // drawerMap created earlier in initSections
-    if (entry) {
-      // close other drawers
-      document.querySelectorAll('.section-drawer').forEach(d => {
-        if (d === entry.drawerEl) return;
-        const otherBtn = document.querySelector(`.section-toggle[aria-controls="${d.id}"]`);
-        if (d.getAttribute('aria-hidden') === 'false') animateCloseDrawer(d, otherBtn).catch(()=>{});
-      });
-      await animateOpenDrawer(entry.drawerEl, entry.toggleBtn);
-
-const offset = 80;
-const top = entry.toggleBtn.getBoundingClientRect().top + window.pageYOffset - offset;
-window.scrollTo({
-  top: top,
-  behavior: 'smooth'
-});
-
-      try { entry.toggleBtn.focus({ preventScroll: true }); } catch(e) {}
-    } else {
-      // if there is a section element with that id, try to focus it
-      const sectionEl = document.getElementById(id);
-      if (sectionEl) sectionEl.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    }
-  }
-
-  // On initial load open if hash present
-  window.addEventListener('load', () => {
-    const initialHash = (location.hash || '').replace(/^#/, '');
-    if (!initialHash) return;
-    // call the helper (no await needed)
-    openDrawerForHash('#' + initialHash).catch(()=>{});
-  });
-
-  // When hash changes (user clicks anchors) open the new drawer
-  window.addEventListener('hashchange', () => {
-    const newHash = location.hash;
-    openDrawerForHash(newHash).catch(()=>{});
-  });
-
-})();
-
-/* ====== PARSE <script class="pdf-data"> blocks and inject content ====== */
-(function injectPdfData() {
-  const blocks = Array.from(document.querySelectorAll(".section-content > script.pdf-data[type='application/json']"));
-  blocks.forEach(block => {
-    let arr = [];
-    try {
-      arr = JSON.parse(block.textContent || "[]");
-      if (!Array.isArray(arr)) arr = [];
-    } catch (e) {
-      console.warn("Invalid JSON in .pdf-data", e);
-      arr = [];
-    }
-
-    const parent = block.parentElement; // .section-content
-    if (!parent) return;
-
-    arr.forEach(item => {
-      const title = item.title || "Document";
-      const file = item.file || "";
-      const logo = item.logo || "default";
-      const options = item.options || {};
-      addPdfBox(title, file, logo, parent, options);
-    });
-
-    // remove script block to avoid re-parsing
-    try { block.remove(); } catch (e) {}
-  });
-})();
-
-/* ====== YOUTUBE RENDERING LOGIC (oEmbed) ====== */
-
-const ytItems = [
-  'https://youtube.com/playlist?list=PLxCxO_FWPIhtWs0utLrv-qWIKB_KbC2tS',
-  'https://youtube.com/playlist?list=PLVbRFL6i5RVJIy_M1NKgMoVpDNXiKzDaQ',
-  'https://youtu.be/kYam6NoxbFE',
-  'https://youtube.com/playlist?list=PLxCzCOWd7aiFOet6KEEqDff1aXEGLdUzn',
-  'https://youtube.com/playlist?list=PL3a9YXWgRykP0quKyX4ejYPr6i0Wl6lDx',
-  'https://youtu.be/MUkvVLGz89k',
-  'https://youtube.com/playlist?list=PLqleLpAMfxGCUpDRFUnLKeDrgBsPOwTQK'
-];
-
-function ytParseUrl(url) {
-  try {
-    const u = new URL(url);
-    const listId = u.searchParams.get('list');
-    if (listId) return { type: 'playlist', id: listId };
-    const v = u.searchParams.get('v');
-    if (v) return { type: 'video', id: v };
-    if (u.hostname.includes('youtu.be')) {
-      const id = u.pathname.slice(1);
-      if (id) return { type: 'video', id: id };
-    }
-    const parts = u.pathname.split('/');
-    const embedIndex = parts.indexOf('embed');
-    if (embedIndex >= 0 && parts[embedIndex+1]) return { type: 'video', id: parts[embedIndex+1] };
-    return null;
-  } catch (e) {
-    return null;
-  }
-}
-
-async function ytFetchOEmbed(url) {
-  try {
-    const ep = 'https://www.youtube.com/oembed?url=' + encodeURIComponent(url) + '&format=json';
-    const res = await fetch(ep);
-    if (!res.ok) throw new Error('oEmbed failed: ' + res.status);
-    return await res.json();
-  } catch (err) {
-    console.warn('ytFetchOEmbed error for', url, err);
-    return null;
-  }
-}
-
-function ytFallbackThumb(url, type) {
-  try {
-    if (type === 'video') {
-      const u = new URL(url);
-      const v = u.searchParams.get('v') || (u.hostname.includes('youtu.be') ? u.pathname.slice(1) : '');
-      return v ? `https://i.ytimg.com/vi/${v}/hqdefault.jpg` : '';
-    } else {
-      return 'data:image/svg+xml;utf8,' + encodeURIComponent(
-        `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="270">
-           <rect width="100%" height="100%" fill="#11131a"/>
-           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f7c2d9" font-size="20">Playlist</text>
-         </svg>`
-      );
-    }
-  } catch (e) {
-    return '';
-  }
-}
-
-function ytCreateRow(url, data) {
-  const parsed = ytParseUrl(url);
-  const type = parsed?.type || 'video';
-
-  const item = document.createElement('div');
-  item.className = 'yt-item';
-
-  const a = document.createElement('a');
-  a.className = 'yt-card-link';
-  a.href = url;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-
-  const thumb = document.createElement('div');
-  thumb.className = 'yt-thumb';
-  const img = document.createElement('img');
-  img.src = data?.thumbnail_url || ytFallbackThumb(url, type);
-  img.alt = data?.title ? `Thumbnail for ${data.title}` : 'YouTube thumbnail';
-  thumb.appendChild(img);
-
-  if (type === 'playlist') {
-    const badge = document.createElement('div');
-    badge.className = 'yt-badge';
-    badge.textContent = 'Playlist';
-    thumb.appendChild(badge);
-  }
-
-  const meta = document.createElement('div');
-  meta.className = 'yt-meta';
-  const title = document.createElement('h3');
-  title.className = 'yt-title';
-  title.textContent = data?.title || '(No title)';
-  const sub = document.createElement('p');
-  sub.className = 'yt-sub';
-  sub.textContent = data?.author_name ? `By ${data.author_name}` : (type === 'playlist' ? 'Playlist' : 'YouTube');
-
-  meta.appendChild(title);
-  meta.appendChild(sub);
-
-  a.appendChild(thumb);
-  a.appendChild(meta);
-  item.appendChild(a);
-  return item;
-}
-
-let ytHasRendered = false;
-async function ytRenderList(containerEl) {
-  if (!containerEl) return;
-  containerEl.innerHTML = '';
-  for (const url of ytItems) {
-    const placeholder = document.createElement('div');
-    placeholder.className = 'yt-item';
-    placeholder.innerHTML = `
-      <div class="yt-thumb" style="background:#111"></div>
-      <div class="yt-meta">
-        <h3 class="yt-title">Loading…</h3>
-        <p class="yt-sub">Fetching info…</p>
-      </div>
-    `;
-    containerEl.appendChild(placeholder);
-
-    const data = await ytFetchOEmbed(url);
-    const row = ytCreateRow(url, data);
-    containerEl.replaceChild(row, placeholder);
-  }
-  ytHasRendered = true;
-  return containerEl;
-}
-
-async function ytEnsureRendered() {
-  if (ytHasRendered) return;
-  const list = document.getElementById("yt-list");
-  if (!list) return;
-  await ytRenderList(list);
-}
-
-/* ====== Wire YouTube toggle only once ====== */
-(function wireYouTubeToggle() {
-  const ytBtn = document.querySelector(".yt-toggle-btn");
-  // There are two possible drawer elements: one with id "drawer-yt" (per HTML) or a generic ".yt-drawer"
-  const ytDrawerById = document.getElementById("drawer-yt");
-  const ytDrawerGeneric = document.querySelector(".yt-drawer");
-  const ytDrawer = ytDrawerById || ytDrawerGeneric;
-  if (!ytBtn || !ytDrawer) return;
-
-  // ensure initial closed state
-  ytDrawer.style.height = "0px";
-  ytDrawer.setAttribute("aria-hidden", "true");
-  ytBtn.setAttribute("aria-expanded", "false");
-
-  ytBtn.addEventListener("click", async (ev) => {
-    ev.preventDefault();
-    // if open, close
-    const isOpen = ytDrawer.getAttribute("aria-hidden") === "false";
-    if (isOpen) {
-      await animateCloseDrawer(ytDrawer, ytBtn);
-      return;
-    }
-
-    // before opening, render list once
-    try { await ytEnsureRendered(); } catch (e) { /* ignore */ }
-
-    // optionally close other open drawers (to keep single open at a time)
-    document.querySelectorAll(".section-drawer").forEach(d => {
-      if (d === ytDrawer) return;
-      if (d.getAttribute("aria-hidden") === "false") {
-        const btn = document.querySelector(`.section-toggle[aria-controls="${d.id}"]`);
-        animateCloseDrawer(d, btn).catch(()=>{});
-      }
-    });
-
-    await animateOpenDrawer(ytDrawer, ytBtn);
-  });
-
-  // Esc key closes YouTube drawer if open
-  document.addEventListener("keydown", (ev) => {
-    if (ev.key === "Escape") {
-      const isOpen = ytDrawer.getAttribute("aria-hidden") === "false";
-      if (isOpen) {
-        // reuse animateCloseDrawer to close
-        animateCloseDrawer(ytDrawer, ytBtn).catch(()=>{});
-      }
-      // also close any legal popup
-      const lp = document.querySelector(".legal-popup-overlay");
-      if (lp) lp.remove();
-    }
-  });
-})();
-
-/* ====== Small utilities and safeguards ====== */
-/* Remove any displayed legal popup on Escape */
-document.addEventListener("keydown", (ev) => {
-  if (ev.key === "Escape") {
-    const lp = document.querySelector(".legal-popup-overlay");
-    if (lp) lp.remove();
-  }
-});
-
-/* Accessibility: if someone clicks a link with a hash for a section, the hashchange listener will handle open */
-document.addEventListener("click", (ev) => {
-  // if clicked element is anchor linking to same-page section (href begins with #)
-  const target = ev.target.closest && ev.target.closest('a[href^="#"]');
-  if (!target) return;
-  const href = target.getAttribute('href') || '';
-  if (!href.startsWith('#')) return;
-  // Let browser update hash; the hashchange listener will open the drawer.
-});
-
-/* End of scripts.js */
-
-</script>
-
+<script src="../src/subject.js"></script>
 </body>
 </html>

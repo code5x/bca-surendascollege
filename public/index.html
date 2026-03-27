@@ -187,7 +187,7 @@ header nav a:hover {
 .sa-filter-btn {
   background: #222;
   color: #dddddd;
-  border: 1px solid #927094;
+  border: 1px solid #386c96;
   width: 37px;
   height: 37px;
   display: flex;
@@ -204,7 +204,7 @@ header nav a:hover {
 #saSearchInput {
   flex: 1;
   height: 35px;
-  border: 1px solid #927094;
+  border: 1px solid #386c96;
   border-right: none;
   padding: 0 12px;
   font-size: 14px;
@@ -215,7 +215,7 @@ header nav a:hover {
 .sa-search-icon {
   width: 37px;
   height: 37px;
-  background: #927094;
+  background: #386c96;
   color: white;
   border-radius: 0 6px 6px 0;
   display: flex;
@@ -232,8 +232,8 @@ header nav a:hover {
   top: 50px;
   left: 0;
   right: 0;
-  background: #333;
-  border: 1px solid #121212;
+  background: #282828;
+  border: 1px solid #434759;
   max-height: 400px;
   min-height: 200px;
   overflow-y: auto;
@@ -245,10 +245,12 @@ header nav a:hover {
   flex-direction: column;
 }
 .sa-result-item {
-  padding: 8px;
-  border: 1px solid #999;
+  border: 1px solid #888;
   margin: 12px 6px;
   border-radius: 5px;
+
+  padding: 0;
+  overflow: hidden;
 }
 
 .sa-message {
@@ -267,23 +269,39 @@ header nav a:hover {
 .sa-result-item a {
   text-decoration: none;
   color: #ccc;
-  font-weight: 410;
+  font-weight: 405;
 }
+
+
+.sa-result-item a.sa-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  background: #444;
+}
+.sa-result-item a.sa-link:hover {
+  background: #444;
+  cursor: pointer;
+}
+
+
 /* Labels */
 .sa-labels {
-  margin-top: 5px;
+  margin-top: 7px;
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
 }
 .sa-label {
   font-size: 12px;
-  padding: 2px 6px;
-  background: #555;
-  border-radius: 4px;
+  padding: 1px 3px;
+  background: #666;
+  border-radius: 3px;
 }
 .sa-highlight {
-  background: rgba(146, 112, 148, 0.4);
+  background: #282828;
   color: #ccc;
 }
 
@@ -291,7 +309,7 @@ header nav a:hover {
 .sa-filter-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.4);
   display: none;
   z-index: 500;
 }
@@ -309,7 +327,7 @@ header nav a:hover {
 }
 
 @media (min-width:769px){ 
-  .sa-filter-popup { width:350px; margin: 210px auto auto 30px; }
+  .sa-filter-popup { width:350px; margin: 210px auto auto 100px; }
 }
 
 .sa-filter-header {
@@ -596,10 +614,10 @@ header nav a:hover {
 
 #annList li:not(.spacer) {
   padding: 10px;
-  margin-bottom: 100px; // expect 50
+  margin-bottom: 20px;
   cursor: pointer;
   transition: background 0.3s;
-  border: 1px solid #f7c2d9;
+  border: 1px solid #8f6d7c;
   background: #191e4f;
   border-radius: 8px;
   transition: transform 0.2s ease;
@@ -612,7 +630,7 @@ header nav a:hover {
 
 
 .spacer {
-  height: 100px;   /* big space at the end before loop */
+  height: 200px;   /* big space at the end before loop */
 }
 
 
@@ -660,7 +678,7 @@ header nav a:hover {
   flex: 1;
   min-width: 180px;
   padding: 10px;
-  border: 1px solid #f7c2d9;
+  border: 1px solid #8f6d7c;
   background: #191e4f;
   border-radius: 8px;
   text-decoration: none;
@@ -835,11 +853,6 @@ footer a:hover {
   </div>
 </div>
 
-
-
-
-
-
         <h2 class="page-title">Welcome to Suren Das College - Computer Science Department</h2>
 
        <p class="lead">The Department of Computer Science is a place for learning, exploring, and growing with technology. Through this website, students can access class notes, study materials, and other resources anytime. More than just a collection of resources, the site is built to guide students step by step, making it easier for them to understand topics and improve their skills beyond the classroom. Students can also contribute by sharing or uploading notes and resources, making learning simple, practical, and more effective for everyone.</p>
@@ -866,7 +879,7 @@ footer a:hover {
 
 <aside class="hero-right" aria-label="Latest announcements">
   <div class="announcements card">
-    <h4>Latest Updates</h4>
+    <h4>Latest Updates 🚀</h4>
     <div class="annBox">
       <ul id="annList" class="list-compact" aria-live="polite">
         <li class="muted">Loading announcements...</li>
@@ -875,7 +888,7 @@ footer a:hover {
   </div>
 
   <div class="upload box">
-    <h2 class="upload-title">Uploads</h2>
+    <h2 class="upload-title">Uploads 📤</h2>
     <div class="upload-options">
       
       <!-- Box 2 -->
@@ -896,7 +909,7 @@ footer a:hover {
 </section>
 
  <section class="section external-links">
-      <h3 class="section-title">External Links</h3>
+      <h3 class="section-title">External Links 🔗</h3>
       <div class="card">
         <ul>
           <li><a href="https://surendascollege.co.in/" target="_blank">SDC Official Website</a></li>
@@ -948,10 +961,10 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
   document.body.dataset.device = device;
 
 const sampleAnnouncements = [
-  { id: 1, title: '2nd sem material added', body: 'Check 2nd semester available courses.', url: 'study-material.html#sem2' }
-   /* { id: 1, title: 'Holiday List', body: 'Click Here to See the Official Holiday List for 2025.', url: 'https://ryrnyvzlmjdgqu' },
-  { id: 2, title: 'Class Routine', body: 'Check Class routine page for latest timetable.', url: 'class-routine.html' },
-  { id: 3, title: 'Exam Notice', body: 'Check Final Examination Routine For First Semester 2025.', url: 'https://ryrnyvzlmjdgqul' } */
+  { id: 1, title: '2nd sem material added', body: 'Check 2nd semester available courses.', url: 'study-material.html#sem2' },
+  { id: 2, title: 'Holiday List GU', body: 'Check GU Official Holiday List for 2026.', url: 'https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Holiday%20List%20GU%202026.pdf' }
+ /* { id: 3, title: 'Class Routine', body: 'Check Class routine page for latest timetable.', url: 'class-routine.html' },
+  { id: 4, title: 'Exam Notice', body: 'Check Final Examination Routine For First Semester 2025.', url: 'https://ryrnyvzlmjdgqul' } */
 ];
 
 const annList = document.getElementById('annList');
@@ -1355,14 +1368,15 @@ if (item.sem !== undefined) {
       }
     }
 
-
     saDiv.innerHTML = `
-      <a href="${item.u}">
-        ${saHighlightedTitle}
+      <a href="${item.u}" class="sa-link">
+        <div class="sa-title">
+          ${saHighlightedTitle}
+        </div>
+        <div class="sa-labels">
+          ${saLabelsHTML}
+        </div>
       </a>
-      <div class="sa-labels">
-        ${saLabelsHTML}
-      </div>
     `;
 
     saSearchResults.appendChild(saDiv);

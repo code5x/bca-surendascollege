@@ -13,6 +13,7 @@
   { "t": "Upload Resources as Image", "u": "upload.html#class-notes" },
   { "t": "Request New Subject Paper", "u": "request-course.html" },
   { "t": "BCA Syllabus (NEP)", "u": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/BCA%20Syllabus%20Final%20(NEP).pdf", "course": "BCA", "type": "content" },
+  { "t": "Holiday List 2026", "u": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Holiday%20List%20GU%202026.pdf" },
 
 
   { "t": "C Programming (BCA)", "u": "sem1/c-programming.html", "sem": 1, "course": "BCA" },
