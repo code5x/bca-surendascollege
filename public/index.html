@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,17 +9,13 @@
 
   <!-- Styles -->
   <style>
-/* Always dark */
-html[data-theme="dark"] { 
-  color-scheme: dark; 
-}
+html { color-scheme: white; }
 
 /* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
 body.bg-app {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   -webkit-font-smoothing: antialiased;
-  color: #e6e9ef;
 
   /* Default desktop background */
   background: url("/src/background.webp") no-repeat center center fixed;
@@ -30,7 +26,6 @@ body.bg-app {
 /* Mobile background */
 @media (max-width: 768px) {
   body.bg-app {
-
   background: url("/src/background-mobile.webp") no-repeat center center fixed; 
   background-size: cover;
   }
@@ -44,7 +39,7 @@ body.bg-app::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.77);
+  background: rgba(255, 255, 255, 0.6);
   z-index: -1;
 }
 
@@ -58,14 +53,12 @@ body.bg-app::before {
 .container {
   max-width:1100px;
   margin:0 auto;
-  padding:180px;
+  padding:18px;
   box-sizing:border-box  
 }
 
-
 /* ===== BANNER (Home Page Only) ===== */
 .banner {
-    background: #0c0c36;
     color: #fff;
     padding: 8px 50px;
     display: flex;
@@ -73,35 +66,35 @@ body.bg-app::before {
     justify-content: center;
     gap: 40px;
     text-align: left;
-    border-bottom: 2px solid #0b2a6b;
-    border-radius: 10px;
+    background: #83ebe9;
+    border-bottom: 1px solid #0b2a6b;
 }
 
 .banner img {
     height: 80px;
     width: auto;
     border-radius: 2px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
 .banner-text h1 {
     font-size: 1.5rem;
     margin: 0;
-    color: #f7c2d9;
+    color: #1b174d;
     font-weight: bold;
 }
 
 .banner-text h2 {
     font-size: 1.1rem;
     margin: 1px 0;
-    color: #48c5f7; /* light blue accent */
+    color: #386c96;
     font-weight: 600;
 }
 
 .banner-text p {
     margin: 2px 0;
     font-size: 1rem;
-    color: #cfd3fa;
+    color: #333a55;
+    font-weight: 500;
 }
 
 /* Mobile View */
@@ -122,16 +115,16 @@ body.bg-app::before {
 
 /* ===== HEADER ===== */
 header {
-    background: #0b2a6b;
+    background: #cfe3fc;
     padding: 4px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
-    top: 0;
+    margin: 0;
     z-index: 1000;
     animation: slideDown 1s ease;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
 }
 header nav {
     display: flex;  
@@ -142,18 +135,18 @@ header nav {
 }
 header nav a {
     text-decoration: none;
-    color: #fff;
+    color: #1a1a1a;
     font-size: 0.9rem;
     font-weight: 450;
     padding: 6px 13px;
     border-radius: 6px;
     transition: all 0.3s ease;
-    background: transparent;
+    background: #93dffa;
     flex-shrink: 0;
     border:1px solid #6974c7;
 }
 header nav a:hover {
-  background: #0b5ed7;
+  background: #45afd6;
 }
 @media (min-width: 769px) {
  header nav a {
@@ -170,8 +163,8 @@ header nav a:hover {
 
 /* hero grid */
 .hero{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;margin-bottom:18px}
-.page-title{color:#fff;margin:25px 0 11px;font-size:1.6rem}
-.lead{color:#cfd3fa;margin:8px 0 14px 0;font-size:0.96rem; text-align:justify; line-height: 1.6}
+.page-title{color:#111;margin:25px 0 11px;font-size:1.6rem}
+.lead{color:#323847;margin:8px 0 14px;font-size:1rem; font-weight: 410; text-align:justify; line-height: 1.6}
 
 
 /* ================= SEARCH BAR ================= */
@@ -185,8 +178,8 @@ header nav a:hover {
 }
 /* Filter button */
 .sa-filter-btn {
-  background: #222;
-  color: #dddddd;
+  background: #ddd;
+  color: #444;
   border: 1px solid #386c96;
   width: 37px;
   height: 37px;
@@ -207,9 +200,11 @@ header nav a:hover {
   border: 1px solid #386c96;
   border-right: none;
   padding: 0 12px;
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
   border-radius: 6px 0 0 6px;
+  background: #ddd;
+  color: #111;
 }
 /* Search icon (right side) */
 .sa-search-icon {
@@ -232,7 +227,7 @@ header nav a:hover {
   top: 50px;
   left: 0;
   right: 0;
-  background: #282828;
+  background: #ddf;
   border: 1px solid #434759;
   max-height: 400px;
   min-height: 200px;
@@ -245,7 +240,7 @@ header nav a:hover {
   flex-direction: column;
 }
 .sa-result-item {
-  border: 1px solid #888;
+  border: 1px solid #666;
   margin: 12px 6px;
   border-radius: 5px;
 
@@ -261,14 +256,14 @@ header nav a:hover {
   align-items: center;
   min-height: 200px;
   text-align: center;
-  color: #ccc;
-  opacity: 0.8;
+  color: #222;
+  opacity: 0.9;
   font-size: 16px;
 }
 
 .sa-result-item a {
   text-decoration: none;
-  color: #ccc;
+  color: #353535;
   font-weight: 405;
 }
 
@@ -279,10 +274,10 @@ header nav a:hover {
   height: 100%;
   padding: 8px;
   box-sizing: border-box;
-  background: #444;
+  background: #eee;
 }
 .sa-result-item a.sa-link:hover {
-  background: #444;
+  background: #dfd;
   cursor: pointer;
 }
 
@@ -291,19 +286,21 @@ header nav a:hover {
 .sa-labels {
   margin-top: 7px;
   display: flex;
-  gap: 5px;
+  gap: 7px;
   flex-wrap: wrap;
 }
 .sa-label {
   font-size: 12px;
   padding: 1px 3px;
-  background: #666;
+  background: #bbb;
+  opacity: 0.85;
   border-radius: 3px;
 }
 .sa-highlight {
-  background: #282828;
-  color: #ccc;
+  background: #ddf;
+  color: #353535;
 }
+
 
 /* ================= FILTER POPUP ================= */
 .sa-filter-overlay {
@@ -311,15 +308,15 @@ header nav a:hover {
   inset: 0;
   background: rgba(0,0,0,0.4);
   display: none;
-  z-index: 500;
+  z-index: 5000;
 }
 .sa-filter-popup {
-  background: #333;
+  background: #cef;
   width: 300px;
   padding: 10px;
-  margin: 170px auto auto 15px;
+  margin: 100px auto;
   border-radius: 7px;
-  border: 1px solid #666666;
+  border: 1px solid #333;
 
   display: flex;
   flex-wrap: wrap;
@@ -327,7 +324,7 @@ header nav a:hover {
 }
 
 @media (min-width:769px){ 
-  .sa-filter-popup { width:350px; margin: 210px auto auto 100px; }
+  .sa-filter-popup { width:350px; }
 }
 
 .sa-filter-header {
@@ -344,6 +341,7 @@ header nav a:hover {
   font-size: 16px;
   cursor: pointer;
   font-weight: 600;
+  color: #222;
 }
 /* ================= CUSTOM SELECTOR ================= */
 .sa-selector {
@@ -354,34 +352,37 @@ header nav a:hover {
   min-width: 120px;   /* controls minimum width */
 }
 .sa-selector-selected {
-  border: 1px solid #999;
+  border: 1px solid #333;
   border-radius: 5px;
   padding: 6px;
   cursor: pointer;
   font-size: 14px;
+  background: #cdf;
+  font-weight: 500;
 }
 .sa-selector-options {
   display: none;
   position: absolute;
   left: 0;
   right: 0;
-  background: #303030;
-  border: 1px solid #888;
+  background: #cdf;
+  border: 1px solid #333;
   z-index: 10;
   border-radius: 5px;
   font-size: 14px;
+  font-weight: 500;
 }
 .sa-selector-options div {
   padding: 6px;
   cursor: pointer;
-  border-bottom: 1px solid #888;
+  border-bottom: 1px solid #333;
 }
 .sa-selector-options div:hover {
-  background: #f1f1f1;
+  background: #dfd;
 }
 /* Active filter color */
 .sa-filter-active {
-  color: #42b858 !important;
+  color: #059e21 !important;
 }
 .sa-selector-options div:last-child {
   border-bottom: none;
@@ -401,7 +402,7 @@ header nav a:hover {
     border-radius: 18px;
     overflow:hidden;
     position:relative;
-    background:#000;
+    background: #ddf;
   }
   @media (min-width:769px){ /* Desktop view */
     .boxB{ width: calc(100vw - 430px); border-width:3px; }
@@ -435,26 +436,25 @@ header nav a:hover {
   .cards{
     flex: 0 0 calc(78% - 14px); /* mobile default */
     aspect-ratio: 5/3.3;
-    border: 3px solid #195b5e;
+    border: 3px solid #337a53;
     border-radius: 14px;
     overflow:hidden;
     position:relative;
     display:block;
     text-decoration:none;
-    color:inherit;
-
+    color:#ddd;
     background-size:cover;
     background-position:center;
     scroll-snap-align:center;
     scroll-snap-stop:always;
-
+    filter: contrast(0.8); 
     transform-origin:center center;
     transform: scale(.88);   /* side cards scale */
     opacity:.68;
 
-    transition: transform .42s cubic-bezier(.22,.9,.18,1),
-                opacity .42s ease,
-                box-shadow .42s ease;
+    transition: transform 0.4s ease,
+                opacity 0.4s ease,
+                box-shadow 0.4s ease;
 
     pointer-events: none; /* only center clickable */
     cursor: default;
@@ -472,23 +472,10 @@ header nav a:hover {
   .cards.is-center{
     transform: scale(1);
     opacity: 1;
-    box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 36px rgba(0,0,0,0.5); 
     pointer-events: auto;
     cursor: pointer;
   }
-
-
-.cards::before {                         
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  opacity: 0.5;   /* 50% transparent black */
-  z-index: 1;     /* sits above the image */
-}
 
 
   .cards .title{
@@ -498,7 +485,8 @@ header nav a:hover {
     transform:translate(-50%,-50%);
     padding:1px;
     border-radius:10px;
-    background:rgba(0,0,0,0.45) transparent;
+    background:rgba(0,0,0,0.5); 
+    text-shadow: 0 2px 6px rgba(0,0,0,0.9);
     font-weight:660;
     pointer-events:none;
     text-align:center;
@@ -507,6 +495,7 @@ header nav a:hover {
     width: 85%;
     max-width: 90%;
   }
+
 
 @media (min-width:769px) {
   .cards .title{ font-weight: 700; font-size: 1.2rem; }
@@ -521,7 +510,7 @@ header nav a:hover {
     width:36px;
     height:36px;
     border-radius:50%;
-    background: rgba(0,0,0,.45);
+    background: rgba(0,0,0,.65);
     color:#fff;
     border:none;
     display:flex;
@@ -540,11 +529,13 @@ header nav a:hover {
 .quick-links{display:flex;column-gap:15px;margin-top:20px;flex-wrap:wrap;}
 
 
-.section-title{color:white;margin-bottom:8px}
-.card{background:#0f1724;border:1px solid #246149;border-radius:12px;padding:12px;margin-bottom:10px}
+.section-title{color:#111; margin-bottom:8px}
+.card{background:#f7e7df;border:2px solid #246149;border-radius:12px;padding:12px;margin-bottom:10px}
 
 
 /* Only style the list inside External Links section */
+.ext-card { background: #e4ffd1; }
+
 .external-links .card ul {
   list-style: none;
   padding: 0;
@@ -552,7 +543,7 @@ header nav a:hover {
 }
 
 .external-links .card li {
-  margin-bottom: 10px;
+  margin: 13px 0;
   position: relative;
   padding-left: 25px;
 }
@@ -560,7 +551,7 @@ header nav a:hover {
 /* Custom bullet (aligned properly) */
 .external-links .card li::before {
   content: "➤";          /* change to →, ◆, ✓ if you want */
-  color: #5d8cc9;
+  color: #0c54b3;
   position: absolute;
   left: 0;
   top: 50%;              /* move to vertical center */
@@ -571,18 +562,19 @@ header nav a:hover {
 /* Link styling */
 .external-links .card a {
   text-decoration: none;
-  color: #5d8cc9;
+  color: #0c54b3;
   font-size: 15.3px;
+  font-weight: 410;
   transition: color 0.2s ease;
 }
 
 .external-links .card a:hover {
-  color: #ffb6d3;
+  color: #b814c7;
 }
 
 
 .announcements h4 {
-  color: #f7c2d9;      /* light pink */
+  color: #294494;
   font-size: 18px;
   font-weight: bold;
   margin-top: 8px;
@@ -617,15 +609,16 @@ header nav a:hover {
   margin-bottom: 20px;
   cursor: pointer;
   transition: background 0.3s;
-  border: 1px solid #8f6d7c;
-  background: #191e4f;
+  border: 1px solid #4363cc;
+  background: #cfd9fa;
   border-radius: 8px;
   transition: transform 0.2s ease;
+  color: #294494;
 }
 
 
 #annList li:hover {
-  background: rgba(247,194,217,0.2);
+  background: #aabbff;
 }
 
 
@@ -637,7 +630,7 @@ header nav a:hover {
 #annList li .muted {
   font-size: 14px;
   font-weight: 400;
-  color: #cfd3fa   /* light gray for body text */
+  color: #333; 
 }
 
 
@@ -649,15 +642,15 @@ header nav a:hover {
 
 /* Main Upload Box */
 .upload.box {
-  background: #0f1724;
-  border: 1px solid #246149;
+  background: #f7dff5;
+  border: 2px solid #246149;
   border-radius: 12px;
   padding: 12px;
 }
 
 /* Section Title */
 .upload-title {
-  color: #f7c2d9;
+  color: #09697a;
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 12px;
@@ -678,22 +671,22 @@ header nav a:hover {
   flex: 1;
   min-width: 180px;
   padding: 10px;
-  border: 1px solid #8f6d7c;
-  background: #191e4f;
+  border: 1px solid #09697a;
+  background: #cfd9fa;
   border-radius: 8px;
   text-decoration: none;
   margin-bottom: 5px;
   transition: transform 0.2s ease;
 }
 
-.upload-card:active {
+.upload-card:hover {
   transform: scale(1.04);
 }
 
 
 /* Card title */
 .card-title {
-  color: #fff;
+  color: #09697a;
   font-size: 16px;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -701,9 +694,9 @@ header nav a:hover {
 
 /* Card description */
 .card-desc {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
-  color: #cfd3fa;
+  color: #333;
   margin-top: 1px;
   margin-bottom: 4px;
 }
@@ -720,18 +713,21 @@ header nav a:hover {
 
 /* ===== FOOTER ===== */
 footer {
-    background: #111;
+    background: #a7cfc9;
     text-align: center;
-    padding: 0.1px;
+    padding-bottom: 2px;
     margin-top: 5px;
-    color: #aaa;
+    color: #333;
     font-size: 0.85rem;
+    line-height: 20px;
     border-top: 1px solid #333;
     border-radius: 20px 20px 0 0;
 }
 
+
+
 footer a {
-    color: #f7c2d9;
+    color: #0c54b3;
     text-decoration: none;
 }
 footer a:hover {
@@ -756,14 +752,67 @@ footer a:hover {
     }
 }
 
+
+
+
+
+@media (prefers-color-scheme: dark) {
+html { color-scheme: dark; }
+body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
+.banner { background: #0c0c36; }
+.banner-text h1 { color: #f7c2d9; }
+.banner-text h2 { color: #48c5f7; }
+.banner-text p { color: #cfd3fa; }
+header { background: #0b2a6b; }
+header nav a { color: #fff; background: transparent; }
+header nav a:hover { background: #0b5ed7;}
+.lead { font-weight: 400; color: #cfd3fa; }
+.page-title { color: #fff; }
+.announcements h4 { color: #f7c2d9; }
+#annList li:not(.spacer) { background: #191e4f; border: 1px solid #f7c2d9; color: #ddd; }
+#annList li:hover { background: rgba(247,194,217,0.2); } 
+#annList li .muted { color: #cfd3fa; }
+.boxB { background:#000; }
+.section-title { color:white; }                            
+.card { background:#0f1724; }
+.upload.box { background: #0f1724; }
+footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
+.upload-title { color: #f7c2d9; }
+.upload-card { border: 1px solid #f7c2d9; background: #191e4f; }
+.card-title { color: #fff; }
+.card-desc { color: #cfd3fa; }
+.external-links .card li::before { color: #5d8cc9; }
+.external-links .card a { color: #5d8cc9; }
+footer a { color: #f7c2d9; }
+.external-links .card a:hover { color: #ffb6d3; }
+.external-links .card a { font-weight: 400; }
+
+.sa-filter-btn { background: #222; color: #dddddd; }
+#saSearchInput { background: #353535; color: #ddd;}
+.sa-search-results { background: #222; }
+.sa-result-item { border: 1px solid #999; }
+.sa-message { color: #ddd; }
+.sa-result-item a { color: #ccc; }
+.sa-result-item a.sa-link { background: #3a3a3a; }
+.sa-result-item a.sa-link:hover { background: #555; }
+.sa-label { background: #555555; opacity: 1.0; }
+.sa-highlight { background: #222; color: #d5d5d5; }
+.sa-filter-popup { background: #454545; border: 1px solid #ccc; }
+.sa-filter-close { color: #ddd; }
+.sa-selector-selected { border: 1px solid #bbb; background: #393939; }
+.sa-selector-options { background: #393939; border: 1px solid #bbb; }
+.sa-selector-options div { border-bottom: 1px solid #bbb; }
+.sa-selector-options div:hover { background: #454545; }
+.sa-selector-selected { font-weight: 400; }
+.sa-selector-options { font-weight: 400; }
+}
+
+
+
+
+
 </style>
  
-  <!-- small critical CSS inline to avoid flash on slow networks -->
-  <style>
-    html[data-theme="dark"]{color-scheme:dark}
-    body{margin:0;background:#070914;color:#e6e9ef;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
-    .container{max-width:1100px;margin:0 auto;padding:18px}
-  </style>
 
 </head>
 <body class="bg-app">
@@ -868,8 +917,10 @@ footer a:hover {
 
 <a class="cards" data-index="0" href="sem2/dsa.html" style="background-image:url('/src/dsa.webp')"><span class="title">Data Structure and Algorithms (BCA)</span></a>
 <a class="cards" data-index="1" href="sem2/digital-logic.html" style="background-image:url('/src/dlf.webp')"><span class="title">Digital Logic Fundamentals (BCA)</span></a>
-<a class="cards" data-index="2" href="sem2/mathematics-ii.html" style="background-image:url('/src/maths.webp')"><span class="title">Mathematics II (BCA)</span></a>
-<a class="cards" data-index="3" href="sem2/information-source-service-mdc.html" style="background-image:url('/src/mdc.webp')"><span class="title">Information Sources and Services (MDC)</span></a>
+<a class="cards" data-index="2" href="sem2/html-programming-sec.html" style="background-image:url('/src/sec2.webp')"><span class="title">HTML Programming (SEC)</span></a>
+<a class="cards" data-index="3" href="sem2/trade-commerce-india-vac.html" style="background-image:url('/src/vac2.webp')"><span class="title">Trade and Commerce in India (VAC)</span></a>
+<a class="cards" data-index="4" href="sem2/english-communication-aec.html" style="background-image:url('/src/aec2.webp')"><span class="title">English Communication (AEC)</span></a>
+<a class="cards" data-index="5" href="sem2/information-source-service-mdc.html" style="background-image:url('/src/mdc.webp')"><span class="title">Information Sources and Services (MDC)</span></a>
 
       </div>
       <button class="nav-btn right" id="btnNext" aria-label="Next">&#10095;</button>
@@ -898,7 +949,7 @@ footer a:hover {
       </a>
 
       <!-- Box 1 -->
-      <a href="upload.html#class-notes" class="upload-card">
+      <a href="upload.html#images" class="upload-card">
         <h3 class="card-title">Upload as Image</h3>
         <p class="card-desc">Easily upload or share study materials as image version.</p>
       </a>
@@ -910,10 +961,9 @@ footer a:hover {
 
  <section class="section external-links">
       <h3 class="section-title">External Links 🔗</h3>
-      <div class="card">
+      <div class="card ext-card">
         <ul>
           <li><a href="https://surendascollege.co.in/" target="_blank">SDC Official Website</a></li>
-          <li><a href="https://new.surendascollege.co.in/" target="_blank">SDC Official Website (New)</a></li>
           <li><a href="https://digilib.surendascollege.co.in/" target="_blank">SDC Digital Library (New)</a></li>
           <li><a href="library-opac.html">SDC Library OPAC</a></li>
           <li><a href="links.html">External Digital Sources</a></li>
@@ -950,8 +1000,6 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 });
 
 (function(){
-  // enforce dark theme
-  document.documentElement.setAttribute('data-theme','dark');
 
   // device detection (mobile vs desktop)
   const ua = navigator.userAgent || navigator.vendor || window.opera;

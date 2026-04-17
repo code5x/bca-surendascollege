@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Courses by CS Deparement</title>
 
 <style>
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
+html { color-scheme: white; }
 
 /* ===== Background with overlay ===== */
 body.bg-app {
   background: url("/src/background.webp") no-repeat center center fixed;
   background-size: cover;
   margin: 0;
-  color: #f7c2d9;
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  padding: 0; /* 20px; */
+  padding: 0;
   position: relative;
 }
 
@@ -33,7 +30,7 @@ body.bg-app::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.77); /* black overlay */
+  background: rgba(255, 255, 255, 0.6);
   z-index: 0;
   pointer-events: none;
 }
@@ -47,9 +44,10 @@ body.bg-app::before {
 
 .course-no {
   max-width: 95%;
-  margin: 30px auto;
-  padding: 20px;
-  background: rgba(0,0,0,0.5);
+  margin: 30px 10px;
+  padding: 10px;
+  background: rgba(230,240,250,0.8);
+  border: 2px solid #151;
   border-radius: 15px;
   z-index: 10;
   position: relative;
@@ -58,7 +56,7 @@ body.bg-app::before {
 
 /* ===== HEADER ===== */
 header {
-    background: #0b2a6b; /* dark blue */
+    background: #cfe3fc; 
     padding: 4px 10px;
     display: flex;
     justify-content: space-between;
@@ -66,8 +64,8 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    animation: slideDown 0.8s ease;  
-    box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+    animation: slideDown 1s ease;  
+    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
 }
 
 /* Navigation */
@@ -81,19 +79,19 @@ header nav {
 
 header nav a {
     text-decoration: none;
-    color: #fff;
+    color: #1a1a1a;
     font-size: 0.9rem;
     font-weight: 450;
     padding: 3px 13px;
     border-radius: 6px;
     transition: all 0.3s ease;
-    background: transparent;
-    flex-shrink: 0; /* prevent shrinking of links */
+    flex-shrink: 0;
     border:1px solid #6974c7;
+    background: #93dffa;
 }
 
 header nav a:hover {
-  background: #0b5ed7;
+  background: #45afd6;
 }
 
 @media (min-width: 769px) {
@@ -118,15 +116,16 @@ header nav a:hover {
 /* ===== Text Elements ===== */
 h2 {
   text-align: center;
-  color: #ffffff;
+  color: #111;
   margin-bottom: 5px;
   position: relative;
   z-index: 1;
+  line-height: 35px;
 }
 
 h3 {
   text-align: left;
-  color: #ffffff;
+  color: #222;
   margin-top: 20px;
   margin-bottom: 10px;
   position: relative;
@@ -136,8 +135,9 @@ h3 {
 .p1 {
   display: block;
   margin: 10px 0;
+  font-size: 1.1rem;
   font-weight: bold;
-  color: #eecef5;
+  color: #141;
   position: relative;
   z-index: 1;
 }
@@ -146,7 +146,8 @@ h3 {
   display: block;
   margin: 10px 0 20px;
   text-align: justify;
-  color: #cfd3fa;
+  color: #333;
+  font-weight: 450;
   position: relative;
   z-index: 1;
   line-height: 1.5;
@@ -164,39 +165,39 @@ h3 {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
-  background: rgba(255, 255, 255, 0.05); /* transparent look */
-
+  background: rgba(255, 240, 240, 0.7);
   white-space: nowrap;
 }
 
 .course-table th,
 .course-table td {
-  border: 1px solid #ccc;
+  border: 1px solid #222;
   padding: 10px 15px;
   text-align: left;
   vertical-align: top;
-  color: #dfdfea;  /* white text for dark theme */
+  color: #333;  
 }
 
 .course-table th {
-  background-color: #0b2a6b;  /* dark blue header */
-  color: #f7c2d9;             /* pink text */
+  background-color: #ffe1e1; 
+  color: #114;     
   text-align: center;
 }
 
 .course-table td b {
-  color: #f7c2d9; /* highlight electives */
+  color: #141;
 }
 
 
 /* ===== Small Box ===== */
 .course-box {
-  width: 90%;
+  width: 85%;
   max-width: 500px;
   margin: 20px auto;
   display: flex;
   gap: 20px;
-  background: #282d4f;
+  background: #8aa9c1;
+  border: 1px solid #123;
   border-radius: 12px;
   padding: 20px 20px;
   position: relative;
@@ -229,29 +230,27 @@ h3 {
 }
 
 button {
-  background: #743c78;
+  background: #34547d;
   color: #fff;
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  border: 1px solid #ffffff;
 }
 
 button:hover {
-  background: #ffffff;
-  color: #0b2a6b;
+  background: #276e57;
 }
 
 .file-title {
   font-size: 15px;
-  color: #ffffff;
+  font-weight: 450;
+  color: #222;
 }
 
 @media (min-width: 769px) {
  button {
-  border: 3px solid #ffffff;
   padding: 10px 20px;
 }
 .button-row {
@@ -278,7 +277,7 @@ button:hover {
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.85);
+ /*   background: rgba(0,0,0,0.85); */
     z-index: 9999;
 }
 
@@ -294,11 +293,11 @@ button:hover {
     top: 32px;
     right: 0;
     margin: 0;
-    background: #262323;
-    color: white;
+    background: #aaaaaa;
+    color: #111;
     border: none;
-    padding: 7px 10px;
-    font-size: 20px;
+    padding: 5px;
+    font-size: 17px;
     cursor: pointer;
     border-radius: 2px;
     z-index: 1000;
@@ -313,11 +312,11 @@ button:hover {
 
 /* ===== FOOTER ===== */
 footer {
-    background: #111;
+    background: #a7cfc9;
     text-align: center;
     padding: 0.1px;
     margin-top: 5px;
-    color: #aaa;
+    color: #333;
     font-size: 0.85rem;
     border-top: 1px solid #333;
     border-radius: 20px 20px 0 0;
@@ -328,12 +327,40 @@ footer {
 
 
 footer a {
-    color: #f7c2d9;
+    color: #0c54b3;
     text-decoration: none;
 }
 footer a:hover {
     text-decoration: underline;
 }
+
+
+@media (prefers-color-scheme: dark) {
+html { color-scheme: dark; }
+body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
+header { background: #0b2a6b; }
+header nav a { color: #fff; background: transparent; }
+header nav a:hover { background: #0b5ed7;}
+footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
+footer a { color: #f7c2d9; }
+h2 { color: #eee; }
+h3 { color: #ddd; }
+.p1 { color: #ccc; font-size: 1.05rem }
+.p2 { color: #cfd3fa; font-weight: 400; }
+.course-no { background: rgba(50,50,70,0.9); border: 2px solid #667; }
+.course-table { background: rgba(40, 40, 40, 0.6); }
+.course-table th,
+.course-table td { border: 1px solid #aaa; color: #dfdfea; }
+.course-table th { background-color: #0b2a55; color: #f7c2d9; }
+.course-table td b { color: #f7c2d9; }
+.course-box { background: #1a2f52; border: 1px solid #99a }
+button { background: #733182; color: #ddd; border: 1px solid #999; }
+button:hover { background: #a843ba; }
+.file-title { color: #ccc; }
+.close-btn { background: #333; color: #ccc; }
+
+}
+
 
 @media (max-width: 768px) {
     /* Hide scrollbar for Chrome, Safari and Edge */
@@ -359,7 +386,7 @@ footer a:hover {
 <!-- PDF Overlay -->
 <div id="overlay">
   <div class="overlay-content">
-    <button class="close-btn" onclick="closePDF()">X</button>
+    <button class="close-btn" onclick="closePDF()">✕</button>
     <iframe id="pdfFrame"></iframe>
   </div>
 </div>
@@ -479,7 +506,7 @@ footer a:hover {
 </div>
 
 
-  <p class="p1">Here is the full course details, get view or download.</p>
+  <p class="p1">Get the complete course details here.</p>
 
   <!-- Small Box (Logo + Buttons + Title) -->
   <div class="course-box">

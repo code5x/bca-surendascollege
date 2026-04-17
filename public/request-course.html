@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Request New Subject (Paper)</title>
@@ -8,17 +8,13 @@
 <style>
 /* ---------------- Base / Mobile First ---------------- */
 
-/* Always dark */
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
+html { color-scheme: white; }
 
 /* ===== RESET / BASE FIX ===== */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  color:#e6e9ef;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
 }
 
@@ -61,7 +57,7 @@ body.bg-app::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.77);
+  background: rgba(255, 255, 255, 0.6);
   z-index: -1; /* keeps overlay behind all content */
 }
 
@@ -83,7 +79,7 @@ body.bg-app::before {
 /* Header */
 
 header {
-  background: #0b2a6b;
+  background: #cfe3fc;
   padding: 4px 10px;
   display: flex;
   justify-content: space-between;
@@ -93,7 +89,7 @@ header {
   left: 0;
   width: 100%;       /* full width */
   z-index: 1000;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
   animation: slideDown 1s ease;
 }
 
@@ -109,20 +105,20 @@ header nav {
 
 header nav a {
   text-decoration: none;
-  color: #fff;
+  color: #1a1a1a;
   font-size: 0.9rem;
   font-weight: 450;
   padding: 6px 13px;
   border-radius: 6px;
   transition: all 0.3s ease;
-  background: transparent;
+  background: #93dffa;
   flex-shrink: 0; /* prevent shrinking of links */
   border: 1px solid #6974c7;
 }
 
 
 header nav a:hover {
-  background: #0b5ed7;
+  background: #45afd6;
 }
 
 
@@ -142,22 +138,24 @@ header nav a:hover {
 h2 {
   text-align: center;
   font-size: 1.4rem;
-  color: white;
+  color: #111;
 }
 
 .container p {
-  color: #cfd3fa;
+  color: #323847;
   margin: 25px 13px;
   line-height: 1.5;
   text-align: justify;
-  font-size: 0.98rem;
+  font-size: 1rem;
+  font-weight: 450;
 }
 
 .form-group {
   margin-bottom: 18px;
 }
 .form-group input {
- border:1px solid #84b0a9;
+  background: #ded;
+  border: 1px solid #222;
 }
 .form-group input:focus {
  outline: none; 
@@ -169,6 +167,7 @@ label {
   margin-bottom: 7px;
   font-weight: 480;
   font-size: 16px;
+  color: #222;
 }
 
 input[type="text"],
@@ -180,12 +179,12 @@ select {
 }
 
 select:disabled {
-  background: #eee;
+  background: #888;
 }
 
 .inputDetail {
  border-radius: 10px;
- background: rgba(14, 13, 33, 0.9);
+ background: rgba(230,240,250,0.8);
  padding: 15px;
  border: 2px solid #23524c;
  margin: auto 5px;
@@ -195,48 +194,54 @@ select:disabled {
 /* ---------------- File Upload ---------------- */
 
 .file-area {
-  border: 1px solid #23524c;
+  border: 2px solid #23524c;
   border-radius: 10px;
   padding: 10px;
-  background: rgba(14, 13, 33, 0.9);
+  background: rgba(230,240,250,0.9);
   margin: auto 12px;
 }
 
 .drop-zone {
   display: block;
-  border: 3px dashed #84b0a9;
+  border: 3px dashed #3461eb;
   border-radius: 10px;
   padding: 20px 10px;
   text-align: center;
   cursor: pointer;
-  background: #27365e;
+  background: #c5e8fc;
   margin: 20px 25px 10px;
+}
+
+.drop-zone:hover {
+  border: 3px dashed #058019;
 }
 
 .drop-text {
   font-size: 16px;
   font-weight: 450;
-  color: white;
+  color: #333;
 }
 
 .drop-sub {
   font-size: 14px;
-  color: #cfd3fa;;
+  color: #444;
   margin-top: 8px;
   font-weight: 400;
 }
 
 .summary {
   margin-top: 10px;
-  font-size: 14px;
-  color: #65eb96;
+  font-size: 15px;
+  font-weight: 420;
+  color: #064a09;
   text-align: center;
   display: none;
 }
 
 .file-error {
-  margin-top: 8px;
-  color: #d93025;
+  margin-top: 10px;
+  color: #cc2418;
+  font-weight: 450;
   font-size: 17px;
   text-align: center;
 }
@@ -253,30 +258,41 @@ select:disabled {
   padding: 8px;
   border-radius: 5px;
   margin-bottom: 8px;
-  background: #154a29;
+  background: #fcd9ac;
+  border: 1px solid #444;
 }
 
 .file-name {
   font-size: 14px;
   font-weight: 450;
   word-break: break-word;
+  color: #222;
 }
 
 .file-info {
   font-size: 13px;
-  color: #bbbbbb;
+  color: #333;
   margin-top: 5px;
   word-break: break-word;
 }
 
 .file-remove {
-  background: #572919;
-  color: #fff;
+  background: transparent;
+  color: #ba3c3c;
+  font-weight: bold;
   border: none;
-  border-radius: 4px;
-  padding: 5px 8px;
+  padding: 5px 0;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
+}
+
+
+#formMessage {
+  margin-top: 15px;
+  font-size: 18px;
+  text-align: center;
+  color: #cc2418;
+  font-weight: 450;
 }
 
 /* ---------------- Submit ---------------- */
@@ -289,14 +305,14 @@ button.submit-btn {
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  background: #4a6cff;
+  background: #3a5efc;
   color: #fff;
   cursor: pointer;
   font-weight: bold;
 }
 
 button.submit-btn:disabled {
-  background: #526a87;
+  background: #39608f;
   cursor: not-allowed;
 }
 
@@ -312,26 +328,29 @@ button.submit-btn:disabled {
   display: none; /* hide by default */
 }
 
-.upload-overlay p { margin-bottom: 15px; color:#cfd3fa; }
-.upload-overlay h3 { margin: 10px auto; color: #f7c2d9; }
+.upload-overlay p { margin-bottom: 15px; color:#333; }
+.upload-overlay h3 { margin: 10px auto; color: #222; }
 
 .upload-overlay.active {
   display: flex; /* show only when needed */
 }
 
 .upload-panel {
-  background: #221f4d;
+  background: #c7e4fc;
   width: 90%;
-  max-width: 600px;
+  max-width: 400px;
   padding: 24px;
   border-radius: 12px;
   text-align: center;
+  color: #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+  border: 2px solid #454;
 }
 
 .progress-bar {
   width: 100%;
   height: 14px;
-  background: #999;
+  background: #ffffff;
   border-radius: 8px;
   overflow: hidden;
   margin: 20px auto;
@@ -341,9 +360,28 @@ button.submit-btn:disabled {
 .progress-fill {
   height: 100%;
   width: 0%;
-  background: #1761b0;
+  background: #0f8ad1;
   height:14px;
   transition: width 0.2s linear;
+}
+
+.show-percent {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px auto;
+  font-weight: 450;
+  color: #252525;
+}
+
+#closeResult {
+  position:absolute; 
+  top:10px; 
+  right:12px; 
+  background:none; 
+  border:none; 
+  font-size:18px; 
+  color:#111; 
+  cursor:pointer;
 }
 
 /* ---------------- Desktop ---------------- */
@@ -354,35 +392,37 @@ button.submit-btn:disabled {
 }
 
 .dropdown-selected {
-  background: #404040;
+  background: #ded;
   padding: 10px;
-  border: 1px solid #84b0a9;
+  border: 1px solid #222;
   border-radius: 10px;
   cursor: pointer;
   height: 40px;
+  color: #222;
 }
 
 .dropdown-options {
   display: none;
   position: absolute;
   width: 100%;
-  background: #404040;
+  background: #ded;
   border-radius: 10px;
+  border: 1px solid #555;
   margin-top: 5px;
   max-height: 260px;
   overflow-y: auto;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
   z-index: 999;
   list-style: none;
   padding-left: 0;
   margin: 0;
+  color: #222;
 }
 
 .dropdown-options li {
   position: relative;
-  padding: 12px 10px 12px 26px;
+  padding: 12px 10px 12px 25px;
   cursor: pointer;
-  border-bottom: 1px solid #808080;
+  border-bottom: 1px solid #555;
 }
 
 .dropdown-options li:last-child {
@@ -392,14 +432,14 @@ button.submit-btn:disabled {
 .dropdown-options li::before {
   content: "⦿";
   position: absolute;
-  left: 10px;
+  left: 7px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 14px;
 }
 
 .dropdown-options li:hover {
-  background: #303030;
+  background: #beb;
 }
 
 .dropdown-options li.disabled {
@@ -410,7 +450,7 @@ button.submit-btn:disabled {
 
 .dropdown-options li.optgroup {
   font-weight: bold;
-  background: #404040;
+  background: #ddb;
   cursor: default;
   padding-left: 10px;
 }
@@ -427,13 +467,11 @@ button.submit-btn:disabled {
 }
 
 footer {
-    background: #111;
+    background: #a7cfc9;
     text-align: center;
     padding: 1px;
-/*    margin-top: 5px;  */
-    color: #aaa;                                                       
+    color: #333;                                                       
     font-size: 0.85rem;
- /*   font-size: clamp(0.85rem, 1vw, 2rem);  */
     border-top: 1px solid #333;                                        
     border-radius: 20px 20px 0 0;
     margin-top: auto;
@@ -447,12 +485,54 @@ footer {
 
 
 footer a {
-    color: #f7c2d9;
+    color: #0c54b3;
     text-decoration: none;
 }
 footer a:hover {
     text-decoration: underline;                                      
 }
+
+@media (prefers-color-scheme: dark) {
+html { color-scheme: dark; }
+body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
+header { background: #0b2a6b; }
+header nav a { color: #fff; background: transparent; }
+header nav a:hover { background: #0b5ed7;}
+footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
+footer a { color: #f7c2d9; }
+h2 { color: #eee; }
+.container p { color: #cfd3fa; font-weight: 400; }
+.inputDetail { background: rgba(50,50,70,0.9); border: 2px solid #778; }
+.form-group input { border: 1px solid #999; background: #444; }
+label { color: #ddd; }
+.dropdown-selected { background: #444; border: 1px solid #999; color: #eee; }
+.dropdown-options { background: #444; border: 1px solid #999; color: #eee; }
+.dropdown-options li { border-bottom: 1px solid #999; }
+.dropdown-options li:hover { background: #555; }
+.dropdown-options li.optgroup { background: #445; }
+.file-area { border: 2px solid #778; background: rgba(50, 50, 70, 0.9); }
+.drop-zone { border: 3px dashed #1c95b0; background: #555; }
+.drop-zone:hover { border: 3px dashed #11ab23; }
+.drop-text { color: #ddd; }
+.drop-sub { color: #ccc; }
+.summary { color: #5ffa66; font-weight: 400; }
+.file-error { color: #fc473a; }
+.file-item { background: #2c6958; border: 1px solid #888; }
+.file-name { color: #fff; }
+.file-info { color: #eee; }
+.file-remove { color: #fc9258; }
+#formMessage { color: #fc473a; }
+.upload-overlay p { color:#c8c8c8; }
+.upload-overlay h3 { color: #ddd; }
+.upload-panel { background: #2a4e61; color: #ddd; border: 2px solid #888; }
+.progress-bar { background: #333; }
+.progress-fill { background: #2299d1; }
+.show-percent { color: #ddd }
+#closeResult { color:#fff; }
+
+}
+
+
 
 @media (max-width: 768px) {
     /* Hide scrollbar for Chrome, Safari and Edge */
@@ -511,12 +591,12 @@ footer a:hover {
         <option value="" disabled selected>Select Semester</option>
         <option value="1">Semester 1</option>
         <option value="2">Semester 2</option>
-        <option value="3" disabled>Semester 3</option>
-        <option value="4" disabled>Semester 4</option>
-        <option value="5" disabled>Semester 5</option>
-        <option value="6" disabled>Semester 6</option>
-        <option value="7" disabled>Semester 7</option>
-        <option value="8" disabled>Semester 8</option>
+        <option value="3">Semester 3</option>
+        <option value="4">Semester 4</option>
+        <option value="5">Semester 5</option>
+        <option value="6">Semester 6</option>
+        <option value="7">Semester 7</option>
+        <option value="8">Semester 8</option>
       </select>
 
 
@@ -525,12 +605,12 @@ footer a:hover {
   <ul class="dropdown-options">
     <li data-value="1">Semester 1</li>
     <li data-value="2">Semester 2</li>
-    <li class="disabled">Semester 3</li>
-    <li class="disabled">Semester 4</li>
-    <li class="disabled">Semester 5</li>
-    <li class="disabled">Semester 6</li>
-    <li class="disabled">Semester 7</li>
-    <li class="disabled">Semester 8</li>
+    <li data-value="3">Semester 3</li>
+    <li data-value="4">Semester 4</li>
+    <li data-value="5">Semester 5</li>
+    <li data-value="6">Semester 6</li>
+    <li data-value="7">Semester 7</li>
+    <li data-value="8">Semester 8</li>
   </ul>
  </div>
 </div>
@@ -616,7 +696,7 @@ footer a:hover {
       Submit
     </button>
 
-    <div id="formMessage" style="margin-top:15px;font-size:17px; text-align:center;"></div>
+    <div id="formMessage"></div>
 
 </main>
 
@@ -628,18 +708,29 @@ footer a:hover {
 <!-- Upload Overlay (hidden by default) -->
 <div id="uploadOverlay" class="upload-overlay" hidden>
   <div class="upload-panel">
-    <h3>Uploading... please wait...</h3>
+    <h3>Uploading... Please wait...</h3>
 
     <div class="progress-bar">
       <div id="progressFill" class="progress-fill"></div>
     </div>
 
- <div style="display:flex; justify-content:space-between; margin:15px auto; color:#e6e6e6;">
+ <div class="show-percent">
     <div id="progressPercent">0%</div>
     <div id="progressBytes">0 B / 0 B</div>
  </div>
 
-    <p>Do not close this tab while upload is in progress.</p>
+    <p>Do not close this tab while upload in progress.</p>
+  </div>
+</div>
+
+<!-- Result Popup Overlay -->
+<div id="resultOverlay" class="upload-overlay">
+  <div class="upload-panel" style="position:relative;">
+    
+    <!-- Close Button -->
+    <button id="closeResult">✕</button>
+    <h2 id="resultTitle"></h2>
+    <p style="font-size:1rem; font-weight:450;" id="resultMessage"></p>
   </div>
 </div>
 
@@ -698,6 +789,7 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 </script>
 
 <script>
+
 /* ================= ELEMENTS ================= */
 const fileInput = document.getElementById('fileInput');
 const fileListEl = document.getElementById('fileList');
@@ -722,6 +814,11 @@ const progressFill = document.getElementById('progressFill');
 const progressPercent = document.getElementById('progressPercent');
 const progressBytes = document.getElementById('progressBytes');
 
+const resultOverlay = document.getElementById('resultOverlay');
+const resultMessage = document.getElementById('resultMessage');
+const resultTitle = document.getElementById('resultTitle');
+const closeResult = document.getElementById('closeResult');
+
 /* ================= LIMITS ================= */
 const MIN_FILES = 3;
 const MAX_FILES = 20;
@@ -743,12 +840,33 @@ function formatBytes(bytes) {
   return bytes.toFixed(2) + ' ' + u[i];
 }
 
-function showMessage(msg, type = 'info') {
-  formMessage.textContent = msg;
-  formMessage.style.color =
-    type === 'error' ? '#d93025' :
-    type === 'success' ? '#1fab49' : '#fff';
+function showResult(message, type = 'success') {
+  resultOverlay.classList.add('active');
+
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (type === 'success') {
+    resultTitle.innerHTML = '✔ upload Successful';
+    resultTitle.style.color = isDark ? '#4bfa4b' : '#017501';
+  }
+  else if (type === 'error') {
+    resultTitle.innerHTML = '✖ Upload Failed';
+    resultTitle.style.color = isDark ? '#fc3838' : '#b30707';
+  }
+  resultMessage.innerHTML = message;
 }
+
+function hideResult() {
+  resultOverlay.classList.remove('active');
+}
+
+/* Close button */
+closeResult.addEventListener('click', hideResult);
+
+/* Click outside to close */
+resultOverlay.addEventListener('click', (e) => {
+  if (e.target === resultOverlay) hideResult();
+});
+
 
 function resetForm() {
   nameInput.value = '';
@@ -826,6 +944,7 @@ fileInput.addEventListener('change', () => {
 
     if (
       !file.type.startsWith('image/') &&
+      !file.type.startsWith('text/') &&
       !file.type.startsWith('application/')
     ) {
       fileErrorEl.textContent = 'Invalid file format';
@@ -891,11 +1010,10 @@ function uploadFileXHR(url, file, onProgress) {
 
 /* ================= SUBMIT ================= */
 submitBtn.addEventListener('click', async () => {
-  showMessage('');
   fileErrorEl.textContent = '';
 
   if (selectedFiles.length < MIN_FILES) {
-    showMessage('Please upload at least 3 files.', 'error');
+    formMessage.textContent = 'Please upload at least 3 files.';
     return;
   }
 
@@ -941,14 +1059,15 @@ submitBtn.addEventListener('click', async () => {
     }
 
     hideOverlay();
-    showMessage(`Upload successful. Thank you ${nameInput.value.trim()}`, 'success');
+    showResult(`Your request has been submitted.<br>Thank you ${nameInput.value.trim()}`, 'success');
     resetForm();
 
   } catch (err) {
     hideOverlay();
-    showMessage(err.message || 'Upload failed.', 'error');
+    showResult(err.message || 'Something went wrong. Please try again later.', 'error');
   }
 });
+
 </script>
 
 </body>

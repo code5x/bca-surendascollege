@@ -1,22 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feedback page</title>
 
 <style>
-/* Always dark */
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
+html { color-scheme: white; }
 
 /* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
 body.bg-app {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   -webkit-font-smoothing: antialiased;
-  color: #e6e9ef;
 
   /* Default desktop background */
   background: url("/src/background.webp") no-repeat center center fixed;
@@ -40,7 +36,7 @@ body.bg-app::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.77);
+  background: rgba(255, 255, 255, 0.6);
   z-index: -1;
 }
 
@@ -58,7 +54,7 @@ body {
 
 
 header {
-  background: #0b2a6b;
+  background: #cfe3fc;
   padding: 5px 15px;
   display: flex;
   justify-content: space-between;
@@ -66,6 +62,7 @@ header {
   position: sticky;
   z-index: 1000;
   border-radius: 0 0 7px 7px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
 }
 
 header nav {
@@ -76,19 +73,27 @@ header nav {
 
 header nav a {
   text-decoration: none;
-  color: #fff;
+  color: #1a1a1a;
   font-size: 1rem;
   font-weight: 500;
   padding: 8px 12px;
   border-radius: 6px;
   transition: all 0.3s ease;
-  background: transparent;
+  background: #93dffa;
   flex-shrink: 0;
   border: 1px solid #6974c7;
 }
 
 header nav a:hover {
-  background: #0b5ed7;
+  background: #45afd6;
+}
+
+.back-btn {
+  color: #1a1a1a;
+  font-size: 0.9rem;
+  font-weight: 450;
+  border: none;
+  background: transparent;
 }
 
 @media (max-width: 768px) {
@@ -112,27 +117,27 @@ header nav a:hover {
 .title-box { padding: 0 20px; align-item: center; margin: 0;}
 
 .page-title {
-  color: white;
+  color: #111;
   text-align: center;
+  padding-top: 30px;
 }
 
 .page-subtitle {
   line-height: 1.4;
-  color: #cfd3fa;
+  color: #323847;
+  font-weight: 450;
   text-align: justify;
 }
 
 
 /* Container */
 .feedback-form {
-
-    width: 80%;
+    width: 87%;
     margin: 20px auto;
-    padding: 25px;
-    background: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    background: rgba(230,240,250,0.8);
     border-radius: 12px;
- /*   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.9); */
-
+    border: 2px solid #151;
 }
 
 @media (min-width: 769px) {
@@ -147,7 +152,7 @@ header nav a:hover {
     margin-top: 18px;
     margin-bottom: 4px;
     font-weight: 500;
-    color: #d5bdd9; /* light pink */
+    color: #333;
     font-size: 1.0rem;
 }
 
@@ -157,11 +162,11 @@ header nav a:hover {
 .feedback-form textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #444;
+    border: 2px solid #4f73b3;
     border-radius: 8px;
     font-size: 1rem;
-    background: #2a2a30;
-    color: #fff;
+    background: #ccdbff;
+    color: #222;
     transition: all 0.3s ease;
 
     box-sizing: border-box;
@@ -175,7 +180,7 @@ header nav a:hover {
 
 .feedback-form input:focus,
 .feedback-form textarea:focus {
-    border-color: #f7c2d9;
+    border-color: #21803d;
     outline: none;
  
 }
@@ -190,11 +195,12 @@ header nav a:hover {
 
 .checkbox-group label {
     font-weight: normal;
-    background: #2a2a30;
-    padding: 5px 10px;
+    background: #b8f3f5;
+    padding: 3px 6px;
     border-radius: 6px;
     cursor: pointer;
-    color: #ddd;
+    color: #111;
+    border: 1px solid #222;
     font-size: 0.85rem;
     transition: background 0.3s ease, color 0.3s ease; 
 
@@ -210,18 +216,18 @@ header nav a:hover {
 
 /* Upload box styling */
 .upload-box {
-  border: 2px dashed #75457d;
+  border: 3px dashed #4f73b3;
   border-radius: 12px;
   padding: 15px;
   text-align: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: #e2ffde;
   margin: 15px 0;
   cursor: pointer;
   transition: border 0.3s ease;
 }
 
 .upload-box:hover {
-  border-color: #ff99c8;
+  border-color: #21803d;
 }
 
 /* Show the input as clickable but make it styled */
@@ -237,7 +243,6 @@ header nav a:hover {
 }
 
 .upload-box p {
-  color: #ddd;
   font-size: 14px;
   margin: 0;
   pointer-events: none; /* so clicking text still clicks input */
@@ -263,20 +268,21 @@ header nav a:hover {
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
-  border: 2px solid #f7c2d9;
+  border: 2px solid #4f73b3;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 
 /* Button */
 .feedback-form button {
-    margin-top: 20px;
-    width: 100%;
+    margin: 20px auto 10px;
+    display: block;
+    max-width: 60%;
     padding: 12px;
     border: none;
     border-radius: 8px;
-    background: linear-gradient(45deg, #d777e6, #f2b6fc);
-    color: #0b2a6b;
+    background: #0b577d;
+    color: #fff;
     font-size: 1.05rem;
     font-weight: bold;
     cursor: pointer;
@@ -284,43 +290,45 @@ header nav a:hover {
 }
 
 .feedback-form button:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(135deg, #f7c2d9, #ffb6d9);
+    background: #018f8f;
 }
 
 /* Success message */
 #responseMessage {
-    margin-top: 20px;
-    padding: 12px;
-    background: transparent;
-    color: white;
-    border-radius: 8px;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 450;
+    color: #333;
+}
+
+#responseTitle {
+    margin-bottom: 20px;
     text-align: center;
     font-size: 1.2rem;
 }
 
-
-    /* Minimal fallback styles for the modal and progress bar in case CSS isn't ready */
     .modal-overlay {
       position: fixed;
-      inset: 0;
+      inset: 0;  
       background: rgba(0,0,0,0.4);
       display: flex;                                                                                    
       align-items: center;
       justify-content: center;                                                                           
       z-index: 9999; 
-  margin: auto 15px;
+  
  }
     .modal-panel {
-      background: #332331;                                                                               
-      color: #d8c3d9;
+      background: #c7e4fc;
+      color: #333;
       padding: 18px 18px 40px;
       border-radius: 8px;
-      width: min(680px, 94%);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      width: min(300px, 80%);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      border: 2px solid #454;
     }
     .progress-bar {
-      background: rgba(255,255,255,0.08);
+      background: #ffffff;
       border-radius: 7px;
       height: 18px;
       overflow: hidden;
@@ -329,13 +337,12 @@ header nav a:hover {
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: rgba(247,194,217,0.85);
+      background: #0f8ad1;
       transition: width 200ms linear;
     }
     .progress-info {
       margin-top: 8px;
-      font-size: 0.95rem;
-      opacity: 0.98;
+      font-size: 1rem;
       display:flex;
       justify-content:space-between;
       gap:16px;
@@ -344,12 +351,32 @@ header nav a:hover {
     .hidden { display: none !important; }
 
 
+/* Success modal custom */
+.success-panel {
+  position: relative;
+  text-align: center;
+  padding-top: 30px;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #222;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
 footer {
-    background: #111;
+    background: #a7cfc9;
     text-align: center;
     padding: 0.1px;  
     margin-top: 5px;
-    color: #aaa;
+    color: #333;
     font-size: 0.85rem;
     border-top: 1px solid #333;
     border-radius: 20px 20px 0 0;
@@ -357,7 +384,7 @@ footer {
 flex-shrink: 0;
 }                         
   footer a {
-    color: #f7c2d9;
+    color: #0c54b3;
     text-decoration: none;
 }
 footer a:hover {
@@ -367,6 +394,37 @@ footer a:hover {
 .hidden {
     display: none;
 }
+
+
+@media (prefers-color-scheme: dark) {
+html { color-scheme: dark; }
+body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
+header { background: #0b2a6b; }
+header nav a { color: #fff; background: transparent; }
+header nav a:hover { background: #0b5ed7;}
+.back-btn { color: #fff; }
+footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
+footer a { color: #f7c2d9; }
+.page-title { color: #eee; }
+.page-subtitle { font-weight: 400; color: #cfd3fa; }
+.feedback-form { background: rgba(50,50,70,0.9); border: 2px solid #778; }
+.feedback-form label { color: #ddd; }
+.feedback-form input[type="text"],
+.feedback-form input[type="email"],
+.feedback-form textarea { border: 1px solid #999; background: #444; color: #eee; }
+.feedback-form input:focus,
+.feedback-form textarea:focus { border: 2px solid #999; }
+.checkbox-group label { background: #394657; color: #eee; border: 1px solid #999; }
+.upload-box { border: 3px dashed #2d949c; background: #30464f; }
+.upload-box:hover { border-color: #2cab41; }
+.modal-panel { background: #2a4e61; color: #ddd; border: 2px solid #888; }
+.progress-bar { background: #333; }
+.progress-fill { background: #2299d1; }
+.close-btn { color: #ddd; }
+#responseMessage { color: #ddd; }
+
+}
+
 
 @media (max-width: 768px) {
     /* Hide scrollbar for Chrome, Safari and Edge */
@@ -392,7 +450,7 @@ footer a:hover {
   <!-- Header -->
   <header>
     <nav>
-       <a href="#"><button onclick="history.back()" style="background:transparent; border:none; color:#fff; font-size:0.9rem; font-weight:450;">← Back</button></a>
+       <a href="#"><button onclick="history.back()" class="back-btn">← Back</button></a>
       <a href="index.html">🏠 Home</a>
     </nav>
   </header>
@@ -448,15 +506,13 @@ footer a:hover {
 
           <button type="submit" id="submitBtn">Submit Feedback</button>
         </form>
-
-        <p id="responseMessage" class="hidden" role="status">Thank you for your feedback!</p>
       </section>
   </main>
 
   <!-- Progress modal / overlay shown during upload -->
   <div id="uploadModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="uploadTitle" aria-hidden="true">
     <div class="modal-panel" id="modalPanel">
-      <h3 id="uploadTitle" style="font-weight:500;" >Sending feedback - Please don't close this tab</h3>
+      <h3 id="uploadTitle" style="font-weight:500;" >Sending feedback... Don't close this tab</h3>
       <p id="modalMessage">Preparing to send....</p> 
 
       <!-- Visual progress bar -->
@@ -468,9 +524,22 @@ footer a:hover {
         <div><strong id="progressPercent">0%</strong></div>
         <div id="progressBytes">0 / 0 MB</div>
       </div>
-
     </div>
   </div>
+
+<!-- Success Popup Modal -->
+<div id="successModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+  <div class="modal-panel success-panel" id="successPanel">
+
+    <!-- Close button -->
+    <button id="closeSuccessModal" class="close-btn">✕</button>
+
+    <!-- Your existing message goes here -->
+    <h2 id="responseTitle"></h2>
+    <p id="responseMessage" role="status"></p>
+
+  </div>
+</div>
 
   <!-- Footer -->
   <footer>
@@ -497,12 +566,17 @@ const form = document.getElementById('feedbackForm');
 const screenshotsInput = document.getElementById('screenshots');
 const previewContainer = document.getElementById('previewContainer');
 const responseMessage = document.getElementById('responseMessage');
+const responseTitle = document.getElementById('responseTitle');
 const uploadModal = document.getElementById('uploadModal');
 const progressFill = document.getElementById('progressFill');
 const progressPercent = document.getElementById('progressPercent');
 const progressBytes = document.getElementById('progressBytes');
 const modalMessage = document.getElementById('modalMessage');
 const submitBtn = document.getElementById('submitBtn');
+
+const successModal = document.getElementById('successModal');
+const closeSuccessModal = document.getElementById('closeSuccessModal');
+const successPanel = document.getElementById('successPanel');
 
 // State for sendBeacon fallback
 let textSaved = false;
@@ -549,11 +623,52 @@ function updateProgressUI(uploadedBytes, totalBytes) {
   if (progressbar) progressbar.setAttribute('aria-valuenow', String(pct));
 }
 
-function resetFormUI(name) {
-  form.reset();
-  previewContainer.innerHTML = '';
-  responseMessage.classList.remove('hidden');
-  responseMessage.textContent = `Thank you! ${name} Your feedback was submitted.`;
+// Show popup
+function showSuccessModal(messageHTML, type = 'success') {
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (type === 'success') {
+    responseTitle.textContent = '✔ Feedback Sent Successfully';
+    responseTitle.style.color = isDark ? '#4bfa4b' : '#017501';
+  } 
+  else if (type === 'error') {
+    responseTitle.textContent = '✖ Sending Failed';
+    responseTitle.style.color = isDark ? '#fc3838' : '#b30707';
+  }
+
+  responseMessage.innerHTML = messageHTML;
+  successModal.classList.remove('hidden');
+}
+
+// Hide popup
+function hideSuccessModal() {
+  successModal.classList.add('hidden');
+}
+
+// Close button click
+closeSuccessModal.addEventListener('click', hideSuccessModal);
+
+// Click outside to close
+successModal.addEventListener('click', function (e) {
+  if (!successPanel.contains(e.target)) {
+    hideSuccessModal();
+  }
+});
+
+function handleResult(type, name = '', errorMessage = '') {
+  if (type === 'success') {
+    form.reset();
+    previewContainer.innerHTML = '';
+    showSuccessModal(
+      `Your feedback has been submitted successfully.<br>Thank you ${name}.`,
+      'success'
+    );
+  }
+  else if (type === 'error') {
+    showSuccessModal(
+      errorMessage || 'Failed to send feedback. Please try again later.',
+      'error'
+    );
+  }
 }
 
 function isAtLeastOneCheckboxChecked() {
@@ -714,9 +829,9 @@ form.addEventListener('submit', async function (event) {
     modalMessage.textContent = 'Text saved — starting image uploads (if any).';
   } catch (err) {
     console.error('Error saving text:', err);
-    alert('Failed to save feedback text. Try again later.');
     hideModal();
     submitBtn.disabled = false;
+    handleResult('error', '', 'Failed to save feedback text. Please try again later.');
     return;
   }
 
@@ -727,9 +842,9 @@ form.addEventListener('submit', async function (event) {
     } catch (err) {
       console.warn('Complete endpoint failed (no images):', err);
     }
-    resetFormUI(name);
     hideModal();
     submitBtn.disabled = false;
+    handleResult('success', name);
     return;
   }
 
@@ -752,9 +867,9 @@ form.addEventListener('submit', async function (event) {
       if (!signResp || !signResp.uploadUrl || !signResp.filePath) throw new Error('Invalid sign URL response');
     } catch (err) {
       console.error('Error getting signed URL:', err);
-      alert('Failed to get upload URL for one of the images. Try again later.');
       hideModal();
       submitBtn.disabled = false;
+      handleResult('error', '', 'Failed to get upload URL for one of the images. Please try again later.');
       return;
     }
 
@@ -773,9 +888,9 @@ form.addEventListener('submit', async function (event) {
       updateProgressUI(uploadedBytes, totalBytes);
     } catch (err) {
       console.error('Upload error:', err);
-      alert('An error occurred while uploading images. Please try again.');
       hideModal();
       submitBtn.disabled = false;
+      handleResult('error', '', 'An error occured while uploading images. Please try again later.');
       return;
     }
   }
@@ -785,9 +900,9 @@ form.addEventListener('submit', async function (event) {
     await postJSON(COMPLETE_ENDPOINT, { feedback_id: feedbackId, images: uploadedPaths });
   } catch (err) {
     console.warn('Failed to finalize feedback with image paths:', err);
-    alert('Images uploaded, but we could not update the database with image links. Contact admin if links are missing.');
     hideModal();
     submitBtn.disabled = false;
+    handleResult('error', '', 'Failed to update database with image links. Please try again later.');
     return;
   }
 
@@ -795,9 +910,10 @@ form.addEventListener('submit', async function (event) {
   updateProgressUI(totalBytes, totalBytes);
   modalMessage.textContent = 'Upload complete!';
   hideModal();
-  resetFormUI(name);
   submitBtn.disabled = false;
+  handleResult('success', name);
 });
+
 </script>
 
 </body>

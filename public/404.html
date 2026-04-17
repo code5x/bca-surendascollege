@@ -1,21 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page Not Found</title>
 <style>
-/* Always dark */
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
+
+html { color-scheme: white; }
 
 /* ===== RESET / BASE FIX ===== */
 html, body {
   height: 100%;     
   margin: 0;       
   padding: 0;     
-  color:#e6e9ef;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
 }
 
@@ -57,7 +54,7 @@ body.bg-app::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.6);
   z-index: -1; /* keeps overlay behind all content */
 }
 
@@ -80,37 +77,33 @@ body.bg-app::before {
 /* Header */
 
 header {
-  background: #0b2a6b; 
+  background: #cfe3fc;
   padding: 4px 10px;
   display: flex;
-/*  justify-content: space-between;
-  align-items: center;  */
-  position: relative;   /* stays visible */
+  position: relative; 
   top: 0;
   left: 0;
   width: 100%;       /* full width */
   z-index: 1000;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
   border-radius: 0 0 8px 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
 }
 
 
 .back-btn {
   display: flex;    
-/*  align-items: center;
-  gap: 10px;*/
   padding: 6px 10px;
   text-decoration: none;   
   font-weight: 700;
   cursor: pointer;
   border: transparent;
-  color: #fff;
+  color: #1a1a1a;
   background: transparent;
 }
 
 .head-title1 {
-  width: 100%;
-  color: #f0cef2;
+  width: 100%; 
+  color: #ba2e29;
   text-align: center;
   margin: 10px auto 0;
   font-size: 1.9rem;
@@ -118,7 +111,7 @@ header {
 
 .head-title2 {
   width: 100%;
-  color: #f0cef2; 
+  color: #0a3b78;
   text-align: center;
   margin: 0 auto 10px;
   font-size: 1.3rem;
@@ -129,7 +122,8 @@ header {
   display: block;
   margin: 5px auto;
   text-align: justify;
-  color: #fff;
+  color: #333;
+  font-weight: 450;
   position: relative;
   z-index: 5;
   font-size: 1rem;
@@ -140,24 +134,26 @@ header {
   display: block;
   margin: 5px auto;
   text-align: justify;
-  color: #d3d8f5;
+  color: #222;
   position: relative;
   z-index: 5;
-  font-size: 0.9rem;                                              
+  font-size: 0.95rem; 
+  font-weight: 400;
   line-height: 1.4;
 }
 
 
 .home-btn {
-  background: #753678;
-  color: #fff;
+  background: #82f6fa;
+  color: #222;
   max-width: 200px;
   text-align: center;
   border-radius: 10px;
-  border: 2px solid #b088b5;
+  border: 2px solid #0f8f94;
   padding: 8px 15px;
   margin: 17px auto;
   cursor: pointer;
+  font-weight: 500;
   text-decoration: none; /* removes underline */
   display: block; /* makes it behave like your old div */
 }
@@ -168,23 +164,23 @@ header {
    }
 
     .main-box {
-      fill: rgba(115, 230, 228, 0.2);
-      stroke: #ad7bb0;
+      fill: #fad1a2;
+      stroke: #d74bde;
       stroke-width: 2;
     }
 
-    .bar-1 { fill: #6092e0; }
-    .bar-2 { fill: #4e9937; }
+    .bar-1 { fill: #6092ff; }
+    .bar-2 { fill: #2b9c09; }
     .bar-3 { fill: #e060ad; }
     .bar-4 { fill: #3c4b80; }
 
 
 /* ===== FOOTER ===== */
 footer {
-    background: #111;
+    background: #a7cfc9;
     text-align: center;
     padding: 1px;
-    color: #aaa;
+    color: #333;
      font-size: 0.85rem;
     border-top: 1px solid #333;
     border-radius: 20px 20px 0 0;
@@ -204,6 +200,23 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+
+@media (prefers-color-scheme: dark) {
+html { color-scheme: dark; }
+body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
+header { background: #0b2a6b; }
+.back-btn { color: #eee; }
+footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
+.head-title1 { color: #fc7672; }
+.head-title2 { color: #dee2ff; }
+.lead { color: #eee; font-weight: 400; }
+.lead2 { color: #ddd; }
+.home-btn { background: #1f7371; color: #ddd; border: 2px solid #099c99; }
+.main-box { fill: rgba(250, 209, 162, 0.7); stroke: #f772ee; }
+
+}
+
 
 @media (max-width: 768px) {
     /* Hide scrollbar for Chrome, Safari and Edge */

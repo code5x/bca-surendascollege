@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Computer Application (SEC) - First Semester</title>
   <link rel="stylesheet" href="../src/subject.css">
+  <link rel="icon" href="../src/sec.webp">
 
 </head>
 
 <body class="bg-app" style="background: url('../src/sec.webp') no-repeat center center fixed; background-size: cover;">
-<!-- Overlay -->
- <div style=" position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: -1;"> </div>
-
   <header>
     <nav>
       <a href="../study-material.html">←</a>
@@ -42,11 +40,19 @@
           <script type="application/json" class="pdf-data">
             [
               {
-                "title": "Contents - Computer Application (SEC) (Unofficial)",
-                "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/computer-application-sec-bca/Contents%20of%20Syllabus%20-%20Computer%20Application%20(SEC).pdf",
+                "title": "Syllabus - Computer Application (SEC)",
+                "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/computer-application-sec-bca/content/Syllabus%20-%20Computer%20Application%20(SEC).pdf",
                 "logo": "default",
                 "options": {"noLegal": false},
-                "label1": "size: 380 KB",
+                "label1": "size: 100 KB",
+                "label2": "page: 2"
+              },
+              {
+                "title": "Syllabus (unofficial) - Computer Application (SEC)",
+                "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/computer-application-sec-bca/content/Syllabus%20(unofficial)%20-%20Computer%20Application%20(SEC).pdf",
+                "logo": "default",
+                "options": {"noLegal": false},
+                "label1": "size: 170 KB",
                 "label2": "page: 2"
               }
             ]
@@ -109,8 +115,8 @@
           </script>
 <!--
           <div class="upload-notes">
-            <p class="lead">Upload class notes, book pages, e-books, Or share missing notes 
-              to keep the collection complete. Just click the button below -
+            <p class="lead">
+              Upload class notes, book pages, or e-books to help complete the collection. Click the button below to contribute.
                </p>
             <a href="../upload.html#resources" class="upload-btn">Upload Notes</a>
           </div>
@@ -255,7 +261,7 @@
 
 
   <p class="lead"">Note: The above information has been gathered from multiple sources, including user submissions and AI-generated content.
- If you see any mistakes or wrong information, please provide a <a href="../feedback.html" style="text-decoration: underline;">feedback</a> to help us improve the content.</p>
+ If you see any mistakes or wrong information, please provide a <a href="../feedback.html">feedback</a> to help us improve the content.</p>
 
 
   </main>
@@ -267,7 +273,7 @@
 
   <div id="overlay">
     <div class="overlay-content">
-      <button class="close-btn" onclick="closePDF()" aria-label="Close PDF viewer">X</button>
+      <button class="close-btn" onclick="closePDF()" aria-label="Close PDF viewer">✕</button>
       <iframe id="pdfFrame" title="PDF Viewer"></iframe>
     </div>
   </div>

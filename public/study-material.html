@@ -1,22 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Study Materials - SDC</title>
 
 <style>
-/* Always dark */
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
+html { color-scheme: white; }
 
 /* ===== RESET / BASE FIX ===== */
 html, body {
   height: 100%;     
   margin: 0;       
   padding: 0;     
-  color:#e6e9ef;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
 }
 
@@ -59,7 +55,7 @@ body.bg-app::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.77);
+  background: rgba(255, 255, 255, 0.6);
   z-index: -1; /* keeps overlay behind all content */
 }
 
@@ -81,7 +77,7 @@ body.bg-app::before {
 /* Header */
 
 header {
-  background: #0b2a6b; 
+  background: #cfe3fc; 
   padding: 4px 10px;
   display: flex;
   justify-content: space-between;
@@ -91,7 +87,7 @@ header {
   left: 0;
   width: 100%;       /* full width */
   z-index: 1000;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
   animation: slideDown 1s ease;
 }
 
@@ -107,20 +103,20 @@ header nav {
 
 header nav a {
   text-decoration: none;
-  color: #fff;
+  color: #1a1a1a;
   font-size: 0.9rem;
   font-weight: 450;
   padding: 6px 13px;
   border-radius: 6px;
   transition: all 0.3s ease;
-  background: transparent;
+  background: #93dffa;
   flex-shrink: 0; /* prevent shrinking of links */
   border: 1px solid #6974c7;
 }
 
 
 header nav a:hover {
-  background: #0b5ed7;
+  background: #45afd6;
 }
 
 
@@ -141,12 +137,12 @@ header nav a:hover {
 .page-title-text {
   text-align: center;
   padding: 1rem;
-  color: #fff;
+  color: #111;
   margin: 50px 0 10px;
 }
 
-.lead1 {color:#cfd3fa;margin:8px 0 14px 0;font-size:0.97rem; text-align:justify; line-height: 1.5;}
-.lead2 {color:#fff;margin:8px 0 14px 0;font-size:1.1rem; text-align:center;}
+.lead1 {color:#323847;margin:8px 0 14px 0;font-size:1rem; text-align:justify; line-height: 1.5; font-weight: 410; }
+.lead2 {color:#323847;margin:8px 0 14px 0;font-size:1.2rem; text-align:center; line-height: 1.5; font-weight: 500;}
 
 
 /* ===== SEMESTER SELECTOR ===== */
@@ -158,12 +154,12 @@ header nav a:hover {
 
 /* Box around the label + select */
 .selector-box {
-  background: #1d3559; /* dark background */
+  background: #97acfc;
   padding: 1.5rem 2rem;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  border: 1px solid #50ab93;
+  border: 2px solid #334aa6;
 }
 
 /* Style for label */
@@ -178,16 +174,16 @@ header nav a:hover {
 .selector-box select {
   padding: 0.8rem 1.2rem;
   font-size: 1.1rem;
-  border: 1px solid #80558a;
+  border: 2px solid #1c6d78;
   border-radius: 8px;
-  background: #222;
-  color: #fce8fc;
+  background: #ddd;
+  color: #333;
   width: 200px; /* make it wider */
 }
 
 .selector-box select:focus {
   outline: none;
-  border: 1px solid #e6cfe5;
+  border: 2px solid #334aa6;
 }
 
 /* ===== MATERIAL GRID ===== */
@@ -209,7 +205,7 @@ header nav a:hover {
 .section-heading {
   margin: 0.6rem 0 1rem 0;
   font-size: 1.25rem;
-  color: white;
+  color: #222;
   letter-spacing: 0.4px;
 }
 
@@ -224,32 +220,21 @@ header nav a:hover {
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 2;
-
   border-radius: 8px;
-  border: 3px solid #505e53;
+  border: 3px solid #337a53;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease;
-
+  filter: contrast(0.8);
   /* center text */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: #fff;
+  padding: 20px;
 }
 
-/* ===== FIX CONTENT POSITION ===== */
-.card > * {
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .card:hover {
   transform: scale(1.05);
@@ -261,6 +246,13 @@ header nav a:hover {
   color: #fff;
   z-index: 1;
   position: relative;
+
+  display: inline-block; 
+  width: auto;
+  max-width: 90%;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
 }
 
 /* ===== NO DATA MESSAGE ===== */
@@ -268,21 +260,35 @@ header nav a:hover {
   grid-column: 1 / -1;  /* span full width of grid */
   text-align: center;
   font-size: 1.3rem;
-  color: white;
+  color: #444;
   padding: 2rem 0;
+  font-weight: 500;
 }
 
+.req-sub {
+  margin:10px auto 40px;
+  text-align: center;
+  display:none;
+}
+
+.req-sub a {
+  text-decoration:underline;
+  color: #0c54b3;
+  text-underline-offset: 5px;
+}
+
+.req-sub a:hover {  color: #b814c7; }
+
 footer {
-    background: #111;
+    background: #a7cfc9;
     text-align: center;
-    padding: 1px;
-/*    margin-top: 5px;  */
-    color: #aaa;
-     font-size: 0.85rem;   
- /*   font-size: clamp(0.85rem, 1vw, 2rem);  */
+    padding-bottom: 2px;
+    margin-top: 5px;
+    color: #333;
+    font-size: 0.85rem;   
+    line-height: 20px;
     border-top: 1px solid #333;
     border-radius: 20px 20px 0 0;
-    margin-top: auto;  
 }
 
 @media (min-width: 769px) {
@@ -292,7 +298,7 @@ footer {
 }
 
 footer a {
-    color: #f7c2d9;
+    color: #0c54b3;
     text-decoration: none;
 }
 footer a:hover {
@@ -315,6 +321,28 @@ footer a:hover {
         -ms-overflow-style: none;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+html { color-scheme: dark; }
+body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
+header { background: #0b2a6b; }
+header nav a { color: #fff; background: transparent; }
+header nav a:hover { background: #0b5ed7;}
+footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
+footer a { color: #f7c2d9; }
+
+.lead1 { font-weight: 400; color: #cfd3fa; }
+.lead2 { font-weight: 401; color: #bbb; }
+.page-title-text { color: #fff; }
+.section-heading { color: #fff; }
+.req-sub a { color:#52cceb; }
+.req-sub a:hover { color:#f7c2d9;  }
+.selector-box { background: #1d3559; border: 2px solid #50ab93; }
+.selector-box select { border: 1px solid #80558a; background: #222; color: #fce8fc; }
+.selector-box select:focus { border: 1px solid #e6cfe5; }
+.no-data { color: #ccc; }
+}
+
 
 </style>
 </head>
@@ -344,19 +372,6 @@ footer a:hover {
 <div class="semester-selector">
   <div class="selector-box">
 
-<!--
-    <label for="semester"></label>
-    <select id="semester" onchange="loadSemesterData()">
-      <option value="1">Semester 1</option>
-      <option value="2">Semester 2</option>
-      <option value="3">Semester 3</option>
-      <option value="4">Semester 4</option>
-      <option value="5">Semester 5</option>
-      <option value="6">Semester 6</option>
-      <option value="6">Semester 7</option>
-      <option value="6">Semester 8</option>
-    </select>
--->
 
 <select id="semester">
   <option value="" selected disabled>Select Semester</option>
@@ -376,7 +391,7 @@ footer a:hover {
     <section id="materialGrid" class="material-grid" aria-live="polite">
       <!-- JS will populate cards here -->
     </section>
-   <h3 style="margin:10px auto 40px; text-decoration:underline; text-underline-offset: 5px; color:#82a6cf; text-align: center; display:none;" id="ShowRequest">
+   <h3 class="req-sub" id="ShowRequest">
      <a href="request-course.html">Request New Subject (Paper)</a>
    </h3>
 
@@ -429,9 +444,11 @@ const materialData = {
     bca: [
       { subject: "Data Structure and Algorithms (BCA)", link: "sem2/dsa.html", image: "/src/dsa.webp" },
       { subject: "Digital Logic Fundamentals (BCA)", link: "sem2/digital-logic.html", image: "/src/dlf.webp" },
-      { subject: "Mathematics -II (BCA)", link: "sem2/mathematics-ii.html", image: "/src/maths.webp" }
     ],
     common: [
+      { subject: "HTML Programming (SEC)", link: "sem2/html-programming-sec.html", image: "/src/sec2.webp" },
+      { subject: "Trade and Commerce in India (VAC)", link: "sem2/trade-commerce-india-vac.html", image: "/src/vac2.webp" },
+      { subject: "English Communication (AEC)", link: "sem2/english-communication-aec.html", image: "/src/aec2.webp" },
       { subject: "Information Sources and Services (MDC)", link: "sem2/information-source-service-mdc.html", image: "/src/mdc.webp" }
     ]      
 
@@ -445,7 +462,6 @@ function createCardElement(item) {
 
   if (item.image) {
     card.style.background = `
-      linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
       url(${item.image}) center/cover no-repeat
     `;
   }

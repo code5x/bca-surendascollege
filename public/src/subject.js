@@ -212,6 +212,7 @@ function animateOpenDrawer(drawer, toggleBtn) {
     drawer.classList.add("open");
     drawer.setAttribute("aria-hidden", "false");
     if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "true");
+    if (toggleBtn) toggleBtn.classList.add("active");
 
     // allow content to render and then measure
     // set height auto to measure scrollHeight
@@ -261,6 +262,7 @@ function animateCloseDrawer(drawer, toggleBtn) {
     drawer.style.height = "0px";
     drawer.setAttribute("aria-hidden", "true");
     if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "false");
+    if (toggleBtn) toggleBtn.classList.remove("active");
 
     if (toggleBtn) toggleBtn.style.borderRadius = "14px";
 
@@ -503,6 +505,7 @@ async function ytFetchOEmbed(url) {
   }
 }
 
+
 function ytFallbackThumb(url, type) {
   try {
     if (type === 'video') {
@@ -513,7 +516,7 @@ function ytFallbackThumb(url, type) {
       return 'data:image/svg+xml;utf8,' + encodeURIComponent(
         `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="270">
            <rect width="100%" height="100%" fill="#11131a"/>
-           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f7c2d9" font-size="20">Playlist</text>
+           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f7c2d9" font-size="30">Playlist</text>
          </svg>`
       );
     }
@@ -521,6 +524,7 @@ function ytFallbackThumb(url, type) {
     return '';
   }
 }
+
 
 function ytCreateRow(url, data) {
   const parsed = ytParseUrl(url);

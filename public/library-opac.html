@@ -1,21 +1,18 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <title>Suren Das College Library Catalog - OPAC</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
 
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
+html { color-scheme: white; }
 
 /* ===== RESET / BASE FIX ===== */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  color:#e6e9ef;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
 }
 
@@ -33,7 +30,6 @@ body.bg-app {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   -webkit-font-smoothing: antialiased;
-  color: #e6e9ef;
 
   /* Default desktop background */
   background: url("/src/background.webp") no-repeat center center fixed;
@@ -49,7 +45,7 @@ body.bg-app {
   }
 }
 
-/* Black overlay */
+
 body.bg-app::before {
   content: "";
   position: fixed;
@@ -57,7 +53,7 @@ body.bg-app::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.77);
+  background: rgba(255, 255, 255, 0.6);
   z-index: -1; /* keeps overlay behind all content */
 }
 
@@ -79,7 +75,7 @@ body.bg-app::before {
 /* Header */
 
 header {
-  background: #0b2a6b;
+  background: #cfe3fc;
   padding: 5px 10px;
   display: flex;
   justify-content: space-between;
@@ -89,7 +85,7 @@ header {
   left: 0;
   width: 100%;       /* full width */
   z-index: 1000;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
   animation: slideDown 1s ease;
 }
 
@@ -105,20 +101,20 @@ header nav {
 
 header nav a {
   text-decoration: none;
-  color: #fff;
+  color: #1a1a1a;
   font-size: 0.9rem;
   font-weight: 450;
   padding: 6px 13px;
   border-radius: 6px;
   transition: all 0.3s ease;
-  background: transparent;
+  background: #93dffa;
   flex-shrink: 0; /* prevent shrinking of links */
   border: 1px solid #6974c7;
 }
 
 
 header nav a:hover {
-  background: #0b5ed7;
+  background: #45afd6;
 }
 
 @media (min-width: 769px) {
@@ -138,22 +134,25 @@ header nav a:hover {
     .phead {
       text-align: center;
       margin-bottom: 22px;
+      margin-top: 10px;
     }
     h1 {
       font-size: 21px;
       margin: 0;
+      color: #111;
     }
     p.lead {
       margin: 0;
-      color: #a9b9d4;
-      font-size: 14px;
+      color: #323847;
+      font-size: 0.98rem;
+      font-weight: 410;
       text-align: justify;
       line-height: 1.3;
     }
     .meta {
       margin-top: 6px;
-      color: #cfd3fa;
-      font-size: 16px;
+      color: #252525;
+      font-size: 17px;
       text-align: center;
       font-weight: bold;
     }
@@ -164,7 +163,6 @@ header nav a:hover {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      max-width: 800px;
       width: 100%;
       margin-left: auto;
       margin-right: auto;
@@ -173,12 +171,17 @@ header nav a:hover {
 
     .selector-row {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       gap: 7px;
-      width: 100%;
-      margin-top: 15px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      padding: 12px;
+      background: rgba(230,240,250,0.8);
+      border-radius: 12px;
+      border: 1px solid #353;
     }
 
     .selector-group {
@@ -188,23 +191,23 @@ header nav a:hover {
     }
     .selector-group label {
       font-size: 15px;
-      font-weight: 400;
-      color: #bfc8d6;
+      font-weight: 410;
+      color: #333;
       white-space: nowrap;
     }
     .selector-group select {
       padding: 7px;
       border-radius: 7px;
-      border: 1px solid #636163;
+      border: 1px solid #333;
       font-size: 14px;
-      background: #2d2c2e;
+      background: #c2eaff;
       outline: none;
       cursor: pointer;
       transition: all 0.15s ease;
-      width: 250px;
-      color: #fff;
+      width: 200px;
+      color: #111;
     }
-    .selector-group select:hover { border-color: #611b70; }
+    .selector-group select:hover { transform: scale(1.02); }
 
     /* ---------- INPUT + BUTTON ---------- */
     .search-input-row {
@@ -220,12 +223,11 @@ header nav a:hover {
       flex: 1;
       padding: 9px;
       border-radius: 7px 0 0 7px;
-      border: 1px solid #4b4e6b;
       font-size: 15px;
-      background: #2d2c2e;
+      background: #cddcfa;
       outline: none;
-      font-weight: 400;
-      color: #fff;
+      color: #111;
+      border: 1px solid #294691; 
     }
     .search-input-row button {
       padding: 10px;
@@ -241,6 +243,12 @@ header nav a:hover {
       background: #103287;
     }
 
+    #total {
+      margin: 7px 0 7px auto;
+      font-size: 16px;
+      color: #333;
+    }
+
     /* ---------- RESULTS + CARDS ---------- */
     .results {
       margin-top: 22px;
@@ -252,75 +260,88 @@ header nav a:hover {
       margin-right: auto;
     }
     .card {
-      background: #333333;
+      background: #bdcbff;
       border-radius: 7px;
       padding: 15px;
-      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.04);
-      border: 1px solid #5a5e78;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid #555;
       cursor: pointer;
       transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
     .card:hover {
       transform: scale(1.03);
-      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.06);
     }
 
     .info h3 {
       margin: 0 0 6px;
       font-size: 16px;
-      color: #afc0db;
+      color: #333;
     }
 
     .chip {
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 410;
       margin: 5px auto;
+      color: #444;
     }
 
     .desc {
       margin-top: 8px;
-      color: #cfd3fa;
+      color: #555;
       font-size: 17px;
       line-height: 1.25;
       text-align: justify;
     }
 
-    .placeholder {
+    #spinner {
+      display: none;
+      color: #333;
+      text-align: center;
+      margin: 30px auto;
+      font-size: 18px;
+      font-weight: 450;
+    }
+
+    #placeholder {
       text-align: center;
       padding: 40px 12px;
-      color: #cfd3fa;
-      font-size: 17px;
+      color: #871b1b;
+      font-size: 18px;
+      font-weight: 450;
     }
 
     .pagination {
       text-align: center;
-      margin-top: 24px;
-      margin-bottom: 24px;
+      margin: 30px auto;
+      color: #111;
     }
     .pagination button {
-      margin: 0 3px;
+      margin: 5px;
       padding: 6px 10px;
       border-radius: 8px;
-      border: 1px solid #4b4e6b;
-      background: #2d2c2e;
+      border: 1px solid #333;
+      background: #ccc;
       cursor: pointer;
       font-size: 13px;
-      color: #fff;
+      color: #111;
+    }
+    .pagination button:hover {
+      background: #aafab9;
     }
     .pagination button.active {
-      background: #1f6feb;
+      background: #5a9afa;
     }
     .pagination button:disabled {
-      opacity: 0.5;
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
 footer {
-    background: #111;
+    background: #a7cfc9;
     text-align: center;
     padding: 1px;
-    color: #aaa;
+    color: #333;
      font-size: 0.85rem;
- /*   font-size: clamp(0.85rem, 1vw, 2rem);  */
     border-top: 1px solid #333;
     border-radius: 20px 20px 0 0;
     margin-top: auto;
@@ -330,11 +351,12 @@ footer {
   footer {
     font-size: 1.25rem;
   }
+  .selector-group select { width: 250px; }
 }
 
 
 footer a {
-    color: #f7c2d9;
+    color: #0c54b3;
     text-decoration: none;
 }
 footer a:hover {
@@ -350,6 +372,36 @@ footer a:hover {
         max-width: 100%;
       }
     }
+
+@media (prefers-color-scheme: dark) {
+html { color-scheme: dark; }
+body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
+header { background: #0b2a6b; }
+header nav a { color: #fff; background: transparent; }
+header nav a:hover { background: #0b5ed7;}
+footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
+footer a { color: #f7c2d9; }
+h1 { color: #ffffff; }
+p.lead { color: #cfd3fa; font-weight: 400; }
+.meta { color: #cec; }
+.selector-row { background: rgba(50,50,70,0.9); border: 1px solid #778; }
+.selector-group label { color: #ccc; }
+.selector-group select { border: 1px solid #aaa; background: #555; color: #eee; }
+.search-input-row input { background: #555; color: #fff; border: 1px solid #999; border-right: none; }
+.search-input-row button { box-shadow: inset 0 0 0 1px #999; background: #103287; }
+.search-input-row button:hover { background: #401087; }
+#total { color: #ccc; }
+.card { background: #35404a; border: 1px solid #888; }
+.info h3 { color: #ddd; }
+.chip { color: #ccc; font-weight: 400; }
+#spinner { color: #ddd; }
+#placeholder { color: #ff5252; }
+.pagination { color: #eee; }
+.pagination button { color: #eee; background: #444; border: 1px solid #999; }
+.pagination button:hover { background: #0a613e; }
+.pagination button.active { background: #11428c; }
+
+}
 
 @media (max-width: 768px) {
     /* Hide scrollbar for Chrome, Safari and Edge */
@@ -435,11 +487,8 @@ footer a:hover {
       <button id="searchBtn">Search</button>
     </div>
 
-    <p id="total" style="margin:7px 0 7px auto;font-size:16px;"></p>
-
-    <div id="spinner" style="display:none; color:#cfd3fa; text-align:center; margin:30px auto; font-size: 17px;">
-      Searching…
-    </div>
+    <p id="total"></p>
+    <div id="spinner">Searching…</div>
   </section>
 
   <main id="resultsArea">
@@ -449,7 +498,7 @@ footer a:hover {
 
   <div id="pagination" class="pagination" style="display:block"></div>
 
-  <p class="lead" style="margin:15px auto;">
+  <p class="lead" style="margin: 30px auto;">
     The search results shown here are fetched through the INFLIBNET IndCat system, which provides access to
     library records from colleges and universities across India. This page filters and displays those records
     that belong to Suren Das College Library. It helps quickly find book details such as title, author,
@@ -549,24 +598,48 @@ function renderRecords(records){
   }
 }
 
+
 function renderPagination(totalRecords, limit, currentPage){
-  paginationEl.innerHTML="";
-  const totalPages=Math.ceil(totalRecords/limit);
-  const createBtn=(label,page,disabled=false,active=false)=>{
-    const btn=document.createElement("button");
-    btn.textContent=label;
-    if(active)btn.classList.add("active");
-    btn.disabled=disabled;
-    btn.onclick=()=>runSearch(qEl.value,false,page);
+  paginationEl.innerHTML = "";
+  const totalPages = Math.ceil(totalRecords / limit);
+  const createBtn = (label, page, disabled = false, active = false) => {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    if (active) btn.classList.add("active");
+    btn.disabled = disabled;
+    btn.onclick = () => runSearch(qEl.value, false, page);
     paginationEl.appendChild(btn);
   };
-  createBtn("❮",currentPage-1,currentPage===1);
-  for(let i=1;i<=totalPages;i++){
-    if(i>5 && Math.abs(i-currentPage)>2 && i!==totalPages){if(i===currentPage+3)paginationEl.append("...");continue;}
-    createBtn(i,i,false,i===currentPage);
+  // Previous button
+  createBtn("❮", currentPage - 1, currentPage === 1);
+  const pages = new Set();
+  // Always show first 2
+  pages.add(1);
+  if (totalPages >= 2) pages.add(2);
+  // Current page and neighbors
+  pages.add(currentPage - 1);
+  pages.add(currentPage);
+  pages.add(currentPage + 1);
+  // Always show last 2
+  if (totalPages > 1) pages.add(totalPages);
+  if (totalPages > 2) pages.add(totalPages - 1);
+  // Convert to sorted array and filter valid pages
+  const sortedPages = [...pages]
+    .filter(p => p >= 1 && p <= totalPages)
+    .sort((a, b) => a - b);
+  // Render with dots
+  let prevPage = 0;
+  for (let page of sortedPages) {
+    if (page - prevPage > 1) {
+      paginationEl.append("...");
+    }
+    createBtn(page, page, false, page === currentPage);
+    prevPage = page;
   }
-  createBtn("❯",currentPage+1,currentPage===totalPages);
+  // Next button
+  createBtn("❯", currentPage + 1, currentPage === totalPages);
 }
+
 
 async function runSearch(query,auto=false,page=1){
   const opt=optSel.value, limits=limitSel.value, field=fieldSel.value;

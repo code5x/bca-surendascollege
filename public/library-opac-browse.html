@@ -1,20 +1,18 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <title>Browse Books — Suren Das College Library (OPAC)</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
-html[data-theme="dark"] {
-  color-scheme: dark;
-}
+
+html { color-scheme: white; }
 
 /* ===== RESET / BASE FIX ===== */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  color:#e6e9ef;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
 }
 
@@ -33,7 +31,6 @@ body.bg-app {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   -webkit-font-smoothing: antialiased;
-  color: #e6e9ef;
 
   /* Default desktop background */
   background: url("/src/background.webp") no-repeat center center fixed;
@@ -57,7 +54,7 @@ body.bg-app::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.77);
+  background: rgba(255, 255, 255, 0.6);
   z-index: -1; /* keeps overlay behind all content */
 }
 
@@ -78,31 +75,38 @@ body.bg-app::before {
 
 .header1 {
   display: flex;
-  background: #0b2a6b;
+  background: #cfe3fc;
   gap: 1px;
   margin: 0;
   border-radius: 0 0 7px 7px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
 }
 
 .header1 button {
-  color: #fff;
+  color: #1a1a1a;
   font-size: 0.9rem;
   font-weight: 450;
   padding: 5px 10px;
   border-radius: 6px;
-  background: transparent;
+  background: #93dffa;
   border: 1px solid #6974c7;
   margin: 5px 0 5px 17px;
+}
+
+.header1 button:hover {
+  background: #45afd6;
 }
 
 h1 {
       font-size: 21px;
       margin: 10px 0;
+      color: #111;
     }
     p.lead {
-      margin: 0;
-      color: #a9b9d4;
-      font-size: 14px;
+      margin: 40px auto 30px;
+      color: #323847;
+      font-size: 0.98rem;
+      font-weight: 410;
       text-align: justify;
       line-height: 1.3;
     }
@@ -117,61 +121,68 @@ h1 {
       margin-right: auto;
     }
     .card {
-      background: #333333;
+      background: #bdcbff;
       border-radius: 7px;
       padding: 15px;
-      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.04);
-      border: 1px solid #5a5e78;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid #555;
       cursor: pointer;
       transition: transform 0.12s ease, box-shadow 0.12s ease;
     }
     .card:hover {
       transform: scale(1.03);
-      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.06);
     }
 
 .card h3 {
       font-size: 16px;
-      color: #afc0db;
+      color: #333;
       margin: 0;
 }
-.meta{color:#fff;font-size:13px;margin:5px auto;line-height:1.5;}
-
-button{
-  background:#1f6feb;
-  color:white;border:none;
-  border-radius:7px;
-  padding:7px;
-  font-weight:500;
-  cursor:pointer;
+.meta {
+  color: #444; 
+  font-size: 14px;
+  font-weight: 410;
+  margin: 5px auto;
+  line-height: 1.5;
 }
-button:hover{background:#0b5ed7;}
-.header-row{
+
+
+.header-row {
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
   gap:2px;
 }
+
+.page-limit {
+  font-size: 15px;
+  font-weight: 410;
+  color: #222;
+  margin-right: 6px;
+}
+
 .selector{
       padding: 5px;
       border-radius: 7px;
-      border: 1px solid #636163;
+      border: 1px solid #222;
       font-size: 14px;
-      background: #2d2c2e;
+      background: #ccc;
       outline: none;
       cursor: pointer;
       transition: all 0.15s ease;
       width: 100px;
+      color: #111;
     }
-.selector:hover { border-color: #611b70; }
+.selector:hover { transform: scale(1.02); }
 
 .status{
-  text-align: center;
+      text-align: center;
       padding: 40px 12px;
-      color: #cfd3fa;
-      font-size: 17px;
-  margin-top:30px;
+      color: #333;
+      font-size: 18px;
+      font-weight: 450;
+      margin-top:30px;
 }
 
 .pagination {
@@ -183,27 +194,29 @@ button:hover{background:#0b5ed7;}
       margin: 0 3px;
       padding: 6px 10px;
       border-radius: 8px;
-      border: 1px solid #4b4e6b;
-      background: #2d2c2e;
+      border: 1px solid #333;
+      background: #ccc;
       cursor: pointer;
       font-size: 13px;
-      color: #fff;
+      color: #111;
+    }
+    .pagination button:hover {
+      background: #aafab9;
     }
     .pagination button.active {
-      background: #1f6feb;
+      background: #5a9afa;
     }
     .pagination button:disabled {
-      opacity: 0.5;
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
 footer {
-    background: #111;
+    background: #a7cfc9;
     text-align: center;
     padding: 1px;
-    color: #aaa;
+    color: #333;
      font-size: 0.85rem;
- /*   font-size: clamp(0.85rem, 1vw, 2rem);  */
     border-top: 1px solid #333;
     border-radius: 20px 20px 0 0;
     margin-top: auto;
@@ -217,12 +230,37 @@ footer {
 
 
 footer a {
-    color: #f7c2d9;
+    color: #0c54b3;
     text-decoration: none;
 }
 footer a:hover {
     text-decoration: underline;
 }
+
+
+
+@media (prefers-color-scheme: dark) {
+html { color-scheme: dark; }
+body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
+.header1 { background: #0b2a6b; }
+.header1 button  { color: #fff; background: transparent; }
+.header1 button:hover { background: #0b5ed7;}
+footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
+footer a { color: #f7c2d9; }
+h1 { color: #eee; }
+p.lead { color: #cfd3fa; font-weight: 400; }
+.card { background: #35404a; border: 1px solid #888; }
+.card h3 { color: #ddd; }
+.meta { color: #ccc; font-weight: 400; }
+.page-limit { color: #bbb; }
+.selector { border: 1px solid #999999; background: #555; color: #eee; }
+.status { color: #ddd; }
+.pagination button { border: 1px solid #999; color: #eee; background: #444; }
+.pagination button:hover { background: #0a613e; }
+.pagination button.active { background: #11428c; } 
+
+}
+
 
 @media (max-width: 768px) {
     /* Hide scrollbar for Chrome, Safari and Edge */
@@ -257,7 +295,7 @@ footer a:hover {
     <h1 id="title">Loading...</h1>
   </div>
   <div>
-    <label for="limitSel" style="font-size: 15px; font-weight: 400; color: #bfc8d6;margin-right:6px;">Page limit:</label>
+    <label for="limitSel" class="page-limit">Page limit:</label>
     <select id="limitSel" class="selector">
       <option value="10">10</option>
       <option value="20" selected>20</option>
@@ -272,7 +310,7 @@ footer a:hover {
 <div class="results" id="results"></div>
 <div id="pagination" class="pagination" style="display:block;"></div>
 
-  <p class="lead" style="margin:20px auto;">
+  <p class="lead">
     The search results shown here are fetched through the INFLIBNET IndCat system, which provides access to
     library records from colleges and universities across India. This page filters and displays those records
     that belong to Suren Das College Library. It helps quickly find book details such as title, author,
@@ -292,6 +330,13 @@ const titleEl=document.getElementById("title");
 const statusEl=document.getElementById("status");
 const limitSel=document.getElementById("limitSel");
 const paginationEl=document.getElementById("pagination");
+
+function showStatus(message) {
+  if (!loadingEl) return;
+  statusEl.textContent = message || '';
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  statusEl.style.color = isDark ? '#fc3838' : '#b30707';
+}
 
 /* -------------------------
    Client-side HTML parser
@@ -364,7 +409,11 @@ async function loadBrowse(page=1){
   const type=params.get("type")||"subject";
   const limits=limitSel.value;
 
-  if(!query){titleEl.textContent="No query specified.";return;}
+  if (!query) {
+    titleEl.textContent = "No query specified.";
+    titleEl.style.color = 'red';
+    return;
+  }
 
   const displayType={
     author:"Author",
@@ -377,7 +426,6 @@ async function loadBrowse(page=1){
 
   titleEl.textContent=`Books under ${displayType}: ${query}`;
   statusEl.style.display="block";
-  statusEl.textContent="Searching book records…";
   resultsEl.innerHTML="";
 
   try{
@@ -389,7 +437,7 @@ async function loadBrowse(page=1){
     const data=await res.json();
 
     if(!data.success){
-      statusEl.textContent="Failed to load data. Refresh the page to see again.";
+      showStatus('Failed to load data. Refresh the page to see again.');
       return;
     }
 
@@ -411,7 +459,7 @@ async function loadBrowse(page=1){
     }
 
     if(!recs.length){
-      statusEl.textContent="No records found.";
+      showStatus('No records found.');
       return;
     }
 
@@ -437,32 +485,52 @@ async function loadBrowse(page=1){
       `Total <strong>${(data.stats && data.stats.totalRecords) || recs.length}</strong> Records found`;
 
   }catch(e){
-    statusEl.textContent="Error: "+e.message;
+    showStatus(`Error: ${e.message}`);
   }
 }
 
 function renderPagination(totalRecord, limit, currentPage, query, type){
-  paginationEl.innerHTML="";
-  const totalPages=Math.ceil(totalRecord/limit);
-
-  const createBtn=(label,page,disabled=false,active=false)=>{
-    const btn=document.createElement("button");
-    btn.textContent=label;
-    if(active)btn.classList.add("active");
-    btn.disabled=disabled;
-    btn.onclick=()=>loadBrowse(page);
+  paginationEl.innerHTML = "";
+  const totalPages = Math.ceil(totalRecord / limit);
+  const createBtn = (label, page, disabled = false, active = false) => {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    if (active) btn.classList.add("active");
+    btn.disabled = disabled;
+    btn.onclick = () => loadBrowse(page);
     paginationEl.appendChild(btn);
   };
-
-  createBtn("❮",currentPage-1,currentPage===1);
-  for(let i=1;i<=totalPages;i++){
-    if(i>5 && Math.abs(i-currentPage)>2 && i!==totalPages){
-      if(i===currentPage+3)paginationEl.append("...");continue;
+  // Previous button
+  createBtn("❮", currentPage - 1, currentPage === 1);
+  const pages = new Set();
+  // Always show first 2
+  pages.add(1);
+  if (totalPages >= 2) pages.add(2);
+  // Current page and neighbors
+  pages.add(currentPage - 1);
+  pages.add(currentPage);
+  pages.add(currentPage + 1);
+  // Always show last 2
+  if (totalPages > 1) pages.add(totalPages);
+  if (totalPages > 2) pages.add(totalPages - 1);
+  // Convert to sorted array and filter valid pages
+  const sortedPages = [...pages]
+    .filter(p => p >= 1 && p <= totalPages)
+    .sort((a, b) => a - b);
+  // Render with dots
+  let prevPage = 0;
+  for (let page of sortedPages) {
+    if (page - prevPage > 1) {
+      paginationEl.append("...");
     }
-    createBtn(i,i,false,i===currentPage);
+    createBtn(page, page, false, page === currentPage);
+    prevPage = page;
   }
-  createBtn("❯",currentPage+1,currentPage===totalPages);
+  // Next button
+  createBtn("❯", currentPage + 1, currentPage === totalPages);
 }
+
+
 
 // Reload when limit changes
 limitSel.addEventListener("change",()=>loadBrowse(1));
