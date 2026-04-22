@@ -163,7 +163,7 @@ header nav a:hover {
 }
 .box-left { flex: 0 0 85px; display:flex; align-items:center; justify-content:center; }
 .box-left img { width: 100%; height: auto; border-radius: 8px; object-fit: cover; }
-.box-right { flex: 1 1 auto; display:flex; flex-direction:column; gap:7px; }
+.box-right { flex: 1 1 auto; display:flex; flex-direction:column; gap:7px; min-width: 0; }
 .button-row { display:flex; gap:12px; align-items:center; }
 .pdf-box button {
   background: var(--btn-color);
@@ -176,7 +176,17 @@ header nav a:hover {
 }
 .pdf-box button:hover { background: #751aeb; }
 
-.file-title { font-size: 14px; color: #222; }
+.file-title {
+  margin: 0;
+  font-size: 15px;
+  color: #222;
+  line-height: 1.2;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .label {
   display: inline-block;
@@ -326,7 +336,7 @@ header nav a:hover {
 .yt-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
 .yt-badge { position:absolute; left:6px; top:6px; background:rgba(0,0,0,0.45); color:#fff; font-size:11px; padding:4px 6px; border-radius:4px; }
 .yt-meta { display:flex; flex-direction:column; flex:1 1 auto; min-width:0; }
-.yt-title { margin:0; font-size:14px; color:#222; line-height:1.2; font-weight: 500;}
+.yt-title { margin: 0; font-size: 14px; color: #222; line-height: 1.2; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .yt-sub { margin-top: 5px; color: #1224aa; font-size:14px; }
 
 /* Responsive adjustments */

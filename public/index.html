@@ -429,7 +429,6 @@ header nav a:hover {
     scroll-snap-type:x mandatory;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
-    scroll-behavior:smooth; /* smooth when script scrolls */
   }
 
   /* cards (boxA) smaller than before, keeps 5:4 ratio */
@@ -1010,7 +1009,8 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 
 const sampleAnnouncements = [
   { id: 1, title: '2nd sem material added', body: 'Check 2nd semester available courses.', url: 'study-material.html#sem2' },
-  { id: 2, title: 'Holiday List GU', body: 'Check GU Official Holiday List for 2026.', url: 'https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Holiday%20List%20GU%202026.pdf' }
+  { id: 2, title: 'Holiday List GU', body: 'Check GU Official Holiday List for 2026.', url: 'https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Holiday%20List%20GU%202026.pdf' },
+  { id: 3, title: 'Exam Notice', body: 'Check Sessional Exam Routine for 2nd Semester 2026.', url: 'https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/Sessional%20Exam%20Routine%202026%20-%202nd%20Semester.pdf' }
  /* { id: 3, title: 'Class Routine', body: 'Check Class routine page for latest timetable.', url: 'class-routine.html' },
   { id: 4, title: 'Exam Notice', body: 'Check Final Examination Routine For First Semester 2025.', url: 'https://ryrnyvzlmjdgqul' } */
 ];
@@ -1046,24 +1046,19 @@ if (annList) {
 })();
 
 
-
 (() => {
   const scroller = document.getElementById('scroller');
   const btnPrev = document.getElementById('btnPrev');
   const btnNext = document.getElementById('btnNext');
 
-  // Start by collecting the original set (as provided in HTML)
   const originalSet = Array.from(scroller.querySelectorAll('.cards'));
   const n = originalSet.length;
   if (n === 0) return;
 
-  // Clear scroller and rebuild with [left copy] [center copy] [right copy]
-  // We'll clone nodes to avoid modifying originals further.
-  // Each clone gets data-copy attribute: 'left' | 'center' | 'right' and data-index 0..n-1 (original index)
   const cardssFrag = document.createDocumentFragment();
 
-  function appendCopy(type){
-    for (let i=0; i<n; i++){
+  function appendCopy(type) {
+    for (let i = 0; i < n; i++) {
       const source = originalSet[i];
       const clone = source.cloneNode(true);
       clone.dataset.copy = type;
@@ -1076,148 +1071,226 @@ if (annList) {
   appendCopy('center');
   appendCopy('right');
 
-  // flush and replace children
   scroller.innerHTML = '';
   scroller.appendChild(cardssFrag);
 
-  // now query all cardss
-  const allcardss = Array.from(scroller.querySelectorAll('.cards'));
-  // index range: 0..(3n-1)
-  const leftStart = 0;
-  const centerStart = n; // the middle copy begins at index n
+  const allCards = Array.from(scroller.querySelectorAll('.cards'));
+  const centerStart = n;
   const rightStart = 2 * n;
 
-  // helper: get center copy element for a given original index
-  function centerCopyElementForIndex(idx){
-    // center copy is at centerStart + idx
-    return allcardss[centerStart + (idx % n)];
+  function getCardElement(copyType, idx) {
+    const i = ((idx % n) + n) % n;
+    if (copyType === 'left') return allCards[i];
+    if (copyType === 'center') return allCards[centerStart + i];
+    if (copyType === 'right') return allCards[rightStart + i];
+    return null;
   }
 
-  // helper: center a cards with given behavior
-  function centercardsElem(el, behavior = 'smooth'){
+  function centerCardElem(el, behavior = 'smooth') {
     if (!el) return;
-    const left = el.offsetLeft + el.offsetWidth/2 - scroller.clientWidth/2;
+    const left = el.offsetLeft + el.offsetWidth / 2 - scroller.clientWidth / 2;
     scroller.scrollTo({ left, behavior });
   }
 
-  // initial: after layout, center the first item of center copy
+  // Scroll to center copy first card on init
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      const firstCenter = allcardss[centerStart]; // center copy first cards
-      centercardsElem(firstCenter, 'auto'); // immediate
+      centerCardElem(allCards[centerStart], 'auto');
     });
   });
 
-  // Update which cards is center (closest to scroller center) and toggle class
-  function updateCenterClass(){
-    const mid = scroller.scrollLeft + scroller.clientWidth/2;
+  // Update center class using RAF loop
+  function updateCenterClass() {
+    const mid = scroller.scrollLeft + scroller.clientWidth / 2;
     let best = null, bestDist = Infinity;
-    allcardss.forEach(cards => {
-      const c = cards.offsetLeft + cards.offsetWidth/2;
+    allCards.forEach(card => {
+      const c = card.offsetLeft + card.offsetWidth / 2;
       const d = Math.abs(c - mid);
-      if (d < bestDist){ bestDist = d; best = cards; }
+      if (d < bestDist) { bestDist = d; best = card; }
     });
     if (!best) return;
-    allcardss.forEach(cards => cards.classList.toggle('is-center', cards === best));
+    allCards.forEach(card => card.classList.toggle('is-center', card === best));
   }
-  // run in RAF loop for responsive updates while dragging
-  function rafLoop(){ updateCenterClass(); requestAnimationFrame(rafLoop); }
+
+  function rafLoop() { updateCenterClass(); requestAnimationFrame(rafLoop); }
   requestAnimationFrame(rafLoop);
 
-  // On scroll end: snap to nearest center-copy cards.
+  // Track whether a programmatic scroll is in progress
+  // to avoid the scroll-end handler interfering with button navigation
+  let isProgrammaticScroll = false;
+  let programmaticTimer = null;
+
+  function programmaticScrollTo(el, behavior) {
+    if (!el) return;
+    isProgrammaticScroll = true;
+    clearTimeout(programmaticTimer);
+    centerCardElem(el, behavior);
+    // Clear the flag after scroll should have settled
+    programmaticTimer = setTimeout(() => {
+      isProgrammaticScroll = false;
+    }, 600);
+  }
+
+  // Scroll-end handler: snap to nearest center-copy card
   let scrollTimer = null;
 
   scroller.addEventListener('scroll', () => {
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(() => {
-      // find closest element
-      const mid = scroller.scrollLeft + scroller.clientWidth/2;
+      // Don't interfere if buttons triggered the scroll
+      if (isProgrammaticScroll) return;
+
+      const mid = scroller.scrollLeft + scroller.clientWidth / 2;
       let closest = null, closestDist = Infinity;
-      allcardss.forEach(cards => {
-        const c = cards.offsetLeft + cards.offsetWidth/2;
+      allCards.forEach(card => {
+        const c = card.offsetLeft + card.offsetWidth / 2;
         const d = Math.abs(c - mid);
-        if (d < closestDist){ closestDist = d; closest = cards; }
+        if (d < closestDist) { closestDist = d; closest = card; }
       });
       if (!closest) return;
 
-      // If closest is not center copy, jump to its center-copy counterpart instantly
-      if (closest.dataset.copy !== 'center'){
+      if (closest.dataset.copy !== 'center') {
         const idx = parseInt(closest.getAttribute('data-index'), 10);
-        const target = centerCopyElementForIndex(idx);
-        if (target) {
-          // jump instantly to the center copy counterpart so looping is seamless
-          centercardsElem(target, 'auto');
-        }
+        const target = getCardElement('center', idx);
+        if (target) centerCardElem(target, 'auto');
       } else {
-        // center the cards smoothly (in case of tiny drift)
-        centercardsElem(closest, 'smooth');
+        centerCardElem(closest, 'smooth');
       }
     }, 80);
   }, { passive: true });
 
-(function enablePointerDrag(el){
-  let down = false, startX = 0, startScroll = 0;
+  // Pointer drag — touch only, does NOT affect page scroll
+  (function enablePointerDrag(el) {
+    let down = false, startX = 0, startScroll = 0;
+    let isDraggingHorizontal = false;
+    let startY = 0;
+    const THRESHOLD = 8; // px to decide direction
 
-  el.addEventListener('pointerdown', (ev) => {
-    // Only allow touch input
-    if (ev.pointerType !== 'touch') return;
+    el.addEventListener('pointerdown', (ev) => {
+      if (ev.pointerType !== 'touch') return;
+      down = true;
+      isDraggingHorizontal = false;
+      startX = ev.clientX;
+      startY = ev.clientY;
+      startScroll = el.scrollLeft;
+      // Do NOT capture pointer yet — wait to determine direction
+    });
 
-    down = true;
-    el.setPointerCapture(ev.pointerId);
-    startX = ev.clientX;
-    startScroll = el.scrollLeft;
-  });
+    window.addEventListener('pointermove', (ev) => {
+      if (!down) return;
 
-  window.addEventListener('pointermove', (ev) => {
-    if (!down) return;
-    const dx = startX - ev.clientX;
-    el.scrollLeft = startScroll + dx;
-  });
+      const dx = Math.abs(ev.clientX - startX);
+      const dy = Math.abs(ev.clientY - startY);
 
-  window.addEventListener('pointerup', (ev) => {
-    if (!down) return;
-    down = false;
-    try { el.releasePointerCapture(ev.pointerId); } catch(e){}
-  });
-})(scroller);
+      if (!isDraggingHorizontal) {
+        // Not yet decided direction
+        if (dx < THRESHOLD && dy < THRESHOLD) return; // too small, keep waiting
+        if (dy > dx) {
+          // Vertical scroll intent — release control
+          down = false;
+          return;
+        }
+        // Horizontal drag confirmed
+        isDraggingHorizontal = true;
+        try { el.setPointerCapture(ev.pointerId); } catch (e) {}
+      }
 
-  // click guard: only center cards navigates, side cardss re-center
+      // Only handle horizontal drag
+      el.scrollLeft = startScroll + (startX - ev.clientX);
+    }, { passive: true });
+
+    window.addEventListener('pointerup', (ev) => {
+      if (!down) return;
+      down = false;
+      isDraggingHorizontal = false;
+      try { el.releasePointerCapture(ev.pointerId); } catch (e) {}
+    });
+
+    window.addEventListener('pointercancel', () => {
+      down = false;
+      isDraggingHorizontal = false;
+    });
+  })(scroller);
+
+  // Click guard: non-center cards re-center; center card navigates
   scroller.addEventListener('click', (e) => {
-    const cards = e.target.closest('.cards');
-    if (!cards) return;
+    const card = e.target.closest('.cards');
+    if (!card) return;
     const center = scroller.querySelector('.cards.is-center');
-    if (cards !== center){
+    if (card !== center) {
       e.preventDefault();
-      const idx = parseInt(cards.getAttribute('data-index'), 10);
-      const target = centerCopyElementForIndex(idx);
-      if (target) centercardsElem(target, 'smooth');
+      const idx = parseInt(card.getAttribute('data-index'), 10);
+      const target = getCardElement('center', idx);
+      if (target) centerCardElem(target, 'smooth');
       return;
     }
-    // center cards clicked -> allow navigation (default link behavior)
+    // Center card — allow navigation
   }, { capture: true });
 
-  // Prev / Next buttons: find current center original index and move +/- 1
-
-
-  function currentOriginalIndex(){
-    const centercards = scroller.querySelector('.cards.is-center');
-    if (!centercards) return 0;
-    return parseInt(centercards.getAttribute('data-index'), 10);
+  // Get current center card's original index and which copy it belongs to
+  function currentCenterInfo() {
+    const centerCard = scroller.querySelector('.cards.is-center');
+    if (!centerCard) return { idx: 0, copy: 'center' };
+    return {
+      idx: parseInt(centerCard.getAttribute('data-index'), 10),
+      copy: centerCard.dataset.copy
+    };
   }
 
-  function gotoIndex(i){
-    const idx = ((i % n) + n) % n;
-    const target = centerCopyElementForIndex(idx);
-    if (target) centercardsElem(target, 'smooth');
+  // Navigate forward (next) or backward (prev)
+  // Key fix: when on last card going next  → scroll to RIGHT copy index 0 then jump to center
+  //          when on first card going prev → scroll to LEFT copy last card then jump to center
+  function navigate(direction) {
+    const { idx, copy } = currentCenterInfo();
+    const nextIdx = (idx + direction + n) % n;
+
+    let targetCopy;
+
+    if (direction === 1) {
+      // Going forward
+      if (idx === n - 1) {
+        // Last card → next should appear from the RIGHT (use right copy index 0)
+        targetCopy = 'right';
+      } else {
+        // Normal forward: stay in whatever copy keeps it to the right
+        targetCopy = copy === 'left' ? 'left'
+                   : copy === 'right' ? 'right'
+                   : 'center';
+      }
+    } else {
+      // Going backward
+      if (idx === 0) {
+        // First card → prev should appear from the LEFT (use left copy last card)
+        targetCopy = 'left';
+      } else {
+        targetCopy = copy === 'left' ? 'left'
+                   : copy === 'right' ? 'right'
+                   : 'center';
+      }
+    }
+
+    const target = getCardElement(targetCopy, nextIdx);
+    if (!target) return;
+
+    // Scroll smoothly to the target (which is in left/right/center copy)
+    programmaticScrollTo(target, 'smooth');
+
+    // After the smooth scroll settles, jump instantly to center copy counterpart
+    setTimeout(() => {
+      const centerTarget = getCardElement('center', nextIdx);
+      if (centerTarget) centerCardElem(centerTarget, 'auto');
+      // Allow scroll-end handler again after repositioning
+      isProgrammaticScroll = false;
+    }, 500);
   }
 
-  btnNext.addEventListener('click', (e) => { e.stopPropagation(); gotoIndex(currentOriginalIndex() + 1); });
-  btnPrev.addEventListener('click', (e) => { e.stopPropagation(); gotoIndex(currentOriginalIndex() - 1); });
+  btnNext.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
+  btnPrev.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
 
-  // on resize re-center on the visible center original
+  // Resize: re-center the visible center card
   window.addEventListener('resize', () => {
-    const centercards = scroller.querySelector('.cards.is-center') || centerCopyElementForIndex(0);
-    if (centercards) centercardsElem(centercards, 'auto');
+    const centerCard = scroller.querySelector('.cards.is-center') || getCardElement('center', 0);
+    if (centerCard) centerCardElem(centerCard, 'auto');
   });
 
 })();

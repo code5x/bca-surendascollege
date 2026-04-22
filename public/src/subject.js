@@ -557,7 +557,7 @@ function ytCreateRow(url, data) {
   meta.className = 'yt-meta';
   const title = document.createElement('h3');
   title.className = 'yt-title';
-  title.textContent = data?.title || '(No title)';
+  title.textContent = data?.title || 'Failed to fetch data';
   const sub = document.createElement('p');
   sub.className = 'yt-sub';
   sub.textContent = data?.author_name ? `By ${data.author_name}` : (type === 'playlist' ? 'Playlist' : 'YouTube');
@@ -582,7 +582,7 @@ async function ytRenderList(containerEl) {
       <div class="yt-thumb" style="background:#111"></div>
       <div class="yt-meta">
         <h3 class="yt-title">Loading…</h3>
-        <p class="yt-sub">Fetching info…</p>
+        <p class="yt-sub"></p>
       </div>
     `;
     containerEl.appendChild(placeholder);
