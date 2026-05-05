@@ -654,7 +654,7 @@ h2 { color: #eee; }
         <label id="dropZone" for="fileInput" class="drop-zone" tabindex="0">
           <div class="drop-text">Click here to select the files</div>
           <div class="drop-sub">Or drag & drop up to 20 files</div>
-          <div class="drop-sub">(max 300 MB per file)</div>
+          <div class="drop-sub">(max 50 MB per file)</div>
         </label>
 
         <!-- summary for selected files (count + total size) -->
@@ -922,8 +922,8 @@ document.getElementById("shareBtn").addEventListener("click", async (event) => {
 
   // limits (use dataset on HTML or fallbacks)
   const RESOURCES_MAX_FILES = 20;
-  const RESOURCES_MAX_FILE_SIZE = 300 * 1024 * 1024;
-  const RESOURCES_MAX_TOTAL = 500 * 1024 * 1024;
+  const RESOURCES_MAX_FILE_SIZE = 50 * 1024 * 1024;
+  const RESOURCES_MAX_TOTAL = 300 * 1024 * 1024;
 
   const NOTES_MAX_IMAGES = 50;
   const NOTES_MAX_IMAGE_SIZE = 5 * 1024 * 1024;

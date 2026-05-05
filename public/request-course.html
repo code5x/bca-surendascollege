@@ -678,7 +678,7 @@ label { color: #ddd; }
 
       <label for="fileInput" class="drop-zone">
         <div class="drop-text">Click here to select files</div>
-        <div class="drop-sub">Or drag and drop files max 300 MB</div>
+        <div class="drop-sub">Or drag and drop files max 50 MB</div>
         <div class="drop-sub">Minimum 3 • Maximum 20 files</div>
       </label>
 
@@ -822,8 +822,8 @@ const closeResult = document.getElementById('closeResult');
 /* ================= LIMITS ================= */
 const MIN_FILES = 3;
 const MAX_FILES = 20;
-const MAX_EACH = 300 * 1024 * 1024;
-const MAX_TOTAL = 500 * 1024 * 1024;
+const MAX_EACH = 50 * 1024 * 1024;
+const MAX_TOTAL = 300 * 1024 * 1024;
 
 /* ================= STATE ================= */
 let selectedFiles = [];

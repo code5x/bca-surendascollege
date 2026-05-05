@@ -54,8 +54,8 @@ export async function onRequest(context) {
       )
     }
 
-    const MAX_EACH = 300 * 1024 * 1024
-    const MAX_TOTAL = 500 * 1024 * 1024
+    const MAX_EACH = 50 * 1024 * 1024
+    const MAX_TOTAL = 300 * 1024 * 1024
 
     let totalSize = 0
 

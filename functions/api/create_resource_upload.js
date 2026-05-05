@@ -12,8 +12,8 @@ export async function onRequestPost({ request, env }) {
     const supabase = createAdmin(env)
 
 const MAX_FILES = 20
-const MAX_FILE_SIZE = 300 * 1024 * 1024      // 300MB
-const MAX_TOTAL_SIZE = 500 * 1024 * 1024     // 500MB
+const MAX_FILE_SIZE = 50 * 1024 * 1024      // 300MB
+const MAX_TOTAL_SIZE = 300 * 1024 * 1024     // 500MB
 
 if (filenames.length > MAX_FILES) {
   return new Response(JSON.stringify({
