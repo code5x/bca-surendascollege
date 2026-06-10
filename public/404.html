@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page Not Found</title>
-<style>
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-html { color-scheme: white; }
+<style>
 
 /* ===== RESET / BASE FIX ===== */
 html, body {
@@ -74,32 +75,91 @@ body.bg-app::before {
 
 }
 
-/* Header */
 
-header {
-  background: #cfe3fc;
-  padding: 4px 10px;
+/* ===== HEADER ===== */
+header{
+    background: #1b9ade;
+    color:white;
+    padding: 4px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+    animation: slideDown 1s ease;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+@keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+.btn-area{
+         display: flex;
+         align-items: center;
+         gap: 15px;
+    font-size: 18px;
+    font-weight:bold;
+}
+@media(min-width:769px){
+    header { padding: 4px 30px; }
+    .btn-area { gap: 25px; }
+}
+
+.fa-left-long {
+  font-size: 22px;
+  color: #ddd;
+}
+.fa-house {
+   color: #333;
+   font-size: 20px;
+}
+
+.theme-toggle {
+  position: relative;
   display: flex;
-  position: relative; 
-  top: 0;
-  left: 0;
-  width: 100%;       /* full width */
-  z-index: 1000;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-}
-
-
-.back-btn {
-  display: flex;    
-  padding: 6px 10px;
-  text-decoration: none;   
-  font-weight: 700;
+  align-items: center;
+  justify-content: space-between;
+  width: 65px;
+  height: 29px;
+  padding: 0 10px;
+  border-radius: 40px;
+  background: #bbb;
   cursor: pointer;
-  border: transparent;
-  color: #1a1a1a;
-  background: transparent;
+  user-select: none;
+  box-sizing: border-box;
 }
+.theme-toggle .icon {
+  font-size: 18px;
+  z-index: 2;
+  position: absolute;
+}
+.sun { color: #bbb; }
+.moon { color: #444; }
+
+.theme-toggle .thumb {
+  position: absolute;
+  left: 3px;
+  top: 2px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #195ea8;
+  transition: transform 0.3s ease;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+#themeCheckbox:checked + .sun + .moon + .thumb {
+  transform: translateX(33px);
+}
+.theme-toggle .sun {
+  left: 6px;
+}
+.theme-toggle .moon {
+  right: 9px;
+}
+
+
 
 .head-title1 {
   width: 100%; 
@@ -144,16 +204,17 @@ header {
 
 
 .home-btn {
-  background: #82f6fa;
+  background: #9cfcff;
   color: #222;
   max-width: 200px;
   text-align: center;
   border-radius: 10px;
-  border: 2px solid #0f8f94;
+  border: 2px solid #09acb3;
   padding: 8px 15px;
   margin: 17px auto;
   cursor: pointer;
   font-weight: 500;
+  font-size: 20px;
   text-decoration: none; /* removes underline */
   display: block; /* makes it behave like your old div */
 }
@@ -202,11 +263,9 @@ footer a:hover {
 }
 
 
-@media (prefers-color-scheme: dark) {
-html { color-scheme: dark; }
+[data-theme="dark"] {
+color-scheme: dark;
 body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
-header { background: #0b2a6b; }
-.back-btn { color: #eee; }
 footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
 .head-title1 { color: #fc7672; }
 .head-title2 { color: #dee2ff; }
@@ -214,6 +273,11 @@ footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
 .lead2 { color: #ddd; }
 .home-btn { background: #1f7371; color: #ddd; border: 2px solid #099c99; }
 .main-box { fill: rgba(250, 209, 162, 0.7); stroke: #f772ee; }
+
+header{ background: #074085; }
+.sun { color: #444; }
+.moon { color: #bbb; }
+.fa-house { color: #bbb; }
 
 }
 
@@ -237,18 +301,55 @@ footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
 
 </style>
 
+<script>
+    (function () {
+      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
+      const saved = localStorage.getItem("userThemePreference");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark" : "light";
+      const theme = saved || system;
 
+      // Apply data-theme immediately
+      document.documentElement.setAttribute("data-theme", theme);
+
+      // Update meta theme-color immediately
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = THEME_COLORS[theme];
+    })();
+  </script>
 
 </head>
 
+<body class="bg-app">
 <header>
 
-  <button class="back-btn" onclick="history.back()" aria-label="Go back">
-                ← Go back
-   </button>
+<div class="btn-area">
+  <button style="background:none; border: none;" onclick="history.back()" aria-label="Go back"><i class="fa-solid fa-left-long"></i></button>
+<div class="theme-toggle-wrapper">
+  <label
+    for="themeCheckbox"
+    id="theme-toggle"
+    class="theme-toggle"
+    aria-label="Toggle Theme">
+    <input
+      type="checkbox"
+      id="themeCheckbox"
+      aria-label="Toggle dark mode"
+      hidden
+    >
+<span class="icon sun">
+    <i class="fa-solid fa-sun"></i>
+</span>
 
-  </header>
-<body class="bg-app">
+<span class="icon moon">
+    <i class="fa-solid fa-moon"></i>
+</span>
+    <span class="thumb"></span>
+  </label>
+</div>
+</div>
+</header>
+
  <main class="container" id="main">
 <!--  <h1 class="head-title">! 404 !</h1>  -->
   <h1 class="head-title1">Page Not Found</h1>
@@ -280,7 +381,7 @@ footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
 
 <p class="lead">The page may have moved, been renamed, or no longer exists. Try going back to the homepage or use the button below.</p>
 
-<a class="home-btn" href="/">Goto Homepage 🏠</a>
+<a class="home-btn" href="/"><i class="fa-solid fa-house"></i> Home</a>
 
 <p class="lead2">
 Tip: Check the URL for typos or use the homepage to continue.
@@ -292,5 +393,85 @@ Tip: Check the URL for typos or use the homepage to continue.
 <footer>
     <p>© 2026 Student Community Portal - Suren Das College</p>
   </footer>
+
+<script>
+(function () {
+  const STORAGE_KEY = "userThemePreference";
+  const THEME_COLORS = {
+    light: "#ffffff",
+    dark:  "#1a1a2e"
+  };
+  function getSystemTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+  function getSavedTheme() {
+    return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+  }
+  function updateMetaThemeColor(theme) {
+    let metaTag = document.querySelector('meta[name="theme-color"]');
+    if (!metaTag) {
+      metaTag = document.createElement("meta");
+      metaTag.name = "theme-color";
+      document.head.appendChild(metaTag);
+    }
+    metaTag.content = THEME_COLORS[theme];
+  }
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    updateMetaThemeColor(theme);
+    const checkbox = document.getElementById("themeCheckbox");
+    if (checkbox) {
+      checkbox.checked = theme === "dark";
+    }
+  }
+  function setTheme(theme) {
+    localStorage.setItem(STORAGE_KEY, theme);
+    applyTheme(theme);
+  }
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    setTheme(current === "dark" ? "light" : "dark");
+  }
+  function watchSystemTheme() {
+    window.matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          applyTheme(e.matches ? "dark" : "light");
+        }
+      });
+  }
+  function watchStorageChanges() {
+    window.addEventListener("storage", (e) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        applyTheme(e.newValue);
+      }
+    });
+  }
+  if (document.head) {
+    applyTheme(getSavedTheme());
+  }
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    applyTheme(getSavedTheme());
+    const checkbox = document.getElementById("themeCheckbox");
+    if (checkbox) {
+      checkbox.addEventListener("change", toggleTheme);
+    }
+  });
+} else {
+  applyTheme(getSavedTheme());
+  const checkbox = document.getElementById("themeCheckbox");
+  if (checkbox) {
+    checkbox.addEventListener("change", toggleTheme);
+  }
+}
+  watchSystemTheme();
+  watchStorageChanges();
+})();
+
+</script>
+
 </body>
 </html>

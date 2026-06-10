@@ -3,289 +3,187 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="subject" content="Jogajogmuluk Asomiya (AEC)">
   <title>Jogajogmuluk Asomiya -I (AEC) - First Semester</title>
+  <meta property="og:image" content="https://bca-surendascollege.pages.dev/src/aec.webp">
+  <meta property="og:type" content="website">
   <link rel="stylesheet" href="../src/subject.css">
   <link rel="icon" href="../src/aec.webp">
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+<script>
+    (function () {
+      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
+      const saved = localStorage.getItem("userThemePreference");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark" : "light";
+      const theme = saved || system;
+
+      // Apply data-theme immediately
+      document.documentElement.setAttribute("data-theme", theme);
+
+      // Update meta theme-color immediately
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = THEME_COLORS[theme];
+    })();
+  </script>
 </head>
 
 <body class="bg-app" style="background: url('../src/aec.webp') no-repeat center center fixed; background-size: cover;">
-  <header>
-    <nav>
-      <a href="../study-material.html">←</a>
-      <a href="../index.html">🏠 Home</a>
-      <a href="#" id="shareBtn">🔗 Share</a>
-      <a href="../upload.html">📤 Upload</a>
-      <a href="../request-course.html">➕ Request Subject</a>
-      <a href="../links.html">🌐 External Sources</a>
-      <a href="../about.html">ℹ️ About</a>
-      <a href="../feedback.html">💬 Feedback</a>
-    </nav>
-  </header>
+
+<header>
+<div class="btn-area">
+<a href="#" id="shareBtn">
+    <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;" >
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="22"
+             height="22"
+             viewBox="2 0 23 23"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+    </button>
+</a>
+
+<div class="theme-toggle-wrapper">
+  <label
+    for="themeCheckbox"
+    id="theme-toggle"
+    class="theme-toggle"
+    aria-label="Toggle Theme">
+    <input
+      type="checkbox"
+      id="themeCheckbox"
+      aria-label="Toggle dark mode"
+      hidden
+    >
+<span class="icon sun">
+    <i class="fa-solid fa-sun"></i>
+</span>
+
+<span class="icon moon">
+    <i class="fa-solid fa-moon"></i>
+</span>
+    <span class="thumb"></span>
+  </label>
+</div>
+</div>
+    <div class="menu-btn" onclick="openMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
+
+<div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+<div class="side-menu" id="sideMenu">
+<div class="menu-header">
+        <span class="head-close-btn" onclick="closeMenu()">✕</span>
+    </div>
+<div class="menu-content">
+
+<ul class="side-links">
+    <li>
+        <a href="/">
+            <i class="fa-solid fa-house"></i> Home
+        </a>
+    </li>
+
+    <li>
+        <a href="../study-material.html">
+            <i class="fa-solid fa-book"></i> Study Material
+        </a>
+    </li>
+
+    <li>
+        <a href="../links.html">
+            <i class="fa-solid fa-link"></i> External Source
+        </a>
+    </li>
+
+    <li>
+        <a href="../courses.html">
+            <i class="fa-solid fa-graduation-cap"></i> Courses
+        </a>
+    </li>
+
+    <li>
+        <a href="../library-opac.html">
+            <i class="fa-solid fa-book-open"></i> Library OPAC
+        </a>
+    </li>
+
+    <li>
+        <div class="dropdown-btn" onclick="toggleUploads()">
+            <i class="fa-solid fa-upload"></i> Uploads
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="submenu" id="uploadsMenu">
+            <a href="../upload.html#resources">
+                <i class="fa-solid fa-file-lines"></i> Upload as Document
+            </a>
+
+            <a href="../upload.html#images">
+                <i class="fa-solid fa-camera"></i> Upload as Image
+            </a>
+        </div>
+    </li>
+
+    <li>
+        <a href="../request-course.html">
+            <i class="fa-solid fa-pen-to-square"></i> Request Subject
+        </a>
+    </li>
+
+    <li>
+        <a href="../feedback.html">
+            <i class="fa-solid fa-comment"></i> Feedback
+        </a>
+    </li>
+
+    <li>
+        <div class="dropdown-btn" onclick="toggleAbout()">
+            <i class="fa-solid fa-circle-info"></i> About
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
+        <div class="submenu" id="aboutMenu">
+            <a href="../about.html#about-college">
+                <i class="fa-solid fa-building-columns"></i> About College
+            </a>
+
+            <a href="../about.html#cs-department">
+                <i class="fa-solid fa-computer"></i> CS Department
+            </a>
+
+            <a href="../about.html#about-website">
+                <i class="fa-solid fa-globe"></i> About this Website
+            </a>
+
+            <a href="../about.html#about-admin">
+                <i class="fa-solid fa-user-tie"></i> Admin
+            </a>
+        </div>
+    </li>
+</ul>
+
+  </div>
+</div>
 
   <main class="container" id="main" role="main" tabindex="-1">
     <h2 class="head-title">Semester 1<br>⬇<br>Jogajogmuluk Asomiya -I (AEC)</h2>
-
       <div class="divider"><div class="lines"><div class="divider-line"></div></div></div>
 
-
-<!-- CONTENT / Syllabus -->
-<section id="content" class="doc-section" data-section="content">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-content">
-    <h3 class="head2-title">Contents of Syllabus</h3>
-  </button>
-
-  <div id="drawer-content" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Contents of Syllabus - Jogajogmuluk Asomiya -I (AEC)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/Contents%20-%20Jogajogmuluk%20Asomiya%20(AEC).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 137 KB",
-            "label2": "page: 1"
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-
-<!-- REFERENCE BOOKS -->
-<section id="reference" class="doc-section" data-section="reference">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-reference">
-    <h3 class="head2-title">Reference Books</h3>
-  </button>
-
-  <div id="drawer-reference" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Jogajogmuluk Asomiya - 1 Book",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/reference/Jogajogmuluk%20Asomiya%20-%201.pdf",
-            "logo": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAD0qLjYuJj02MjZFQT1JXJpkXFRUXLyGjm+a38Tq5tvE19P2////9v///9PX////////////7v//////////////2wBDAUFFRVxRXLRkZLT//df9////////////////////////////////////////////////////////////////////wAARCAH0AfQDASIAAhEBAxEB/8QAGQABAQEBAQEAAAAAAAAAAAAAAAECAwQF/8QANhAAAgIBAwIGAQMCBQQDAQAAAAECEQMSITFBUQQTIjJhcYEzQpFSoRQjU2KxNEPB8CRy0eH/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAQIDBAX/xAAkEQEBAQEAAgMBAAEFAQAAAAAAARECITEDEkFRMhMiYXGR8P/aAAwDAQACEQMRAD8A6AAwwq6fYe4XK+wwrk4aZ6lsbUr+ymZY0yNzodmXY8uS4mx5N+6TZMXY5SlvS3Z0xYqeqXJ0jCMeFRoqXoBCmnMAAAAAALAFBCgAAUAABUCACgEAoICCkAKABQBllsAAAAA6gAK2AAiRom5LAvA+SkALcB/A4QAdCJl4YDkDkAUj3IyLcC8AoAgAAAAANgQIoIAAAMqq6fYfIX/kPkCAAAAAKCFKBC8Hnlnblpxq/kD0A8/+fV2c3mydZMuD2A80PNyK1M08eVK9f9wO5MknGDa5R5sayZE2pvb5NPJLRKGT3UB6IvVFNdSnnwwlSlGWz6GsubQ9K5A7A8sfNnur/k2pzxup3QwdJz0zinwzZ5/EerQ0+SuOTErUtSXQDpq/zdL4o3weaT8zLGnVo6eVP+sDqU88scoxbeQ5RlNuotv8jFx7SNHnlHLFJ239Mxrne8mMMesp51jyNWsn9yZFkxpXPn5CPSc3PTkUXwznWWK1XaM5ZeY4NbWB6aBzhrivW013Oc88m6jsgPQDzrzlvudMeXU6ltIC456k76M2eWMZSnLS6ok3kjKnJhcesHnhGc1ayM15U3+8I7bko82WM8bXrbs35Un+9gdxZx8h/wBbH+Hf9bA7Dk4+R/vZJ4qjepukB2RbXc8+PGpRTtm3gXdhXRyS6oak+qOX+Hj1bMTjjivS22B3td0LXdHGKg1u3Z0WOPyDHRfYJGKiqVlCA6kKBB0BQIQpGEUEAAAGVX/9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",
-            "options": {"noLegal": false},
-            "label1": "size: 1 MB",
-            "label2": "page: 156"            
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-
-<!-- CLASS NOTES -->
-<section id="class-notes" class="doc-section" data-section="class">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-class-notes">
-    <h3 class="head2-title">Class Notes (college)</h3>
-  </button>
-
-  <div id="drawer-class-notes" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-
-
-<script type="application/json" class="pdf-data">
-        [
-{
-"title": "Jogajogmuluk Asomiya (AEC) - Class Notes 1",
-"file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/Jogajogmuluk%20Asomiya%20(AEC)%20-%20Class%20Notes%201.pdf",
-"logo": "default",
-"options": {"noLegal": false},
-"label1": "size: 14 MB",
-"label2": "page: 26"
-}
-        ]
-      </script>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- SHARED CONTENTS -->
-<section id="shared" class="doc-section" data-section="shared">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-shared">
-    <h3 class="head2-title">Shared Contents</h3>
-  </button>
-
-  <div id="drawer-shared" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Jogajogmuluk Asomiya Book (incomplete)",      
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/shared/Jogajogmuluk%20Asomiya%20Book%20(incomplete).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 5 MB",
-            "label2": "page: 33"
-          }
-        ]
-      </script>
-    </div>             
-  </div>
-</section>
-
-
-<!-- MODEL QUESTION ANSWERS -->
-<section id="model" class="doc-section" data-section="model">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-model">
-    <h3 class="head2-title">Model Question-Answers</h3>
-  </button>
-
-  <div id="drawer-model" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Model question answer - Assamese (AEC)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/model/Model%20question%20answer%20-%20Assamese%20(AEC).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 8 MB",
-            "label2": "page: 70"
-          },
-          {
-            "title": "Unit 2 - Assamese (AEC) - Model Question Answers",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/model/Unit%202%20-%20Assamese%20(AEC)%20-%20Model%20Question%20Answers.pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 2 MB",
-            "label2": "page: 9"
-          },
-          {
-            "title": "Answers of old paper - Assamese (AEC)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/model/Answers%20of%20old%20paper%20-%20Assamese%20(AEC).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 3 MB",
-            "label2": "page: 28"
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-
-<!-- PREVIOUS YEAR QUESTION PAPERS -->
-<section id="paper" class="doc-section" data-section="paper">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-paper">
-    <h3 class="head2-title">Previous Year Question Papers</h3>
-  </button>
-
-  <div id="drawer-paper" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "AEC0100102 (2023) (BA_BCom)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/AEC0100102%20(2023)%20(BA_BCom).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 60 KB",
-            "label2": "page: 2"
-          },
-          {
-            "title": "AEC0100102 (2023)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/AEC0100102%20(2023).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 420 KB",
-            "label2": "page: 2"
-          },
-          {
-            "title": "AEC0100102 NEP (2024)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/AEC0100102%20NEP%20(2024).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 90 KB",
-            "label2": "page: 3"
-          },
-          {
-            "title": "Assamese (AEC) - Sessional Exam 2023",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/Assamese%20(AEC)%20-%20Sessional%20Exam%202023.pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 200 KB",
-            "label2": "page: 1"
-          },
-{
-"title": "AEC Assamese (Sessional exam 2025)",
-"file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/AEC%20Assamese%20(Sessional%20exam%202025).pdf",
-"logo": "default",
-"options": {"noLegal": false},
-"label1": "size: 880 KB",
-"label2": "page: 1"
-},
-{
-"title": "AEC0100204 (2025)",
-"file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/paper/AEC0100204%20(2025).pdf",
-"logo": "default",
-"options": {"noLegal": false},
-"label1": "size: 820 KB",
-"label2": "page: 2"
-}
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-
-<!-- ASSIGNMENTS -->
-<section id="assignment" class="doc-section" data-section="assignment">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-assignment">
-    <h3 class="head2-title">Assignments</h3>
-  </button>
-
-  <div id="drawer-assignment" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Assignment - Jogajogmuluk Asomiya (AEC)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/jogajogmuluk-asomiys-i-aec/Assignment%20-%20Jogajogmuluk%20Asomiya%20(AEC).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 490 KB",
-            "label2": "page: 5"
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-
-<!-- YOUTUBE TUTORIALS -->
-<section class="yt-wrapper doc-section" id="yt-wrapper" data-section="yt">
-  <button class="section-toggle yt-toggle-btn" aria-expanded="false" aria-controls="drawer-yt">
-    YouTube Tutorials Video/Playlist
-  </button>
-
-  <div id="drawer-yt" class="section-drawer yt-drawer" aria-hidden="true">
-    <div class="section-content yt-drawer-inner">
-
-          <div id="yt-list" class="yt-list"
-            data-yt='[
-"https://youtu.be/fZCIwCsf7rs"
-            ]'>
-          </div>
-
-    </div>
-  </div>
-</section>
-
-
-  <p class="lead"">Note: The above information has been gathered from multiple sources, including user submissions and AI-generated content.
- If you see any mistakes or wrong information, please provide a <a href="../feedback.html">feedback</a> to help us improve the content.</p>
-
+<div id="subject-content"></div>
 
   </main>
 
@@ -293,13 +191,6 @@
     <p>© 2026 Student Community Portal - Suren Das College<br>
       <a href="../about.html">About Us</a></p>
   </footer>
-
-  <div id="overlay">
-    <div class="overlay-content">
-      <button class="close-btn" onclick="closePDF()" aria-label="Close PDF viewer">✕</button>
-      <iframe id="pdfFrame" title="PDF Viewer"></iframe>
-    </div>
-  </div>
 
 <script src="../src/subject.js"></script>
 </body>

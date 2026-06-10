@@ -3,275 +3,187 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="subject" content="Library Information Science (MDC)">
   <title>Foundation of Library and Information Science (MDC) - First Semester</title>
+  <meta property="og:image" content="https://bca-surendascollege.pages.dev/src/mdc.webp">
+  <meta property="og:type" content="website">
   <link rel="stylesheet" href="../src/subject.css">
   <link rel="icon" href="../src/mdc.webp">
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+<script>
+    (function () {
+      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
+      const saved = localStorage.getItem("userThemePreference");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark" : "light";
+      const theme = saved || system;
+
+      // Apply data-theme immediately
+      document.documentElement.setAttribute("data-theme", theme);
+
+      // Update meta theme-color immediately
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = THEME_COLORS[theme];
+    })();
+  </script>
 </head>
 
 <body class="bg-app" style="background: url('../src/mdc.webp') no-repeat center center fixed; background-size: cover;">
-  <header>
-    <nav>
-      <a href="../study-material.html">←</a>
-      <a href="../index.html">🏠 Home</a>
-      <a href="#" id="shareBtn">🔗 Share</a>
-      <a href="../upload.html">📤 Upload</a>
-      <a href="../request-course.html">➕ Request Subject</a>
-      <a href="../links.html">🌐 External Sources</a>
-      <a href="../about.html">ℹ️ About</a>
-      <a href="../feedback.html">💬 Feedback</a>
-    </nav>
-  </header>
+
+<header>
+<div class="btn-area">
+<a href="#" id="shareBtn">
+    <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;" >
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="22"
+             height="22"
+             viewBox="2 0 23 23"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+    </button>
+</a>
+
+<div class="theme-toggle-wrapper">
+  <label
+    for="themeCheckbox"
+    id="theme-toggle"
+    class="theme-toggle"
+    aria-label="Toggle Theme">
+    <input
+      type="checkbox"
+      id="themeCheckbox"
+      aria-label="Toggle dark mode"
+      hidden
+    >
+<span class="icon sun">
+    <i class="fa-solid fa-sun"></i>
+</span>
+
+<span class="icon moon">
+    <i class="fa-solid fa-moon"></i>
+</span>
+    <span class="thumb"></span>
+  </label>
+</div>
+</div>
+    <div class="menu-btn" onclick="openMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
+
+<div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+<div class="side-menu" id="sideMenu">
+<div class="menu-header">
+        <span class="head-close-btn" onclick="closeMenu()">✕</span>
+    </div>
+<div class="menu-content">
+
+<ul class="side-links">
+    <li>
+        <a href="/">
+            <i class="fa-solid fa-house"></i> Home
+        </a>
+    </li>
+
+    <li>
+        <a href="../study-material.html">
+            <i class="fa-solid fa-book"></i> Study Material
+        </a>
+    </li>
+
+    <li>
+        <a href="../links.html">
+            <i class="fa-solid fa-link"></i> External Source
+        </a>
+    </li>
+
+    <li>
+        <a href="../courses.html">
+            <i class="fa-solid fa-graduation-cap"></i> Courses
+        </a>
+    </li>
+
+    <li>
+        <a href="../library-opac.html">
+            <i class="fa-solid fa-book-open"></i> Library OPAC
+        </a>
+    </li>
+
+    <li>
+        <div class="dropdown-btn" onclick="toggleUploads()">
+            <i class="fa-solid fa-upload"></i> Uploads
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="submenu" id="uploadsMenu">
+            <a href="../upload.html#resources">
+                <i class="fa-solid fa-file-lines"></i> Upload as Document
+            </a>
+
+            <a href="../upload.html#images">
+                <i class="fa-solid fa-camera"></i> Upload as Image
+            </a>
+        </div>
+    </li>
+
+    <li>
+        <a href="../request-course.html">
+            <i class="fa-solid fa-pen-to-square"></i> Request Subject
+        </a>
+    </li>
+
+    <li>
+        <a href="../feedback.html">
+            <i class="fa-solid fa-comment"></i> Feedback
+        </a>
+    </li>
+
+    <li>
+        <div class="dropdown-btn" onclick="toggleAbout()">
+            <i class="fa-solid fa-circle-info"></i> About
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
+        <div class="submenu" id="aboutMenu">
+            <a href="../about.html#about-college">
+                <i class="fa-solid fa-building-columns"></i> About College
+            </a>
+
+            <a href="../about.html#cs-department">
+                <i class="fa-solid fa-computer"></i> CS Department
+            </a>
+
+            <a href="../about.html#about-website">
+                <i class="fa-solid fa-globe"></i> About this Website
+            </a>
+
+            <a href="../about.html#about-admin">
+                <i class="fa-solid fa-user-tie"></i> Admin
+            </a>
+        </div>
+    </li>
+</ul>
+
+  </div>
+</div>
 
   <main class="container" id="main" role="main" tabindex="-1">
     <h2 class="head-title">Semester 1<br>⬇<br>Foundation of Library and Information Science (MDC)</h2>
-
       <div class="divider"><div class="lines"><div class="divider-line"></div></div></div>
 
-
-<!-- CONTENT / SYLLABUS -->
-<section id="content" class="doc-section" data-section="content">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-content">
-    <h3 class="head2-title">Contents of Syllabus</h3>
-  </button>
-
-  <div id="drawer-content" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Contents of Syllabus - Foundation of Library and Information Science (MDC)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/Contents%20-%20Foundations%20of%20Library%20and%20Information%20Science%20(MDC).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 150 KB",
-            "label2": "page: 1"
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-<!-- REFERENCE BOOKS -->
-<section id="reference" class="doc-section" data-section="reference">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-reference">
-    <h3 class="head2-title">Reference Books</h3>
-  </button>
-
-  <div id="drawer-reference" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Foundation of Library and Information Science - BLIS-01",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/reference/Foundation%20of%20Library%20and%20Information%20Science%20-%20BLIS-01.pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 1 MB",
-            "label2": "page: 242 KB"
-          },
-          {
-            "title": "Foundation of Library and Information Science (LPU)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/reference/Foundation%20of%20Library%20and%20Information%20Science%20%20(Lovely%20Professional%20University).pdf",
-            "logo": "data:image/jpeg;base64,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",
-            "options": {"noLegal": false},
-            "label1": "size: 5 MB",
-            "label2": "page: 301"
-          },
-          {
-            "title": "Fundamentals of Library and Information Science (APAC)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/reference/Fundamentals%20of%20Library%20and%20Information%20Science%20(Arulmigu%20Palaniandavar%20Arts%20College).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 1 MB",
-            "label2": "page: 61"
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-
-<!-- SHARED CONTENTS -->
-<section id="shared" class="doc-section" data-section="shared">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-shared">
-    <h3 class="head2-title">Shared Contents (Notes)</h3>
-  </button>
-
-  <div id="drawer-shared" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Library and Information Science (Assamese Medium)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/shared/Library%20and%20Information%20Science%20(Assamese%20Medium).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 10 MB",
-            "label2": "page: 53"
-          },
-          {
-            "title": "Notes - Unit 4 Library and Information Related Regulations",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/shared/Notes%20-%20Unit%204%20Library%20and%20Information%20Related%20Regulations.pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 500 KB",
-            "label2": "page: 5"
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-<!-- MODEL QUESTION ANSWERS & MCQs -->
-<section id="model" class="doc-section" data-section="model">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-model">
-    <h3 class="head2-title">Model Question-Answers & MCQs</h3>
-  </button>
-
-  <div id="drawer-model" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Model Question Answer - Library and Information Science (MDC)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/model/Model%20Question%20Answer%20-%20Library%20and%20Information%20Science%20(MDC).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 820 KB",
-            "label2": "page: 60"
-          },
-          {
-            "title": "Model Question Answer - Library and Information Science (MDC) (sessional)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/model/Model%20Question%20Answer%20-%20Library%20and%20Information%20Science%20(MDC)%20(sessional).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 620 KB",
-            "label2": "page: 42"
-          },
-          {
-            "title": "Answer of old paper - Library and Information Science (MDC)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/model/Answer%20of%20old%20paper%20-%20Library%20and%20Information%20Science%20(MDC).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 660 KB",
-            "label2": "page: 34"
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-<!-- PREVIOUS YEAR QUESTION PAPERS -->
-<section id="paper" class="doc-section" data-section="paper">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-paper">
-    <h3 class="head2-title">Previous Year Question Papers</h3>
-  </button>
-
-  <div id="drawer-paper" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "MDC0100303 (2023) (BA)01",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100303%20(2023)%20(BA)01.pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 370 KB",
-            "label2": "page: 3"
-          },
-          {
-            "title": "MDC0100303 (2023) (BA)02",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100303%20(2023)%20(BA)02.pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 100 KB",
-            "label2": "page: 3"
-          },
-          {
-            "title": "MDC0100303 (2023)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100303%20(2023).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 520 KB",
-            "label2": "page: 3"
-          },
-          {
-            "title": "MDC0100303 NEP (2024)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100303%20NEP%20(2024).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 130 KB",
-            "label2": "page: 4"
-          },
-          {
-            "title": "MTDC010103 (2024)",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MTDC010103%20(2024).pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 300 KB",
-            "label2": "page: 3"
-          },
-{
-"title": "MDC Library & Information Science (Sessional exam 2025)",
-"file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC%20Library%20&%20Information%20Science%20(Sessional%20exam%202025).pdf",
-"logo": "default",
-"options": {"noLegal": false},
-"label1": "size: 1 MB",
-"label2": "page: 1"
-},
-{
-"title": "MDC0100503 (2025)",
-"file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/paper/MDC0100503%20(2025).pdf",
-"logo": "default",
-"options": {"noLegal": false},
-"label1": "size: 800 KB",
-"label2": "page: 5"
-}
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-<!-- ASSIGNMENTS -->
-<section id="assignment" class="doc-section" data-section="assignment">
-  <button class="section-toggle" aria-expanded="false" aria-controls="drawer-assignment">
-    <h3 class="head2-title">Assignments</h3>
-  </button>
-
-  <div id="drawer-assignment" class="section-drawer" aria-hidden="true">
-    <div class="section-content">
-      <script type="application/json" class="pdf-data">
-        [
-          {
-            "title": "Assignment 1 - Short note on S.R. Ranganathan",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/assignment/Assignment%20-%20Short%20note%20on%20S.R.%20Ranganathan.pdf",
-            "logo": "default",
-            "options": {"noLegal": false},
-            "label1": "size: 300 KB",
-            "label2": "page: 3"
-          },
-          {               
-            "title": "Assignment 2 - Library definition, types, functions, RRRLF, LC",
-            "file": "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/sem1/library-information-science-mdc/assignment/Assignment%20-%20Library%20definition,%20types,%20functions,%20RRRLF,%20LC.pdf",
-            "logo": "default",     
-            "options": {"noLegal": false},
-            "label1": "size: 300 KB",
-            "label2": "page: 4"
-          }
-        ]
-      </script>
-    </div>
-  </div>
-</section>
-
-  <p class="lead"">Note: The above information has been gathered from multiple sources, including user submissions and AI-generated content.
- If you see any mistakes or wrong information, please provide a <a href="../feedback.html">feedback</a> to help us improve the content.</p>
+<div id="subject-content"></div>
 
   </main>
 
@@ -279,13 +191,6 @@
     <p>© 2026 Student Community Portal - Suren Das College<br>
       <a href="../about.html">About Us</a></p>
   </footer>
-
-  <div id="overlay">
-    <div class="overlay-content">
-      <button class="close-btn" onclick="closePDF()" aria-label="Close PDF viewer">✕</button>
-      <iframe id="pdfFrame" title="PDF Viewer"></iframe>
-    </div>
-  </div>
 
 <script src="../src/subject.js"></script>
 </body>

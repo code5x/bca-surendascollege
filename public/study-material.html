@@ -4,19 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Study Materials - SDC</title>
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-html { color-scheme: white; }
 
 /* ===== RESET / BASE FIX ===== */
 html, body {
-  height: 100%;     
   margin: 0;       
   padding: 0;     
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
 }
 
 body {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -74,65 +75,191 @@ body.bg-app::before {
 
 @media (min-width: 769px) { .container { padding: 35px; }}
 
-/* Header */
 
-header {
-  background: #cfe3fc; 
-  padding: 4px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;   /* stays visible */
-  top: 0;
-  left: 0;
-  width: 100%;       /* full width */
-  z-index: 1000;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-  animation: slideDown 1s ease;
+/* ===== HEADER ===== */
+header{
+    background: #1b9ade;
+    color:white;
+    padding: 4px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+    animation: slideDown 1s ease;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-
-
-/* Navigation */
-header nav {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto; /* enable horizontal scroll */
-  white-space: nowrap; /* keep links in a single line */
-  scrollbar-width: none; /* hide scrollbar (Firefox) */
-}
-
-header nav a {
-  text-decoration: none;
-  color: #1a1a1a;
-  font-size: 0.9rem;
-  font-weight: 450;
-  padding: 6px 13px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  background: #93dffa;
-  flex-shrink: 0; /* prevent shrinking of links */
-  border: 1px solid #6974c7;
-}
-
-
-header nav a:hover {
-  background: #45afd6;
-}
-
-
-@media (min-width: 769px) {
-  header nav a {
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 8px 13px;
-  }
-}
-
 @keyframes slideDown {
     from { transform: translateY(-100%); opacity: 0; }
     to   { transform: translateY(0); opacity: 1; }
 }
+.btn-area{
+         display: flex;
+         align-items: center;
+         gap: 15px;
+    font-size: 18px;
+    font-weight:bold;
+}
+.menu-btn{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    cursor:pointer;
+}
+.menu-btn span{
+    width:22px;
+    height:3px;
+    background:white;
+}
 
+.side-menu{
+    position:fixed;
+    top:1px;
+    right:-250px;
+    width:250px;
+    height:90vh;
+    background:#abe2ff;
+    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
+    transition:0.4s;
+    overflow-y:auto;
+    z-index:1000;
+    border-radius:5px 0 0 5px;
+
+    display: flex;
+    flex-direction: column;
+}
+.menu-header{
+    flex-shrink: 0;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 10px;
+}
+.side-menu.active{
+    right:0;
+}
+.head-close-btn{
+    font-size:22px;
+    cursor:pointer;
+    color: #111;
+}
+.menu-content{
+    flex: 1;
+    overflow-y: auto;
+}
+.side-links{
+    list-style:none;
+    padding: 0 10px;
+}
+.side-links i {
+    color: #444;
+    width: 25px;
+}
+.side-links li{
+    border-bottom: 1px solid #888;
+}
+.side-links li:last-child{
+    border:none;
+}
+.side-links a{
+    text-decoration:none;
+    color:#111;
+    display:block;
+    padding: 15px 10px;
+}
+.side-links a:hover{
+    background:#87d2fa;
+}
+.dropdown-btn{
+    cursor:pointer;
+    padding:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 10px;
+    color:#111;
+}
+.dropdown-btn .fa-chevron-down {
+    margin-left: auto;
+}
+.dropdown-btn:hover{
+    background:#77cefc;
+}
+.submenu{
+    display:none;
+    padding-left:20px;
+}
+.submenu a{
+    color:#111;
+    border-top: 1px solid #888;
+}
+.submenu.show{
+    display:block;
+}
+.head-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.3);
+    display:none;
+    z-index:999;
+}
+.head-overlay.show{
+    display:block;
+}
+@media(min-width:769px){
+    .side-menu{
+        right:-350px;
+        width:350px;
+    }
+    header { padding: 4px 30px; }
+    .btn-area { gap: 25px; }
+}
+
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 65px;
+  height: 29px;
+  padding: 0 10px;
+  border-radius: 40px;
+  background: #bbb;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+}
+.theme-toggle .icon {
+  font-size: 18px;
+  z-index: 2;
+  position: absolute;
+}
+.sun { color: #bbb; }
+.moon { color: #444; }
+
+.theme-toggle .thumb {
+  position: absolute;
+  left: 3px;
+  top: 2px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #195ea8;
+  transition: transform 0.3s ease;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+#themeCheckbox:checked + .sun + .moon + .thumb {
+  transform: translateX(33px);
+}
+.theme-toggle .sun {
+  left: 6px;
+}
+.theme-toggle .moon {
+  right: 9px;
+}
 
 .page-title-text {
   text-align: center;
@@ -251,8 +378,14 @@ header nav a:hover {
   width: auto;
   max-width: 90%;
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.5);
-  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+
+    background: rgba(0,0,0,.4);
+    text-shadow:
+    0 0 2px #000,
+    0 0 4px #000,
+    0 0 8px #000,
+    2px 2px 6px #000;
+
 }
 
 /* ===== NO DATA MESSAGE ===== */
@@ -283,7 +416,7 @@ footer {
     background: #a7cfc9;
     text-align: center;
     padding-bottom: 2px;
-    margin-top: 5px;
+    margin-top: auto;
     color: #333;
     font-size: 0.85rem;   
     line-height: 20px;
@@ -322,12 +455,9 @@ footer a:hover {
     }
 }
 
-@media (prefers-color-scheme: dark) {
-html { color-scheme: dark; }
+[data-theme="dark"] {
+color-scheme: dark;
 body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
-header { background: #0b2a6b; }
-header nav a { color: #fff; background: transparent; }
-header nav a:hover { background: #0b5ed7;}
 footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
 footer a { color: #f7c2d9; }
 
@@ -341,27 +471,192 @@ footer a { color: #f7c2d9; }
 .selector-box select { border: 1px solid #80558a; background: #222; color: #fce8fc; }
 .selector-box select:focus { border: 1px solid #e6cfe5; }
 .no-data { color: #ccc; }
+
+header{ background: #074085; }
+.side-menu{ background:#1e3759; }
+.side-links a{ color:#ddd;}
+.dropdown-btn{ color: #ddd; }
+.side-links a:hover, .dropdown-btn:hover {background:#2f4a70;}
+.submenu a{ color:#ddd;}
+.head-close-btn{ color: #ddd; }
+.side-links i { color: #aaa; }
+.sun { color: #444; }
+.moon { color: #bbb; }
 }
 
 
 </style>
+
+<script>
+    (function () {
+      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
+      const saved = localStorage.getItem("userThemePreference");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark" : "light";
+      const theme = saved || system;
+
+      // Apply data-theme immediately
+      document.documentElement.setAttribute("data-theme", theme);
+
+      // Update meta theme-color immediately
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = THEME_COLORS[theme];
+    })();
+  </script>
+
 </head>
 
+<body class="bg-app">
+
 <header>
-    <nav>
-        <a href="index.html">🏠 Home</a>
-        <a href="#" id="shareBtn">🔗 Share</a>
-        <a href="request-course.html">➕ Request Subject</a>
-        <a href="upload.html">📤 Upload</a>
-        <a href="courses.html">🎓 Courses</a>
-        <a href="library-opac.html">🏛️ Library OPAC</a>
-        <a href="links.html">🌐 External Source</a>
-        <a href="about.html">ℹ️ About</a>
-        <a href="feedback.html">💬 Feedback</a>
-    </nav>
+<div class="btn-area">
+<a href="#" id="shareBtn">
+    <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;" >
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="22"
+             height="22"
+             viewBox="2 0 23 23"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+    </button>
+</a>
+
+<div class="theme-toggle-wrapper">
+  <label
+    for="themeCheckbox"
+    id="theme-toggle"
+    class="theme-toggle"
+    aria-label="Toggle Theme">
+    <input
+      type="checkbox"
+      id="themeCheckbox"
+      aria-label="Toggle dark mode"
+      hidden
+    >
+<span class="icon sun">
+    <i class="fa-solid fa-sun"></i>
+</span>
+
+<span class="icon moon">
+    <i class="fa-solid fa-moon"></i>
+</span>
+    <span class="thumb"></span>
+  </label>
+</div>
+</div>
+    <div class="menu-btn" onclick="openMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 </header>
 
-<body class="bg-app">
+<div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+<div class="side-menu" id="sideMenu">
+<div class="menu-header">
+        <span class="head-close-btn" onclick="closeMenu()">✕</span>
+    </div>
+<div class="menu-content">
+
+<ul class="side-links">
+    <li>
+        <a href="/">
+            <i class="fa-solid fa-house"></i> Home
+        </a>
+    </li>
+
+    <li>
+        <a href="#">
+            <i class="fa-solid fa-book"></i> Study Material
+        </a>
+    </li>
+
+    <li>
+        <a href="links.html">
+            <i class="fa-solid fa-link"></i> External Source
+        </a>
+    </li>
+
+    <li>
+        <a href="courses.html">
+            <i class="fa-solid fa-graduation-cap"></i> Courses
+        </a>
+    </li>
+
+    <li>
+        <a href="library-opac.html">
+            <i class="fa-solid fa-book-open"></i> Library OPAC
+        </a>
+    </li>
+
+    <li>
+        <div class="dropdown-btn" onclick="toggleUploads()">
+            <i class="fa-solid fa-upload"></i> Uploads
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="submenu" id="uploadsMenu">
+            <a href="upload.html#resources">
+                <i class="fa-solid fa-file-lines"></i> Upload as Document
+            </a>
+
+            <a href="upload.html#images">
+                <i class="fa-solid fa-camera"></i> Upload as Image
+            </a>
+        </div>
+    </li>
+
+    <li>
+        <a href="request-course.html">
+            <i class="fa-solid fa-pen-to-square"></i> Request Subject
+        </a>
+    </li>
+
+    <li>
+        <a href="feedback.html">
+            <i class="fa-solid fa-comment"></i> Feedback
+        </a>
+    </li>
+
+    <li>
+        <div class="dropdown-btn" onclick="toggleAbout()">
+            <i class="fa-solid fa-circle-info"></i> About
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
+        <div class="submenu" id="aboutMenu">
+            <a href="about.html#about-college">
+                <i class="fa-solid fa-building-columns"></i> About College
+            </a>
+
+            <a href="about.html#cs-department">
+                <i class="fa-solid fa-computer"></i> CS Department
+            </a>
+
+            <a href="about.html#about-website">
+                <i class="fa-solid fa-globe"></i> About this Website
+            </a>
+
+            <a href="about.html#about-admin">
+                <i class="fa-solid fa-user-tie"></i> Admin
+            </a>
+        </div>
+    </li>
+</ul>
+
+
+  </div>
+</div>
+
+
   <main class="container" id="main">
     <section class="page-title">
       <h2 class="page-title-text">Study Material</h2>
@@ -403,27 +698,131 @@ footer a { color: #f7c2d9; }
   </footer>
 
 <script>
-
-const ShowRequest = document.getElementById('ShowRequest');
-
-document.getElementById("shareBtn").addEventListener("click", async (event) => {
-  event.preventDefault(); // stop the link from reloading page
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: document.title,
-        text: " ",
-        url: window.location.href,
-      });
-      console.log("Page shared successfully!");
-    } catch (err) {
-      console.error("Share failed:", err.message);
-    }          
-   } else {
-    alert("Sharing not supported in this browser.");
+(function () {
+  const STORAGE_KEY = "userThemePreference";
+  const THEME_COLORS = {
+    light: "#ffffff",
+    dark:  "#1a1a2e"
+  };
+  function getSystemTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   }
-});
+  function getSavedTheme() {
+    return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+  }
+  function updateMetaThemeColor(theme) {
+    let metaTag = document.querySelector('meta[name="theme-color"]');
+    if (!metaTag) {
+      metaTag = document.createElement("meta");
+      metaTag.name = "theme-color";
+      document.head.appendChild(metaTag);
+    }
+    metaTag.content = THEME_COLORS[theme];
+  }
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    updateMetaThemeColor(theme);
+    const checkbox = document.getElementById("themeCheckbox");
+    if (checkbox) {
+      checkbox.checked = theme === "dark";
+    }
+  }
+  function setTheme(theme) {
+    localStorage.setItem(STORAGE_KEY, theme);
+    applyTheme(theme);
+  }
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    setTheme(current === "dark" ? "light" : "dark");
+  }
+  function watchSystemTheme() {
+    window.matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          applyTheme(e.matches ? "dark" : "light");
+        }
+      });
+  }
+  function watchStorageChanges() {
+    window.addEventListener("storage", (e) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        applyTheme(e.newValue);
+      }
+    });
+  }
+  if (document.head) {
+    applyTheme(getSavedTheme());
+  }
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    applyTheme(getSavedTheme());
+    const checkbox = document.getElementById("themeCheckbox");
+    if (checkbox) {
+      checkbox.addEventListener("change", toggleTheme);
+    }
+  });
+} else {
+  applyTheme(getSavedTheme());
+  const checkbox = document.getElementById("themeCheckbox");
+  if (checkbox) {
+    checkbox.addEventListener("change", toggleTheme);
+  }
+}
+  watchSystemTheme();
+  watchStorageChanges();
+})();
 
+
+function openMenu(){
+    document.getElementById("sideMenu").classList.add("active");
+    document.getElementById("headOverlay").classList.add("show");
+}
+function closeMenu(){
+    document.getElementById("sideMenu").classList.remove("active");
+    document.getElementById("headOverlay").classList.remove("show");
+}
+function toggleUploads(){
+    document.getElementById("uploadsMenu").classList.toggle("show");
+}
+function toggleAbout(){
+    document.getElementById("aboutMenu").classList.toggle("show");
+}
+document.querySelectorAll('.side-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        closeMenu();
+    });
+});
+window.addEventListener('pageshow', () => {
+    closeMenu();
+});
+</script>
+
+<script>
+document.getElementById("shareBtn")?.addEventListener(
+  "click",
+  async (event) => {
+    event.preventDefault();
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          text: " ",
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.error("Share failed:", err.message);
+      }
+    } else {
+      alert("Sharing not supported in this browser.");
+    }
+  }
+);
+</script>
+
+<script>
+const ShowRequest = document.getElementById('ShowRequest');
 const materialData = {
   "1": {
 
@@ -443,8 +842,7 @@ const materialData = {
 
     bca: [
       { subject: "Data Structure and Algorithms (BCA)", link: "sem2/dsa.html", image: "/src/dsa.webp" },
-      { subject: "Digital Logic Fundamentals (BCA)", link: "sem2/digital-logic.html", image: "/src/dlf.webp" },
-      { subject: "Mathematics - II (BCA)", link: "sem2/mathematics-ii.html", image: "/src/maths.webp" },
+      { subject: "Digital Logic Fundamentals (BCA)", link: "sem2/digital-logic.html", image: "/src/dlf.webp" }
     ],
     common: [
       { subject: "HTML Programming (SEC)", link: "sem2/html-programming-sec.html", image: "/src/sec2.webp" },
