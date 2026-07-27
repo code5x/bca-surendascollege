@@ -6,7 +6,6 @@
   <title>About - College Site</title>
   <meta name="theme-color" content="#ffffff"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <style>
 html {
   scroll-behavior: smooth;
@@ -283,7 +282,7 @@ header {
 main {
   max-width: 1100px;
   margin: 0 auto;
-  padding: calc(5px) 10px 30px;
+  padding: 10px;
   position: relative;
   z-index: 1;
   flex: 1;            /*    take up remaining space */
@@ -293,7 +292,6 @@ main {
   border: transparent;
   padding: 5px;  
   outline: none;
-  margin-top: 15px;
 }
 
 @media (min-width: 769px) {
@@ -505,138 +503,222 @@ html {
 }
 
 
-
-#about-admin {
-  margin: 0 auto;
-  text-align: center;
+@media (max-width: 768px) {
+	.section-admin {
+		margin-left: -8px;
+		margin-right: -8px;
+		margin-top: -10px;
+	}
 }
 
-.divider {
-    display: flex;                 
-    align-items: center;           
-    margin: 30px 0;
-}
+    .member-card {
+		background: rgba(153, 194, 240, 0.4);
+      border: 1px solid #27324a;
+      border-radius: 14px;
+                padding: 24px 10px;
+      margin: 20px 0 40px;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+    }
 
-.divider2 {
-    display: flex;
-    align-items: center;
-    margin: 30px 0 10px;
-}
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
 
+    .lines {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
 
-.lines {
-    display: flex;
-    flex-direction: column;        
-    justify-content: space-between; /* controls gap between lines */
-    flex: 1;                       
-    margin: 0 15px;                
-    height: 15px;                  /* total height for two lines (adjustable) */
-}
+    .divider-line {
+      height: 2px;
+      border-radius: 50px;
+      background: #2f3b56;
+    }
 
-.divider-line {
-    height: 3px;                   
-    background-color: #354bbd;       
-}
+    .admin-card .lines-left .divider-line:first-child {
+      background: linear-gradient(to right, transparent, #624dfa);
+    }
 
-.divider-text {
-    font-size: 26px;
-    font-weight: bold;
-    white-space: nowrap;
-    text-align: center;
-    color: #354bbd;
-}
+    .admin-card .lines-left .divider-line:last-child {
+      background: linear-gradient(to right, transparent, #678);
+    }
 
+    .admin-card .lines-right .divider-line:first-child {
+      background: linear-gradient(to left, transparent, #624dfa);
+    }
 
-.admin-avatar {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
+    .admin-card .lines-right .divider-line:last-child {
+      background: linear-gradient(to left, transparent, #678);
+    }
 
-.avatar-frame {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  border: 3px solid #098774;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-  overflow: hidden;
-  background: #cfe3fc;
-}
-.avatar-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.1) translateY(13px);
-}
+    .contributor-card .lines-left .divider-line:first-child {
+      background: linear-gradient(to right, transparent, #047533);
+    }
 
-.admin-social {
-  font-size: 1.17em;
-  font-weight: bold;
-  color: #3046b8;
-  text-align: center;
-  margin-bottom: 20px;
-}
+    .contributor-card .lines-left .divider-line:last-child {
+      background: linear-gradient(to right, transparent, #678);
+    }
 
-.section p3 {
-  line-height: 1.6;
-  margin: 0.5rem 0;
-  font-size: 1.0rem;
-  color: #323847;
-  font-weight: 450;
-}
+    .contributor-card .lines-right .divider-line:first-child {
+      background: linear-gradient(to left, transparent, #047533);
+    }
 
+    .contributor-card .lines-right .divider-line:last-child {
+      background: linear-gradient(to left, transparent, #678);
+    }
 
-/* Intro Paragraph */
-.admin-intro {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto 30px auto;
-  line-height: 1.6;
-}
+    .divider-sep {
+      display: flex;
+      justify-content: center;
+      margin: 25px 0;
+      position: relative;
+      z-index: 1;
+    }
 
+    .divider-line2 {
+      width: 70%;
+      height: 2px;
+    }
 
-.lines2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1;     
-    margin: 0 15px;
-    height: 3px; 
-}
-.divider-line2 {
-    height: 3px;
-    background-color: #5467c4;
-}
+        .line2-admin {
+                background: linear-gradient(90deg, transparent 0%, #624dfa 50%, transparent 100%);
+        }
 
+        .line2-cont {
+                background: linear-gradient(90deg, transparent 0%, #047533 50%, transparent 100%);
+        }
 
-/* Social Icons */
-.admin-socials {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-  margin-top: 30px; 
-}
+    .social-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #222;
+      text-align: center;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
 
-.social-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: none; /* remove underline for links */
-}
+    .admin-label {
+      padding: 7px 18px;
+      border-radius: 999px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      border: 1px solid #444;
+      color: #e2e8f0;
+      white-space: nowrap;
+    }
 
-.social-icon {
-  width: 35px;
-  height: 35px;
-  object-fit: contain;
-  transition: transform 0.5s ease;
-}
+	.ad-label-ad { background: #624dfa; }
+	.co-label-co { background: #047533; }
 
-.admin-socials .social-icon:hover {
-  transform: scale(1.05) translateY(-3px);
-  transition: transform 0s;
-}
+    .admin-avatar {
+      display: flex;
+      justify-content: center;
+    }
+
+    .avatar-frame,
+    .cont-frame {
+      width: 180px;
+      height: 180px;
+		padding: 3px;
+      border-radius: 50%;
+      background: #bddcfc;
+    }
+
+    .avatar-frame {
+      border: 3px solid #624dfa;
+      box-shadow: 0 0 0 6px rgba(124, 108, 255, 0.15);
+    }
+
+    .cont-frame {
+      border: 3px solid #047533;
+      box-shadow: 0 0 0 6px rgba(36, 195, 123, 0.15);
+    }
+
+    .avatar-frame img,
+    .cont-frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .admin-name {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .admin-name h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .member-card p {
+      text-align: center;
+    }
+
+    .admin-socials {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      width: 35px;
+      height: 35px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 35px;
+      background: transparent;
+      border: none;
+      color: #e2e8f0;
+    }
+
+    .social-btn:hover {
+                transform: scale(1.03) translateY(-3px);
+                transition: transform 0s;
+    }
+
+    .social-btn[aria-label="WhatsApp"] {
+      color: #048a3c;
+    }
+
+    .social-btn[aria-label="Email"] {
+      color: #0c48a8;
+    }
+
+    .social-btn[aria-label="GitHub"] {
+      color: #222222;
+    }
+
+    .social-btn[aria-label="Instagram"] {
+      color: #a80c74;
+    }
+
+    .social-btn[aria-label="Facebook"] {
+      color: #0c48a8;
+    }
+
+    @media (min-width: 769px) {
+      .member-card {
+                        padding: 30px 25px;
+      }
+
+    }
 
 
 footer {
@@ -679,11 +761,6 @@ footer a { color: #f7c2d9; }
 .staff-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.3); } 
 .staff-name { color: #e0c8e0; }
 .staff-phone { color: #cfd3fa; }
-.divider-line { background-color: #6880f7; }
-.divider-text { color: #fab589; }
-.section p3 { color: #cfd3fa; font-weight: 400; }
-.avatar-frame { background: #555; }
-.admin-social { color: #fab589; }
 
 .site-header { background: #1a557d; border-top: 1px solid #999; }
 .nav2 a { color: #e6f4ff; }
@@ -697,6 +774,40 @@ footer a { color: #f7c2d9; }
 .side-links i { color: #aaa; }
 .sun { color: #444; }
 .moon { color: #bbb; }
+
+.member-card { background: rgba(31, 55, 84, 0.4); border: 1px solid #888; }
+.admin-card .lines-left .divider-line:first-child {
+	background: linear-gradient(to right, transparent, #8272fc);
+}
+.admin-card .lines-right .divider-line:first-child {
+	background: linear-gradient(to left, transparent, #8272fc);
+}
+.line2-admin {
+	background: linear-gradient(90deg, transparent 0%, #8272fc 50%, transparent 100%);
+}
+.admin-label { border: 1px solid #999; }
+.ad-label-ad { background: #7562fc; }
+.avatar-frame { border: 3px solid #8272fc; }
+
+.contributor-card .lines-left .divider-line:first-child {
+	background: linear-gradient(to right, transparent, #039e44);
+}.contributor-card .lines-right .divider-line:first-child {
+	background: linear-gradient(to left, transparent, #039e44);
+}
+.line2-cont {
+	background: linear-gradient(90deg, transparent 0%, #039e44 50%, transparent 100%);
+}
+.co-label-co { background: #038238; }
+.cont-frame { border: 3px solid #039e44; }
+
+.avatar-frame, .cont-frame { background: #445; }
+.social-title { color: #bbb; }
+
+.social-btn[aria-label="WhatsApp"] { color: #04b54e; }
+.social-btn[aria-label="Email"] { color: #5891ed; }
+.social-btn[aria-label="GitHub"] { color: #bbb; }
+.social-btn[aria-label="Instagram"] { color: #ff66bd; }
+.social-btn[aria-label="Facebook"] { color: #5891ed; }
 }
 
 
@@ -1034,7 +1145,7 @@ Our goal is to build a simple, reliable study platform for college students. We 
 <h3>Disclaimer</h3>
 
 <p>
-This is an unofficial student community website for Suren Das College learners. It is not the college’s official website and is not managed or endorsed by the college administration. All shared content is for educational purposes, and the materials belong to their respective owners. For official updates or notices, please visit the college’s official website. If any copyright holder wants content removed, please provide 
+This is an unofficial student community website for Suren Das College learners. It is not the college’s official website and is not managed or endorsed by the college administration. All shared content is for educational purposes, and the materials belong to their respective owners. For official updates or notices, please visit the college’s official website.<br>If any copyright holder wants content removed, please provide 
 <a href="feedback.html" style="text-decoration: underline;">feedback</a>.
 </p>
 
@@ -1042,80 +1153,109 @@ This is an unofficial student community website for Suren Das College learners. 
 
 
 <!-- Admin -->
-<section id="about-admin" class="section" tabindex="-1" hidden>
+<section id="about-admin" class="section section-admin" tabindex="-1" hidden>
 
-<div class="divider">
-        <div class="lines">
-            <div class="divider-line"></div>
-            <div class="divider-line"></div>
+    <!-- ADMIN CARD -->
+    <div class="member-card admin-card">
+      <div class="divider">
+        <div class="lines lines-left">
+          <div class="divider-line"></div>
+          <div class="divider-line"></div>
         </div>
-        <div class="divider-text">ADMIN</div>
-        <div class="lines">
-            <div class="divider-line"></div>
-            <div class="divider-line"></div>
+        <div class="admin-label ad-label-ad">ADMIN</div>
+        <div class="lines lines-right">
+          <div class="divider-line"></div>
+          <div class="divider-line"></div>
         </div>
+      </div>
+
+      <div class="admin-avatar">
+        <div class="avatar-frame">
+          <img
+            id="adminAvatar"
+            src="/src/admin-thumb.png"
+            data-thumb="/src/admin-thumb.png"
+            data-gif="/src/admin.gif"
+            alt="Admin Thumbnail"
+          >
+        </div>
+      </div>
+
+      <div class="admin-name">
+        <h3>Tirtha Jyoti Deka</h3>
+      </div>
+
+      <p>
+        Hello! I am a second-semester BCA student at Suren Das College and the creator of this website. I built it to make information simple, organized, and easy to access for students and visitors. I enjoy web development, creating user-friendly designs, and exploring new ideas to improve the overall experience. This website reflects my passion for technology, and I will continue improving it over time.
+      </p>
+
+      <div class="divider-sep">
+        <div class="divider-line2 line2-admin"></div>
+      </div>
+      <div class="social-title">Connect</div>
+
+      <div class="admin-socials" aria-label="Social links">
+        <a class="social-btn" href="https://wa.me/+918812039066" target="_blank" aria-label="WhatsApp">
+          <i class="fa-brands fa-square-whatsapp"></i>
+        </a>
+        <a class="social-btn" href="mailto:tirthajyotideka020@gmail.com" target="_blank" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+        <a class="social-btn" href="https://github.com/code5x" target="_blank" aria-label="GitHub">
+          <i class="fa-brands fa-square-github"></i>
+        </a>
+        <a class="social-btn" href="https://instagram.com/tirtha__27" target="_blank" aria-label="Instagram">
+          <i class="fa-brands fa-square-instagram"></i>
+        </a>
+      </div>
     </div>
 
-  <!-- Avatar GIF -->
-<div id="about-admin">
-  <div class="admin-avatar">
-    <div class="avatar-frame">
-      <img
-        id="adminAvatar"
-        src="/src/admin-thumb.png"
-        data-thumb="/src/admin-thumb.png"
-        data-gif="/src/admin.gif"
-        alt=""
-      >
+    <!-- CONTRIBUTOR CARD -->
+    <div class="member-card contributor-card">
+      <div class="divider">
+        <div class="lines lines-left">
+          <div class="divider-line"></div>
+          <div class="divider-line"></div>
+        </div>
+        <div class="admin-label co-label-co">CONTRIBUTOR</div>
+        <div class="lines lines-right">
+          <div class="divider-line"></div>
+          <div class="divider-line"></div>
+        </div>
+      </div>
+
+      <div class="admin-avatar">
+        <div class="cont-frame">
+          <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/contributor_bikash-pathak.webp" alt="Bikash Pathak">
+        </div>
+      </div>
+
+      <div class="admin-name">
+        <h3>Bikash Pathak</h3>
+      </div>
+
+      <div class="divider-sep">
+        <div class="divider-line2 line2-cont"></div>
+      </div>
+      <div class="social-title">Connect</div>
+
+      <div class="admin-socials" aria-label="Social links">
+        <a class="social-btn" href="https://wa.me/+917099366900" target="_blank" aria-label="WhatsApp">
+          <i class="fa-brands fa-square-whatsapp"></i>
+        </a>
+        <a class="social-btn" href="https://github.com/bikash23m" target="_blank" aria-label="GitHub">
+          <i class="fa-brands fa-square-github"></i>
+        </a>
+        <a class="social-btn" href="https://www.facebook.com/bikasa.pathaka.mana" target="_blank" aria-label="Facebook">
+          <i class="fa-brands fa-square-facebook"></i>
+        </a>
+        <a class="social-btn" href="https://www.instagram.com/bikaaxh" target="_blank" aria-label="Instagram">
+          <i class="fa-brands fa-square-instagram"></i>
+        </a>
+      </div>
     </div>
-  </div>
-</div>
 
-
-  <!-- Short intro paragraph (only your name inside) -->
-<p3 class="admin-intro">
-  Hello! &nbsp;My name is <strong>Tirth Jyoti Deka</strong>.<br>  
-  I am a student of Suren Das College, from the BCA department, currently in the second semester. I am also the creator and maintainer of this website, built to make information easily accessible and well-presented for students and visitors. I enjoy working with web technologies, creating simple yet effective designs, and exploring new ideas to improve user experience. My goal is to build a platform where knowledge and creativity come together. This website is a small step in my passion for technology, and I look forward to improving it continuously.
-</p3>
-
-<div class="divider2">
- <div class="lines2">
-   <div class="divider-line2"></div>
- </div>
-</div>
-
-<div class="admin-social">
-  — ADMIN SOCIAL —
-</div>
-
-  <!-- Social logos row -->
-  <div class="admin-socials" aria-label="Social links">
-
-    <a class="social-btn" href="https://wa.me/+918812039066" target="_blank" aria-label="WhatsApp" onclick="delayRedirect(event, this.href)">
-      <img class="social-icon" src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/whatsapp-logo.png">
-    </a>
-
-    <a class="social-btn" href="mailto:t246948@gmail.com" target="_blank" aria-label="Email" onclick="delayRedirect(event, this.href)">
-      <img class="social-icon" src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/email-logo.png">
-    </a>
-
-    <a class="social-btn" href="https://t.me/simplyzenn" target="_blank" aria-label="Telegram" onclick="delayRedirect(event, this.href)">
-      <img class="social-icon" src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/telegram-logo.png">
-    </a>
-
-    <a class="social-btn" href="https://github.com/code5x" target="_blank" aria-label="GitHub" onclick="delayRedirect(event, this.href)">
-      <img class="social-icon" src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/github-logo.png">
-    </a>
-
-    <a class="social-btn" href="https://instagram.com/tirtha_d_100" target="_blank" aria-label="Instagram" onclick="delayRedirect(event, this.href)">
-      <img class="social-icon" src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/instagram-logo.png">
-    </a>
-  </div>
-<div class="divider">
- <div class="lines2">
-   <div class="divider-line2"></div>
- </div>                                                    
-</div>
+</section>
 
 <script>
   function delayRedirect(event, url) {
@@ -1306,59 +1446,75 @@ document.getElementById("shareBtn")?.addEventListener(
   });
 })();
 
-
 document.addEventListener("DOMContentLoaded", () => {
-  const section = document.getElementById("about-admin");
-  const avatar = document.getElementById("adminAvatar");
 
-  const thumb = avatar.dataset.thumb;
-  const gif = avatar.dataset.gif;
+    const avatar = document.getElementById("adminAvatar");
+    const adminSection = document.getElementById("about-admin");
 
-  let active = false;
+    const thumb = avatar.dataset.thumb;
+    const gif = avatar.dataset.gif;
 
-  function loadGif() {
-    if (active) return;
+    let gifLoaded = false;
+    let loading = false;
 
-    active = true;
+    function playGif() {
 
-    // Keep thumbnail visible while GIF downloads
-    avatar.src = thumb;
-
-    const img = new Image();
-
-    img.onload = () => {
-      if (!active) return;
-
-      // Force restart from first frame
-      avatar.src = gif + "?t=" + Date.now();
-    };
-
-    img.src = gif + "?t=" + Date.now();
-  }
-
-  function unloadGif() {
-    active = false;
-
-    // Stop GIF immediately
-    avatar.src = thumb;
-  }
-
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          loadGif();
-        } else {
-          unloadGif();
+        if (loading || gifLoaded) {
+            avatar.src = gif;
+            return;
         }
-      });
-    },
-    {
-      threshold: 0.6
-    }
-  );
 
-  observer.observe(section);
+        loading = true;
+
+        // Keep PNG visible
+        avatar.src = thumb;
+
+        const preload = new Image();
+
+        preload.onload = function () {
+
+            gifLoaded = true;
+            loading = false;
+
+            // Only show GIF if Admin section is still active
+            if (!adminSection.hidden) {
+                avatar.src = gif;
+            }
+
+        };
+
+        preload.onerror = function () {
+            loading = false;
+            avatar.src = thumb;
+        };
+
+        preload.src = gif;
+    }
+
+    function stopGif() {
+        avatar.src = thumb;
+    }
+
+    function updateAvatar() {
+
+        if (adminSection.hidden) {
+            stopGif();
+        } else {
+            playGif();
+        }
+
+    }
+
+    // Observe hidden attribute changes
+    const observer = new MutationObserver(updateAvatar);
+
+    observer.observe(adminSection, {
+        attributes: true,
+        attributeFilter: ["hidden"]
+    });
+
+    updateAvatar();
+
 });
 
 </script>
