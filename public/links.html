@@ -293,7 +293,7 @@ header{
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.7);
     border: 2px solid #666;
-    margin: 20px auto;
+    margin: 30px auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -302,23 +302,24 @@ header{
     z-index: 10;
   }
 
+.link-box h3 {
+  cursor: pointer;
+}
+.link-box h3:hover {
+    text-decoration: underline;
+}
+
 
 .typea { background: #c3fadf; }
 .typea .title-row h3 { color: #0b3d0b; }
-.typea .visit-row button { background: #145a1a; }
-.typea .visit-row button:hover { background: #1faa2e; }
 .typea .search-row button { background: #6fcf97; }
 
 .typeb { background: #a2cafc; }
 .typeb .title-row h3 { color: #082567; }
-.typeb .visit-row button { background: #0a3d91; }
-.typeb .visit-row button:hover { background: #1a8fd0; }
 .typeb .search-row button { background: #5aa0f2; }
 
 .typec { background: #fadeca; }
 .typec .title-row h3 { color: #7f1d1d; }
-.typec .visit-row button { background: #a9320a; }
-.typec .visit-row button:hover { background: #d9690f; }
 .typec .search-row button { background: #f4a261; }
 
 
@@ -332,20 +333,6 @@ header{
     font-size: 1.2em;
     margin: 0;
     vertical-align: middle;
-  }
-
-  .visit-row {
-    text-align: center;
-    margin-bottom: 3px;
-  }
-  .visit-row .visit-btn {
-    padding: 8px 18px;
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
   }
 
   .desc-row {
@@ -423,20 +410,14 @@ link-box { border: 2px solid #777; }
 
 .typea { background: #0f2e22; }
 .typea .title-row h3 { color: #5fbba4; }
-.typea .visit-row button { background: #4faa5e; color: #0b1f14; }
-.typea .visit-row button:hover { background: #1f8979; }
 .typea .search-row button { background: #0f7722; }
 
 .typeb { background: #0b1e3a; }
 .typeb .title-row h3 { color: #8ab4dd; }
-.typeb .visit-row button { background: #1d92d4; color: #0a1a2f; }
-.typeb .visit-row button:hover { background: #005795; }
 .typeb .search-row button { background: #2a5d99; }
 
 .typec { background: #3d2f29; }
 .typec .title-row h3 { color: #ffb4a2; }
-.typec .visit-row button { background: #bc7d1d; color: #2a1205; }
-.typec .visit-row button:hover { background: #8c4d11; }
 .typec .search-row button { background: #9c5d09; }
 
 header{ background: #074085; }
@@ -656,16 +637,13 @@ header{ background: #074085; }
 
 
 <div class="link-box typea" 
-     data-site="https://egyankosh.ac.in/" 
+     data-site="https://egyankosh.ac.in" 
      data-search="https://egyankosh.ac.in/simple-search?query=QUERY">
   <div class="title-row">
     <h3>E-GyanKosh</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-    A digital repository by IGNOU that provides free access to study materials and course modules. Very useful for students in distance and higher education.
+Developed by IGNOU, E-GyanKosh is a comprehensive repository of self-learning materials, course blocks, study guides, and academic resources. It is particularly valuable for distance-learning students and learners pursuing structured undergraduate and postgraduate programmes.
   </div>
   <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within E-GyanKosh">
@@ -675,16 +653,13 @@ header{ background: #074085; }
 
 
 <div class="link-box typea" 
-     data-site="https://epgp.inflibnet.ac.in/" 
+     data-site="https://epgp.inflibnet.ac.in" 
      data-search="https://www.google.com/search?q=site%3Aepgp.inflibnet.ac.in+QUERY">
   <div class="title-row">
     <h3>e-PG Pathshala</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-An initiative by INFLIBNET offering high-quality postgraduate level content. A valuable platform for advanced learners and researchers.
+An initiative of INFLIBNET, e-PG Pathshala provides expertly developed postgraduate-level e-content across a wide range of disciplines. Its structured modules, learning materials, and multimedia resources make it a useful reference for advanced study, examination preparation, and academic research.
   </div>
  <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within e-PG Pathshala in google">
@@ -694,16 +669,13 @@ An initiative by INFLIBNET offering high-quality postgraduate level content. A v
 
 
 <div class="link-box typea" 
-     data-site="https://shodhganga.inflibnet.ac.in/" 
+     data-site="https://shodhganga.inflibnet.ac.in" 
      data-search="https://shodhganga.inflibnet.ac.in/simple-search?query=QUERY">
   <div class="title-row">
     <h3>Shodhganga</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-A large collection of Indian theses and dissertations. A rich resource for research scholars looking for original academic work.
+Shodhganga is a national repository of theses and dissertations contributed by Indian universities and research institutions. It offers researchers access to original academic work that can support literature reviews, topic exploration, research design, and the development of dissertations and scholarly papers.
   </div>
  <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within Shodhganga">
@@ -712,16 +684,13 @@ A large collection of Indian theses and dissertations. A rich resource for resea
 </div>
 
 <div class="link-box typea"
-     data-site="https://ndl.iitkgp.ac.in/"
+     data-site="https://ndl.iitkgp.ac.in"
      data-search="https://ndl.iitkgp.ac.in/he_search?key=QUERY">
   <div class="title-row">
     <h3>National Digital Library of India</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-A one-stop digital library with millions of books, journals, and resources for all age groups. Very helpful for both students and researchers.
+The National Digital Library of India brings together a vast range of educational and scholarly resources from numerous institutions and repositories. Its extensive collection of books, articles, manuscripts, lectures, videos, and other learning materials makes it a valuable starting point for broad academic research and self-directed learning.
   </div>
   <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within National Digital Library of India">
@@ -733,16 +702,13 @@ A one-stop digital library with millions of books, journals, and resources for a
 <p class="lead">Completely free and legal collections of books, textbooks, and classics for study and self-learning.</p>
 
 <div class="link-box typeb"
-     data-site="https://www.doabooks.org/"
+     data-site="https://www.doabooks.org"
      data-search="https://directory.doabooks.org/discover?query=QUERY">
   <div class="title-row">
     <h3>Directory of Open Access Books</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-Provides thousands of peer-reviewed academic books. A reliable source for quality scholarly reading.
+DOAB provides access to a growing collection of scholarly books published under open-access models, with an emphasis on academic quality and peer-reviewed research. It is especially useful for university students, researchers, and academics seeking authoritative books that can be accessed without subscription barriers.
   </div>
  <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within Directory of Open Access Books">
@@ -756,11 +722,8 @@ Provides thousands of peer-reviewed academic books. A reliable source for qualit
   <div class="title-row">
     <h3>Open Textbook Library</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-Offers free textbooks for various subjects, written and reviewed by experts. Great for students looking for affordable learning resources.
+The Open Textbook Library offers a diverse collection of openly licensed textbooks covering disciplines ranging from mathematics and science to business and the humanities. These resources are particularly useful for university coursework, independent study, and educators seeking accessible alternatives to conventional commercial textbooks.
   </div>
  <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within Open Textbook Library">
@@ -769,16 +732,13 @@ Offers free textbooks for various subjects, written and reviewed by experts. Gre
 </div>
 
 <div class="link-box typeb"
-     data-site="https://www.gutenberg.org/"
+     data-site="https://www.gutenberg.org"
      data-search="https://www.gutenberg.org/ebooks/search/?query=QUERY">
   <div class="title-row">
     <h3>Project Gutenberg</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-One of the oldest digital libraries with classic literature and public domain books. A treasure for those who love reading timeless works.
+Project Gutenberg is a long-established digital library dedicated primarily to freely accessible public-domain literature. Its extensive collection is well suited to readers and students looking for classic novels, poetry, philosophy, history, and other influential works from earlier periods.
   </div>
  <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within Project Gutenberg">
@@ -790,54 +750,13 @@ One of the oldest digital libraries with classic literature and public domain bo
 <p class="lead">Large collections shared by global communities. While some are unofficial, they help learners access knowledge that may otherwise be hard to find.</p>
 
 <div class="link-box typec"
-     data-site="https://libgen.li/"
-     data-search="https://libgen.li/index.php?req=QUERY">
-  <div class="title-row">
-    <h3>Library Genesis</h3>
-  </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
-  <div class="desc-row">
-A massive archive of books and research papers from all fields. Very helpful when students need quick access to study material.
-  </div>
- <div class="search-row">
-  <input type="text" class="search-input" placeholder="Search within Library Genesis">
-  <button class="search-btn"></button>
-</div>
-</div>
-
-<!--
-<div class="link-box typec"
-     data-site="https://welib.org/"
-     data-search="https://welib.org/search?q=QUERY">
-  <div class="title-row">
-    <h3>WeLib</h3>
-  </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
-  <div class="desc-row">
-A community-driven digital library with a variety of books. It supports learning by making resources widely available.
-  </div>
- <div class="search-row">
-  <input type="text" class="search-input" placeholder="Search within WeLib">
-  <button class="search-btn"></button>
-</div>
-</div>
--->
-
-<div class="link-box typec"
-     data-site="https://archive.org/"
+     data-site="https://archive.org"
      data-search="https://archive.org/search?query=QUERY">
   <div class="title-row">
     <h3>Internet Archive</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-A nonprofit digital library that offers books, websites, music, videos, and software. It preserves cultural and historical materials and makes them free to access or borrow.
+Internet Archive is a nonprofit digital library dedicated to preserving and providing access to books, websites, films, music, software, and other cultural materials. Its collections are particularly valuable for historical research, archival studies, older publications, rare materials, and resources that may no longer be readily available elsewhere.
   </div>                                                                                           
    <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within Internet Archive">
@@ -846,16 +765,28 @@ A nonprofit digital library that offers books, websites, music, videos, and soft
 </div>
 
 <div class="link-box typec"
-     data-site="https://annas-archive.li/"
-     data-search="https://annas-archive.li/search?q=QUERY">
+     data-site="https://libgen.li"
+     data-search="https://libgen.li/index.php?req=QUERY">
+  <div class="title-row">
+    <h3>Library Genesis</h3>
+  </div>
+  <div class="desc-row">
+Library Genesis is an unofficial digital repository associated with a broad range of books, textbooks, scientific papers, and technical publications. It is known for helping users locate hard-to-find academic material, although the copyright status and legal availability of individual resources can vary by jurisdiction.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within Library Genesis">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+<div class="link-box typec"
+     data-site="https://annas-archive.gl"
+     data-search="https://annas-archive.gl/search?q=QUERY">
   <div class="title-row">
     <h3>Anna’s Archive</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-A global search engine for digital books and articles. Useful for discovering hard-to-find study material.
+Anna’s Archive is an unofficial search platform that aggregates metadata and links relating to books, academic papers, and other digital publications from multiple sources. It can be useful for discovering obscure or difficult-to-locate titles, while users should independently verify the copyright and legal status of any material they access.
   </div>
  <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within Anna’s Archive">
@@ -864,19 +795,31 @@ A global search engine for digital books and articles. Useful for discovering ha
 </div>
 
 <div class="link-box typec"
-     data-site="https://wvw.zlibrary.to/"
-     data-search="https://wvw.zlibrary.to/top-QUERY-books">
+     data-site="https://z-lib.sk"
+     data-search="https://z-lib.sk/s/QUERY">
   <div class="title-row">
     <h3>Z-Library</h3>
   </div>
-  <div class="visit-row">
-    <button class="visit-btn">Visit</button>
-  </div>
   <div class="desc-row">
-One of the largest free eBook collections covering textbooks, research works, and novels. A convenient platform for readers and learners worldwide.
+Z-Library is an unofficial digital-book platform associated with a large collection of eBooks and academic publications across numerous subjects. It is commonly used to search for textbooks, scholarly books, and general reading material, but the legal status of specific resources should always be checked before accessing or downloading them.
   </div>
  <div class="search-row">
   <input type="text" class="search-input" placeholder="Search within Z-Library">
+  <button class="search-btn"></button>
+</div>
+</div>
+
+<div class="link-box typec"
+     data-site="https://www.pdfdrive.com"
+     data-search="https://www.pdfdrive.com/search?q=QUERY">
+  <div class="title-row">
+    <h3>PDF Drive</h3>
+  </div>
+  <div class="desc-row">
+PDF Drive is a book-search platform historically known for indexing a wide variety of PDF-format reading material across education, technology, literature, business, and other fields. It can serve as a discovery tool for locating books and study resources, with users advised to confirm that individual materials are legally available before downloading them.
+  </div>
+ <div class="search-row">
+  <input type="text" class="search-input" placeholder="Search within PDF Drive">
   <button class="search-btn"></button>
 </div>
 </div>
@@ -1018,7 +961,7 @@ document.querySelectorAll('.link-box').forEach(box => {
   const searchTemplate = box.dataset.search;
 
   // Visit button
-  box.querySelector('.visit-btn').addEventListener('click', () => {
+  box.querySelector('h3').addEventListener('click', () => {
     window.open(site, '_blank');   // open in new tab
   });
 
