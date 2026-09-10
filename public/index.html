@@ -8,1276 +8,994 @@
   <meta name="theme-color" content="#ffffff"/>
   <link rel="icon" href="/src/college-logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
- 
+  
   <!-- Styles -->
   <style>
+    /* ===== COLOR VARIABLES ===== */
+    :root {
+      --primary-blue: #1b9ade;
+      --accent-red: #e01a5f;
+      --light-bg: #ffffff;
+      --dark-bg: #1a1a2e;
+      --text-light: #111111;
+      --text-dark: #f7f7f7;
+      --filter-light: #ddf;
+      --filter-dark: #222;
+      --card-light: #f7e7df;
+      --card-dark: #0f1724;
+      --border-light: #386c96;
+      --border-dark: #555;
+    }
+    
+    [data-theme="dark"] {
+      --primary-blue: #074085;
+      --accent-red: #ff0050;
+      --light-bg: #1a1a2e;
+      --dark-bg: #12121a;
+      --text-light: #f7f7f7;
+      --text-dark: #111111;
+      --filter-light: #222;
+      --filter-dark: #222;
+      --card-light: #0f1724;
+      --card-dark: #0f1724;
+      --border-light: #555;
+      --border-dark: #555;
+    }
 
-/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
-body.bg-app {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  -webkit-font-smoothing: antialiased;
-  /* Default desktop background */
-  background: url("/src/background.webp") no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
-}
+    /* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+    body.bg-app {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      -webkit-font-smoothing: antialiased;
+      background: url("/src/background.webp") no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      color: var(--text-light);
+    }
 
-/* Mobile background */
-@media (max-width: 768px) {
-  body.bg-app {
-  background: url("/src/background-mobile.webp") no-repeat center center fixed; 
-  background-size: cover;
-  }
-}
+    /* Mobile background */
+    @media (max-width: 768px) {
+      body.bg-app {
+        background: url("/src/background-mobile.webp") no-repeat center center fixed;
+        background-size: cover;
+      }
+    }
 
-/* Black overlay */
-body.bg-app::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: -1;
-}
+    body.bg-app::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.6);
+      z-index: -1;
+      transition: background 0.3s ease;
+    }
 
-/* Optional wrapper padding for content */
-.overlay {
-  padding: 2rem;
-}
+    [data-theme="dark"] body.bg-app::before {
+      background: rgba(0, 0, 0, 0.7);
+    }
 
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-light);
+    }
 
-/* container  */
-.container {
-  max-width:1100px;
-  margin:0 auto;
-  padding:18px;
-  box-sizing:border-box  
-}
+    .page-title { color: var(--text-light); margin: 25px 0 11px; font-size: 1.6rem; }
+    .lead { color: var(--text-light); margin: 8px 0 14px; font-size: 1rem; font-weight: 410; text-align: justify; line-height: 1.6; }
 
-/* ===== BANNER (Home Page Only) ===== */
-.banner {
-    color: #fff;
-    padding: 8px 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    text-align: left;
-    background: #83ebe9;
-    border-bottom: 1px solid #0b2a6b;
-}
-
-.banner img {
-    height: 80px;
-    width: auto;
-    border-radius: 2px;
-}
-
-.banner-text h1 {
-    font-size: 1.5rem;
-    margin: 0;
-    color: #1b174d;
-    font-weight: bold;
-}
-
-.banner-text h2 {
-    font-size: 1.1rem;
-    margin: 1px 0;
-    color: #386c96;
-    font-weight: 600;
-}
-
-.banner-text p {
-    margin: 2px 0;
-    font-size: 1rem;
-    color: #333a55;
-    font-weight: 500;
-}
-
-/* Mobile View */
-@media (max-width: 768px) {
+    /* ===== BANNER (Home Page Only) ===== */
     .banner {
+      color: #fff;
+      padding: 8px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      text-align: left;
+      background: var(--primary-blue);
+      border-bottom: 1px solid var(--accent-red);
+    }
+
+    .banner img {
+      height: 80px;
+      width: auto;
+      border-radius: 2px;
+    }
+
+    .banner-text h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .banner-text h2 {
+      font-size: 1.1rem;
+      margin: 1px 0;
+      color: #e01a5f;
+      font-weight: 600;
+    }
+
+    .banner-text p {
+      margin: 2px 0;
+      font-size: 1rem;
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    /* Mobile View */
+    @media (max-width: 768px) {
+      .banner {
         padding: 8px 8px;
         gap: 3px;
-        flex-direction: row;
+        flex-direction: column;
         text-align: center;
-    }
-    .banner img {
-        height: 60px;
-    }
-    .banner-text h1 { font-size: 0.94rem; }
-    .banner-text h2 { font-size: 0.88rem; }
-    .banner-text p  { font-size: 0.78rem; }
-}
-
-
-/* ===== HEADER ===== */
-header{
-    background: #1b9ade;
-    color:white;
-    padding: 4px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-    animation: slideDown 1s ease;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-@keyframes slideDown {
-    from { transform: translateY(-100%); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
-}
-.btn-area{
-	 display: flex;
-	 align-items: center;
-	 gap: 15px;
-    font-size: 18px;
-    font-weight:bold;
-}
-.menu-btn{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    cursor:pointer;
-}
-.menu-btn span{
-    width:22px;
-    height:3px;
-    background:white;
-}
-
-.side-menu{
-    position:fixed;
-    top:1px;
-    right:-250px;
-    width:250px;
-    height:90vh;
-    background:#abe2ff;
-    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
-    transition:0.4s;
-    overflow-y:auto;
-    z-index:1000;
-    border-radius:5px 0 0 5px;
-
-    display: flex;
-    flex-direction: column;
-}
-.menu-header{
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 10px;
-}
-.side-menu.active{
-    right:0;
-}
-.head-close-btn{
-    font-size:22px;
-    cursor:pointer;
-    color: #111;
-}
-.menu-content{
-    flex: 1;
-    overflow-y: auto;
-}
-.side-links{
-    list-style:none;
-    padding: 0 10px;
-}
-.side-links i {
-    color: #444;
-    width: 25px;
-}
-.side-links li{
-    border-bottom: 1px solid #888;
-}
-.side-links li:last-child{
-    border:none;
-}
-.side-links a{
-    text-decoration:none;
-    color:#111;
-    display:block;
-    padding: 15px 10px;
-}
-.side-links a:hover{
-    background:#87d2fa;
-}
-.dropdown-btn{
-    cursor:pointer;
-    padding:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 10px;
-    color:#111;
-}
-.dropdown-btn .fa-chevron-down {
-    margin-left: auto;
-}
-.dropdown-btn:hover{
-    background:#77cefc;
-}
-.submenu{
-    display:none;
-    padding-left:20px;
-}
-.submenu a{
-    color:#111;
-    border-top: 1px solid #888;
-}
-.submenu.show{
-    display:block;
-}
-.head-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.3);
-    display:none;
-    z-index:999;
-}
-.head-overlay.show{
-    display:block;
-}
-@media(min-width:769px){
-    .side-menu{
-        right:-350px;
-        width:350px;
-    }
-    header { padding: 4px 30px; }
-	 .btn-area { gap: 25px; }
-}
-
-.theme-toggle {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 65px;
-  height: 29px;
-  padding: 0 10px;
-  border-radius: 40px;
-  background: #bbb;
-  cursor: pointer;
-  user-select: none;
-  box-sizing: border-box;
-}
-.theme-toggle .icon {
-  font-size: 18px;
-  z-index: 2;
-  position: absolute;
-}
-.sun { color: #bbb; }
-.moon { color: #444; }
-
-.theme-toggle .thumb {
-  position: absolute;
-  left: 3px;
-  top: 2px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #195ea8;
-  transition: transform 0.3s ease;
-  z-index: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-#themeCheckbox:checked + .sun + .moon + .thumb {
-  transform: translateX(33px);
-}
-.theme-toggle .sun {
-  left: 6px;
-}
-.theme-toggle .moon {
-  right: 9px;
-}
-
-
-
-/* hero grid */
-.hero{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;margin-bottom:18px}
-.page-title{color:#111;margin:25px 0 11px;font-size:1.6rem}
-.lead{color:#323847;margin:8px 0 14px;font-size:1rem; font-weight: 410; text-align:justify; line-height: 1.6}
-
-
-/* ================= SEARCH BAR ================= */
-.sa-search-wrapper {
-  position: relative;
-  margin: 0 auto;
-}
-.sa-search-bar {
-  display: flex;
-  align-items: center;
-}
-/* Filter button */
-.sa-filter-btn {
-  background: #ddd;
-  color: #444;
-  border: 1px solid #386c96;
-  width: 37px;
-  height: 37px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 6px;
-}
-/* Space between filter and input */
-.sa-search-bar input {
-  margin-left: 2px;
-}
-/* Input */
-#saSearchInput {
-  flex: 1;
-  height: 35px;
-  border: 1px solid #386c96;
-  border-right: none;
-  padding: 0 12px;
-  font-size: 15px;
-  outline: none;
-  border-radius: 6px 0 0 6px;
-  background: #ddd;
-  color: #111;
-}
-/* Search icon (right side) */
-.sa-search-icon {
-  width: 37px;
-  height: 37px;
-  background: #386c96;
-  color: white;
-  border-radius: 0 6px 6px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* No space between input and search icon */
-.sa-search-bar input + .sa-search-icon {
-  margin-left: 0;
-}
-/* ================= SEARCH RESULTS ================= */
-.sa-search-results {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  right: 0;
-  background: #ddf;
-  border: 1px solid #434759;
-  max-height: 400px;
-  min-height: 200px;
-  overflow-y: auto;
-
-  z-index: 50;
-  border-radius: 5px;
-
-  display: flex;
-  flex-direction: column;
-}
-.sa-result-item {
-  border: 1px solid #666;
-  margin: 12px 6px;
-  border-radius: 5px;
-
-  padding: 0;
-  overflow: hidden;
-}
-
-.sa-message {
-  border: none !important;
-  margin: 0 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  text-align: center;
-  color: #222;
-  opacity: 0.9;
-  font-size: 16px;
-}
-
-.sa-result-item a {
-  text-decoration: none;
-  color: #353535;
-  font-weight: 405;
-}
-
-
-.sa-result-item a.sa-link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  background: #eee;
-}
-.sa-result-item a.sa-link:hover {
-  background: #dfd;
-  cursor: pointer;
-}
-
-
-/* Labels */
-.sa-labels {
-  margin-top: 7px;
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-}
-.sa-label {
-  font-size: 12px;
-  padding: 1px 3px;
-  background: #bbb;
-  opacity: 0.85;
-  border-radius: 3px;
-}
-.sa-highlight {
-  background: #ddf;
-  color: #353535;
-}
-
-
-/* ================= FILTER POPUP ================= */
-.sa-filter-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  display: none;
-  z-index: 5000;
-}
-.sa-filter-popup {
-  background: #cef;
-  width: 300px;
-  padding: 10px;
-  margin: 100px auto;
-  border-radius: 7px;
-  border: 1px solid #333;
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-@media (min-width:769px){ 
-  .sa-filter-popup { width:350px; }
-}
-
-.sa-filter-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  font-weight: 600;
-
-  width: 100%;
-}
-.sa-filter-close {
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: 600;
-  color: #222;
-}
-/* ================= CUSTOM SELECTOR ================= */
-.sa-selector {
-  position: relative;
-  margin-bottom: 15px;
-
-  flex: 1;
-  min-width: 120px;   /* controls minimum width */
-}
-.sa-selector-selected {
-  border: 1px solid #333;
-  border-radius: 5px;
-  padding: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  background: #cdf;
-  font-weight: 500;
-}
-.sa-selector-options {
-  display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  background: #cdf;
-  border: 1px solid #333;
-  z-index: 10;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: 500;
-}
-.sa-selector-options div {
-  padding: 6px;
-  cursor: pointer;
-  border-bottom: 1px solid #333;
-}
-.sa-selector-options div:hover {
-  background: #dfd;
-}
-/* Active filter color */
-.sa-filter-active {
-  color: #059e21 !important;
-}
-.sa-selector-options div:last-child {
-  border-bottom: none;
-}
-#saSelectorSecondary {
-  display: none;
-}
-
-
-  /* spacing: mobile 10px each side, desktop 30px each side */
-  .box-wrapper { width:100%; display:flex; justify-content:center; }
-  .boxB{
-    width: calc(100vw - 60px); /* Mobile View */
-    max-width:1400px;
-    aspect-ratio: 16/7;
-    border: 4px solid #195b5e;
-    border-radius: 18px;
-    overflow:hidden;
-    position:relative;
-    background: #ddf;
-  }
-  @media (min-width:769px){ /* Desktop view */
-    .boxB{ width: calc(100vw - 430px); border-width:3px; }
-  }
-  @media (min-width:1200px){ /* Desktop view for large screen */
-    .boxB{ width: calc(100vw - 900px); border-width:3px; }
-  }
-
-  @media (max-width:768px){ /* Mobile viwe */
-    .boxB{ border-width:2px; border-radius:14px; }
-  }
-
-  /* scroller */
-  .scroller{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    height:100%;
-    gap:14px;
-    padding-inline: clamp(16px, 8vw, 120px);
-    overflow-x:auto;
-    overflow-y:hidden;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-  }
-
-  /* cards (boxA) smaller than before, keeps 5:4 ratio */
-  .cards{
-    flex: 0 0 calc(78% - 14px); /* mobile default */
-    aspect-ratio: 5/3.3;
-    border: 3px solid #337a53;
-    border-radius: 14px;
-    overflow:hidden;
-    position:relative;
-    display:block;
-    text-decoration:none;
-    color:#ddd;
-    background-size:cover;
-    background-position:center;
-    scroll-snap-align:center;
-    scroll-snap-stop:always;
-    filter: contrast(0.8); 
-    transform-origin:center center;
-    transform: scale(.88);   /* side cards scale */
-    opacity:.68;
-
-    transition: transform 0.4s ease,
-                opacity 0.4s ease,
-                box-shadow 0.4s ease;
-
-    pointer-events: none; /* only center clickable */
-    cursor: default;
-  }
-
-  /* desktop cards size tweak */
-  @media (min-width:769px){
-    .cards { flex: 0 0 calc(95% - 14px); transform: scale(.83); aspect-ratio: 5/3.15; }
-  }
-  @media (max-width:768px){
-    .cards { border-width:2px; border-radius:12px; }
-  }
-
-  /* center cards big & clickable */
-  .cards.is-center{
-    transform: scale(1);
-    opacity: 1;
-    box-shadow: 0 10px 36px rgba(0,0,0,0.5); 
-    pointer-events: auto;
-    cursor: pointer;
-  }
-
-
-  .cards .title{
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    padding:1px;
-    border-radius:10px;
-    background: rgba(0,0,0,.35);
-
-    text-shadow:
-    0 0 2px #000,
-    0 0 4px #000,
-    0 0 8px #000,
-    2px 2px 6px #000;
-
-    font-weight:700;
-    pointer-events:none;
-    text-align:center;
-    z-index: 2;
-    font-size: 1.1rem;
-    width: 85%;
-    max-width: 90%;
-  }
-
-
-@media (min-width:769px) {
-  .cards .title{ font-weight: 700; font-size: 1.2rem; }
-}
-
-
-  /* nav buttons */
-  .nav-btn{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    background: rgba(0,0,0,.65);
-    color:#fff;
-    border:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:30;
-    box-shadow: 0 6px 18px rgba(0,0,0,.4);
-    -webkit-tap-highlight-color: transparent;
-  }
-  .nav-btn.left{ left: -1px; }
-  .nav-btn.right{ right: -1px; }
-  @media (max-width:420px){ .nav-btn{ width:32px; height:32px; font-size:14px } .nav-btn.left{ left:-2px } .nav-btn.right{ right:-2px } }
-
-
-/* quick links */
-.quick-links{display:flex;column-gap:15px;margin-top:20px;flex-wrap:wrap;}
-
-
-.section-title{color:#111; margin-bottom:8px}
-.card{background:#f7e7df;border:2px solid #246149;border-radius:12px;padding:12px;margin-bottom:10px}
-
-
-/* Only style the list inside External Links section */
-.ext-card { background: #e4ffd1; }
-
-.external-links .card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.external-links .card li {
-  margin: 13px 0;
-  position: relative;
-  padding-left: 25px;
-}
-
-/* Custom bullet (aligned properly) */
-.external-links .card li::before {
-  content: "➤";          /* change to →, ◆, ✓ if you want */
-  color: #0c54b3;
-  position: absolute;
-  left: 0;
-  top: 50%;              /* move to vertical center */
-  transform: translateY(-50%); 
-  font-size: 15px;
-}
-
-/* Link styling */
-.external-links .card a {
-  text-decoration: none;
-  color: #0c54b3;
-  font-size: 15.3px;
-  font-weight: 410;
-  transition: color 0.2s ease;
-}
-
-.external-links .card a:hover {
-  color: #b814c7;
-}
-
-
-.announcements h4 {
-  color: #294494;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 8px;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-
-.annBox {
-  height: 300px;
-  overflow: hidden;       
-  position: relative;
-  border-top: 2px solid #314987;
-  margin: 15px;
-}
-
-#annList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.scroll-wrapper {
-  display: flex;
-  flex-direction: column;
-  animation: scrollLoop 15s linear infinite;
-}
-
-#annList li:not(.spacer) {
-  padding: 10px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  transition: background 0.3s;
-  border: 1px solid #4363cc;
-  background: #cfd9fa;
-  border-radius: 8px;
-  transition: transform 0.2s ease;
-  color: #294494;
-}
-
-#annList li:hover {
-  background: #aabbff;
-}
-
-.spacer {
-  height: 200px;
-}
-
-#annList li .anon-body {
-  font-size: 14px;
-  font-weight: 400;
-  color: #333; 
-}
-
-@keyframes scrollLoop {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
-
-.muted {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #40454f;
-    font-size: 17px;
-    font-style: italic;
-    background: transparent;
-    border: none;
-    padding: 10px;
-}
-
-.muted.hidden {
-    display: none;
-}
-
-
-/* Main Upload Box */
-.upload.box {
-  background: #f7dff5;
-  border: 2px solid #246149;
-  border-radius: 12px;
-  padding: 12px;
-}
-
-/* Section Title */
-.upload-title {
-  color: #09697a;
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 12px;
-  margin-top: 8px;
-  text-align: center;
-}
-
-/* Layout for the 2 clickable boxes */
-.upload-options {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap; /* so it stacks on small screens */
-  margin: 15px;
-}
-
-/* Each clickable card */
-.upload-card {
-  flex: 1;
-  min-width: 180px;
-  padding: 10px;
-  border: 1px solid #09697a;
-  background: #cfd9fa;
-  border-radius: 8px;
-  text-decoration: none;
-  margin-bottom: 5px;
-  transition: transform 0.2s ease;
-}
-
-.upload-card:hover {
-  transform: scale(1.04);
-}
-
-
-/* Card title */
-.card-title {
-  color: #09697a;
-  font-size: 16px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-
-/* Card description */
-.card-desc {
-  font-size: 14px;
-  font-weight: 400;
-  color: #333;
-  margin-top: 1px;
-  margin-bottom: 4px;
-}
-
-
-/* responsive */
-@media (max-width:980px){
-  .hero{grid-template-columns:1fr}
-  .cards-grid{grid-template-columns:repeat(1,1fr)}
-  .nav{overflow:auto;padding-bottom:8px}
-  .brand-title{font-size:1rem}
-}
-
-
-/* ===== FOOTER ===== */
-footer {
-    background: #a7cfc9;
-    text-align: center;
-    padding-bottom: 2px;
-    margin-top: 5px;
-    color: #333;
-    font-size: 0.85rem;
-    line-height: 20px;
-    border-top: 1px solid #333;
-    border-radius: 20px 20px 0 0;
-}
-footer a {
-    color: #0c54b3;
-    text-decoration: none;
-}
-footer a:hover {
-    text-decoration: underline;
-}
-.hidden{display:none}
-
-
-@media (max-width: 768px) {
-    /* Hide scrollbar for Chrome, Safari and Edge */
-    *::-webkit-scrollbar {
-        display: none;
+      }
+      .banner img { height: 60px; }
+      .banner-text h1 { font-size: 0.94rem; }
+      .banner-text h2 { font-size: 0.88rem; }
+      .banner-text p { font-size: 0.78rem; }
     }
 
-    /* Hide scrollbar for Firefox */
-    * {
-        scrollbar-width: none;
+    /* ===== HEADER ===== */
+    header {
+      background: var(--primary-blue);
+      color: white;
+      padding: 4px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    /* Hide scrollbar for IE and old Edge */
-    * {
-        -ms-overflow-style: none;
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
     }
-}
 
+    .btn-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
 
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
 
+    .menu-btn span {
+      width: 22px;
+      height: 3px;
+      background: white;
+    }
 
+    /* ===== SIDE MENU ===== */
+    .side-menu {
+      position: fixed;
+      top: 1px;
+      right: -250px;
+      width: 250px;
+      height: 90vh;
+      background: #abe2ff;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      transition: 0.4s;
+      overflow-y: auto;
+      z-index: 1000;
+      border-radius: 5px 0 0 5px;
+      display: flex;
+      flex-direction: column;
+    }
 
+    .side-menu.active { right: 0; }
 
-[data-theme="dark"] {
+    .menu-header {
+      flex-shrink: 0;
+      height: 50px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 10px;
+    }
 
-color-scheme: dark;
-body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
-.banner { background: #0c0c36; }
-.banner-text h1 { color: #f7c2d9; }
-.banner-text h2 { color: #48c5f7; }
-.banner-text p { color: #cfd3fa; }
-.lead { font-weight: 400; color: #cfd3fa; }
-.page-title { color: #fff; }
-.announcements h4 { color: #f7c2d9; }
-#annList li:not(.spacer) { background: #191e4f; border: 1px solid #f7c2d9; color: #ddd; }
-#annList li:hover { background: rgba(247,194,217,0.2); } 
-#annList li .anon-body { color: #cfd3fa; }
-.muted { color: #9199a8; }
-.boxB { background:#000; }
-.section-title { color:white; }                            
-.card { background:#0f1724; }
-.upload.box { background: #0f1724; }
-footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
-.upload-title { color: #f7c2d9; }
-.upload-card { border: 1px solid #f7c2d9; background: #191e4f; }
-.card-title { color: #fff; }
-.card-desc { color: #cfd3fa; }
-.external-links .card li::before { color: #5d8cc9; }
-.external-links .card a { color: #5d8cc9; }
-footer a { color: #f7c2d9; }
-.external-links .card a:hover { color: #ffb6d3; }
-.external-links .card a { font-weight: 400; }
+    .head-close-btn {
+      font-size: 22px;
+      cursor: pointer;
+      color: #111;
+    }
 
-.sa-filter-btn { background: #222; color: #dddddd; }
-#saSearchInput { background: #353535; color: #ddd;}
-.sa-search-results { background: #222; }
-.sa-result-item { border: 1px solid #999; }
-.sa-message { color: #ddd; }
-.sa-result-item a { color: #ccc; }
-.sa-result-item a.sa-link { background: #3a3a3a; }
-.sa-result-item a.sa-link:hover { background: #555; }
-.sa-label { background: #555555; opacity: 1.0; }
-.sa-highlight { background: #222; color: #d5d5d5; }
-.sa-filter-popup { background: #454545; border: 1px solid #ccc; }
-.sa-filter-close { color: #ddd; }
-.sa-selector-selected { border: 1px solid #bbb; background: #393939; }
-.sa-selector-options { background: #393939; border: 1px solid #bbb; }
-.sa-selector-options div { border-bottom: 1px solid #bbb; }
-.sa-selector-options div:hover { background: #454545; }
-.sa-selector-selected { font-weight: 400; }
-.sa-selector-options { font-weight: 400; }
+    .menu-content { flex: 1; overflow-y: auto; }
 
-header{ background: #074085; }
-.side-menu{ background:#1e3759; }
-.side-links a{ color:#ddd;}
-.dropdown-btn{ color:#ddd; }
-.side-links a:hover, .dropdown-btn:hover {background:#2f4a70;}
-.submenu a{ color:#ddd;}
-.head-close-btn{ color: #ddd; }
-.side-links i { color: #aaa; }
-.sun { color: #444; }
-.moon { color: #bbb; }
-}
+    .side-links {
+      list-style: none;
+      padding: 0 10px;
+    }
 
-</style>
+    .side-links i { color: #444; width: 25px; }
+    .side-links li { border-bottom: 1px solid #888; }
+    .side-links li:last-child { border: none; }
+    .side-links a { text-decoration: none; color: #111; display: block; padding: 15px 10px; }
+    .side-links a:hover { background: #87d2fa; }
 
-  <script>
-    (function () {
-      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
-      const saved = localStorage.getItem("userThemePreference");
-      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark" : "light";
-      const theme = saved || system;
+    .dropdown-btn {
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10px;
+      color: #111;
+    }
 
-      // Apply data-theme immediately
-      document.documentElement.setAttribute("data-theme", theme);
+    .dropdown-btn .fa-chevron-down { margin-left: auto; }
+    .dropdown-btn:hover { background: #77cefc; }
 
-      // Update meta theme-color immediately
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.content = THEME_COLORS[theme];
-    })();
-  </script>
+    .submenu { display: none; padding-left: 20px; }
+    .submenu a { color: #111; border-top: 1px solid #888; }
+    .submenu.show { display: block; }
 
+    .head-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      display: none;
+      z-index: 999;
+    }
+
+    .head-overlay.show { display: block; }
+
+    @media (min-width: 769px) {
+      .side-menu { right: -350px; width: 350px; }
+      header { padding: 4px 30px; }
+      .btn-area { gap: 25px; }
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 65px;
+      height: 29px;
+      padding: 0 10px;
+      border-radius: 40px;
+      background: #bbb;
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .theme-toggle .icon { font-size: 18px; z-index: 2; position: absolute; }
+    .sun { color: #bbb; }
+    .moon { color: #444; }
+
+    .theme-toggle .thumb {
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #195ea8;
+      transition: transform 0.3s ease;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    #themeCheckbox:checked + .sun + .moon + .thumb { transform: translateX(33px); }
+    .theme-toggle .sun { left: 6px; }
+    .theme-toggle .moon { right: 9px; }
+
+    /* ===== HERO GRID ===== */
+    .hero { display: grid; grid-template-columns: 1fr 320px; gap: 18px; align-items: start; margin-bottom: 18px; }
+    .page-title { color: #111; margin: 25px 0 11px; font-size: 1.6rem; }
+    .lead { color: #323847; margin: 8px 0 14px; font-size: 1rem; font-weight: 410; text-align: justify; line-height: 1.6; }
+
+    /* ===== SEARCH BAR ===== */
+    .sa-search-wrapper { position: relative; margin: 0 auto; }
+    .sa-search-bar { display: flex; align-items: center; }
+
+    /* Filter button */
+    .sa-filter-btn {
+      background: var(--filter-light);
+      color: var(--text-light);
+      border: 1px solid var(--border-light);
+      width: 37px;
+      height: 37px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    [data-theme="dark"] .sa-filter-btn { background: var(--filter-dark); color: #ddd; border-color: var(--border-dark); }
+
+    .sa-filter-btn:hover { background: #ccc; }
+    [data-theme="dark"] .sa-filter-btn:hover { background: #555; }
+
+    /* Space between filter and input */
+    .sa-search-bar input { margin-left: 2px; }
+
+    /* Input */
+    #saSearchInput {
+      flex: 1;
+      height: 35px;
+      border: 1px solid var(--border-light);
+      border-right: none;
+      padding: 0 12px;
+      font-size: 15px;
+      outline: none;
+      border-radius: 6px 0 0 6px;
+      background: var(--filter-light);
+      color: var(--text-light);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] #saSearchInput { background: var(--filter-dark); border-color: var(--border-dark); color: #ddd; }
+
+    #saSearchInput:focus { background: #fff; color: #111; }
+
+    /* Search icon (right side) */
+    .sa-search-icon {
+      width: 37px;
+      height: 37px;
+      background: var(--primary-blue);
+      color: white;
+      border-radius: 0 6px 6px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* No space between input and search icon */
+    .sa-search-bar input + .sa-search-icon { margin-left: 0; }
+
+    /* ===== SEARCH RESULTS ===== */
+    .sa-search-results {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      right: 0;
+      background: var(--filter-light);
+      border: 1px solid var(--border-light);
+      max-height: 400px;
+      min-height: 200px;
+      overflow-y: auto;
+      z-index: 50;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] .sa-search-results { background: var(--filter-dark); border-color: var(--border-dark); }
+
+    .sa-result-item {
+      border: 1px solid var(--border-light);
+      margin: 12px 6px;
+      border-radius: 5px;
+      padding: 0;
+      overflow: hidden;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] .sa-result-item { border-color: var(--border-dark); }
+
+    .sa-result-item a { text-decoration: none; color: var(--text-light); font-weight: 405; display: block; width: 100%; height: 100%; padding: 8px; box-sizing: border-box; background: var(--card-light); }
+    
+    [data-theme="dark"] .sa-result-item a { background: var(--card-dark); color: var(--text-light); }
+
+    .sa-result-item a.sa-link:hover { background: #bfd; cursor: pointer; }
+    [data-theme="dark"] .sa-result-item a.sa-link:hover { background: #454545; }
+
+    /* Labels */
+    .sa-labels { margin-top: 7px; display: flex; gap: 7px; flex-wrap: wrap; }
+    .sa-label { font-size: 12px; padding: 1px 3px; background: #bbb; opacity: 0.85; border-radius: 3px; color: var(--text-light); }
+    [data-theme="dark"] .sa-label { background: #555555; opacity: 1.0; }
+
+    .sa-highlight { background: var(--filter-light); color: var(--text-light); }
+
+    /* ===== FILTER POPUP ===== */
+    .sa-filter-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      z-index: 5000;
+    }
+
+    .sa-filter-popup {
+      background: var(--filter-light);
+      width: 300px;
+      padding: 10px;
+      margin: 100px auto;
+      border-radius: 7px;
+      border: 1px solid var(--border-light);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] .sa-filter-popup { background: var(--filter-dark); border-color: var(--border-dark); }
+
+    @media (min-width:769px){ .sa-filter-popup { width:350px; } }
+
+    .sa-filter-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-weight: 600;
+      width: 100%;
+    }
+
+    .sa-filter-close {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    /* ===== CUSTOM SELECTOR ===== */
+    .sa-selector {
+      position: relative;
+      margin-bottom: 15px;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .sa-selector-selected {
+      border: 1px solid var(--border-light);
+      border-radius: 5px;
+      padding: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      background: var(--filter-light);
+      font-weight: 500;
+      color: var(--text-light);
+    }
+
+    [data-theme="dark"] .sa-selector-selected { border-color: var(--border-dark); background: var(--filter-dark); color: #ddd; }
+
+    .sa-selector-options {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      background: var(--filter-light);
+      border: 1px solid var(--border-light);
+      z-index: 10;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+
+    [data-theme="dark"] .sa-selector-options { background: var(--filter-dark); border-color: var(--border-dark); }
+
+    .sa-selector-options div {
+      padding: 6px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    [data-theme="dark"] .sa-selector-options div { border-color: var(--border-dark); }
+
+    .sa-selector-options div:hover { background: #bfd; }
+    [data-theme="dark"] .sa-selector-options div:hover { background: #454545; }
+
+    /* Active filter color */
+    .sa-filter-active { color: #059e21 !important; }
+
+    .sa-selector-options div:last-child { border-bottom: none; }
+    #saSelectorSecondary { display: none; }
+
+    /* spacing: mobile 10px each side, desktop 30px each side */
+    .box-wrapper { width:100%; display: flex; justify-content: center; }
+    .boxB {
+      width: calc(100vw - 60px);
+      max-width: 1400px;
+      aspect-ratio: 16/7;
+      border: 4px solid #195b5e;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background: var(--filter-light);
+      transition: background 0.3s;
+    }
+
+    @media (min-width:769px){ .boxB{ width: calc(100vw - 430px); border-width:3px; } }
+    @media (min-width:1200px){ .boxB{ width: calc(100vw - 900px); border-width:3px; } }
+
+    @media (max-width:768px){ .boxB{ border-width:2px; border-radius:14px; } }
+
+    /* scroller */
+    .scroller{
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      gap: 14px;
+      padding-inline: clamp(16px, 8vw, 120px);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .scroller::-webkit-scrollbar { display: none; }
+
+    /* cards (boxA) */
+    .cards {
+      flex: 0 0 calc(78% - 14px);
+      aspect-ratio: 5/3.3;
+      border: 3px solid var(--border-light);
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      text-decoration: none;
+      color: var(--text-light);
+      background-size: cover;
+      background-position: center;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      filter: contrast(0.8);
+      transform-origin: center center;
+      transform: scale(.88);
+      opacity: .68;
+      transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    @media (min-width:769px){
+      .cards { flex: 0 0 calc(95% - 14px); transform: scale(.83); aspect-ratio: 5/3.15; }
+    }
+    @media (max-width:768px){ .cards { border-width:2px; border-radius:12px; } }
+
+    /* center cards big & clickable */
+    .cards.is-center{
+      transform: scale(1);
+      opacity: 1;
+      box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .cards .title{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      padding: 1px;
+      border-radius: 10px;
+      background: rgba(0,0,0,.35);
+      text-shadow: 0 0 2px #000, 0 0 4px #000, 0 0 8px #000, 2px 2px 6px #000;
+      font-weight: 700;
+      pointer-events: none;
+      text-align: center;
+      z-index: 2;
+      font-size: 1.1rem;
+      width: 85%;
+      max-width: 90%;
+    }
+
+    @media (min-width:769px) { .cards .title{ font-weight: 700; font-size: 1.2rem; } }
+
+    /* nav buttons */
+    .nav-btn{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.65);
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 30;
+      box-shadow: 0 6px 18px rgba(0,0,0,.4);
+    }
+
+    .nav-btn.left{ left: -1px; }
+    .nav-btn.right{ right: -1px; }
+
+    @media (max-width:420px){ .nav-btn{ width:32px; height:32px; font-size:14px } .nav-btn.left{ left:-2px } .nav-btn.right{ right:-2px } }
+
+    /* quick links */
+    .quick-links{display: flex; column-gap: 15px; flex-wrap: wrap; }
+
+    /* section title */
+    .section-title { color: #111; margin-bottom: 8px; }
+
+    /* card */
+    .card { background: var(--card-light); border: 2px solid var(--border-light); border-radius: 12px; padding: 12px; margin-bottom: 10px; transition: background 0.3s, border-color 0.3s; }
+    [data-theme="dark"] .card { background: var(--card-dark); border-color: var(--border-dark); }
+
+    .external-links .card { background: #e4ffd1; }
+
+    /* Upload boxes */
+    .upload.box { background: var(--card-light); border: 2px solid var(--border-light); border-radius: 12px; padding: 12px; transition: background 0.3s, border-color 0.3s; }
+    [data-theme="dark"] .upload.box { background: var(--card-dark); border-color: var(--border-dark); }
+
+    .upload-title { color: var(--primary-blue); font-size: 18px; font-weight: bold; margin-bottom: 12px; margin-top: 8px; text-align: center; }
+
+    .upload-options { display: flex; gap: 12px; flex-wrap: wrap; margin: 15px; }
+    .upload-card { flex: 1; min-width: 180px; padding: 10px; border: 1px solid var(--border-light); background: var(--filter-light); border-radius: 8px; text-decoration: none; margin-bottom: 5px; transition: transform 0.2s ease; }
+    [data-theme="dark"] .upload-card { border-color: var(--border-dark); background: var(--filter-dark); color: #ddd; }
+    .upload-card:hover { transform: scale(1.04); }
+
+    .card-title { color: var(--primary-blue); font-size: 16px; margin-top: 4px; margin-bottom: 4px; }
+    [data-theme="dark"] .card-title { color: #f7c2d9; }
+
+    .card-desc { font-size: 14px; font-weight: 400; color: var(--text-light); margin-top: 1px; margin-bottom: 4px; }
+    [data-theme="dark"] .card-desc { color: #cfd3fa; }
+
+    /* Only style the list inside External Links section */
+    .ext-card { background: #e4ffd1; }
+
+    .external-links .card ul { list-style: none; padding: 0; margin: 0; }
+    .external-links .card li { margin: 13px 0; position: relative; padding-left: 25px; }
+
+    /* Custom bullet */
+    .external-links .card li::before {
+      content: "➤";
+      color: var(--primary-blue);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+    }
+
+    .external-links .card a { text-decoration: none; color: var(--primary-blue); font-size: 15.3px; font-weight: 410; transition: color 0.2s ease; }
+    .external-links .card a:hover { color: var(--accent-red); }
+
+    /* announcements */
+    .announcements h4 { color: var(--primary-blue); font-size: 18px; font-weight: bold; margin-top: 8px; margin-bottom: 15px; text-align: center; }
+
+    .annBox { height: 300px; overflow: hidden; position: relative; border-top: 2px solid var(--border-light); margin: 15px; transition: border-color 0.3s; }
+    [data-theme="dark"] .annBox { border-color: var(--border-dark); }
+
+    #annList { list-style: none; margin: 0; padding: 0; }
+
+    .scroll-wrapper {
+      display: flex;
+      flex-direction: column;
+      animation: scrollLoop 15s linear infinite;
+    }
+
+    #annList li:not(.spacer) {
+      padding: 10px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+      border: 1px solid var(--border-light);
+      background: var(--card-light);
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+      color: var(--text-light);
+    }
+
+    [data-theme="dark"] #annList li:not(.spacer) { border-color: var(--border-dark); background: var(--card-dark); }
+
+    #annList li:hover { background: #bfd; }
+    [data-theme="dark"] #annList li:hover { background: rgba(247,194,217,0.2); }
+
+    .spacer { height: 200px; }
+
+    #annList li .anon-body { font-size: 14px; font-weight: 400; color: var(--text-light); }
+
+    @keyframes scrollLoop { 0%   { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+
+    .muted {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 17px;
+      font-style: italic;
+      background: transparent;
+      border: none;
+      padding: 10px;
+    }
+
+    .muted.hidden { display: none; }
+
+    /* Footer */
+    footer {
+      background: var(--card-light);
+      text-align: center;
+      padding-bottom: 2px;
+      margin-top: 5px;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      line-height: 20px;
+      border-top: 1px solid var(--border-light);
+      border-radius: 20px 20px 0 0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] footer { background: var(--card-dark); border-color: var(--border-dark); color: #aaa; }
+
+    footer a { color: var(--primary-blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    .hidden{ display: none; }
+
+    @media (max-width: 768px) {
+      *::-webkit-scrollbar { display: none; }
+      * { scrollbar-width: none; }
+      * { -ms-overflow-style: none; }
+    }
+
+    /* ===== QUICK LINKS/SECTIONS ===== */
+    .quick-links { display: flex; column-gap: 15px; flex-wrap: wrap; }
+
+    /* Study Material sections */
+    .study-material-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+
+    .study-card {
+      background: var(--card-light);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 20px;
+      text-decoration: none;
+      color: var(--text-light);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] .study-card { background: var(--card-dark); border-color: var(--border-dark); color: #ddd; }
+    .study-card:hover { background: #e8eef5; }
+    [data-theme="dark"] .study-card:hover { background: #2a2e42; }
+
+    .study-card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
+    .study-card p { font-size: 0.9rem; margin: 0; }
+
+    /* Cards grid for browse results */
+    .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .result-card { 
+      background: var(--card-light); 
+      border-radius: 8px; 
+      padding: 20px; 
+      text-decoration: none; 
+      color: var(--text-light);
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    [data-theme="dark"] .result-card { background: var(--card-dark); color: #ddd; }
+    .result-card:hover { transform: translateY(-4px); background: #e8eef5; }
+    [data-theme="dark"] .result-card:hover { background: #2a2e42; }
+
+    .result-card h3 { margin: 0 0 8px 0; font-size: 1.1rem; }
+    .result-card .meta { font-size: 0.85rem; color: #888; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; }
+    }
+  </style>
 </head>
+
 <body class="bg-app">
-    <div class="banner">
-<img src="/src/college-logo.png" alt="College Logo">
 
-      <div class="banner-text">
-          <h1>SUREN DAS COLLEGE (AUTONOMOUS)</h1>
-          <h2>Hajo, Kamrup, Assam, Pin - 781102</h2>
-          <p>Department of Computer Science & Application</p>
-       </div>
+  <!-- ===== BANNER (Home Page Only) ===== -->
+  <div class="banner">
+    <img src="/src/college-logo.png" alt="College Logo">
+    <div class="banner-text">
+      <h1>SUREN DAS COLLEGE (AUTONOMOUS)</h1>
+      <h2>Hajo, Kamrup, Assam, Pin - 781102</h2>
+      <p>Department of Computer Science & Application</p>
     </div>
- 
+  </div>
 
-<header>
-<div class="btn-area">
-<a href="#" id="shareBtn">
-    <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;" >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="22"
-             height="22"
-             viewBox="2 0 23 23"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="btn-area">
+      <a href="#" id="shareBtn">
+        <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="2 0 23 23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="18" cy="5" r="3"></circle>
             <circle cx="6" cy="12" r="3"></circle>
             <circle cx="18" cy="19" r="3"></circle>
             <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-    </button>
-</a>
+          </svg>
+        </button>
+      </a>
 
-<div class="theme-toggle-wrapper">
-  <label
-    for="themeCheckbox"
-    id="theme-toggle"
-    class="theme-toggle"
-    aria-label="Toggle Theme">
-    <input
-      type="checkbox"
-      id="themeCheckbox"
-      aria-label="Toggle dark mode"
-      hidden
-    >
-<span class="icon sun">
-    <i class="fa-solid fa-sun"></i>
-</span>
+      <div class="theme-toggle-wrapper">
+        <label for="themeCheckbox" id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+          <input type="checkbox" id="themeCheckbox" aria-label="Toggle dark mode" hidden>
+          <span class="icon sun"><i class="fa-solid fa-sun"></i></span>
+          <span class="icon moon"><i class="fa-solid fa-moon"></i></span>
+          <span class="thumb"></span>
+        </label>
+      </div>
+    </div>
 
-<span class="icon moon">
-    <i class="fa-solid fa-moon"></i>
-</span>
-    <span class="thumb"></span>
-  </label>
-</div>
-</div>
     <div class="menu-btn" onclick="openMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-</header>
+  </header>
 
-<div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
-<div class="side-menu" id="sideMenu">
-<div class="menu-header">
-        <span class="head-close-btn" onclick="closeMenu()">✕</span>
+  <!-- ===== SIDE MENU ===== -->
+  <div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <span class="head-close-btn" onclick="closeMenu()">✕</span>
     </div>
-<div class="menu-content">
+    <div class="menu-content">
 
-<ul class="side-links">
-    <li>
-        <a href="#">
-            <i class="fa-solid fa-house"></i> Home
-        </a>
-    </li>
-
-    <li>
-        <a href="study-material.html">
-            <i class="fa-solid fa-book"></i> Study Material
-        </a>
-    </li>
-
-    <li>
-        <a href="links.html">
-            <i class="fa-solid fa-link"></i> External Source
-        </a>
-    </li>
-
-    <li>
-        <a href="courses.html">
-            <i class="fa-solid fa-graduation-cap"></i> Courses
-        </a>
-    </li>
-
-    <li>
-        <a href="library-opac.html">
-            <i class="fa-solid fa-book-open"></i> Library OPAC
-        </a>
-    </li>
-
-    <li>
+    <ul class="side-links">
+      <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="study-material.html"><i class="fa-solid fa-book"></i> Study Material</a></li>
+      <li><a href="links.html"><i class="fa-solid fa-link"></i> External Source</a></li>
+      <li><a href="courses.html"><i class="fa-solid fa-graduation-cap"></i> Courses</a></li>
+      <li><a href="library-opac.html"><i class="fa-solid fa-book-open"></i> Library OPAC</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleUploads()">
-            <i class="fa-solid fa-upload"></i> Uploads
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-upload"></i> Uploads
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="submenu" id="uploadsMenu">
-            <a href="upload.html#resources">
-                <i class="fa-solid fa-file-lines"></i> Upload as Document
-            </a>
-
-            <a href="upload.html#images">
-                <i class="fa-solid fa-camera"></i> Upload as Image
-            </a>
+          <a href="upload.html#resources"><i class="fa-solid fa-file-lines"></i> Upload as Document</a>
+          <a href="upload.html#images"><i class="fa-solid fa-camera"></i> Upload as Image</a>
         </div>
-    </li>
-
-    <li>
-        <a href="request-course.html">
-            <i class="fa-solid fa-pen-to-square"></i> Request Subject
-        </a>
-    </li>
-
-    <li>
-        <a href="feedback.html">
-            <i class="fa-solid fa-comment"></i> Feedback
-        </a>
-    </li>
-
-    <li>
+      </li>
+      <li><a href="request-course.html"><i class="fa-solid fa-pen-to-square"></i> Request Subject</a></li>
+      <li><a href="feedback.html"><i class="fa-solid fa-comment"></i> Feedback</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleAbout()">
-            <i class="fa-solid fa-circle-info"></i> About
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-circle-info"></i> About
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
-
         <div class="submenu" id="aboutMenu">
-            <a href="about.html#about-college">
-                <i class="fa-solid fa-building-columns"></i> About College
-            </a>
-
-            <a href="about.html#cs-department">
-                <i class="fa-solid fa-computer"></i> CS Department
-            </a>
-
-            <a href="about.html#about-website">
-                <i class="fa-solid fa-globe"></i> About this Website
-            </a>
-
-            <a href="about.html#about-admin">
-                <i class="fa-solid fa-user-tie"></i> Admin
-            </a>
+          <a href="#about-college"><i class="fa-solid fa-building-columns"></i> About College</a>
+          <a href="#cs-department"><i class="fa-solid fa-computer"></i> CS Department</a>
+          <a href="#about-website"><i class="fa-solid fa-globe"></i> About this Website</a>
+          <a href="#about-admin"><i class="fa-solid fa-user-tie"></i> Admin</a>
         </div>
-    </li>
-</ul>
+      </li>
+    </ul>
 
-
+    </div>
   </div>
-</div>
 
-
+  <!-- ===== MAIN CONTENT ===== -->
   <main id="main" class="container" role="main">
+
+    <!-- ===== HOME PAGE HERO SECTION ===== -->
     <section class="hero">
       <div class="hero-left">
 
-<!-- ================= SEARCH AREA ================= -->
-<div class="sa-search-wrapper">
-  <div class="sa-search-bar">
-    <!-- Filter Button -->
-<button class="sa-filter-btn" id="saFilterBtn">
-  <svg viewBox="0 0 22 20" width="22" height="22">
-    <path 
-      d="M20 0H0l8 9.46V16l4 2V9.46z"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
-</button>
-    <!-- Search Input -->
-    <input type="text" id="saSearchInput" placeholder="Search..." autocomplete="off">
-    <!-- Search Icon (Design only) -->
-
-<div class="sa-search-icon">
-  <svg viewBox="0 0 48 48" width="22" height="22">
-    <path
-      d="M46.599 40.236L36.054 29.691C37.89 26.718 39 23.25 39 19.5 39 8.73 30.27 0 19.5 0S0 8.73 0 19.5 8.73 39 19.5 39c3.75 0 7.218-1.11 10.188-2.943l10.548 10.545a4.501 4.501 0 0 0 6.363-6.366zM19.5 33C12.045 33 6 26.955 6 19.5S12.045 6 19.5 6 33 12.045 33 19.5 26.955 33 19.5 33z"
-      fill="currentColor"
-    />
-  </svg>
-</div>
-
-  </div>
-  <!-- Search Result -->
-  <div class="sa-search-results" id="saSearchResults" style="display:none;"></div>
-</div>
-<!-- ================= FILTER POPUP ================= -->
-<div class="sa-filter-overlay" id="saFilterOverlay">
-  <div class="sa-filter-popup">
-    <div class="sa-filter-header">
-      <span>Filter</span>
-      <button class="sa-filter-close" id="saFilterClose">✕</button>
-    </div>
-    <!-- First Selector -->
-    <div class="sa-selector" id="saSelectorPrimary">
-      <div class="sa-selector-selected">All</div>
-      <div class="sa-selector-options">
-        <div data-value="all">All</div>
-        <div data-value="pages">Pages</div>
-        <div data-value="semester">Semester</div>
-        <div data-value="course">Course</div>
-        <div data-value="type">Type</div>
-      </div>
-    </div>
-    <!-- Second Selector -->
-    <div class="sa-selector" id="saSelectorSecondary" >
-      <div class="sa-selector-selected">All</div>
-      <div class="sa-selector-options"></div>
-    </div>
-  </div>
-</div>
+        <!-- ================= SEARCH AREA ================= -->
+        <div class="sa-search-wrapper">
+          <div class="sa-search-bar">
+            <!-- Filter Button -->
+            <button class="sa-filter-btn" id="saFilterBtn">
+              <svg viewBox="0 0 22 20" width="22" height="22">
+                <path d="M20 0H0l8 9.46V16l4 2V9.46z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <!-- Search Input -->
+            <input type="text" id="saSearchInput" placeholder="Search..." autocomplete="off">
+            <!-- Search Icon (Design only) -->
+            <div class="sa-search-icon">
+              <svg viewBox="0 0 48 48" width="22" height="22">
+                <path d="M46.599 40.236L36.054 29.691C37.89 26.718 39 23.25 39 19.5 39 8.73 30.27 0 19.5 0S0 8.73 0 19.5 8.73 39 19.5 39c3.75 0 7.218-1.11 10.188-2.943l10.548 10.545a4.501 4.501 0 0 0 6.363-6.366zM19.5 33C12.045 33 6 26.955 6 19.5S12.045 6 19.5 6 33 12.045 33 19.5 26.955 33 19.5 33z" fill="currentColor" />
+              </svg>
+            </div>
+          </div>
+          <!-- Search Result -->
+          <div class="sa-search-results" id="saSearchResults" style="display:none;"></div>
+        </div>
+        <!-- ================= FILTER POPUP ================= -->
+        <div class="sa-filter-overlay" id="saFilterOverlay">
+          <div class="sa-filter-popup">
+            <div class="sa-filter-header">
+              <span>Filter</span>
+              <button class="sa-filter-close" id="saFilterClose">✕</button>
+            </div>
+            <!-- First Selector -->
+            <div class="sa-selector" id="saSelectorPrimary">
+              <div class="sa-selector-selected">All</div>
+              <div class="sa-selector-options">
+                <div data-value="all">All</div>
+                <div data-value="semester">Semester</div>
+                <div data-value="course">Course</div>
+                <!-- Removed: pages and type -->
+              </div>
+            </div>
+            <!-- Second Selector -->
+            <div class="sa-selector" id="saSelectorSecondary">
+              <div class="sa-selector-selected">All</div>
+              <div class="sa-selector-options"></div>
+            </div>
+          </div>
+        </div>
 
         <h2 class="page-title">Welcome to Suren Das College - Computer Science Department</h2>
-
-       <p class="lead">The Department of Computer Science is a place for learning, exploring, and growing with technology. Through this website, students can access class notes, study materials, and other resources anytime. More than just a collection of resources, the site is built to guide students step by step, making it easier for them to understand topics and improve their skills beyond the classroom. Students can also contribute by sharing or uploading notes and resources, making learning simple, practical, and more effective for everyone.</p>
+        <p class="lead">The Department of Computer Science is a place for learning, exploring, and growing with technology. Through this website, students can access class notes, study materials, and other resources anytime. More than just a collection of resources, the site is built to guide students step by step, making it easier for them to understand topics and improve their skills beyond the classroom. Students can also contribute by sharing or uploading notes and resources, making learning simple, practical, and more effective for everyone.</p>
 
         <p class="lead">While the main focus is on Computer Science, many of the study resources and materials available here can also support students from other departments. By offering useful notes and guidance, the site encourages learning that can benefit anyone interested in improving their knowledge.</p>
 
-   <h3>Pick-up Course for 3rd sem</h3>
+        <h3>Pick-up Course for 3rd sem</h3>
 
-       <div class="box-wrapper">
-    <div class="boxB" id="boxB">
-      <button class="nav-btn left" id="btnPrev" aria-label="Previous">&#10094;</button>   
-       <div class="scroller" id="scroller">
+        <div class="box-wrapper">
+          <div class="boxB" id="boxB">
+            <button class="nav-btn left" id="btnPrev" aria-label="Previous">&#10094;</button>
+            <div class="scroller" id="scroller">
 
-<a class="cards" data-index="0" href="sem3/coa-bca.html" style="background-image:url('/src/coa.webp')"><span class="title">Computer Organisation Architecture (BCA)</span></a>
-<a class="cards" data-index="1" href="sem3/oop-bca.html" style="background-image:url('/src/oop.webp')"><span class="title">Object Oriented Programming C++ (BCA)</span></a>
-<a class="cards" data-index="2" href="sem3/math2-bca.html" style="background-image:url('/src/maths2.webp')"><span class="title">Mathematics-II (BCA)</span></a>
-<a class="cards" data-index="3" href="sem3/data-analysis-social-sec.html" style="background-image:url('/src/sec3.webp')"><span class="title">Data Analysis Social Science (SEC)</span></a>
-<a class="cards" data-index="4" href="sem3/natural-resource-management-vac.html" style="background-image:url('/src/vac3.webp')"><span class="title">Natural Resource Management (VAC)</span></a>
-<a class="cards" data-index="5" href="sem3/mass-media-studies-mdc.html" style="background-image:url('/src/mdc3.webp')"><span class="title">Mass Media Studies (MDC)</span></a>
+            <a class="cards" data-index="0" href="sem3/coa-bca.html" style="background-image:url('/src/coa.webp')"><span class="title">Computer Organisation Architecture (BCA)</span></a>
+            <a class="cards" data-index="1" href="sem3/oop-bca.html" style="background-image:url('/src/oop.webp')"><span class="title">Object Oriented Programming C++ (BCA)</span></a>
+            <a class="cards" data-index="2" href="sem3/math2-bca.html" style="background-image:url('/src/maths2.webp')"><span class="title">Mathematics-II (BCA)</span></a>
+            <a class="cards" data-index="3" href="sem3/data-analysis-social-sec.html" style="background-image:url('/src/sec3.webp')"><span class="title">Data Analysis Social Science (SEC)</span></a>
+            <a class="cards" data-index="4" href="sem3/natural-resource-management-vac.html" style="background-image:url('/src/vac3.webp')"><span class="title">Natural Resource Management (VAC)</span></a>
+            <a class="cards" data-index="5" href="sem3/mass-media-studies-mdc.html" style="background-image:url('/src/mdc3.webp')"><span class="title">Mass Media Studies (MDC)</span></a>
 
+            </div>
+            <button class="nav-btn right" id="btnNext" aria-label="Next">&#10095;</button>
+          </div>
+        </div>
+
+        <aside class="hero-right" aria-label="Latest announcements">
+          <div class="announcements card">
+            <h4>Latest Updates 🚀</h4>
+            <div class="annBox">
+              <div id="annStatus" class="muted">Loading announcements...</div>
+              <ul id="annList" class="list-compact" aria-live="polite"></ul>
+            </div>
+          </div>
+
+          <div class="upload box">
+            <h2 class="upload-title">Uploads 📤</h2>
+            <div class="upload-options">
+
+              <!-- Box 2 -->
+              <a href="upload.html#resources" class="upload-card">
+                <h3 class="card-title">Upload study resources</h3>
+                <p class="card-desc">Share documents, ebook, papers or study materials here.</p>
+              </a>
+
+              <!-- Box 1 -->
+              <a href="upload.html#images" class="upload-card">
+                <h3 class="card-title">Upload as Image</h3>
+                <p class="card-desc">Easily upload or share study materials as image version.</p>
+              </a>
+
+            </div>
+          </div>
+        </aside>
       </div>
-      <button class="nav-btn right" id="btnNext" aria-label="Next">&#10095;</button>
-    </div>
-  </div>
- </div>
+    </section>
 
-<aside class="hero-right" aria-label="Latest announcements">
-  <div class="announcements card">
-    <h4>Latest Updates 🚀</h4>
-    <div class="annBox">
-      <div id="annStatus" class="muted">
-        Loading announcements...
-      </div>
-      <ul id="annList" class="list-compact" aria-live="polite"></ul>
-    </div>
-  </div>
-
-  <div class="upload box">
-    <h2 class="upload-title">Uploads 📤</h2>
-    <div class="upload-options">
-      
-      <!-- Box 2 -->
-      <a href="upload.html#resources" class="upload-card">
-        <h3 class="card-title">Upload study resources</h3>
-        <p class="card-desc">Share documents, ebook, papers or study materials here.</p>
-      </a>
-
-      <!-- Box 1 -->
-      <a href="upload.html#images" class="upload-card">
-        <h3 class="card-title">Upload as Image</h3>
-        <p class="card-desc">Easily upload or share study materials as image version.</p>
-      </a>
-
-    </div>
-  </div>
- </aside>
-</section>
-
- <section class="section external-links">
+    <!-- ===== EXTERNAL LINKS ===== -->
+    <section class="section external-links">
       <h3 class="section-title">External Links 🔗</h3>
       <div class="card ext-card">
         <ul>
@@ -1288,125 +1006,22 @@ header{ background: #074085; }
           <li><a href="links.html">External Digital Sources</a></li>
         </ul>
       </div>
- </section>
+    </section>
 
-</main>
+  </main>
 
-<footer>
+  <!-- ===== FOOTER ===== -->
+  <footer>
     <p>
-        © 2026 Student Community Portal - Suren Das College  
-   <br>
-        <a href="/about.html">About Us</a>
+      © 2026 Student Community Portal - Suren Das College
+      <br>
+      <a href="about.html">About Us</a>
     </p>
-</footer>
+  </footer>
 
-
-<script>
-(function () {
-  const STORAGE_KEY = "userThemePreference";
-  const THEME_COLORS = {
-    light: "#ffffff",
-    dark:  "#1a1a2e"
-  };
-  function getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
-  function getSavedTheme() {
-    return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
-  }
-  function updateMetaThemeColor(theme) {
-    let metaTag = document.querySelector('meta[name="theme-color"]');
-    if (!metaTag) {
-      metaTag = document.createElement("meta");
-      metaTag.name = "theme-color";
-      document.head.appendChild(metaTag);
-    }
-    metaTag.content = THEME_COLORS[theme];
-  }
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    updateMetaThemeColor(theme);
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.checked = theme === "dark";
-    }
-  }
-  function setTheme(theme) {
-    localStorage.setItem(STORAGE_KEY, theme);
-    applyTheme(theme);
-  }
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute("data-theme");
-    setTheme(current === "dark" ? "light" : "dark");
-  }
-  function watchSystemTheme() {
-    window.matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => {
-        if (!localStorage.getItem(STORAGE_KEY)) {
-          applyTheme(e.matches ? "dark" : "light");
-        }
-      });
-  }
-  function watchStorageChanges() {
-    window.addEventListener("storage", (e) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        applyTheme(e.newValue);
-      }
-    });
-  }
-  if (document.head) {
-    applyTheme(getSavedTheme());
-  }
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    applyTheme(getSavedTheme());
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.addEventListener("change", toggleTheme);
-    }
-  });
-} else {
-  applyTheme(getSavedTheme());
-  const checkbox = document.getElementById("themeCheckbox");
-  if (checkbox) {
-    checkbox.addEventListener("change", toggleTheme);
-  }
-}
-  watchSystemTheme();
-  watchStorageChanges();
-})();
-
-
-function openMenu(){
-    document.getElementById("sideMenu").classList.add("active");
-    document.getElementById("headOverlay").classList.add("show");
-}
-function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("active");
-    document.getElementById("headOverlay").classList.remove("show");
-}
-function toggleUploads(){
-    document.getElementById("uploadsMenu").classList.toggle("show");
-}
-function toggleAbout(){
-    document.getElementById("aboutMenu").classList.toggle("show");
-}
-document.querySelectorAll('.side-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        closeMenu();
-    });
-});
-window.addEventListener('pageshow', () => {
-    closeMenu();
-});             
-</script>
-
-<script>
-document.getElementById("shareBtn")?.addEventListener(
-  "click",
-  async (event) => {
+  <!-- ===== SHARE BUTTON ===== -->
+  <script>
+  document.getElementById("shareBtn")?.addEventListener("click", async (event) => {
     event.preventDefault();
     if (navigator.share) {
       try {
@@ -1421,682 +1036,265 @@ document.getElementById("shareBtn")?.addEventListener(
     } else {
       alert("Sharing not supported in this browser.");
     }
-  }
-);
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
-
-<script>
-(function(){
-  // device detection (mobile vs desktop)
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  const isMobile = /android|ipad|iphone|mobile/i.test(ua);
-  const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-  const device = (!isMobile || width >= 769) ? 'desktop' : 'mobile';
-  document.body.dataset.device = device;
-
-async function loadAnnouncements() {
-    const status = document.getElementById('annStatus');
-
-    try {
-        const response = await fetch('/api/announcements');
-        const result = await response.json();
-
-        if (!result.success) {
-            throw new Error(result.error || 'Failed to load announcements');
-        }
-
-        renderAnnouncements(result.announcements);
-    } catch (err) {
-        console.error(err);
-        status.textContent = 'Failed to load announcements.';
-    }
-}
-
-
-function renderAnnouncements(announcements) {
-    const annList = document.getElementById('annList');
-    const status = document.getElementById('annStatus');
-
-    if (!annList) return;
-
-    if (!announcements.length) {
-        status.textContent = 'No announcements available.';
-        return;
-    }
-
-    // Hide status message
-    status.classList.add('hidden');
-
-    const items = announcements.map(a => `
-        <li class="card" data-url="${a.url}">
-            <strong>${a.title}</strong>
-            <div class="anon-body">${a.body}</div>
-        </li>
-    `).join('');
-
-    const itemsWithSpacer = items + '<li class="spacer"></li>';
-
-    annList.innerHTML = `
-        <div class="scroll-wrapper">
-            ${itemsWithSpacer}
-            ${itemsWithSpacer}
-        </div>
-    `;
-
-    annList.querySelectorAll('li.card').forEach(card => {
-        card.addEventListener('click', () => {
-            let url = card.dataset.url;
-
-            // Google Drive file link
-            if (url && url.includes('drive.google.com')) {
-                const match = url.match(/\/file\/d\/([^\/?#]+)/);
-
-                if (match && match[1]) {
-                    const id = match[1];
-
-                    const downloadUrl =
-                        `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`;
-
-                    window.open(downloadUrl, '_blank');
-                    return;
-                }
-            }
-
-            // Original behavior
-            window.location.href = url;
-        });
-    });
-}
-
-loadAnnouncements();
-})();
-
-
-(() => {
-  const scroller = document.getElementById('scroller');
-  const btnPrev = document.getElementById('btnPrev');
-  const btnNext = document.getElementById('btnNext');
-
-  const originalSet = Array.from(scroller.querySelectorAll('.cards'));
-  const n = originalSet.length;
-  if (n === 0) return;
-
-  const cardssFrag = document.createDocumentFragment();
-
-  function appendCopy(type) {
-    for (let i = 0; i < n; i++) {
-      const source = originalSet[i];
-      const clone = source.cloneNode(true);
-      clone.dataset.copy = type;
-      clone.setAttribute('data-index', String(i));
-      cardssFrag.appendChild(clone);
-    }
-  }
-
-  appendCopy('left');
-  appendCopy('center');
-  appendCopy('right');
-
-  scroller.innerHTML = '';
-  scroller.appendChild(cardssFrag);
-
-  const allCards = Array.from(scroller.querySelectorAll('.cards'));
-  const centerStart = n;
-  const rightStart = 2 * n;
-
-  function getCardElement(copyType, idx) {
-    const i = ((idx % n) + n) % n;
-    if (copyType === 'left') return allCards[i];
-    if (copyType === 'center') return allCards[centerStart + i];
-    if (copyType === 'right') return allCards[rightStart + i];
-    return null;
-  }
-
-  function centerCardElem(el, behavior = 'smooth') {
-    if (!el) return;
-    const left = el.offsetLeft + el.offsetWidth / 2 - scroller.clientWidth / 2;
-    scroller.scrollTo({ left, behavior });
-  }
-
-  // Scroll to center copy first card on init
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      centerCardElem(allCards[centerStart], 'auto');
-    });
   });
+  </script>
 
-  // Update center class using RAF loop
-  function updateCenterClass() {
-    const mid = scroller.scrollLeft + scroller.clientWidth / 2;
-    let best = null, bestDist = Infinity;
-    allCards.forEach(card => {
-      const c = card.offsetLeft + card.offsetWidth / 2;
-      const d = Math.abs(c - mid);
-      if (d < bestDist) { bestDist = d; best = card; }
-    });
-    if (!best) return;
-    allCards.forEach(card => card.classList.toggle('is-center', card === best));
-  }
+  <!-- ===== FUSE.js SEARCH ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
 
-  function rafLoop() { updateCenterClass(); requestAnimationFrame(rafLoop); }
-  requestAnimationFrame(rafLoop);
+  <script>
+  // Device detection
+  (function() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const isMobile = /android|ipad|iphone|mobile/i.test(ua);
+    const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const device = (!isMobile || width >= 769) ? 'desktop' : 'mobile';
+    document.body.dataset.device = device;
+  })();
+  </script>
 
-  // Track whether a programmatic scroll is in progress
-  // to avoid the scroll-end handler interfering with button navigation
-  let isProgrammaticScroll = false;
-  let programmaticTimer = null;
+  <!-- ===== SEARCH CORE SYSTEM ===== -->
+  <script>
+  let saData = [];
+  let saFuse = null;
 
-  function programmaticScrollTo(el, behavior) {
-    if (!el) return;
-    isProgrammaticScroll = true;
-    clearTimeout(programmaticTimer);
-    centerCardElem(el, behavior);
-    // Clear the flag after scroll should have settled
-    programmaticTimer = setTimeout(() => {
-      isProgrammaticScroll = false;
-    }, 600);
-  }
+  const saSearchInput = document.getElementById("saSearchInput");
+  const saSearchResults = document.getElementById("saSearchResults");
 
-  // Scroll-end handler: snap to nearest center-copy card
-  let scrollTimer = null;
+  /* ===============================
+     LOAD JSON DATA
+  =============================== */
 
-  scroller.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      // Don't interfere if buttons triggered the scroll
-      if (isProgrammaticScroll) return;
+  const SEARCH_DATA_URL =
+    "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/search-data.json";
 
-      const mid = scroller.scrollLeft + scroller.clientWidth / 2;
-      let closest = null, closestDist = Infinity;
-      allCards.forEach(card => {
-        const c = card.offsetLeft + card.offsetWidth / 2;
-        const d = Math.abs(c - mid);
-        if (d < closestDist) { closestDist = d; closest = card; }
+  fetch(SEARCH_DATA_URL)
+    .then(res => res.json())
+    .then(data => {
+      saData = data;
+
+      saFuse = new Fuse(saData, {
+        keys: ["t"],
+        threshold: 0.3,
+        ignoreLocation: true,
+        minMatchCharLength: 2
       });
-      if (!closest) return;
-
-      if (closest.dataset.copy !== 'center') {
-        const idx = parseInt(closest.getAttribute('data-index'), 10);
-        const target = getCardElement('center', idx);
-        if (target) centerCardElem(target, 'auto');
-      } else {
-        centerCardElem(closest, 'smooth');
-      }
-    }, 80);
-  }, { passive: true });
-
-  // Pointer drag — touch only, does NOT affect page scroll
-  (function enablePointerDrag(el) {
-    let down = false, startX = 0, startScroll = 0;
-    let isDraggingHorizontal = false;
-    let startY = 0;
-    const THRESHOLD = 8; // px to decide direction
-
-    el.addEventListener('pointerdown', (ev) => {
-      if (ev.pointerType !== 'touch') return;
-      down = true;
-      isDraggingHorizontal = false;
-      startX = ev.clientX;
-      startY = ev.clientY;
-      startScroll = el.scrollLeft;
-      // Do NOT capture pointer yet — wait to determine direction
+    })
+    .catch(err => {
+      console.error("Failed to load search data:", err);
     });
 
-    window.addEventListener('pointermove', (ev) => {
-      if (!down) return;
+  /* ===============================
+     REAL TIME SEARCH
+  =============================== */
 
-      const dx = Math.abs(ev.clientX - startX);
-      const dy = Math.abs(ev.clientY - startY);
+  saSearchInput.addEventListener("input", function () {
+    const saValue = this.value.trim();
 
-      if (!isDraggingHorizontal) {
-        // Not yet decided direction
-        if (dx < THRESHOLD && dy < THRESHOLD) return; // too small, keep waiting
-        if (dy > dx) {
-          // Vertical scroll intent — release control
-          down = false;
-          return;
+    if (saValue.length === 0) {
+      saSearchResults.style.display = "none";
+      return;
+    }
+
+    saSearchResults.style.display = "block";
+    saApplySearch();
+  });
+
+  /* ===============================
+     APPLY SEARCH + FILTER
+  =============================== */
+
+  let saFilterCategory = "all";
+  let saFilterValue = "all";
+
+  function saApplySearch() {
+    const saQuery = saSearchInput.value.trim();
+
+    if (saQuery.length === 0) {
+      saSearchResults.style.display = "none";
+      return;
+    }
+
+    saSearchResults.innerHTML = "";
+    saSearchResults.style.display = "block";
+
+    if (saQuery.length < 3) {
+      saSearchResults.innerHTML = `<div class="sa-result-item sa-message">Keep typing...</div>`;
+      return;
+    }
+
+    if (!saFuse) return;
+
+    const saWords = saQuery.split(/\s+/);
+
+    let saResults = saFuse.search(saQuery);
+    saResults = saResults.map(r => r.item);
+
+    // Apply filter - REMOVED: pages and type options
+    saResults = saResults.filter(item => {
+      // saFilterCategory can be: all, semester, course
+      // Removed: pages and type filters
+
+      if (saFilterCategory === "semester") {
+        if (saFilterValue === "all") return item.sem !== undefined;
+        return item.sem == saFilterValue;
+      }
+
+      if (saFilterCategory === "course") {
+        if (saFilterValue === "all") return item.course;
+        return item.course === saFilterValue;
+      }
+
+      // No filter or "all" - show all results
+      return true;
+    });
+
+    if (saResults.length === 0) {
+      saSearchResults.innerHTML = `<div class="sa-result-item sa-message">No search result found</div>`;
+      return;
+    }
+
+    saRenderResults(saResults, saQuery);
+  }
+
+  /* ===============================
+     RENDER RESULTS
+  =============================== */
+
+  function saRenderResults(saItems, saQuery) {
+    saSearchResults.innerHTML = "";
+
+    saItems.forEach(item => {
+      const saDiv = document.createElement("div");
+      saDiv.className = "sa-result-item";
+
+      const saHighlightedTitle = saHighlight(item.t, saQuery);
+
+      let saLabelsHTML = "";
+
+      // Semester Label
+      if (item.sem !== undefined) {
+        saLabelsHTML += `<span class="sa-label">semester ${item.sem}</span>`;
+      }
+
+      // Course Label
+      if (item.course) {
+        saLabelsHTML += `<span class="sa-label">${item.course}</span>`;
+      }
+
+      // Type Label - REMOVED per requirements
+      // if (item.type) { saLabelsHTML += `<span class="sa-label">${item.type}</span>`; }
+
+      /* FILE TYPE LABEL (AUTO DETECT) */
+      if (item.u) {
+        const saUrlLower = item.u.toLowerCase();
+
+        if (
+          saUrlLower.endsWith(".pdf") ||
+          saUrlLower.includes("drive.google.com")
+        ) {
+          saLabelsHTML += `<span class="sa-label">PDF</span>`;
         }
-        // Horizontal drag confirmed
-        isDraggingHorizontal = true;
-        try { el.setPointerCapture(ev.pointerId); } catch (e) {}
       }
 
-      // Only handle horizontal drag
-      el.scrollLeft = startScroll + (startX - ev.clientX);
-    }, { passive: true });
+      saDiv.innerHTML = `
+        <a href="${item.u}" class="sa-link">
+          <div class="sa-title">
+            ${saHighlightedTitle}
+          </div>
+          <div class="sa-labels">
+            ${saLabelsHTML}
+          </div>
+        </a>
+      `;
 
-    window.addEventListener('pointerup', (ev) => {
-      if (!down) return;
-      down = false;
-      isDraggingHorizontal = false;
-      try { el.releasePointerCapture(ev.pointerId); } catch (e) {}
+      // Custom navigation
+      const saLink = saDiv.querySelector(".sa-link");
+
+      saLink.addEventListener("click", function (e) {
+        const url = item.u;
+
+        // Google Drive file link
+        if (url && url.includes("drive.google.com")) {
+          const match = url.match(/\/file\/d\/([^/?#]+)/);
+
+          if (match && match[1]) {
+            e.preventDefault();
+
+            const id = match[1];
+
+            const downloadUrl =
+              `https://drive.usercontent.google.com/download?id=${id}&export=download`;
+
+            window.open(downloadUrl, "_blank");
+
+            return;
+          }
+        }
+
+        // Otherwise browser follows href normally
+      });
+
+      saSearchResults.appendChild(saDiv);
+    });
+  }
+
+  /* ===============================
+     ESCAPE HTML (REQUIRED)
+  =============================== */
+
+  function escapeHtml(saString) {
+    return String(saString).replace(/[&<>'"]/g, function (m) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        '"': "&quot;"
+      }[m];
+    });
+  }
+
+  /* ===============================
+     HIGHLIGHT FUNCTION
+  =============================== */
+
+  function saHighlight(saText, saQuery) {
+    // Escape first (very important)
+    let saSafeText = escapeHtml(saText);
+
+    const saWords = saQuery
+      .split(/\s+/)
+      .filter(w => w.length >= 2); // ignore 1 letter words
+
+    saWords.forEach(word => {
+      const saRegex = new RegExp(
+        `(${word.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")})`,
+        "gi"
+      );
+
+      saSafeText = saSafeText.replace(
+        saRegex,
+        "<mark class='sa-highlight'>$1</mark>"
+      );
     });
 
-    window.addEventListener('pointercancel', () => {
-      down = false;
-      isDraggingHorizontal = false;
-    });
-  })(scroller);
-
-  // Click guard: non-center cards re-center; center card navigates
-  scroller.addEventListener('click', (e) => {
-    const card = e.target.closest('.cards');
-    if (!card) return;
-    const center = scroller.querySelector('.cards.is-center');
-    if (card !== center) {
-      e.preventDefault();
-      const idx = parseInt(card.getAttribute('data-index'), 10);
-      const target = getCardElement('center', idx);
-      if (target) centerCardElem(target, 'smooth');
-      return;
-    }
-    // Center card — allow navigation
-  }, { capture: true });
-
-  // Get current center card's original index and which copy it belongs to
-  function currentCenterInfo() {
-    const centerCard = scroller.querySelector('.cards.is-center');
-    if (!centerCard) return { idx: 0, copy: 'center' };
-    return {
-      idx: parseInt(centerCard.getAttribute('data-index'), 10),
-      copy: centerCard.dataset.copy
-    };
+    return saSafeText;
   }
 
-  // Navigate forward (next) or backward (prev)
-  // Key fix: when on last card going next  → scroll to RIGHT copy index 0 then jump to center
-  //          when on first card going prev → scroll to LEFT copy last card then jump to center
-  function navigate(direction) {
-    const { idx, copy } = currentCenterInfo();
-    const nextIdx = (idx + direction + n) % n;
+  /* ===============================
+     FILTER STATE
+  =============================== */
 
-    let targetCopy;
+  /* ===============================
+     FILTER POPUP CONTROL
+  =============================== */
 
-    if (direction === 1) {
-      // Going forward
-      if (idx === n - 1) {
-        // Last card → next should appear from the RIGHT (use right copy index 0)
-        targetCopy = 'right';
-      } else {
-        // Normal forward: stay in whatever copy keeps it to the right
-        targetCopy = copy === 'left' ? 'left'
-                   : copy === 'right' ? 'right'
-                   : 'center';
-      }
-    } else {
-      // Going backward
-      if (idx === 0) {
-        // First card → prev should appear from the LEFT (use left copy last card)
-        targetCopy = 'left';
-      } else {
-        targetCopy = copy === 'left' ? 'left'
-                   : copy === 'right' ? 'right'
-                   : 'center';
-      }
-    }
-
-    const target = getCardElement(targetCopy, nextIdx);
-    if (!target) return;
-
-    // Scroll smoothly to the target (which is in left/right/center copy)
-    programmaticScrollTo(target, 'smooth');
-
-    // After the smooth scroll settles, jump instantly to center copy counterpart
-    setTimeout(() => {
-      const centerTarget = getCardElement('center', nextIdx);
-      if (centerTarget) centerCardElem(centerTarget, 'auto');
-      // Allow scroll-end handler again after repositioning
-      isProgrammaticScroll = false;
-    }, 500);
-  }
-
-  btnNext.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
-  btnPrev.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
-
-  // Resize: re-center the visible center card
-  window.addEventListener('resize', () => {
-    const centerCard = scroller.querySelector('.cards.is-center') || getCardElement('center', 0);
-    if (centerCard) centerCardElem(centerCard, 'auto');
+  saFilterBtn.addEventListener("click", function () {
+    saFilterOverlay.style.display = "block";
   });
 
-})();
-
-
-/* ===============================
-   SEARCH CORE SYSTEM
-================================ */
-
-let saData = [];
-let saFuse = null;
-
-let saRecentlyClosedFilter = false;
-
-const saSearchInput = document.getElementById("saSearchInput");
-const saSearchResults = document.getElementById("saSearchResults");
-
-/* ===============================
-   LOAD JSON DATA
-================================ */
-
-const SEARCH_DATA_URL =
-  "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/search-data.json";
-
-fetch(SEARCH_DATA_URL)
-  .then(res => res.json())
-  .then(data => {
-    saData = data;
-
-    saFuse = new Fuse(saData, {
-      keys: ["t"],
-      threshold: 0.3,
-      ignoreLocation: true,
-      minMatchCharLength: 2
-    });
-  })
-  .catch(err => {
-    console.error("Failed to load search data:", err);
-  });
-
-/* ===============================
-   REAL TIME SEARCH
-================================ */
-
-saSearchInput.addEventListener("input", function () {
-
-  const saValue = this.value.trim();
-
-  if (saValue.length === 0) {
-    saSearchResults.style.display = "none";
-    return;
-  }
-
-  saSearchResults.style.display = "block";
-  saApplySearch();
-});
-
-/* ===============================
-   APPLY SEARCH + FILTER
-================================ */
-
-function saApplySearch() {
-
-  const saQuery = saSearchInput.value.trim();
-
-  if (saQuery.length === 0) {
-    saSearchResults.style.display = "none";
-    return;
-  }
-
-  saSearchResults.innerHTML = "";
-  saSearchResults.style.display = "block";
-
-if (saQuery.length < 3) {
-  saSearchResults.innerHTML =
-    `<div class="sa-result-item sa-message">Keep typing...</div>`;
-  return;
-}
-
-  if (!saFuse) return;
-
-  const saWords = saQuery.split(/\s+/);
-
-  let saResults = saFuse.search(saQuery);
-
-  saResults = saResults.map(r => r.item);
-
-  // Apply filter
-  saResults = saResults.filter(item => {
-
-    if (saFilterCategory === "pages") {
-      return !item.u.includes("#");
-    }
-
-    if (saFilterCategory === "semester") {
-      if (saFilterValue === "all") return item.sem !== undefined;
-      return item.sem == saFilterValue;
-    }
-
-    if (saFilterCategory === "course") {
-      if (saFilterValue === "all") return item.course;
-      return item.course === saFilterValue;
-    }
-
-/* TYPE FILTER IMPROVED */
-
-if (saFilterCategory === "type") {
-
-  if (saFilterValue === "all") return item.type;
-
-  if (!item.type) return false;
-
-  // syllabus = content
-  if (saFilterValue === "syllabus") {
-    return item.type === "content";
-  }
-
-  // reference group
-  if (saFilterValue === "reference") {
-    return ["reference", "notes", "shared", "class-notes"]
-      .includes(item.type);
-  }
-
-  return item.type === saFilterValue;
-}
-
-    return true;
-  });
-
-  if (saResults.length === 0) {
-    saSearchResults.innerHTML =
-      `<div class="sa-result-item sa-message">No search result found</div>`;
-    return;
-  }
-  saRenderResults(saResults, saQuery);
-}
-
-
-/* ===============================
-   HIDE SEARCH RESULT ON OUTSIDE CLICK
-================================ */
-
-document.addEventListener("click", function (e) {
-
-  const saClickedInsideSearch =
-    saSearchInput.contains(e.target) ||
-    saSearchResults.contains(e.target);
-
-  const saFilterOpen =
-    saFilterOverlay &&
-    saFilterOverlay.style.display === "block";
-
-  if (
-    !saClickedInsideSearch &&
-    !saFilterOpen &&
-    !saRecentlyClosedFilter
-  ) {
-    saSearchResults.style.display = "none";
-  }
-
-});
-
-
-/* ===============================
-   RENDER RESULTS
-================================ */
-
-function saRenderResults(saItems, saQuery) {
-
-  saSearchResults.innerHTML = "";
-
-  saItems.forEach(item => {
-
-    const saDiv = document.createElement("div");
-    saDiv.className = "sa-result-item";
-
-    const saHighlightedTitle = saHighlight(item.t, saQuery);
-
-    let saLabelsHTML = "";
-
-    // Semester Label
-if (item.sem !== undefined) {
-  saLabelsHTML += `<span class="sa-label">semester ${item.sem}</span>`;
-}
-
-    // Course Label
-    if (item.course) {
-      saLabelsHTML += `<span class="sa-label">${item.course}</span>`;
-    }
-
-    // Type Label
-    if (item.type) {
-      saLabelsHTML += `<span class="sa-label">${item.type}</span>`;
-    }
-
-    /* FILE TYPE LABEL (AUTO DETECT) */
-if (item.u) {
-  const saUrlLower = item.u.toLowerCase();
-
-  if (
-    saUrlLower.endsWith(".pdf") ||
-    saUrlLower.includes("drive.google.com")
-  ) {
-    saLabelsHTML += `<span class="sa-label">PDF</span>`;
-  }
-}
-
-saDiv.innerHTML = `
-  <a href="${item.u}" class="sa-link">
-    <div class="sa-title">
-      ${saHighlightedTitle}
-    </div>
-    <div class="sa-labels">
-      ${saLabelsHTML}
-    </div>
-  </a>
-`;
-
-// Custom navigation
-const saLink = saDiv.querySelector(".sa-link");
-
-saLink.addEventListener("click", function (e) {
-
-  const url = item.u;
-
-  // Google Drive file link
-  if (url && url.includes("drive.google.com")) {
-
-    const match = url.match(/\/file\/d\/([^\/?#]+)/);
-
-    if (match && match[1]) {
-
-      e.preventDefault();
-
-      const id = match[1];
-
-      const downloadUrl =
-        `https://drive.usercontent.google.com/download?id=${id}&export=download`;
-
-      window.open(downloadUrl, "_blank");
-
-      return;
-    }
-  }
-
-  // Otherwise browser follows href normally
-});
-
-    saSearchResults.appendChild(saDiv);
-  });
-}
-
-
-/* ===============================
-   ESCAPE HTML (REQUIRED)
-================================ */
-
-function escapeHtml(saString) {
-  return String(saString).replace(/[&<>"']/g, function (m) {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    }[m];
-  });
-}
-
-
-/* ===============================
-   HIGHLIGHT FUNCTION
-================================ */
-
-function saHighlight(saText, saQuery) {
-
-  // Escape first (very important)
-  let saSafeText = escapeHtml(saText);
-
-  const saWords = saQuery
-    .split(/\s+/)
-    .filter(w => w.length >= 2); // ignore 1 letter words
-
-  saWords.forEach(word => {
-
-    const saRegex = new RegExp(
-      `(${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-      "gi"
-    );
-
-    saSafeText = saSafeText.replace(
-      saRegex,
-      "<mark class='sa-highlight'>$1</mark>"
-    );
-  });
-
-  return saSafeText;
-}
-
-/* ===============================
-   FILTER STATE
-================================ */
-
-let saFilterCategory = "all";
-let saFilterValue = "all";
-
-const saFilterBtn = document.getElementById("saFilterBtn");
-const saFilterOverlay = document.getElementById("saFilterOverlay");
-const saFilterClose = document.getElementById("saFilterClose");
-
-const saSelectorPrimary = document.getElementById("saSelectorPrimary");
-const saSelectorSecondary = document.getElementById("saSelectorSecondary");
-
-/* ===============================
-   FILTER POPUP CONTROL
-================================ */
-
-saFilterBtn.addEventListener("click", function () {
-  saFilterOverlay.style.display = "block";
-});
-
-saFilterClose.addEventListener("click", function (e) {
-
-  saFilterOverlay.style.display = "none";
-
-  saRecentlyClosedFilter = true;
-
-  setTimeout(() => {
-    saRecentlyClosedFilter = false;
-  }, 100);
-
-});
-
-// Close when clicking outside popup
-saFilterOverlay.addEventListener("click", function (e) {
-
-  if (e.target === saFilterOverlay) {
-
+  saFilterClose.addEventListener("click", function (e) {
     saFilterOverlay.style.display = "none";
 
     saRecentlyClosedFilter = true;
@@ -2104,151 +1302,645 @@ saFilterOverlay.addEventListener("click", function (e) {
     setTimeout(() => {
       saRecentlyClosedFilter = false;
     }, 100);
+  });
 
-  }
+  // Close when clicking outside popup
+  saFilterOverlay.addEventListener("click", function (e) {
+    if (e.target === saFilterOverlay) {
+      saFilterOverlay.style.display = "none";
 
-});
+      saRecentlyClosedFilter = true;
 
-/* ===============================
-   CUSTOM SELECTOR OPEN / CLOSE
-================================ */
-
-document.querySelectorAll(".sa-selector").forEach(selector => {
-
-  const saSelected = selector.querySelector(".sa-selector-selected");
-  const saOptions = selector.querySelector(".sa-selector-options");
-
-saSelected.addEventListener("click", function (e) {
-
-  const saIsOpen = saOptions.style.display === "block";
-
-  // Close all selectors first
-  document.querySelectorAll(".sa-selector-options")
-    .forEach(opt => opt.style.display = "none");
-
-  // Toggle only if it was closed
-  if (!saIsOpen) {
-    saOptions.style.display = "block";
-  }
-
-  e.stopPropagation();
-});
-
-  saOptions.addEventListener("click", function (e) {
-
-    if (e.target.dataset.value) {
-
-      saSelected.textContent = e.target.textContent;
-      saOptions.style.display = "none";
-
-      if (selector.id === "saSelectorPrimary") {
-        saHandlePrimaryChange(e.target.dataset.value);
-      }
-
-      if (selector.id === "saSelectorSecondary") {
-        saFilterValue = e.target.dataset.value;
-        saApplySearch();
-      }
+      setTimeout(() => {
+        saRecentlyClosedFilter = false;
+      }, 100);
     }
   });
-});
 
-/* ===============================
+  /* ===============================
+     CUSTOM SELECTOR OPEN / CLOSE
+  =============================== */
+
+  document.querySelectorAll(".sa-selector").forEach(selector => {
+
+    const saSelected = selector.querySelector(".sa-selector-selected");
+    const saOptions = selector.querySelector(".sa-selector-options");
+
+    saSelected.addEventListener("click", function (e) {
+      const saIsOpen = saOptions.style.display === "block";
+
+      // Close all selectors first
+      document.querySelectorAll(".sa-selector-options")
+        .forEach(opt => opt.style.display = "none");
+
+      // Toggle only if it was closed
+      if (!saIsOpen) {
+        saOptions.style.display = "block";
+      }
+
+      e.stopPropagation();
+    });
+
+    saOptions.addEventListener("click", function (e) {
+      if (e.target.dataset.value) {
+
+        saSelected.textContent = e.target.textContent;
+        saOptions.style.display = "none";
+
+        if (selector.id === "saSelectorPrimary") {
+          saHandlePrimaryChange(e.target.dataset.value);
+        }
+
+        if (selector.id === "saSelectorSecondary") {
+          saFilterValue = e.target.dataset.value;
+          saApplySearch();
+        }
+      }
+    });
+  });
+
+  /* ===============================
    PRIMARY SELECTOR LOGIC
-================================ */
+  =============================== */
 
-function saHandlePrimaryChange(saValue) {
+  function saHandlePrimaryChange(saValue) {
+    saFilterCategory = saValue;
+    saFilterValue = "all";
 
-  saFilterCategory = saValue;
-  saFilterValue = "all";
+    const saSecondary = saSelectorSecondary;
+    const saSecondarySelected =
+      saSecondary.querySelector(".sa-selector-selected");
+    const saSecondaryOptions =
+      saSecondary.querySelector(".sa-selector-options");
 
-  const saSecondary = saSelectorSecondary;
-  const saSecondarySelected =
-    saSecondary.querySelector(".sa-selector-selected");
-  const saSecondaryOptions =
-    saSecondary.querySelector(".sa-selector-options");
+    saSecondarySelected.textContent = "All";
+    saSecondaryOptions.innerHTML = "";
 
-  saSecondarySelected.textContent = "All";
-  saSecondaryOptions.innerHTML = "";
-
-  if (saValue === "all" || saValue === "pages") {
-    saSecondary.style.display = "none";
-  } else {
-    saSecondary.style.display = "block";
-  }
-
-  if (saValue === "semester") {
-
-    saSecondaryOptions.innerHTML = `
-      <div data-value="all">All</div>
-      <div data-value="1">Semester 1</div>
-      <div data-value="2">Semester 2</div>
-      <div data-value="3">Semester 3</div>
-    `;
-
-  } else if (saValue === "course") {
-
-    saSecondaryOptions.innerHTML = `
-      <div data-value="all">All</div>
-      <div data-value="BCA">BCA</div>
-      <div data-value="SEC">SEC</div>
-      <div data-value="VAC">VAC</div>
-      <div data-value="MDC">MDC</div>
-      <div data-value="AEC">AEC</div>
-    `;
-
-  } else if (saValue === "type") {
-
-    saSecondaryOptions.innerHTML = `
-      <div data-value="all">All</div>
-      <div data-value="syllabus">Syllabus</div>
-      <div data-value="reference">Reference & Notes</div>
-      <div data-value="model">Model Question & MCQ</div>
-      <div data-value="paper">Question Paper</div>
-      <div data-value="videos">Youtube Tutorials</div>
-      <div data-value="assignment">Assignment</div>
-    `;
-  }
-
-  saUpdateFilterIcon();
-  saApplySearch();
-}
-
-saHandlePrimaryChange("all");
-
-/* ===============================
-   FILTER ICON COLOR
-================================ */
-
-function saUpdateFilterIcon() {
-
-  if (saFilterCategory !== "all") {
-    saFilterBtn.classList.add("sa-filter-active");
-  } else {
-    saFilterBtn.classList.remove("sa-filter-active");
-  }
-}
-
-/* ===============================
-   CLOSE SELECTOR WHEN CLICK OUTSIDE
-================================ */
-
-document.addEventListener("click", function (e) {
-
-  const saSelectors = document.querySelectorAll(".sa-selector");
-
-  saSelectors.forEach(selector => {
-
-    if (!selector.contains(e.target)) {
-      const saOptions =
-        selector.querySelector(".sa-selector-options");
-      saOptions.style.display = "none";
+    if (saValue === "all" || saValue === "pages") {
+      saSecondary.style.display = "none";
+    } else {
+      saSecondary.style.display = "block";
     }
 
+    if (saValue === "semester") {
+
+      saSecondaryOptions.innerHTML = `
+        <div data-value="all">All</div>
+        <div data-value="1">Semester 1</div>
+        <div data-value="2">Semester 2</div>
+        <div data-value="3">Semester 3</div>
+      `;
+
+    } else if (saValue === "course") {
+
+      saSecondaryOptions.innerHTML = `
+        <div data-value="all">All</div>
+        <div data-value="BCA">BCA</div>
+        <div data-value="SEC">SEC</div>
+        <div data-value="VAC">VAC</div>
+        <div data-value="MDC">MDC</div>
+        <div data-value="AEC">AEC</div>
+      `;
+
+    } else if (saValue === "course") {
+
+      saSecondaryOptions.innerHTML = `
+        <div data-value="all">All</div>
+        <div data-value="syllabus">Syllabus</div>
+        <div data-value="reference">Reference & Notes</div>
+        <div data-value="model">Model Question & MCQ</div>
+        <div data-value="paper">Question Paper</div>
+        <div data-value="videos">Youtube Tutorials</div>
+        <div data-value="assignment">Assignment</div>
+      `;
+
+    }
+
+    saUpdateFilterIcon();
+    saApplySearch();
+  }
+
+  saHandlePrimaryChange("all");
+
+  /* ===============================
+     FILTER ICON COLOR
+  =============================== */
+
+  function saUpdateFilterIcon() {
+
+    if (saFilterCategory !== "all") {
+      saFilterBtn.classList.add("sa-filter-active");
+    } else {
+      saFilterBtn.classList.remove("sa-filter-active");
+    }
+  }
+
+  /* ===============================
+     CLOSE SELECTOR WHEN CLICK OUTSIDE
+  =============================== */
+
+  document.addEventListener("click", function (e) {
+
+    const saSelectors = document.querySelectorAll(".sa-selector");
+
+    saSelectors.forEach(selector => {
+
+      if (!selector.contains(e.target)) {
+        const saOptions =
+          selector.querySelector(".sa-selector-options");
+        saOptions.style.display = "none";
+
+      }
+    });
   });
+  </script>
 
-});
+  <!-- ===============================
+     ANNOUNCEMENTS SCROLLER
+  =============================== -->
 
-</script>
+  <script>
+  (function () {
+    const STORAGE_KEY = "userThemePreference";
+    const THEME_COLORS = {
+      light: "#ffffff",
+      dark:  "#1a1a2e"
+    };
+
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    function getSavedTheme() {
+      return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+    }
+
+    function updateMetaThemeColor(theme) {
+      let metaTag = document.querySelector('meta[name="theme-color"]');
+      if (!metaTag) {
+        metaTag = document.createElement("meta");
+        metaTag.name = "theme-color";
+        document.head.appendChild(metaTag);
+      }
+      metaTag.content = THEME_COLORS[theme];
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      updateMetaThemeColor(theme);
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.checked = theme === "dark";
+      }
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem(STORAGE_KEY, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    }
+
+    function watchSystemTheme() {
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    }
+
+    function watchStorageChanges() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          applyTheme(e.newValue);
+        }
+      });
+    }
+
+    if (document.head) {
+      applyTheme(getSavedTheme());
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getSavedTheme());
+        const checkbox = document.getElementById("themeCheckbox");
+        if (checkbox) {
+          checkbox.addEventListener("change", toggleTheme);
+        }
+      });
+    } else {
+      applyTheme(getSavedTheme());
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.addEventListener("change", toggleTheme);
+      }
+    }
+
+    watchSystemTheme();
+    watchStorageChanges();
+  })();
+  </script>
+
+  <!-- ===== ANNOUNCEMENTS FETCH ===== -->
+  <script>
+  (function () {
+    const STORAGE_KEY = "userThemePreference";
+    const THEME_COLORS = {
+      light: "#ffffff",
+      dark: "#1a1a2e"
+    };
+
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    function getSavedTheme() {
+      return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = THEME_COLORS[theme];
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.checked = theme === "dark";
+      }
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem(STORAGE_KEY, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    }
+
+    function watchSystemTheme() {
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    }
+
+    function watchStorageChanges() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          applyTheme(e.newValue);
+        }
+      });
+    }
+
+    if (document.head) {
+      applyTheme(getSavedTheme());
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getSavedTheme());
+        const checkbox = document.getElementById("themeCheckbox");
+        if (checkbox) {
+          checkbox.addEventListener("change", toggleTheme);
+        }
+      });
+    } else {
+      applyTheme(getSavedTheme());
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.addEventListener("change", toggleTheme);
+      }
+    }
+
+    watchSystemTheme();
+    watchStorageChanges();
+  })();
+
+  // Load announcements from Supabase
+  async function loadAnnouncements() {
+    const status = document.getElementById('annStatus');
+
+    try {
+      const response = await fetch('/api/announcements');
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to load announcements');
+      }
+
+      renderAnnouncements(result.announcements);
+    } catch (err) {
+      console.error(err);
+      status.textContent = 'Failed to load announcements.';
+    }
+  }
+
+  function renderAnnouncements(announcements) {
+    const annList = document.getElementById('annList');
+    const status = document.getElementById('annStatus');
+
+    if (!annList) return;
+
+    if (!announcements.length) {
+      status.textContent = 'No announcements available.';
+      return;
+    }
+
+    // Hide status message
+    status.classList.add('hidden');
+
+    const items = announcements.map(a => `
+      <li class="card" data-url="${a.url}">
+        <strong>${a.title}</strong>
+        <div class="anon-body">${a.body}</div>
+      </li>
+    `).join('');
+
+    const itemsWithSpacer = items + '<li class="spacer"></li>';
+
+    annList.innerHTML = `
+      <div class="scroll-wrapper">
+        ${itemsWithSpacer}
+        ${itemsWithSpacer}
+      </div>
+    `;
+
+    annList.querySelectorAll('li.card').forEach(card => {
+      card.addEventListener('click', () => {
+        let url = card.dataset.url;
+
+        // Google Drive file link
+        if (url && url.includes('drive.google.com')) {
+          const match = url.match(/\/file\/d\/([^/?#]+)/);
+
+          if (match && match[1]) {
+            const id = match[1];
+            const downloadUrl =
+              `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`;
+
+            window.open(downloadUrl, '_blank');
+            return;
+          }
+        }
+
+        // Original behavior
+        window.location.href = url;
+      });
+    });
+  }
+
+  loadAnnouncements();
+  </script>
+
+  <!-- ===== SCROLLER CAROUSEL ===== -->
+  <script>
+  (function () {
+    const scroller = document.getElementById('scroller');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+
+    const originalSet = Array.from(scroller.querySelectorAll('.cards'));
+    const n = originalSet.length;
+    if (n === 0) return;
+
+    const cardssFrag = document.createDocumentFragment();
+
+    function appendCopy(type) {
+      for (let i = 0; i < n; i++) {
+        const source = originalSet[i];
+        const clone = source.cloneNode(true);
+        clone.dataset.copy = type;
+        clone.setAttribute('data-index', String(i));
+        cardssFrag.appendChild(clone);
+      }
+    }
+
+    appendCopy('left');
+    appendCopy('center');
+    appendCopy('right');
+
+    scroller.innerHTML = '';
+    scroller.appendChild(cardssFrag);
+
+    const allCards = Array.from(scroller.querySelectorAll('.cards'));
+    const centerStart = n;
+    const rightStart = 2 * n;
+
+    function getCardElement(copyType, idx) {
+      const i = ((idx % n) + n) % n;
+      if (copyType === 'left') return allCards[i];
+      if (copyType === 'center') return allCards[centerStart + i];
+      if (copyType === 'right') return allCards[rightStart + i];
+      return null;
+    }
+
+    function centerCardElem(el, behavior = 'smooth') {
+      if (!el) return;
+      const left = el.offsetLeft + el.offsetWidth / 2 - scroller.clientWidth / 2;
+      scroller.scrollTo({ left, behavior });
+    }
+
+    // Scroll to center copy first card on init
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        centerCardElem(allCards[centerStart], 'auto');
+      });
+    });
+
+    // Update center class using RAF loop
+    function rafLoop() {
+      updateCenterClass();
+      requestAnimationFrame(rafLoop);
+    }
+    requestAnimationFrame(rafLoop);
+
+    // Track whether a programmatic scroll is in progress
+    let isProgrammaticScroll = false;
+    let programmaticTimer = null;
+
+    function programmaticScrollTo(el, behavior) {
+      if (!el) return;
+      isProgrammaticScroll = true;
+      clearTimeout(programmaticTimer);
+      centerCardElem(el, behavior);
+      programmaticTimer = setTimeout(() => {
+        isProgrammaticScroll = false;
+      }, 600);
+    }
+
+    // Scroll-end handler: snap to nearest center-copy card
+    let scrollTimer = null;
+
+    scroller.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        if (isProgrammaticScroll) return;
+
+        const mid = scroller.scrollLeft + scroller.clientWidth / 2;
+        let closest = null, closestDist = Infinity;
+        allCards.forEach(card => {
+          const c = card.offsetLeft + card.offsetWidth / 2;
+          const d = Math.abs(c - mid);
+          if (d < closestDist) { closestDist = d; closest = card; }
+        });
+
+        if (!closest) return;
+
+        if (closest.dataset.copy !== 'center') {
+          const idx = parseInt(closest.getAttribute('data-index'), 10);
+          const target = getCardElement('center', idx);
+          if (target) centerCardElem(target, 'auto');
+        } else {
+          centerCardElem(closest, 'smooth');
+        }
+      }, 80);
+    }, { passive: true });
+
+    // Pointer drag — touch only, does NOT affect page scroll
+    (function enablePointerDrag(el) {
+      let down = false, startX = 0, startScroll = 0;
+      let isDraggingHorizontal = false;
+      let startY = 0;
+      const THRESHOLD = 8;
+
+      el.addEventListener('pointerdown', (ev) => {
+        if (ev.pointerType !== 'touch') return;
+        down = true;
+        isDraggingHorizontal = false;
+        startX = ev.clientX;
+        startY = ev.clientY;
+        startScroll = el.scrollLeft;
+        // Do NOT capture pointer yet — wait to determine direction
+      });
+
+      window.addEventListener('pointermove', (ev) => {
+        if (!down) return;
+
+        const dx = Math.abs(ev.clientX - startX);
+        const dy = Math.abs(ev.clientY - startY);
+
+        if (!isDraggingHorizontal) {
+          // Not yet decided direction
+          if (dx < THRESHOLD && dy < THRESHOLD) return;
+          if (dy > dx) {
+            // Vertical scroll intent — release control
+            down = false;
+            return;
+          }
+          // Horizontal drag confirmed
+          isDraggingHorizontal = true;
+          try { el.setPointerCapture(ev.pointerId); } catch (e) {}
+        }
+
+        // Only handle horizontal drag
+        el.scrollLeft = startScroll + (startX - ev.clientX);
+      }, { passive: true });
+
+      window.addEventListener('pointerup', (ev) => {
+        if (!down) return;
+        down = false;
+        isDraggingHorizontal = false;
+        try { el.releasePointerCapture(ev.pointerId); } catch (e) {}
+      });
+
+      window.addEventListener('pointercancel', () => {
+        down = false;
+        isDraggingHorizontal = false;
+      });
+    })(scroller);
+
+    // Click guard: non-center cards re-center; center card navigates
+    scroller.addEventListener('click', (e) => {
+      const card = e.target.closest('.cards');
+      if (!card) return;
+      const center = scroller.querySelector('.cards.is-center');
+      if (card !== center) {
+        e.preventDefault();
+        const idx = parseInt(card.getAttribute('data-index'), 10);
+        const target = getCardElement('center', idx);
+        if (target) centerCardElem(target, 'smooth');
+        return;
+      }
+      // Center card — allow navigation
+    }, { capture: true });
+
+    // Get current center card's original index and which copy it belongs to
+    function currentCenterInfo() {
+      const centerCard = scroller.querySelector('.cards.is-center');
+      if (!centerCard) return { idx: 0, copy: 'center' };
+      return {
+        idx: parseInt(centerCard.getAttribute('data-index'), 10),
+        copy: centerCard.dataset.copy
+      };
+    }
+
+    // Navigate forward (next) or backward (prev)
+    function navigate(direction) {
+      const { idx, copy } = currentCenterInfo();
+      const nextIdx = (idx + direction + n) % n;
+
+      let targetCopy;
+
+      if (direction === 1) {
+        // Going forward
+        if (idx === n - 1) {
+          // Last card → next should appear from the RIGHT (use right copy index 0)
+          targetCopy = 'right';
+        } else {
+          // Normal forward: stay in whatever copy keeps it to the right
+          targetCopy = copy === 'left' ? 'left'
+                     : copy === 'right' ? 'right'
+                     : 'center';
+        }
+      } else {
+        // Going backward
+        if (idx === 0) {
+          // First card → prev should appear from the LEFT (use left copy last card)
+          targetCopy = 'left';
+        } else {
+          targetCopy = copy === 'left' ? 'left'
+                     : copy === 'right' ? 'right'
+                     : 'center';
+        }
+      }
+
+      const target = getCardElement(targetCopy, nextIdx);
+      if (!target) return;
+
+      // Scroll smoothly to the target
+      programmaticScrollTo(target, 'smooth');
+
+      // After the smooth scroll settles, jump instantly to center copy counterpart
+      setTimeout(() => {
+        const centerTarget = getCardElement('center', nextIdx);
+        if (centerTarget) centerCardElem(centerTarget, 'auto');
+        isProgrammaticScroll = false;
+      }, 500);
+    }
+
+    btnNext.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
+    btnPrev.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
+
+    // Resize: re-center the visible center card
+    window.addEventListener('resize', () => {
+      const centerCard = scroller.querySelector('.cards.is-center') || getCardElement('center', 0);
+      if (centerCard) centerCardElem(centerCard, 'auto');
+    });
+  })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
 </body>
 </html>

@@ -1,286 +1,297 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>Browse Books — Suren Das College Library (OPAC)</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#ffffff"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-
-/* ===== RESET / BASE FIX ===== */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-
-/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
-body.bg-app {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  -webkit-font-smoothing: antialiased;
-
-  /* Default desktop background */
-  background: url("/src/background.webp") no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
-}
-
-/* Mobile background */
-@media (max-width: 768px) {
-  body.bg-app {
-    background: url("/src/background-mobile.webp") no-repeat center center fixed;
-    background-size: cover;
-  }
-}
-
-/* Black overlay */
-body.bg-app::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: -1; /* keeps overlay behind all content */
-}
-
-/* Optional wrapper padding for content */
-.overlay {
-  padding: 2rem;
-}
-
-/* container */
-.container {
-  max-width: 1100px;
-  margin: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-@media (min-width: 769px) { .container { padding: 35px; }}
-
-
-/* ===== HEADER ===== */
-header{
-    background: #1b9ade;
-    color:white;
-    padding: 4px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-    animation: slideDown 1s ease;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-@keyframes slideDown {
-    from { transform: translateY(-100%); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
-}
-.btn-area{
-         display: flex;
-         align-items: center;
-         gap: 15px;
-    font-size: 18px;
-    font-weight:bold;
-}
-
-.menu-btn{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    cursor:pointer;
-}
-.menu-btn span{
-    width:22px;
-    height:3px;
-    background:white;
-}
-
-.side-menu{
-    position:fixed;
-    top:1px;
-    right:-250px;
-    width:250px;
-    height:90vh;
-    background:#abe2ff;
-    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
-    transition:0.4s;
-    overflow-y:auto;
-    z-index:1000;
-    border-radius:5px 0 0 5px;
-
-    display: flex;
-    flex-direction: column;
-}
-.menu-header{
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 10px;
-}
-.side-menu.active{
-    right:0;
-}
-.head-close-btn{
-    font-size:22px;
-    cursor:pointer;
-    color: #111;
-}
-.menu-content{
-    flex: 1;
-    overflow-y: auto;
-}
-.side-links{
-    list-style:none;
-    padding: 0 10px;
-}
-.side-links i {
-    color: #444;
-    width: 25px;
-}
-.side-links li{
-    border-bottom: 1px solid #888;
-}
-.side-links li:last-child{
-    border:none;
-}
-.side-links a{
-    text-decoration:none;
-    color:#111;
-    display:block;
-    padding: 15px 10px;
-}
-.side-links a:hover{
-    background:#87d2fa;
-}
-.dropdown-btn{
-    cursor:pointer;
-    padding:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 10px;
-    color:#111;
-}
-.dropdown-btn .fa-chevron-down {
-    margin-left: auto;
-}
-.dropdown-btn:hover{
-    background:#77cefc;
-}
-.submenu{
-    display:none;
-    padding-left:20px;
-}
-.submenu a{
-    color:#111;
-    border-top: 1px solid #888;
-}
-.submenu.show{
-    display:block;
-}
-.head-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.3);
-    display:none;
-    z-index:999;
-}
-.head-overlay.show{
-    display:block;
-}
-@media(min-width:769px){
-    .side-menu{
-        right:-350px;
-        width:350px;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Browse Books — Suren Das College Library (OPAC)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="icon" href="/src/college-logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Styles -->
+  <style>
+    /* ===== COLOR VARIABLES ===== */
+    :root {
+      --primary-blue: #1b9ade;
+      --accent-red: #e01a5f;
+      --light-bg: #ffffff;
+      --dark-bg: #1a1a2e;
+      --text-light: #111111;
+      --text-dark: #f7f7f7;
+      --filter-light: #ddf;
+      --filter-dark: #222;
+      --card-light: #f7e7df;
+      --card-dark: #0f1724;
+      --border-light: #386c96;
+      --border-dark: #555;
     }
-    header { padding: 4px 30px; }
-    .btn-area { gap: 25px; }
-}
+    
+    [data-theme="dark"] {
+      --primary-blue: #074085;
+      --accent-red: #ff0050;
+      --light-bg: #1a1a2e;
+      --dark-bg: #12121a;
+      --text-light: #f7f7f7;
+      --text-dark: #111111;
+      --filter-light: #222;
+      --filter-dark: #222;
+      --card-light: #0f1724;
+      --card-dark: #0f1724;
+      --border-light: #555;
+      --border-dark: #555;
+    }
 
-.fa-left-long {
-  font-size: 22px;
-  color: #ddd;
-}
-.theme-toggle {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 65px;
-  height: 29px;
-  padding: 0 10px;
-  border-radius: 40px;
-  background: #bbb;
-  cursor: pointer;
-  user-select: none;
-  box-sizing: border-box;
-}
-.theme-toggle .icon {
-  font-size: 18px;
-  z-index: 2;
-  position: absolute;
-}
-.sun { color: #bbb; }
-.moon { color: #444; }
+    /* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+    body.bg-app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: url("/src/background.webp") no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      color: var(--text-light);
+    }
 
-.theme-toggle .thumb {
-  position: absolute;
-  left: 3px;
-  top: 2px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #195ea8;
-  transition: transform 0.3s ease;
-  z-index: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-#themeCheckbox:checked + .sun + .moon + .thumb {
-  transform: translateX(33px);
-}
-.theme-toggle .sun {
-  left: 6px;
-}
-.theme-toggle .moon {
-  right: 9px;
-}
+    @media (max-width: 768px) {
+      body.bg-app {
+        background: url("/src/background-mobile.webp") no-repeat center center fixed;
+        background-size: cover;
+      }
+    }
 
+    body.bg-app::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.6);
+      z-index: -1;
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
 
-h1 {
-      font-size: 21px;
-      margin: 10px 0;
+    [data-theme="dark"] body.bg-app::before {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--primary-blue);
+      color: white;
+      padding: 4px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    .btn-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    @media(min-width:769px){
+      header { padding: 4px 30px; }
+      .btn-area { gap: 25px; }
+    }
+
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      width: 22px;
+      height: 3px;
+      background: white;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 1px;
+      right: -250px;
+      width: 250px;
+      height: 90vh;
+      background: #abe2ff;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      transition: 0.4s;
+      overflow-y: auto;
+      z-index: 1000;
+      border-radius: 5px 0 0 5px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.active { right: 0; }
+
+    .menu-header {
+      flex-shrink: 0;
+      height: 50px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .head-close-btn {
+      font-size: 22px;
+      cursor: pointer;
       color: #111;
     }
+
+    .menu-content { flex: 1; overflow-y: auto; }
+
+    .side-links {
+      list-style: none;
+      padding: 0 10px;
+    }
+
+    .side-links i { color: #444; width: 25px; }
+    .side-links li { border-bottom: 1px solid #888; }
+    .side-links li:last-child { border: none; }
+    .side-links a { text-decoration: none; color: #111; display: block; padding: 15px 10px; }
+    .side-links a:hover { background: #87d2fa; }
+
+    .dropdown-btn {
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10px;
+      color: #111;
+    }
+
+    .dropdown-btn .fa-chevron-down { margin-left: auto; }
+    .dropdown-btn:hover { background: #77cefc; }
+
+    .submenu { display: none; padding-left: 20px; }
+    .submenu a { color: #111; border-top: 1px solid #888; }
+    .submenu.show { display: block; }
+
+    .head-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      display: none;
+      z-index: 999;
+    }
+
+    .head-overlay.show { display: block; }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 65px;
+      height: 29px;
+      padding: 0 10px;
+      border-radius: 40px;
+      background: #bbb;
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .theme-toggle .icon { font-size: 18px; z-index: 2; position: absolute; }
+    .sun { color: #bbb; }
+    .moon { color: #444; }
+
+    .theme-toggle .thumb {
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #195ea8;
+      transition: transform 0.3s ease;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    #themeCheckbox:checked + .sun + .moon + .thumb { transform: translateX(33px); }
+    .theme-toggle .sun { left: 6px; }
+    .theme-toggle .moon { right: 9px; }
+
+    /* ===== BROWSE PAGE LAYOUT ===== */
+    main.container {
+      max-width: 1100px;
+      margin: 10px auto;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    @media (min-width: 769px) { .container { padding: 35px; } }
+
+    h1 {
+      font-size: 21px;
+      margin: 10px 0;
+      color: var(--text-light);
+    }
+
     p.lead {
       margin: 40px auto 30px;
-      color: #323847;
+      color: var(--text-light);
       font-size: 0.98rem;
       font-weight: 410;
       text-align: justify;
       line-height: 1.3;
     }
 
-.results {
+    /* ===== SEARCH FORM ===== */
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2px;
+    }
+
+    .page-limit {
+      font-size: 15px;
+      font-weight: 410;
+      color: var(--text-light);
+      margin-right: 6px;
+    }
+
+    .selector {
+      padding: 5px;
+      border-radius: 7px;
+      border: 1px solid var(--border-light);
+      font-size: 14px;
+      background: var(--filter-light);
+      outline: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      width: 100px;
+      color: var(--text-light);
+    }
+
+    .selector:hover { transform: scale(1.02); }
+
+    @media (min-width: 769px) { .selector { width: 250px; } }
+
+    /* ===== RESULTS ===== */
+    .results {
       margin-top: 22px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -289,674 +300,569 @@ h1 {
       margin-left: auto;
       margin-right: auto;
     }
+
     .card {
-      background: #d4ddff;
+      background: var(--card-light);
       border-radius: 7px;
       padding: 15px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      border: 1px solid #555;
+      border: 1px solid var(--border-light);
       cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.3s;
     }
+
+    [data-theme="dark"] .card { background: var(--card-dark); border-color: var(--border-dark); }
+
     .card:hover {
       transform: scale(1.03);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
 
-.card h3 {
+    .card h3 {
       font-size: 16px;
-      color: #333;
+      color: var(--text-light);
       margin: 0;
-}
-.meta {
-  color: #444; 
-  font-size: 14px;
-  font-weight: 410;
-  margin: 5px auto;
-  line-height: 1.5;
-}
-
-
-.header-row {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:2px;
-}
-
-.page-limit {
-  font-size: 15px;
-  font-weight: 410;
-  color: #222;
-  margin-right: 6px;
-}
-
-.selector{
-      padding: 5px;
-      border-radius: 7px;
-      border: 1px solid #222;
-      font-size: 14px;
-      background: #ccc;
-      outline: none;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      width: 100px;
-      color: #111;
     }
-.selector:hover { transform: scale(1.02); }
 
-.status{
-      text-align: center;
-      padding: 40px 12px;
-      color: #333;
-      font-size: 18px;
-      font-weight: 450;
-      margin-top:30px;
-}
+    .meta {
+      color: var(--text-light);
+      font-size: 14px;
+      font-weight: 410;
+      margin: 5px auto;
+      line-height: 1.5;
+    }
 
-.pagination {
+    /* ===== PAGINATION ===== */
+    .pagination {
       text-align: center;
       margin-top: 24px;
       margin-bottom: 24px;
-    }     
-.pagination button {
+    }
+
+    .pagination button {
       margin: 0 3px;
       padding: 6px 10px;
       border-radius: 8px;
-      border: 1px solid #333;
-      background: #ccc;
+      border: 1px solid var(--border-light);
+      background: var(--filter-light);
       cursor: pointer;
       font-size: 13px;
-      color: #111;
+      color: var(--text-light);
+      transition: background 0.3s, border-color 0.3s;
     }
+
+    [data-theme="dark"] .pagination button { background: var(--filter-dark); border-color: var(--border-dark); color: #ddd; }
+
     .pagination button:hover {
-      background: #aafab9;
+      background: #bfd;
+      border-color: #bfd;
     }
+
+    [data-theme="dark"] .pagination button:hover { background: #555; }
+
     .pagination button.active {
-      background: #5a9afa;
-    }
-    .pagination button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
     }
 
-footer {
-    background: #a7cfc9;
-    text-align: center;
-    padding: 1px;
-    color: #333;
-     font-size: 0.85rem;
-    border-top: 1px solid #333;
-    border-radius: 20px 20px 0 0;
-    margin-top: auto;
-}
+    [data-theme="dark"] .pagination button.active { background: #074085; border-color: #074085; }
 
-@media (min-width: 769px) {
-  footer {
-    font-size: 1.25rem;
-  }
-}
-
-
-footer a {
-    color: #0c54b3;
-    text-decoration: none;
-}
-footer a:hover {
-    text-decoration: underline;
-}
-
-
-[data-theme="dark"] {
-color-scheme: dark;
-body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
-footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
-footer a { color: #f7c2d9; }
-h1 { color: #eee; }
-p.lead { color: #cfd3fa; font-weight: 400; }
-.card { background: #35404a; border: 1px solid #888; }
-.card h3 { color: #ddd; }
-.meta { color: #ccc; font-weight: 400; }
-.page-limit { color: #bbb; }
-.selector { border: 1px solid #999999; background: #555; color: #eee; }
-.status { color: #ddd; }
-.pagination button { border: 1px solid #999; color: #eee; background: #444; }
-.pagination button:hover { background: #0a613e; }
-.pagination button.active { background: #11428c; } 
-
-header{ background: #074085; }
-.side-menu{ background:#1e3759; }
-.side-links a{ color:#ddd;}
-.dropdown-btn{ color: #ddd; }
-.side-links a:hover, .dropdown-btn:hover {background:#2f4a70;}
-.submenu a{ color:#ddd;}
-.head-close-btn{ color: #ddd; }
-.side-links i { color: #aaa; }
-.sun { color: #444; }
-.moon { color: #bbb; }
-}
-
-
-@media (max-width: 768px) {
-    /* Hide scrollbar for Chrome, Safari and Edge */
-    *::-webkit-scrollbar {
-        display: none;
+    /* ===== STATUS ===== */
+    .status {
+      text-align: center;
+      padding: 40px 12px;
+      color: var(--text-light);
+      font-size: 18px;
+      font-weight: 450;
+      margin-top: 30px;
     }
 
-    /* Hide scrollbar for Firefox */
-    * {
-        scrollbar-width: none;
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--card-light);
+      text-align: center;
+      padding: 1px;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-light);
+      border-radius: 20px 20px 0 0;
+      margin-top: auto;
+      transition: background 0.3s, border-color 0.3s;
     }
 
-    /* Hide scrollbar for IE and old Edge */
-    * {
-        -ms-overflow-style: none;
+    [data-theme="dark"] footer { background: var(--card-dark); border-color: var(--border-dark); color: #aaa; }
+
+    footer a {
+      color: var(--primary-blue);
+      text-decoration: none;
     }
-}
 
-</style>
+    footer a:hover { text-decoration: underline; }
 
-<script>
-    (function () {
-      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
-      const saved = localStorage.getItem("userThemePreference");
-      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark" : "light";
-      const theme = saved || system;
+    @media (min-width: 769px) { footer { font-size: 1.25rem; } }
 
-      // Apply data-theme immediately
-      document.documentElement.setAttribute("data-theme", theme);
-
-      // Update meta theme-color immediately
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.content = THEME_COLORS[theme];
-    })();
-  </script>
-
+    /* ===== MOBILE SCROLLBAR ===== */
+    @media (max-width: 768px) {
+      *::-webkit-scrollbar { display: none; }
+      * { scrollbar-width: none; }
+      * { -ms-overflow-style: none; }
+    }
+  </style>
 </head>
+
 <body class="bg-app">
 
-<header>
-<div class="btn-area">
-  <button style="background:none; border: none;" onclick="history.back()" aria-label="Go back"><i class="fa-solid fa-left-long"></i></button>
-<div class="theme-toggle-wrapper">
-  <label
-    for="themeCheckbox"
-    id="theme-toggle"
-    class="theme-toggle"
-    aria-label="Toggle Theme">
-    <input
-      type="checkbox"
-      id="themeCheckbox"
-      aria-label="Toggle dark mode"
-      hidden
-    >
-<span class="icon sun">
-    <i class="fa-solid fa-sun"></i>
-</span>
-
-<span class="icon moon">
-    <i class="fa-solid fa-moon"></i>
-</span>
-    <span class="thumb"></span>
-  </label>
-</div>
-</div>
-
-    <div class="menu-btn" onclick="openMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="btn-area">
+      <a href="#" id="shareBtn">
+        <button style="background:none; border: none;" onclick="history.back()"><i class="fa-solid fa-left-long"></i></button>
+        <a href="#" id="shareBtn2">
+          <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="2 0 23 23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </button>
+        </a>
+      </a>
     </div>
-</header>
 
-<div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
-<div class="side-menu" id="sideMenu">
-<div class="menu-header">
-        <span class="head-close-btn" onclick="closeMenu()">✕</span>
+    <div class="theme-toggle-wrapper">
+      <label for="themeCheckbox" id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+        <input type="checkbox" id="themeCheckbox" aria-label="Toggle dark mode" hidden>
+        <span class="icon sun"><i class="fa-solid fa-sun"></i></span>
+        <span class="icon moon"><i class="fa-solid fa-moon"></i></span>
+        <span class="thumb"></span>
+      </label>
     </div>
-<div class="menu-content">
+  </header>
 
-<ul class="side-links">
-    <li>
-        <a href="/">
-            <i class="fa-solid fa-house"></i> Home
-        </a>
-    </li>
+  <!-- ===== SIDE MENU ===== -->
+  <div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <span class="head-close-btn" onclick="closeMenu()">✕</span>
+    </div>
+    <div class="menu-content">
 
-    <li>
-        <a href="study-material.html">
-            <i class="fa-solid fa-book"></i> Study Material
-        </a>
-    </li>
-
-    <li>
-        <a href="links.html">
-            <i class="fa-solid fa-link"></i> External Source
-        </a>
-    </li>
-
-    <li>
-        <a href="courses.html">
-            <i class="fa-solid fa-graduation-cap"></i> Courses
-        </a>
-    </li>
-
-    <li>
-        <a href="library-opac.html">
-            <i class="fa-solid fa-book-open"></i> Library OPAC
-        </a>
-    </li>
-
-    <li>
+    <ul class="side-links">
+      <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="study-material.html"><i class="fa-solid fa-book"></i> Study Material</a></li>
+      <li><a href="links.html"><i class="fa-solid fa-link"></i> External Source</a></li>
+      <li><a href="courses.html"><i class="fa-solid fa-graduation-cap"></i> Courses</a></li>
+      <li><a href="library-opac.html"><i class="fa-solid fa-book-open"></i> Library OPAC</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleUploads()">
-            <i class="fa-solid fa-upload"></i> Uploads
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-upload"></i> Uploads
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="submenu" id="uploadsMenu">
-            <a href="upload.html#resources">
-                <i class="fa-solid fa-file-lines"></i> Upload as Document
-            </a>
-
-            <a href="upload.html#images">
-                <i class="fa-solid fa-camera"></i> Upload as Image
-            </a>
+          <a href="upload.html#resources"><i class="fa-solid fa-file-lines"></i> Upload as Document</a>
+          <a href="upload.html#images"><i class="fa-solid fa-camera"></i> Upload as Image</a>
         </div>
-    </li>
-
-    <li>
-        <a href="request-course.html">
-            <i class="fa-solid fa-pen-to-square"></i> Request Subject
-        </a>
-    </li>
-
-    <li>
-        <a href="feedback.html">
-            <i class="fa-solid fa-comment"></i> Feedback
-        </a>
-    </li>
-
-    <li>
+      </li>
+      <li><a href="request-course.html"><i class="fa-solid fa-pen-to-square"></i> Request Subject</a></li>
+      <li><a href="feedback.html"><i class="fa-solid fa-comment"></i> Feedback</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleAbout()">
-            <i class="fa-solid fa-circle-info"></i> About
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-circle-info"></i> About
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
-
         <div class="submenu" id="aboutMenu">
-            <a href="about.html#about-college">
-                <i class="fa-solid fa-building-columns"></i> About College
-            </a>
-
-            <a href="about.html#cs-department">
-                <i class="fa-solid fa-computer"></i> CS Department
-            </a>
-
-            <a href="about.html#about-website">
-                <i class="fa-solid fa-globe"></i> About this Website
-            </a>
-
-            <a href="about.html#about-admin">
-                <i class="fa-solid fa-user-tie"></i> Admin
-            </a>
+          <a href="#about-college"><i class="fa-solid fa-building-columns"></i> About College</a>
+          <a href="#cs-department"><i class="fa-solid fa-computer"></i> CS Department</a>
+          <a href="#about-website"><i class="fa-solid fa-globe"></i> About this Website</a>
+          <a href="#about-admin"><i class="fa-solid fa-user-tie"></i> Admin</a>
         </div>
-    </li>
-</ul>
+      </li>
+    </ul>
 
+    </div>
   </div>
-</div>
 
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="container" id="main">
 
-<main class="container" id="main">
+    <div class="header-row">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <h1 id="title">Loading...</h1>
+      </div>
+      <div>
+        <label for="limitSel" class="page-limit">Page limit:</label>
+        <select id="limitSel" class="selector">
+          <option value="10">10</option>
+          <option value="20" selected>20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <p id="total" style="margin:10px 0 5px auto;font-size:16px;"></p>
+    </div>
 
-<div class="header-row">
-  <div style="display:flex;align-items:center;gap:10px;">
-    <h1 id="title">Loading...</h1>
-  </div>
-  <div>
-    <label for="limitSel" class="page-limit">Page limit:</label>
-    <select id="limitSel" class="selector">
-      <option value="10">10</option>
-      <option value="20" selected>20</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
-    </select>
-  </div>
-  <p id="total" style="margin:10px 0 5px auto;font-size:16px;"></p>
-</div>
+    <div id="status" class="status">Searching book records…</div>
+    <div class="results" id="results"></div>
+    <div id="pagination" class="pagination" style="display:block"></div>
 
-<div id="status" class="status">Searching book records…</div>
-<div class="results" id="results"></div>
-<div id="pagination" class="pagination" style="display:block;"></div>
+    <p class="lead">
+      The search results shown here are fetched through the INFLIBNET IndCat system, which provides access to
+      library records from colleges and universities across India. This page filters and displays those records
+      that belong to Suren Das College Library. It helps quickly find book details such as title, author,
+      publisher and more, just like the library OPAC system.
+    </p>
 
-  <p class="lead">
-    The search results shown here are fetched through the INFLIBNET IndCat system, which provides access to
-    library records from colleges and universities across India. This page filters and displays those records
-    that belong to Suren Das College Library. It helps quickly find book details such as title, author,
-    publisher and more, just like the library OPAC system.
-  </p>
+  </main>
 
-</main>
-
-<footer>
+  <!-- ===== FOOTER ===== -->
+  <footer>
     <p>© 2026 Student Community Portal - Suren Das College<br>
     <a href="about.html">About Us</a></p>
   </footer>
 
-<script>
-(function () {
-  const STORAGE_KEY = "userThemePreference";
-  const THEME_COLORS = {
-    light: "#ffffff",
-    dark:  "#1a1a2e"
-  };
-  function getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
-  function getSavedTheme() {
-    return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
-  }
-  function updateMetaThemeColor(theme) {
-    let metaTag = document.querySelector('meta[name="theme-color"]');
-    if (!metaTag) {
-      metaTag = document.createElement("meta");
-      metaTag.name = "theme-color";
-      document.head.appendChild(metaTag);
-    }
-    metaTag.content = THEME_COLORS[theme];
-  }
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    updateMetaThemeColor(theme);
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.checked = theme === "dark";
-    }
-  }
-  function setTheme(theme) {
-    localStorage.setItem(STORAGE_KEY, theme);
-    applyTheme(theme);
-  }
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute("data-theme");
-    setTheme(current === "dark" ? "light" : "dark");
-  }
-  function watchSystemTheme() {
-    window.matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => {
-        if (!localStorage.getItem(STORAGE_KEY)) {
-          applyTheme(e.matches ? "dark" : "light");
-        }
-      });
-  }
-  function watchStorageChanges() {
-    window.addEventListener("storage", (e) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        applyTheme(e.newValue);
+  <!-- ===== SHARE BUTTON ===== -->
+  <script>
+  document.getElementById("shareBtn")?.addEventListener("click", async (event) => {
+    event.preventDefault();
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          text: " ",
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.error("Share failed:", err.message);
       }
-    });
-  }
-  if (document.head) {
-    applyTheme(getSavedTheme());
-  }
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    applyTheme(getSavedTheme());
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.addEventListener("change", toggleTheme);
+    } else {
+      alert("Sharing not supported in this browser.");
     }
   });
-} else {
-  applyTheme(getSavedTheme());
-  const checkbox = document.getElementById("themeCheckbox");
-  if (checkbox) {
-    checkbox.addEventListener("change", toggleTheme);
-  }
-}
-  watchSystemTheme();
-  watchStorageChanges();
-})();
 
-
-function openMenu(){
-    document.getElementById("sideMenu").classList.add("active");
-    document.getElementById("headOverlay").classList.add("show");
-}
-function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("active");
-    document.getElementById("headOverlay").classList.remove("show");
-}
-function toggleUploads(){
-    document.getElementById("uploadsMenu").classList.toggle("show");
-}
-function toggleAbout(){
-    document.getElementById("aboutMenu").classList.toggle("show");
-}
-document.querySelectorAll('.side-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        closeMenu();
-    });
-});
-window.addEventListener('pageshow', () => {
-    closeMenu();
-});
-</script>
-
-<script>
-const resultsEl=document.getElementById("results");
-const titleEl=document.getElementById("title");
-const statusEl=document.getElementById("status");
-const limitSel=document.getElementById("limitSel");
-const paginationEl=document.getElementById("pagination");
-
-function showStatus(message) {
-  if (!loadingEl) return;
-  statusEl.textContent = message || '';
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  statusEl.style.color = isDark ? '#fc3838' : '#b30707';
-}
-
-/* -------------------------
-   Client-side HTML parser
-   (copy of parseIndcatHtmlToRecords from library-opac.html)
-   ------------------------- */
-function norm(s){return (s||"").replace(/\s+/g," ").trim();}
-
-function parseIndcatHtmlToRecords(html){
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  const boxes = [...doc.querySelectorAll(".box1")];
-  const recs = [];
-  for (const b of boxes) {
-    const a = b.querySelector("a[href*='book_search?getDetails']");
-    if (!a) continue;
-    const title = norm(a.textContent);
-    // normalize href to absolute (if relative)
-    let url = a.getAttribute("href") || "";
-    try {
-      if (!/^https?:\/\//i.test(url)) url = new URL(url, "https://indcat.inflibnet.ac.in").href;
-    } catch(e) { /* keep as-is if weird */ }
-
-    const bottom = b.querySelector(".checkbox_bottomText");
-    let author = "", publisher = "", year = "", pubDetails = "";
-    if (bottom) {
-      // try multiple formats for author text
-      const possibleTexts = [bottom.querySelector("p"), bottom];
-      for (const el of possibleTexts) {
-        if (!el) continue;
-        const m = el.textContent.match(/Author\s*[:\-]\s*(.+?)(?:Publisher|$)/i);
-        if (m) { author = norm(m[1]); break; }
+  document.getElementById("shareBtn2")?.addEventListener("click", async (event) => {
+    event.preventDefault();
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          text: " ",
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.error("Share failed:", err.message);
       }
-      // publication info — try several places (col-md-8, any div, fallback to bottom text)
-      const colDiv = bottom.querySelector("div.col-md-8");
-      if (colDiv) pubDetails = norm(colDiv.textContent);
-      else {
-        const firstDiv = bottom.querySelector("div");
-        if (firstDiv) pubDetails = norm(firstDiv.textContent);
-        else pubDetails = norm(bottom.textContent);
+    } else {
+      alert("Sharing not supported in this browser.");
+    }
+  });
+  </script>
+
+  <!-- ===== THEME TOGGLE ===== -->
+  <script>
+  (function () {
+    const STORAGE_KEY = "userThemePreference";
+    const THEME_COLORS = {
+      light: "#ffffff",
+      dark: "#1a1a2e"
+    };
+
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    function getSavedTheme() {
+      return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+    }
+
+    function updateMetaThemeColor(theme) {
+      let metaTag = document.querySelector('meta[name="theme-color"]');
+      if (!metaTag) {
+        metaTag = document.createElement("meta");
+        metaTag.name = "theme-color";
+        document.head.appendChild(metaTag);
       }
+      metaTag.content = THEME_COLORS[theme];
+    }
 
-      const y = pubDetails.match(/\b(19\d{2}|20\d{2})\b/);
-      if (y) year = y[0];
-
-      // publisher heuristics: comma tokens, drop trailing token if it's a year/place
-      const parts = pubDetails.split(",").map(s=>s.trim()).filter(Boolean);
-      if (parts.length > 1) {
-        // if last token is a year, drop it
-        if (/\b(19\d{2}|20\d{2})\b/.test(parts[parts.length-1])) {
-          publisher = parts.slice(0,-1).join(", ");
-        } else {
-          // prefer tokens with publisher-like words or join everything except last
-          publisher = parts.slice(0,-1).join(", ");
-        }
-      } else {
-        // single token: remove year-like part
-        publisher = pubDetails.replace(/\b(19\d{2}|20\d{2})\b/,"").trim();
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      updateMetaThemeColor(theme);
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.checked = theme === "dark";
       }
     }
-    recs.push({ title, author, publisher, year, pubDetails, bookUrl: url });
-  }
-  return recs;
-}
 
-/* -------------------------
+    function setTheme(theme) {
+      localStorage.setItem(STORAGE_KEY, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    }
+
+    function watchSystemTheme() {
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    }
+
+    function watchStorageChanges() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          applyTheme(e.newValue);
+        }
+      });
+    }
+
+    if (document.head) {
+      applyTheme(getSavedTheme());
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getSavedTheme());
+        const checkbox = document.getElementById("themeCheckbox");
+        if (checkbox) {
+          checkbox.addEventListener("change", toggleTheme);
+        }
+      });
+    } else {
+      applyTheme(getSavedTheme());
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.addEventListener("change", toggleTheme);
+      }
+    }
+
+    watchSystemTheme();
+    watchStorageChanges();
+  })();
+  </script>
+
+  <!-- ===== BROWSE FUNCTIONALITY ===== -->
+  <script>
+  const resultsEl = document.getElementById("results");
+  const titleEl = document.getElementById("title");
+  const statusEl = document.getElementById("status");
+  const limitSel = document.getElementById("limitSel");
+  const paginationEl = document.getElementById("pagination");
+
+  function showStatus(message) {
+    if (!statusEl) return;
+    statusEl.textContent = message || '';
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    statusEl.style.color = isDark ? '#fc3838' : '#b30707';
+  }
+
+  /* -------------------------
+     Client-side HTML parser
+     (copy of parseIndcatHtmlToRecords from library-opac.html)
+     ------------------------- */
+  function norm(s) { return (s || "").replace(/\s+/g, " ").trim(); }
+
+  function parseIndcatHtmlToRecords(html) {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const boxes = [...doc.querySelectorAll(".box1")];
+    const recs = [];
+
+    for (const b of boxes) {
+      const a = b.querySelector("a[href*='book_search?getDetails']");
+      if (!a) continue;
+
+      const title = norm(a.textContent);
+      let url = a.getAttribute("href") || "";
+      try {
+        if (!/^https?:\\/\\//i.test(url)) url = new URL(url, "https://indcat.inflibnet.ac.in").href;
+      } catch(e) { /* keep as-is if weird */ }
+
+      const bottom = b.querySelector(".checkbox_bottomText");
+      let author = "", publisher = "", year = "", pubDetails = "";
+
+      if (bottom) {
+        const possibleTexts = [bottom.querySelector("p"), bottom];
+        for (const el of possibleTexts) {
+          if (!el) continue;
+          const m = el.textContent.match(/Author\s*[:\\-]*(.+?)(?:Publisher|$)/i);
+          if (m) { author = norm(m[1]); break; }
+        }
+
+        const colDiv = bottom.querySelector("div.col-md-8");
+        if (colDiv) pubDetails = norm(colDiv.textContent);
+        else {
+          const firstDiv = bottom.querySelector("div");
+          if (firstDiv) pubDetails = norm(firstDiv.textContent);
+          else pubDetails = norm(bottom.textContent);
+        }
+
+        const y = pubDetails.match(/\b(19\d{2}|20\d{2})\b/);
+        if (y) year = y[0];
+
+        const parts = pubDetails.split(",").map(s => s.trim()).filter(Boolean);
+        if (parts.length > 1) {
+          if (/\\b(19\d{2}|20\d{2})\b/.test(parts[parts.length-1])) {
+            publisher = parts.slice(0,-1).join(", ");
+          } else {
+            publisher = parts.slice(0,-1).join(", ");
+          }
+        } else {
+          publisher = pubDetails.replace(/\b(19\d{2}|20\d{2})\b/, "").trim();
+        }
+      }
+
+      recs.push({ title, author, publisher, year, pubDetails, bookUrl: url });
+    }
+
+    return recs;
+  }
+
+  /* -------------------------
    Modified loadBrowse(): parse data.html first
    ------------------------- */
-async function loadBrowse(page=1){
-  const params=new URLSearchParams(window.location.search);
-  const query=params.get("query")||"";
-  const type=params.get("type")||"subject";
-  const limits=limitSel.value;
+  async function loadBrowse(page = 1) {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("query") || "";
+    const type = params.get("type") || "subject";
+    const limits = limitSel.value;
 
-  if (!query) {
-    titleEl.textContent = "No query specified.";
-    titleEl.style.color = 'red';
-    return;
-  }
-
-  const displayType={
-    author:"Author",
-    subject:"Subject",
-    year:"Publication Year",
-    publisher:"Publisher",
-    place:"Place",
-    catalogue:"Catalogue Agency"
-  }[type]||"Subject";
-
-  titleEl.textContent=`Books under ${displayType}: ${query}`;
-  statusEl.style.display="block";
-  resultsEl.innerHTML="";
-
-  try{
-    const res=await fetch("/api/browse",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({type,query,limits,cPageNo:String(page)})
-    });
-    const data=await res.json();
-
-    if(!data.success){
-      showStatus('Failed to load data. Refresh the page to see again.');
+    if (!query) {
+      titleEl.textContent = "No query specified.";
+      titleEl.style.color = 'red';
       return;
     }
 
-    // Prefer parsing the returned HTML (more tolerant). Fallback to server results.
-    let recs = [];
-    if (data.html) {
-      recs = parseIndcatHtmlToRecords(data.html);
-    }
-    // If parse returned nothing, fallback to server-side 'results' (older behavior)
-    if ((!recs || recs.length === 0) && Array.isArray(data.results) && data.results.length) {
-      // normalize field names from server to match rendering code
-      recs = data.results.map(r => ({
-        title: r.title || "",
-        author: r.author || "",
-        publisher: r.publisher || "",
-        year: r.year || "",
-        bookUrl: r.bookUrl || r.bookUrl || ""
-      }));
-    }
+    const displayType = {
+      author: "Author",
+      subject: "Subject",
+      year: "Publication Year",
+      publisher: "Publisher",
+      place: "Place",
+      catalogue: "Catalogue Agency"
+    }[type] || "Subject";
 
-    if(!recs.length){
-      showStatus('No records found.');
-      return;
+    titleEl.textContent = `Books under ${displayType}: ${query}`;
+    statusEl.style.display = "block";
+    resultsEl.innerHTML = "";
+
+    try {
+      const res = await fetch("/api/browse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type, query, limits, cPageNo: String(page) })
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        showStatus('Failed to load data. Refresh the page to see again.');
+        return;
+      }
+
+      // Parse the returned HTML
+      let recs = [];
+
+      if (data.html) {
+        recs = parseIndcatHtmlToRecords(data.html);
+      }
+
+      // Fallback to server results
+      if ((!recs || recs.length === 0) && Array.isArray(data.results) && data.results.length) {
+        recs = data.results.map(r => ({
+          title: r.title || "",
+          author: r.author || "",
+          publisher: r.publisher || "",
+          year: r.year || "",
+          bookUrl: r.bookUrl || r.bookUrl || ""
+        }));
+      }
+
+      if (!recs.length) {
+        showStatus('No records found.');
+        return;
+      }
+
+      statusEl.style.display = "none";
+      resultsEl.innerHTML = "";
+
+      for (const r of recs) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.onclick = () => { window.location.href = `library-opac-book.html?url=${encodeURIComponent(r.bookUrl)}`; };
+        card.innerHTML = `
+          <h3>${r.title}</h3>
+          <div class="meta">
+            ${r.author ? `Author: ${r.author}<br>` : ""}
+            ${r.publisher ? `${r.publisher}` : ""}
+            ${r.year ? `<br>Year: ${r.year}` : ""}
+          </div>
+        `;
+        resultsEl.appendChild(card);
+      }
+
+      // --- Pagination ---
+      const total = parseInt((data.stats && data.stats.totalRecords) || recs.length || 0);
+      renderPagination(total, parseInt(limits), page, query, type);
+      document.getElementById("total").innerHTML = `Total <strong>${(data.stats && data.stats.totalRecords) || recs.length}</strong> Records found`;
+
+    } catch (e) {
+      showStatus(`Error: ${e.message}`);
     }
-
-    statusEl.style.display="none";
-    resultsEl.innerHTML="";
-    for(const r of recs){
-      const card=document.createElement("div");
-      card.className="card";
-      card.onclick=()=>{ window.location.href = `library-opac-book.html?url=${encodeURIComponent(r.bookUrl)}`; };
-      card.innerHTML=`<h3>${r.title}</h3>
-        <div class="meta">
-          ${r.author?`Author: ${r.author}<br>`:""}
-          ${r.publisher?`${r.publisher}`:""}
-          ${r.year?`<br>Year: ${r.year}`:""}
-        </div>`;
-      resultsEl.appendChild(card);
-    }
-
-    // --- Pagination ---
-    const total=parseInt((data.stats && data.stats.totalRecords) || recs.length || 0);
-    renderPagination(total,parseInt(limits),page,query,type);
-    document.getElementById("total").innerHTML =
-      `Total <strong>${(data.stats && data.stats.totalRecords) || recs.length}</strong> Records found`;
-
-  }catch(e){
-    showStatus(`Error: ${e.message}`);
   }
-}
 
-function renderPagination(totalRecord, limit, currentPage, query, type){
-  paginationEl.innerHTML = "";
-  const totalPages = Math.ceil(totalRecord / limit);
-  const createBtn = (label, page, disabled = false, active = false) => {
-    const btn = document.createElement("button");
-    btn.textContent = label;
-    if (active) btn.classList.add("active");
-    btn.disabled = disabled;
-    btn.onclick = () => loadBrowse(page);
-    paginationEl.appendChild(btn);
-  };
-  // Previous button
-  createBtn("❮", currentPage - 1, currentPage === 1);
-  const pages = new Set();
-  // Always show first 2
-  pages.add(1);
-  if (totalPages >= 2) pages.add(2);
-  // Current page and neighbors
-  pages.add(currentPage - 1);
-  pages.add(currentPage);
-  pages.add(currentPage + 1);
-  // Always show last 2
-  if (totalPages > 1) pages.add(totalPages);
-  if (totalPages > 2) pages.add(totalPages - 1);
-  // Convert to sorted array and filter valid pages
-  const sortedPages = [...pages]
-    .filter(p => p >= 1 && p <= totalPages)
-    .sort((a, b) => a - b);
-  // Render with dots
-  let prevPage = 0;
-  for (let page of sortedPages) {
-    if (page - prevPage > 1) {
-      paginationEl.append("...");
+  function renderPagination(totalRecord, limit, currentPage, query, type) {
+    paginationEl.innerHTML = "";
+    const totalPages = Math.ceil(totalRecord / limit);
+    const createBtn = (label, page, disabled = false, active = false) => {
+      const btn = document.createElement("button");
+      btn.textContent = label;
+      if (active) btn.classList.add("active");
+      btn.disabled = disabled;
+      btn.onclick = () => loadBrowse(page);
+      paginationEl.appendChild(btn);
+    };
+
+    // Previous button
+    createBtn("❮", currentPage - 1, currentPage === 1);
+
+    const pages = new Set();
+    pages.add(1);
+    if (totalPages >= 2) pages.add(2);
+    pages.add(currentPage - 1);
+    pages.add(currentPage);
+    pages.add(currentPage + 1);
+    if (totalPages > 1) pages.add(totalPages);
+    if (totalPages > 2) pages.add(totalPages - 1);
+
+    const sortedPages = [...pages]
+      .filter(p => p >= 1 && p <= totalPages)
+      .sort((a, b) => a - b);
+
+    let prevPage = 0;
+    for (let page of sortedPages) {
+      if (page - prevPage > 1) {
+        paginationEl.append("...");
+      }
+      createBtn(page, page, false, page === currentPage);
+      prevPage = page;
     }
-    createBtn(page, page, false, page === currentPage);
-    prevPage = page;
+
+    // Next button
+    createBtn("❯", currentPage + 1, currentPage === totalPages);
   }
-  // Next button
-  createBtn("❯", currentPage + 1, currentPage === totalPages);
-}
 
+  // Reload when limit changes
+  limitSel.addEventListener("change", () => loadBrowse(1));
 
-
-// Reload when limit changes
-limitSel.addEventListener("change",()=>loadBrowse(1));
-
-window.addEventListener("load",()=>loadBrowse());
-</script>
+  window.addEventListener("load", () => loadBrowse());
+  </script>
 
 </body>
 </html>

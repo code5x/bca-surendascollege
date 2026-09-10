@@ -2,292 +2,268 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Suren Das College Library Catalog - OPAC</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#ffffff"/>
+  <link rel="icon" href="/src/college-logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+  
+  <!-- Styles -->
   <style>
-
-/* ===== RESET / BASE FIX ===== */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
-body.bg-app {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  -webkit-font-smoothing: antialiased;
-
-  /* Default desktop background */
-  background: url("/src/background.webp") no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
-}
-
-/* Mobile background */
-@media (max-width: 768px) {
-  body.bg-app {
-    background: url("/src/background-mobile.webp") no-repeat center center fixed;
-    background-size: cover;
-  }
-}
-
-
-body.bg-app::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: -1; /* keeps overlay behind all content */
-}
-
-/* Optional wrapper padding for content */
-.overlay {
-  padding: 2rem;
-}
-
-/* container */
-.container {
-  max-width: 1100px;
-  margin: 50px 0 0;
-  padding: 15px;
-  box-sizing: border-box;
-}
-
-@media (min-width: 769px) { .container { padding: 35px; }}
-
-
-/* ===== HEADER ===== */
-header{
-    background: #1b9ade;
-    color:white;
-    padding: 4px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-    animation: slideDown 1s ease;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-@keyframes slideDown {
-    from { transform: translateY(-100%); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
-}
-.btn-area{
-         display: flex;
-         align-items: center;
-         gap: 15px;
-    font-size: 18px;
-    font-weight:bold;
-}
-.menu-btn{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    cursor:pointer;
-}
-.menu-btn span{
-    width:22px;
-    height:3px;
-    background:white;
-}
-
-.side-menu{
-    position:fixed;
-    top:1px;
-    right:-250px;
-    width:250px;
-    height:90vh;
-    background:#abe2ff;
-    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
-    transition:0.4s;
-    overflow-y:auto;
-    z-index:1000;
-    border-radius:5px 0 0 5px;
-
-    display: flex;
-    flex-direction: column;
-}
-.menu-header{
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 10px;
-}
-.side-menu.active{
-    right:0;
-}
-.head-close-btn{
-    font-size:22px;
-    cursor:pointer;
-    color: #111;
-}
-.menu-content{
-    flex: 1;
-    overflow-y: auto;
-}
-.side-links{
-    list-style:none;
-    padding: 0 10px;
-}
-.side-links i {
-    color: #444;
-    width: 25px;
-}
-.side-links li{
-    border-bottom: 1px solid #888;
-}
-.side-links li:last-child{
-    border:none;
-}
-.side-links a{
-    text-decoration:none;
-    color:#111;
-    display:block;
-    padding: 15px 10px;
-}
-.side-links a:hover{
-    background:#87d2fa;
-}
-.dropdown-btn{
-    cursor:pointer;
-    padding:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 10px;
-    color:#111;
-}
-.dropdown-btn .fa-chevron-down {
-    margin-left: auto;
-}
-.dropdown-btn:hover{
-    background:#77cefc;
-}
-.submenu{
-    display:none;
-    padding-left:20px;
-}
-.submenu a{
-    color:#111;
-    border-top: 1px solid #888;
-}
-.submenu.show{
-    display:block;
-}
-.head-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.3);
-    display:none;
-    z-index:999;
-}
-.head-overlay.show{
-    display:block;
-}
-@media(min-width:769px){
-    .side-menu{
-        right:-350px;
-        width:350px;
+    /* ===== COLOR VARIABLES ===== */
+    :root {
+      --primary-blue: #1b9ade;
+      --accent-red: #e01a5f;
+      --light-bg: #ffffff;
+      --dark-bg: #1a1a2e;
+      --text-light: #111111;
+      --text-dark: #f7f7f7;
+      --filter-light: #ddf;
+      --filter-dark: #222;
+      --card-light: #f7e7df;
+      --card-dark: #0f1724;
+      --border-light: #386c96;
+      --border-dark: #555;
     }
-    header { padding: 4px 30px; }
-    .btn-area { gap: 25px; }
-}
+    
+    [data-theme="dark"] {
+      --primary-blue: #074085;
+      --accent-red: #ff0050;
+      --light-bg: #1a1a2e;
+      --dark-bg: #12121a;
+      --text-light: #f7f7f7;
+      --text-dark: #111111;
+      --filter-light: #222;
+      --filter-dark: #222;
+      --card-light: #0f1724;
+      --card-dark: #0f1724;
+      --border-light: #555;
+      --border-dark: #555;
+    }
 
-.theme-toggle {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 65px;
-  height: 29px;
-  padding: 0 10px;
-  border-radius: 40px;
-  background: #bbb;
-  cursor: pointer;
-  user-select: none;
-  box-sizing: border-box;
-}
-.theme-toggle .icon {
-  font-size: 18px;
-  z-index: 2;
-  position: absolute;
-}
-.sun { color: #bbb; }
-.moon { color: #444; }
+    /* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+    body.bg-app {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      -webkit-font-smoothing: antialiased;
 
-.theme-toggle .thumb {
-  position: absolute;
-  left: 3px;
-  top: 2px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #195ea8;
-  transition: transform 0.3s ease;
-  z-index: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-#themeCheckbox:checked + .sun + .moon + .thumb {
-  transform: translateX(33px);
-}
-.theme-toggle .sun {
-  left: 6px;
-}
-.theme-toggle .moon {
-  right: 9px;
-}
+      /* Default desktop background */
+      background: url("/src/background.webp") no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
 
+    @media (max-width: 768px) {
+      body.bg-app {
+        background: url("/src/background-mobile.webp") no-repeat center center fixed;
+        background-size: cover;
+      }
+    }
 
-    /* ---------- PHEAD ---------- */
+    body.bg-app::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.6);
+      z-index: -1;
+      transition: background 0.3s ease;
+    }
+
+    [data-theme="dark"] body.bg-app::before {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--primary-blue);
+      color: white;
+      padding: 4px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    .btn-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      width: 22px;
+      height: 3px;
+      background: white;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 1px;
+      right: -250px;
+      width: 250px;
+      height: 90vh;
+      background: #abe2ff;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      transition: 0.4s;
+      overflow-y: auto;
+      z-index: 1000;
+      border-radius: 5px 0 0 5px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.active { right: 0; }
+
+    .menu-header {
+      flex-shrink: 0;
+      height: 50px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .head-close-btn {
+      font-size: 22px;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .menu-content { flex: 1; overflow-y: auto; }
+
+    .side-links {
+      list-style: none;
+      padding: 0 10px;
+    }
+
+    .side-links i { color: #444; width: 25px; }
+    .side-links li { border-bottom: 1px solid #888; }
+    .side-links li:last-child { border: none; }
+    .side-links a { text-decoration: none; color: #111; display: block; padding: 15px 10px; }
+    .side-links a:hover { background: #87d2fa; }
+
+    .dropdown-btn {
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10px;
+      color: #111;
+    }
+
+    .dropdown-btn .fa-chevron-down { margin-left: auto; }
+    .dropdown-btn:hover { background: #77cefc; }
+
+    .submenu { display: none; padding-left: 20px; }
+    .submenu a { color: #111; border-top: 1px solid #888; }
+    .submenu.show { display: block; }
+
+    .head-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      display: none;
+      z-index: 999;
+    }
+
+    .head-overlay.show { display: block; }
+
+    @media (min-width:769px){
+      .side-menu { right: -350px; width: 350px; }
+      header { padding: 4px 30px; }
+      .btn-area { gap: 25px; }
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 65px;
+      height: 29px;
+      padding: 0 10px;
+      border-radius: 40px;
+      background: #bbb;
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .theme-toggle .icon { font-size: 18px; z-index: 2; position: absolute; }
+    .sun { color: #bbb; }
+    .moon { color: #444; }
+
+    .theme-toggle .thumb {
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #195ea8;
+      transition: transform 0.3s ease;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    #themeCheckbox:checked + .sun + .moon + .thumb { transform: translateX(33px); }
+    .theme-toggle .sun { left: 6px; }
+    .theme-toggle .moon { right: 9px; }
+
+    /* ===== SEARCH SECTION ===== */
     .phead {
       text-align: center;
       margin-bottom: 22px;
       margin-top: 10px;
     }
+
     h1 {
       font-size: 21px;
       margin: 0;
-      color: #111;
+      color: var(--text-light);
     }
+
     p.lead {
       margin: 0;
-      color: #323847;
+      color: var(--text-light);
       font-size: 0.98rem;
       font-weight: 410;
       text-align: justify;
       line-height: 1.3;
     }
+
     .meta {
       margin-top: 6px;
-      color: #252525;
+      color: var(--text-light);
       font-size: 17px;
       text-align: center;
       font-weight: bold;
     }
 
-    /* ---------- SEARCH SECTION ---------- */
+    /* ===== SEARCH SELECTORS ===== */
     .search {
       margin-top: 18px;
       display: flex;
@@ -297,7 +273,7 @@ header{
       margin-left: auto;
       margin-right: auto;
       align-items: center;
-    }	
+    }
 
     .selector-row {
       display: flex;
@@ -309,37 +285,45 @@ header{
       margin-top: 8px;
       margin-bottom: 12px;
       padding: 12px;
-      background: rgba(230,240,250,0.8);
+      background: var(--filter-light);
       border-radius: 12px;
-      border: 1px solid #353;
+      border: 1px solid var(--border-light);
+      transition: background 0.3s, border-color 0.3s;
     }
+
+    [data-theme="dark"] .selector-row { background: var(--filter-dark); border-color: var(--border-dark); }
 
     .selector-group {
       display: flex;
       align-items: center;
       gap: 5px;
     }
+
     .selector-group label {
       font-size: 15px;
       font-weight: 410;
-      color: #333;
+      color: var(--text-light);
       white-space: nowrap;
     }
+
     .selector-group select {
       padding: 7px;
       border-radius: 7px;
-      border: 1px solid #333;
+      border: 1px solid var(--border-light);
       font-size: 14px;
-      background: #c2eaff;
+      background: var(--filter-light);
       outline: none;
       cursor: pointer;
       transition: all 0.15s ease;
       width: 200px;
-      color: #111;
+      color: var(--text-light);
     }
+
+    [data-theme="dark"] .selector-group select { background: var(--filter-dark); color: #ddd; border-color: var(--border-dark); }
+
     .selector-group select:hover { transform: scale(1.02); }
 
-    /* ---------- INPUT + BUTTON ---------- */
+    /* ===== INPUT + BUTTON ===== */
     .search-input-row {
       display: flex;
       flex-direction: row;
@@ -349,26 +333,35 @@ header{
       width: 100%;
       max-width: 600px;
     }
+
     .search-input-row input {
       flex: 1;
       padding: 9px;
       border-radius: 7px 0 0 7px;
       font-size: 15px;
-      background: #cddcfa;
+      background: var(--filter-light);
       outline: none;
-      color: #111;
-      border: 1px solid #294691; 
+      color: var(--text-light);
+      border: 1px solid var(--border-light);
+      transition: background 0.3s, border-color 0.3s;
     }
+
+    [data-theme="dark"] .search-input-row input { background: var(--filter-dark); border-color: var(--border-dark); color: #ddd; }
+
+    .search-input-row input:focus { background: #fff; color: #111; }
+
     .search-input-row button {
       padding: 10px;
       border-radius: 0 7px 7px 0;
-      background: #294691;
+      background: var(--primary-blue);
       color: #fff;
       border: none;
       font-weight: 450;
       cursor: pointer;
       font-size: 15px;
+      transition: background 0.3s;
     }
+
     .search-input-row button:hover {
       background: #103287;
     }
@@ -376,10 +369,10 @@ header{
     #total {
       margin: 7px 0 7px auto;
       font-size: 16px;
-      color: #333;
+      color: var(--text-light);
     }
 
-    /* ---------- RESULTS + CARDS ---------- */
+    /* ===== RESULTS + CARDS ===== */
     .results {
       margin-top: 22px;
       display: grid;
@@ -389,35 +382,40 @@ header{
       margin-left: auto;
       margin-right: auto;
     }
+
     .card {
-      background: #d4ddff;
+      background: var(--card-light);
       border-radius: 7px;
       padding: 15px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      border: 1px solid #555;
+      border: 1px solid var(--border-light);
       cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.3s;
     }
+
+    [data-theme="dark"] .card { background: var(--card-dark); border-color: var(--border-dark); }
+
     .card:hover {
       transform: scale(1.03);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
 
     .info h3 {
       margin: 0 0 6px;
       font-size: 16px;
-      color: #333;
+      color: var(--text-light);
     }
 
     .chip {
       font-size: 14px;
       font-weight: 410;
       margin: 5px auto;
-      color: #444;
+      color: var(--text-light);
     }
 
     .desc {
       margin-top: 8px;
-      color: #555;
+      color: var(--text-light);
       font-size: 17px;
       line-height: 1.25;
       text-align: justify;
@@ -425,7 +423,7 @@ header{
 
     #spinner {
       display: none;
-      color: #333;
+      color: var(--text-light);
       text-align: center;
       margin: 30px auto;
       font-size: 18px;
@@ -435,7 +433,7 @@ header{
     #placeholder {
       text-align: center;
       padding: 40px 12px;
-      color: #871b1b;
+      color: var(--text-light);
       font-size: 18px;
       font-weight: 450;
     }
@@ -443,474 +441,241 @@ header{
     .pagination {
       text-align: center;
       margin: 30px auto;
-      color: #111;
+      color: var(--text-light);
     }
+
     .pagination button {
       margin: 5px;
       padding: 6px 10px;
       border-radius: 8px;
-      border: 1px solid #333;
-      background: #ccc;
+      border: 1px solid var(--border-light);
+      background: var(--filter-light);
       cursor: pointer;
       font-size: 13px;
-      color: #111;
+      color: var(--text-light);
+      transition: background 0.3s, border-color 0.3s;
     }
+
+    [data-theme="dark"] .pagination button { background: var(--filter-dark); border-color: var(--border-dark); color: #ddd; }
+
     .pagination button:hover {
-      background: #aafab9;
+      background: #bfd;
+      border-color: #bfd;
     }
+
+    [data-theme="dark"] .pagination button:hover { background: #555; }
+
     .pagination button.active {
-      background: #5a9afa;
-    }
-    .pagination button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
     }
 
-footer {
-    background: #a7cfc9;
-    text-align: center;
-    padding: 1px;
-    color: #333;
-     font-size: 0.85rem;
-    border-top: 1px solid #333;
-    border-radius: 20px 20px 0 0;
-    margin-top: auto;
-}
+    [data-theme="dark"] .pagination button.active { background: #074085; border-color: #074085; }
 
-@media (min-width: 769px) {
-  footer {
-    font-size: 1.25rem;
-  }
-  .selector-group select { width: 250px; }
-}
-
-
-footer a {
-    color: #0c54b3;
-    text-decoration: none;
-}
-footer a:hover {
-    text-decoration: underline;
-}
+    @media (min-width: 769px) {
+      .pagination button { width: 250px; }
+    }
 
     @media (max-width: 600px) {
-      .selector-group select {
-        width: 200px;
-      }
-      .search-input-row {
-        flex-direction: row;
-        max-width: 100%;
-      }
+      .selector-group select { width: 200px; }
+      .search-input-row { flex-direction: column; max-width: 100%; }
     }
 
-
-[data-theme="dark"] {
-color-scheme: dark;
-body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
-footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
-footer a { color: #f7c2d9; }
-h1 { color: #ffffff; }
-p.lead { color: #cfd3fa; font-weight: 400; }
-.meta { color: #cec; }
-.selector-row { background: rgba(50,50,70,0.9); border: 1px solid #778; }
-.selector-group label { color: #ccc; }
-.selector-group select { border: 1px solid #aaa; background: #555; color: #eee; }
-.search-input-row input { background: #555; color: #fff; border: 1px solid #999; border-right: none; }
-.search-input-row button { box-shadow: inset 0 0 0 1px #999; background: #103287; }
-.search-input-row button:hover { background: #401087; }
-#total { color: #ccc; }
-.card { background: #35404a; border: 1px solid #888; }
-.info h3 { color: #ddd; }
-.chip { color: #ccc; font-weight: 400; }
-#spinner { color: #ddd; }
-#placeholder { color: #ff5252; }
-.pagination { color: #eee; }
-.pagination button { color: #eee; background: #444; border: 1px solid #999; }
-.pagination button:hover { background: #0a613e; }
-.pagination button.active { background: #11428c; }
-
-header{ background: #074085; }
-.side-menu{ background:#1e3759; }
-.side-links a{ color:#ddd;}
-.dropdown-btn{ color: #ddd; }
-.side-links a:hover, .dropdown-btn:hover {background:#2f4a70;}
-.submenu a{ color:#ddd;}
-.head-close-btn{ color: #ddd; }
-.side-links i { color: #aaa; }
-.sun { color: #444; }
-.moon { color: #bbb; }
-}
-
-@media (max-width: 768px) {
-    /* Hide scrollbar for Chrome, Safari and Edge */
-    *::-webkit-scrollbar {
-        display: none;
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--card-light);
+      text-align: center;
+      padding: 1px;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-light);
+      border-radius: 20px 20px 0 0;
+      margin-top: auto;
+      transition: background 0.3s, border-color 0.3s;
     }
 
-    /* Hide scrollbar for Firefox */
-    * {
-        scrollbar-width: none;
+    [data-theme="dark"] footer { background: var(--card-dark); border-color: var(--border-dark); color: #aaa; }
+
+    footer a {
+      color: var(--primary-blue);
+      text-decoration: none;
     }
 
-    /* Hide scrollbar for IE and old Edge */
-    * {
-        -ms-overflow-style: none;
-    }
-}
+    footer a:hover { text-decoration: underline; }
 
+    @media (max-width: 768px) {
+      *::-webkit-scrollbar { display: none; }
+      * { scrollbar-width: none; }
+      * { -ms-overflow-style: none; }
+    }
+
+    /* ===== SEARCH RESULTS HIGHLIGHT ===== */
+    .sa-highlight {
+      background: var(--filter-light);
+      color: var(--text-light);
+    }
   </style>
-
-<script>
-    (function () {
-      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
-      const saved = localStorage.getItem("userThemePreference");
-      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark" : "light";
-      const theme = saved || system;
-
-      // Apply data-theme immediately
-      document.documentElement.setAttribute("data-theme", theme);
-
-      // Update meta theme-color immediately
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.content = THEME_COLORS[theme];
-    })();
-  </script>
-
 </head>
+
 <body class="bg-app">
 
-<header>
-<div class="btn-area">
-<a href="#" id="shareBtn">
-    <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;" >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="22"
-             height="22"
-             viewBox="2 0 23 23"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="btn-area">
+      <a href="#" id="shareBtn">
+        <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="2 0 23 23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="18" cy="5" r="3"></circle>
             <circle cx="6" cy="12" r="3"></circle>
             <circle cx="18" cy="19" r="3"></circle>
             <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-    </button>
-</a>
+          </svg>
+        </button>
+      </a>
 
-<div class="theme-toggle-wrapper">
-  <label
-    for="themeCheckbox"
-    id="theme-toggle"
-    class="theme-toggle"
-    aria-label="Toggle Theme">
-    <input
-      type="checkbox"
-      id="themeCheckbox"
-      aria-label="Toggle dark mode"
-      hidden
-    >
-<span class="icon sun">
-    <i class="fa-solid fa-sun"></i>
-</span>
+      <div class="theme-toggle-wrapper">
+        <label for="themeCheckbox" id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+          <input type="checkbox" id="themeCheckbox" aria-label="Toggle dark mode" hidden>
+          <span class="icon sun"><i class="fa-solid fa-sun"></i></span>
+          <span class="icon moon"><i class="fa-solid fa-moon"></i></span>
+          <span class="thumb"></span>
+        </label>
+      </div>
+    </div>
 
-<span class="icon moon">
-    <i class="fa-solid fa-moon"></i>
-</span>
-    <span class="thumb"></span>
-  </label>
-</div>
-</div>
     <div class="menu-btn" onclick="openMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-</header>
+  </header>
 
-<div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
-<div class="side-menu" id="sideMenu">
-<div class="menu-header">
-        <span class="head-close-btn" onclick="closeMenu()">✕</span>
+  <!-- ===== SIDE MENU ===== -->
+  <div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <span class="head-close-btn" onclick="closeMenu()">✕</span>
     </div>
-<div class="menu-content">
+    <div class="menu-content">
 
-<ul class="side-links">
-    <li>
-        <a href="/">
-            <i class="fa-solid fa-house"></i> Home
-        </a>
-    </li>
-
-    <li>
-        <a href="study-material.html">
-            <i class="fa-solid fa-book"></i> Study Material
-        </a>
-    </li>
-
-    <li>
-        <a href="links.html">
-            <i class="fa-solid fa-link"></i> External Source
-        </a>
-    </li>
-
-    <li>
-        <a href="courses.html">
-            <i class="fa-solid fa-graduation-cap"></i> Courses
-        </a>
-    </li>
-
-    <li>
-        <a href="#">
-            <i class="fa-solid fa-book-open"></i> Library OPAC
-        </a>
-    </li>
-
-    <li>
+    <ul class="side-links">
+      <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="study-material.html"><i class="fa-solid fa-book"></i> Study Material</a></li>
+      <li><a href="links.html"><i class="fa-solid fa-link"></i> External Source</a></li>
+      <li><a href="courses.html"><i class="fa-solid fa-graduation-cap"></i> Courses</a></li>
+      <li><a href="#"><i class="fa-solid fa-book-open"></i> Library OPAC</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleUploads()">
-            <i class="fa-solid fa-upload"></i> Uploads
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-upload"></i> Uploads
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="submenu" id="uploadsMenu">
-            <a href="upload.html#resources">
-                <i class="fa-solid fa-file-lines"></i> Upload as Document
-            </a>
-
-            <a href="upload.html#images">
-                <i class="fa-solid fa-camera"></i> Upload as Image
-            </a>
+          <a href="upload.html#resources"><i class="fa-solid fa-file-lines"></i> Upload as Document</a>
+          <a href="upload.html#images"><i class="fa-solid fa-camera"></i> Upload as Image</a>
         </div>
-    </li>
-
-    <li>
-        <a href="request-course.html">
-            <i class="fa-solid fa-pen-to-square"></i> Request Subject
-        </a>
-    </li>
-
-    <li>
-        <a href="feedback.html">
-            <i class="fa-solid fa-comment"></i> Feedback
-        </a>
-    </li>
-
-    <li>
+      </li>
+      <li><a href="request-course.html"><i class="fa-solid fa-pen-to-square"></i> Request Subject</a></li>
+      <li><a href="feedback.html"><i class="fa-solid fa-comment"></i> Feedback</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleAbout()">
-            <i class="fa-solid fa-circle-info"></i> About
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-circle-info"></i> About
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
-
         <div class="submenu" id="aboutMenu">
-            <a href="about.html#about-college">
-                <i class="fa-solid fa-building-columns"></i> About College
-            </a>
-
-            <a href="about.html#cs-department">
-                <i class="fa-solid fa-computer"></i> CS Department
-            </a>
-
-            <a href="about.html#about-website">
-                <i class="fa-solid fa-globe"></i> About this Website
-            </a>
-
-            <a href="about.html#about-admin">
-                <i class="fa-solid fa-user-tie"></i> Admin
-            </a>
+          <a href="#about-college"><i class="fa-solid fa-building-columns"></i> About College</a>
+          <a href="#cs-department"><i class="fa-solid fa-computer"></i> CS Department</a>
+          <a href="#about-website"><i class="fa-solid fa-globe"></i> About this Website</a>
+          <a href="#about-admin"><i class="fa-solid fa-user-tie"></i> Admin</a>
         </div>
-    </li>
-</ul>
+      </li>
+    </ul>
 
-
+    </div>
   </div>
-</div>
 
+  <!-- ===== MAIN CONTENT ===== -->
   <main class="container" id="main">
 
-  <div class="phead">
-    <h1>Suren Das College Library Catalog (OPAC)</h1>
-    <div class="meta" id="meta"></div>
-  </div>
+    <div class="phead">
+      <h1>Suren Das College Library Catalog (OPAC)</h1>
+      <div class="meta" id="meta"></div>
+    </div>
 
-  <section class="search">
-    <p class="lead">
-      Search and explore books available in the Suren Das College Library.
-    Find titles by author, subject, or keywords using the simple search below.
+    <section class="search">
+      <p class="lead">
+        Search and explore books available in the Suren Das College Library.
+        Find titles by author, subject, or keywords using the simple search below.
+      </p>
+
+      <div class="selector-row">
+        <div class="selector-group">
+          <label for="opt">Search Option:</label>
+          <select id="opt">
+            <option value="exact" selected>Exact Search</option>
+            <option value="free">Free Search</option>
+          </select>
+        </div>
+
+        <div class="selector-group">
+          <label for="limits">&nbsp;&nbsp;Page Limits:&nbsp;&nbsp;</label>
+          <select id="limits">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+
+        <div class="selector-group">
+          <label for="field">&nbsp;Search Field:&nbsp;&nbsp;</label>
+          <select id="field">
+            <option value="allfields">All</option>
+            <option value="title" selected>Title</option>
+            <option value="author">Author</option>
+            <option value="topic">Subject</option>
+            <option value="publisher">Publisher</option>
+            <option value="place_text">Place</option>
+            <option value="publishDate">Year</option>
+            <option value="isbn">ISBN</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="search-input-row">
+        <input id="query" type="text" placeholder="Search for book..." />
+        <button id="searchBtn">Search</button>
+      </div>
+
+      <p id="total"></p>
+      <div id="spinner">Searching…</div>
+    </section>
+
+    <main id="resultsArea">
+      <div class="placeholder" id="placeholder"></div>
+      <div class="results" id="results" style="display:none"></div>
+    </main>
+
+    <div id="pagination" class="pagination" style="display:block"></div>
+
+    <p class="lead" style="margin: 30px auto;">
+      The search results shown here are fetched through the INFLIBNET IndCat system, which provides access to
+      library records from colleges and universities across India. This page filters and displays those records
+      that belong to Suren Das College Library. It helps quickly find book details such as title, author,
+      publisher and more, just like the library OPAC system.
     </p>
 
-    <div class="selector-row">
-      <div class="selector-group">
-        <label for="opt">Search Option:</label>
-        <select id="opt">
-          <option value="exact" selected>Exact Search</option>
-          <option value="free">Free Search</option>
-        </select>
-      </div>
-
-      <div class="selector-group">
-        <label for="limits">&nbsp;&nbsp;Page Limits:&nbsp;&nbsp;</label>
-        <select id="limits">
-          <option value="10">10</option>
-          <option value="20" selected>20</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </div>
-
-      <div class="selector-group">
-        <label for="field">&nbsp;Search Field:&nbsp;&nbsp;</label>
-        <select id="field">
-          <option value="allfields">All</option>
-          <option value="title" selected>Title</option>
-          <option value="author">Author</option>
-          <option value="topic">Subject</option>
-          <option value="publisher">Publisher</option>
-          <option value="place_text">Place</option>
-          <option value="publishDate">Year</option>
-          <option value="isbn">ISBN</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="search-input-row">
-      <input id="query" type="text" placeholder="Search for book..." />
-      <button id="searchBtn">Search</button>
-    </div>
-
-    <p id="total"></p>
-    <div id="spinner">Searching…</div>
-  </section>
-
-  <main id="resultsArea">
-    <div class="placeholder" id="placeholder"></div>
-    <div class="results" id="results" style="display:none"></div>
   </main>
 
-  <div id="pagination" class="pagination" style="display:block"></div>
-
-  <p class="lead" style="margin: 30px auto;">
-    The search results shown here are fetched through the INFLIBNET IndCat system, which provides access to
-    library records from colleges and universities across India. This page filters and displays those records
-    that belong to Suren Das College Library. It helps quickly find book details such as title, author,
-    publisher and more, just like the library OPAC system.
-  </p>
-
-</main>
-
-<footer>
+  <!-- ===== FOOTER ===== -->
+  <footer>
     <p>© 2026 Student Community Portal - Suren Das College<br>
       <a href="about.html">About Us</a></p>
   </footer>
 
-<script>
-(function () {
-  const STORAGE_KEY = "userThemePreference";
-  const THEME_COLORS = {
-    light: "#ffffff",
-    dark:  "#1a1a2e"
-  };
-  function getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
-  function getSavedTheme() {
-    return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
-  }
-  function updateMetaThemeColor(theme) {
-    let metaTag = document.querySelector('meta[name="theme-color"]');
-    if (!metaTag) {
-      metaTag = document.createElement("meta");
-      metaTag.name = "theme-color";
-      document.head.appendChild(metaTag);
-    }
-    metaTag.content = THEME_COLORS[theme];
-  }
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    updateMetaThemeColor(theme);
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.checked = theme === "dark";
-    }
-  }
-  function setTheme(theme) {
-    localStorage.setItem(STORAGE_KEY, theme);
-    applyTheme(theme);
-  }
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute("data-theme");
-    setTheme(current === "dark" ? "light" : "dark");
-  }
-  function watchSystemTheme() {
-    window.matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => {
-        if (!localStorage.getItem(STORAGE_KEY)) {
-          applyTheme(e.matches ? "dark" : "light");
-        }
-      });
-  }
-  function watchStorageChanges() {
-    window.addEventListener("storage", (e) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        applyTheme(e.newValue);
-      }
-    });
-  }
-  if (document.head) {
-    applyTheme(getSavedTheme());
-  }
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    applyTheme(getSavedTheme());
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.addEventListener("change", toggleTheme);
-    }
-  });
-} else {
-  applyTheme(getSavedTheme());
-  const checkbox = document.getElementById("themeCheckbox");
-  if (checkbox) {
-    checkbox.addEventListener("change", toggleTheme);
-  }
-}
-  watchSystemTheme();
-  watchStorageChanges();
-})();
-
-
-function openMenu(){
-    document.getElementById("sideMenu").classList.add("active");
-    document.getElementById("headOverlay").classList.add("show");
-}
-function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("active");
-    document.getElementById("headOverlay").classList.remove("show");
-}
-function toggleUploads(){
-    document.getElementById("uploadsMenu").classList.toggle("show");
-}
-function toggleAbout(){
-    document.getElementById("aboutMenu").classList.toggle("show");
-}
-document.querySelectorAll('.side-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        closeMenu();
-    });
-});
-window.addEventListener('pageshow', () => {
-    closeMenu();
-});
-</script>
-
-<script>
-document.getElementById("shareBtn")?.addEventListener(
-  "click",
-  async (event) => {
+  <!-- ===== SHARE BUTTON ===== -->
+  <script>
+  document.getElementById("shareBtn")?.addEventListener("click", async (event) => {
     event.preventDefault();
     if (navigator.share) {
       try {
@@ -925,142 +690,308 @@ document.getElementById("shareBtn")?.addEventListener(
     } else {
       alert("Sharing not supported in this browser.");
     }
-  }
-);
-</script>
+  });
+  </script>
 
-<script>
-const qEl=document.getElementById("query"),
-      btn=document.getElementById("searchBtn"),
-      spinner=document.getElementById("spinner"),
-      resultsEl=document.getElementById("results"),
-      placeholder=document.getElementById("placeholder"),
-      metaEl=document.getElementById("meta"),
-      optSel=document.getElementById("opt"),
-      limitSel=document.getElementById("limits"),
-      fieldSel=document.getElementById("field"),
-      paginationEl=document.getElementById("pagination");
+  <!-- ===== THEME TOGGLE ===== -->
+  <script>
+  (function () {
+    const STORAGE_KEY = "userThemePreference";
+    const THEME_COLORS = {
+      light: "#ffffff",
+      dark: "#1a1a2e"
+    };
 
-function norm(s){return(s||"").replace(/\s+/g," ").trim();}
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
 
-function parseIndcatHtmlToRecords(html){
-  const doc=new DOMParser().parseFromString(html,"text/html");
-  const boxes=[...doc.querySelectorAll(".box1")];
-  const recs=[];
-  for(const b of boxes){
-    const a=b.querySelector("a[href*='book_search?getDetails']");
-    if(!a)continue;
-    const title=norm(a.textContent);
-    const url=a.href;
-    const bottom=b.querySelector(".checkbox_bottomText");
-    let author="",publisher="",year="",pubDetails="";
-    if(bottom){
-      // try multiple formats for author text
-      const possibleTexts=[bottom.querySelector("p"),bottom];
-      for(const el of possibleTexts){
-        if(!el)continue;
-        const m=el.textContent.match(/Author\s*[:\-]\s*(.+?)(?:Publisher|$)/i);
-        if(m){author=norm(m[1]);break;}
+    function getSavedTheme() {
+      return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+    }
+
+    function updateMetaThemeColor(theme) {
+      let metaTag = document.querySelector('meta[name="theme-color"]');
+      if (!metaTag) {
+        metaTag = document.createElement("meta");
+        metaTag.name = "theme-color";
+        document.head.appendChild(metaTag);
       }
-      const div=bottom.querySelector("div");
-      if(div){
-        pubDetails=norm(div.textContent);
-        const y=pubDetails.match(/\b(19\d{2}|20\d{2})\b/);if(y)year=y[0];
-        const parts=pubDetails.split(",").map(s=>s.trim());
-        if(parts.length>1)publisher=parts.slice(0,-1).join(", ");
+      metaTag.content = THEME_COLORS[theme];
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      updateMetaThemeColor(theme);
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.checked = theme === "dark";
       }
     }
-    if(title)recs.push({title,author,publisher,year,pubDetails,url});
-  }
-  return recs;
-}
 
-function renderRecords(records){
-  resultsEl.innerHTML="";
-  if(!records.length){ 
-    placeholder.style.display="block";placeholder.textContent="No Records Found";return;
-  }
-  placeholder.style.display="none";resultsEl.style.display="grid";
-  for(const r of records){
-    const card=document.createElement("div");
-    card.className="card";
-    card.onclick=()=>{window.location.href=`library-opac-book.html?url=${encodeURIComponent(r.url)}`;};
-    card.innerHTML=`<div class="info">
-      <h3>${r.title}</h3>
-      <div class="meta-row">
-        ${r.author?`<div class='chip'>Author: ${r.author}</div>`:""}
-        ${r.publisher?`<div class='chip'>${r.publisher}</div>`:""}
-        ${r.year?`<div class='chip'>Year: ${r.year}</div>`:""}
-      </div>
-    </div>`;
-    resultsEl.appendChild(card);
-  }
-}
+    function setTheme(theme) {
+      localStorage.setItem(STORAGE_KEY, theme);
+      applyTheme(theme);
+    }
 
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    }
 
-function renderPagination(totalRecords, limit, currentPage){
-  paginationEl.innerHTML = "";
-  const totalPages = Math.ceil(totalRecords / limit);
-  const createBtn = (label, page, disabled = false, active = false) => {
-    const btn = document.createElement("button");
-    btn.textContent = label;
-    if (active) btn.classList.add("active");
-    btn.disabled = disabled;
-    btn.onclick = () => runSearch(qEl.value, false, page);
-    paginationEl.appendChild(btn);
+    function watchSystemTheme() {
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    }
+
+    function watchStorageChanges() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          applyTheme(e.newValue);
+        }
+      });
+    }
+
+    if (document.head) {
+      applyTheme(getSavedTheme());
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getSavedTheme());
+        const checkbox = document.getElementById("themeCheckbox");
+        if (checkbox) {
+          checkbox.addEventListener("change", toggleTheme);
+        }
+      });
+    } else {
+      applyTheme(getSavedTheme());
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.addEventListener("change", toggleTheme);
+      }
+    }
+
+    watchSystemTheme();
+    watchStorageChanges();
+  })();
+  </script>
+
+  <!-- ===== SEARCH FUNCTIONALITY ===== -->
+  <script>
+  const qEl = document.getElementById("query");
+  const btn = document.getElementById("searchBtn");
+  const spinner = document.getElementById("spinner");
+  const resultsEl = document.getElementById("results");
+  const placeholder = document.getElementById("placeholder");
+  const metaEl = document.getElementById("meta");
+  const optSel = document.getElementById("opt");
+  const limitSel = document.getElementById("limits");
+  const fieldSel = document.getElementById("field");
+  const paginationEl = document.getElementById("pagination");
+
+  function norm(s) { return (s || "").replace(/\s+/g, " ").trim(); }
+
+  function parseIndcatHtmlToRecords(html) {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const boxes = [...doc.querySelectorAll(".box1")];
+    const recs = [];
+
+    for (const b of boxes) {
+      const a = b.querySelector("a[href*='book_search?getDetails']");
+      if (!a) continue;
+
+      const title = norm(a.textContent);
+      const url = a.getAttribute("href");
+
+      const bottom = b.querySelector(".checkbox_bottomText");
+      let author = "", publisher = "", year = "", pubDetails = "";
+
+      if (bottom) {
+        // try multiple formats for author text
+        const possibleTexts = [bottom.querySelector("p"), bottom];
+        for (const el of possibleTexts) {
+          if (!el) continue;
+          const m = el.textContent.match(/Author\s*[:\\-]*(.+?)(?:Publisher|$)/i);
+          if (m) { author = norm(m[1]); break; }
+        }
+
+        const div = bottom.querySelector("div");
+        if (div) {
+          pubDetails = norm(div.textContent);
+          const y = pubDetails.match(/\b(19\d{2}|20\d{2})\b/);
+          if (y) year = y[0];
+
+          const parts = pubDetails.split(",").map(s => s.trim());
+          if (parts.length > 1) {
+            publisher = parts.slice(0, -1).join(", ");
+          }
+        }
+      }
+
+      if (title) recs.push({ title, author, publisher, year, pubDetails, url });
+    }
+
+    return recs;
+  }
+
+  function renderRecords(records) {
+    resultsEl.innerHTML = "";
+    if (!records.length) {
+      placeholder.style.display = "block";
+      placeholder.textContent = "No Records Found";
+      return;
+    }
+    placeholder.style.display = "none";
+    resultsEl.style.display = "grid";
+
+    for (const r of records) {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.onclick = () => {
+        window.location.href = `library-opac-book.html?url=${encodeURIComponent(r.url)}`;
+      };
+      card.innerHTML = `
+        <div class="info">
+          <h3>${r.title}</h3>
+          <div class="meta-row">
+            ${r.author ? `<div class='chip'>Author: ${r.author}</div>` : ""}
+            ${r.publisher ? `<div class='chip'>${r.publisher}</div>` : ""}
+            ${r.year ? `<div class='chip'>Year: ${r.year}</div>` : ""}
+          </div>
+        </div>
+      `;
+      resultsEl.appendChild(card);
+    }
+  }
+
+  function renderPagination(totalRecords, limit, currentPage) {
+    paginationEl.innerHTML = "";
+    const totalPages = Math.ceil(totalRecords / limit);
+    const createBtn = (label, page, disabled = false, active = false) => {
+      const btn = document.createElement("button");
+      btn.textContent = label;
+      if (active) btn.classList.add("active");
+      btn.disabled = disabled;
+      btn.onclick = () => runSearch(qEl.value, false, page);
+      paginationEl.appendChild(btn);
+    };
+
+    // Previous button
+    createBtn("❮", currentPage - 1, currentPage === 1);
+    const pages = new Set();
+    pages.add(1);
+    if (totalPages >= 2) pages.add(2);
+    pages.add(currentPage - 1);
+    pages.add(currentPage);
+    pages.add(currentPage + 1);
+    if (totalPages > 1) pages.add(totalPages);
+    if (totalPages > 2) pages.add(totalPages - 1);
+
+    const sortedPages = [...pages]
+      .filter(p => p >= 1 && p <= totalPages)
+      .sort((a, b) => a - b);
+
+    let prevPage = 0;
+    for (let page of sortedPages) {
+      if (page - prevPage > 1) {
+        paginationEl.append("...");
+      }
+      createBtn(page, page, false, page === currentPage);
+      prevPage = page;
+    }
+
+    // Next button
+    createBtn("❯", currentPage + 1, currentPage === totalPages);
+  }
+
+  async function runSearch(query, auto = false, page = 1) {
+    const opt = optSel.value;
+    const limits = limitSel.value;
+    const field = fieldSel.value;
+
+    spinner.style.display = "flex";
+    btn.disabled = true;
+
+    try {
+      const res = await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query, opt, limits, field, cPageNo: String(page) })
+      });
+      const data = await res.json();
+
+      if (!data.success) {
+        placeholder.style.display = "block";
+        placeholder.textContent = "Failed to Load Records";
+        return;
+      }
+
+      metaEl.innerHTML = `Unique: ${data.stats.uniqueRecords || "—"}  |  &nbsp;&nbsp;&nbsp;  Holdings: ${data.stats.holdings || "—"}`;
+
+      const recs = parseIndcatHtmlToRecords(data.html || "");
+      document.getElementById("total").innerHTML = `Total <strong>${data.stats.totalRecords}</strong> Records found`;
+
+      renderRecords(recs);
+      const total = parseInt(data.stats.totalRecords || recs.length || 0);
+      renderPagination(total, parseInt(limits), page);
+    } catch (e) {
+      placeholder.textContent = "Error: " + e.message;
+    } finally {
+      spinner.style.display = "none";
+      btn.disabled = false;
+    }
+  }
+
+  btn.onclick = () => {
+    const q = qEl.value.trim();
+    if (!q) return;
+    runSearch(q);
   };
-  // Previous button
-  createBtn("❮", currentPage - 1, currentPage === 1);
-  const pages = new Set();
-  // Always show first 2
-  pages.add(1);
-  if (totalPages >= 2) pages.add(2);
-  // Current page and neighbors
-  pages.add(currentPage - 1);
-  pages.add(currentPage);
-  pages.add(currentPage + 1);
-  // Always show last 2
-  if (totalPages > 1) pages.add(totalPages);
-  if (totalPages > 2) pages.add(totalPages - 1);
-  // Convert to sorted array and filter valid pages
-  const sortedPages = [...pages]
-    .filter(p => p >= 1 && p <= totalPages)
-    .sort((a, b) => a - b);
-  // Render with dots
-  let prevPage = 0;
-  for (let page of sortedPages) {
-    if (page - prevPage > 1) {
-      paginationEl.append("...");
-    }
-    createBtn(page, page, false, page === currentPage);
-    prevPage = page;
+
+  qEl.addEventListener("keydown", e => {
+    if (e.key === "Enter") btn.click();
+  });
+
+  window.addEventListener("load", () => runSearch("", true));
+  </script>
+
+  <!-- ===== MENU TOGGLES ===== -->
+  <script>
+  function openMenu() {
+    document.getElementById("sideMenu").classList.add("active");
+    document.getElementById("headOverlay").classList.add("show");
   }
-  // Next button
-  createBtn("❯", currentPage + 1, currentPage === totalPages);
-}
 
+  function closeMenu() {
+    document.getElementById("sideMenu").classList.remove("active");
+    document.getElementById("headOverlay").classList.remove("show");
+  }
 
-async function runSearch(query,auto=false,page=1){
-  const opt=optSel.value, limits=limitSel.value, field=fieldSel.value;
-  spinner.style.display="flex";btn.disabled=true;
-  try{
-    const res=await fetch("/api/search",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query,opt,limits,field,cPageNo:String(page)})});
-    const data=await res.json();
-    if(!data.success){placeholder.style.display="block";placeholder.textContent="Failed to Load Records";return;}
-    metaEl.innerHTML=`Unique: ${data.stats.uniqueRecords||"—"}&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;Holdings: ${data.stats.holdings||"—"}`;
-    const recs=parseIndcatHtmlToRecords(data.html||"");
-    document.getElementById("total").innerHTML = 
-    `Total <strong>${data.stats.totalRecords}</strong> Records found`;
-    renderRecords(recs);
-    const total=parseInt(data.stats.totalRecords||recs.length||0);
-    renderPagination(total,parseInt(limits),page);
-  }catch(e){placeholder.textContent="Error: "+e.message;}
-  finally{spinner.style.display="none";btn.disabled=false;}
-}
+  function toggleUploads() {
+    document.getElementById("uploadsMenu").classList.toggle("show");
+  }
 
-btn.onclick=()=>{const q=qEl.value.trim();if(!q)return;runSearch(q);};
-qEl.addEventListener("keydown",e=>{if(e.key==="Enter")btn.click();});
-window.addEventListener("load",()=>runSearch("",true));
-</script>
+  function toggleAbout() {
+    document.getElementById("aboutMenu").classList.toggle("show");
+  }
+
+  document.querySelectorAll('.side-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  window.addEventListener('pageshow', () => {
+    closeMenu();
+  });
+  </script>
+
 </body>
 </html>

@@ -1,932 +1,576 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Courses by CS Deparement</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Courses by CS Department</title>
   <meta name="theme-color" content="#ffffff"/>
+  <link rel="icon" href="/src/college-logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-
-/* ===== Background with overlay ===== */
-body.bg-app {
-  background: url("/src/background.webp") no-repeat center center fixed;
-  background-size: cover;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  padding: 0;
-  position: relative;
-}
-
-@media (max-width: 768px) {
-  body.bg-app {
-    background: url("/src/background-mobile.webp") no-repeat center center fixed;
-    background-size: cover;
-  }
-}
-
-body.bg-app::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: 0;
-  pointer-events: none;
-}
-
-
-.title-boxx {
- max-width: 100%;
- padding: 0 20px;
-}
-
-
-.course-no {
-  max-width: 95%;
-  margin: 30px 10px;
-  padding: 10px;
-  background: rgba(230,240,250,0.8);
-  border: 2px solid #151;
-  border-radius: 15px;
-  z-index: 10;
-  position: relative;
-}
-
-
-
-/* ===== HEADER ===== */
-header{
-    background: #1b9ade;
-    color:white;
-    padding: 4px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-    animation: slideDown 1s ease;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-@keyframes slideDown {
-    from { transform: translateY(-100%); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
-}
-.btn-area{
-         display: flex;
-         align-items: center;
-         gap: 15px;
-    font-size: 18px;
-    font-weight:bold;
-}
-.menu-btn{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    cursor:pointer;
-}
-.menu-btn span{
-    width:22px;
-    height:3px;
-    background:white;
-}
-
-.side-menu{
-    position:fixed;
-    top:1px;
-    right:-250px;
-    width:250px;
-    height:90vh;
-    background:#abe2ff;
-    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
-    transition:0.4s;
-    overflow-y:auto;
-    z-index:1000;
-    border-radius:5px 0 0 5px;
-
-    display: flex;
-    flex-direction: column;
-}
-.menu-header{
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 10px;
-}
-.side-menu.active{
-    right:0;
-}
-.head-close-btn{
-    font-size:22px;
-    cursor:pointer;
-    color: #111;
-}
-.menu-content{
-    flex: 1;
-    overflow-y: auto;
-}
-.side-links{
-    list-style:none;
-    padding: 0 10px;
-}
-.side-links i {
-    color: #444;
-    width: 25px;
-}
-.side-links li{
-    border-bottom: 1px solid #888;
-}
-.side-links li:last-child{
-    border:none;
-}
-.side-links a{
-    text-decoration:none;
-    color:#111;
-    display:block;
-    padding: 15px 10px;
-}
-.side-links a:hover{
-    background:#87d2fa;
-}
-.dropdown-btn{
-    cursor:pointer;
-    padding:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 10px;
-    color:#111;
-}
-.dropdown-btn .fa-chevron-down {
-    margin-left: auto;
-}
-.dropdown-btn:hover{
-    background:#77cefc;
-}
-.submenu{
-    display:none;
-    padding-left:20px;
-}
-.submenu a{
-    color:#111;
-    border-top: 1px solid #888;
-}
-.submenu.show{
-    display:block;
-}
-.head-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.3);
-    display:none;
-    z-index:999;
-}
-.head-overlay.show{
-    display:block;
-}
-@media(min-width:769px){
-    .side-menu{
-        right:-350px;
-        width:350px;
+  
+  <!-- Styles -->
+  <style>
+    /* ===== COLOR VARIABLES ===== */
+    :root {
+      --primary-blue: #1b9ade;
+      --accent-red: #e01a5f;
+      --light-bg: #ffffff;
+      --dark-bg: #1a1a2e;
+      --text-light: #111111;
+      --text-dark: #f7f7f7;
+      --filter-light: #ddf;
+      --filter-dark: #222;
+      --card-light: #f7e7df;
+      --card-dark: #0f1724;
+      --border-light: #386c96;
+      --border-dark: #555;
     }
-    header { padding: 4px 30px; }
-    .btn-area { gap: 25px; }
-}
-
-.theme-toggle {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 65px;
-  height: 29px;
-  padding: 0 10px;
-  border-radius: 40px;
-  background: #bbb;
-  cursor: pointer;
-  user-select: none;
-  box-sizing: border-box;
-}
-.theme-toggle .icon {
-  font-size: 18px;
-  z-index: 2;
-  position: absolute;
-}
-.sun { color: #bbb; }
-.moon { color: #444; }
-
-.theme-toggle .thumb {
-  position: absolute;
-  left: 3px;
-  top: 2px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #195ea8;
-  transition: transform 0.3s ease;
-  z-index: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-#themeCheckbox:checked + .sun + .moon + .thumb {
-  transform: translateX(33px);
-}
-.theme-toggle .sun {
-  left: 6px;
-}
-.theme-toggle .moon {
-  right: 9px;
-}
-
-
-
-@media (min-width: 769px) {
-.course-no { margin: 40px 35px; max-width: 1100px; }
-} 
-
-
-/* ===== Text Elements ===== */
-h2 {
-  text-align: center;
-  color: #111;
-  margin-bottom: 5px;
-  position: relative;
-  z-index: 1;
-  line-height: 35px;
-}
-
-h3 {
-  text-align: left;
-  color: #222;
-  margin-top: 15px;
-  margin-bottom: 10px;
-  position: relative;
-  z-index: 1;
-}
-
-.p1 {
-  display: block;
-  margin: 10px 0 0;
-  font-size: 1rem;
-  font-weight: 450;
-  color: #141;
-  position: relative;
-  z-index: 1;
-}
-
-.p2 {
-  display: block;
-  margin: 10px 0 20px;
-  text-align: justify;
-  color: #333;
-  font-size: 0.95rem;
-  font-weight: 400;
-  position: relative;
-  z-index: 1;
-  line-height: 1.5;
-}
-
-/* ===== Small Box ===== */
-.pdf-box {
-  width: 100%;
-  max-width: 500px;
-  margin: 20px 0;
-  display: flex;
-  box-sizing: border-box; 
-  gap: 8px;
-  background: #8aa9c1;
-  border: 1px solid #123;
-  border-radius: 10px;
-  padding: 9px;
-  position: relative;
-  z-index: 1;
-  align-items: center;
-}
-
-.box-left {
-  flex: 0 0 80px;
-  width: 80px;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.box-left img {
-   width: 100%;                                           
-   height: 100%;   
-   border-radius: 8px;
-    object-fit: cover;
-}
-
-.box-right {
- flex: 1 1 auto;
- display:flex;
- flex-direction:column;
- gap:7px;
- min-width: 0;
-}
-
-.button-row {
-  display: flex;
-  align-items:center;
-  gap: 12px;
-}
-.course-box {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-.pdf-box button {
-  background: #4073f5;
-  color: #fff;
-  padding: 5px 8px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-  border: none;
-}
-.pdf-box button:hover { background: #751aeb; }
-
-.file-title {                                                   
-  margin: 0;
-  font-size: 15px;                                              
-  color: #222;
-  line-height: 1.2; 
-  font-weight: 400;
-  display: -webkit-box;                                        
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;                                 
-  overflow: hidden;
-}
-
-.label {
-  display: inline-block;
-  font-size: 12px;
-  padding: 2px;
-  margin-right: 3px;
-  margin-left: 3px;
-  background: #bbb;
-  border-radius: 4px;
-  color: #222;
-}
-
-@media (min-width: 769px) {
-  .pdf-box { gap: 20px; padding: 12px; }
-  .box-left { flex-basis: 160px; }
-  .file-title { font-size: 16px; }
-  button { padding: 10px 18px; border-width: 2px; }
-}
-
-/* ===== FOOTER ===== */
-footer {
-    background: #a7cfc9;
-    text-align: center;
-    padding: 0.1px;
-    margin-top: 5px;
-    color: #333;
-    font-size: 0.85rem;
-    border-top: 1px solid #333;
-    border-radius: 20px 20px 0 0;
-
-    z-index: 1;
-    position: relative;
-}
-
-
-footer a {
-    color: #0c54b3;
-    text-decoration: none;
-}
-footer a:hover {
-    text-decoration: underline;
-}
-
-
-[data-theme="dark"] {
-color-scheme: dark;
-body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
-footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
-footer a { color: #f7c2d9; }
-h2 { color: #eee; }
-h3 { color: #ddd; }
-.p1 { color: #ccc; }
-.p2 { color: #cfd3fa; }
-.course-no { background: rgba(50,50,70,0.9); border: 2px solid #667; }
-.pdf-box { background: #243045; border: 1px solid #888; }
-.file-title { color: #eee; }
-.pdf-box button { background: #adf; color: #222; }
-.pdf-box button:hover { background: #aaf; }
-.label { background: #555; color: #eee; }
-
-header{ background: #074085; }
-.side-menu{ background:#1e3759; }
-.side-links a{ color:#ddd;}
-.dropdown-btn{ color: #ddd; }
-.side-links a:hover, .dropdown-btn:hover {background:#2f4a70;}
-.submenu a{ color:#ddd;}
-.head-close-btn{ color: #ddd; }
-.side-links i { color: #aaa; }
-.sun { color: #444; }
-.moon { color: #bbb; }
-}
-
-
-@media (max-width: 768px) {
-    /* Hide scrollbar for Chrome, Safari and Edge */
-    *::-webkit-scrollbar {
-        display: none;
+    
+    [data-theme="dark"] {
+      --primary-blue: #074085;
+      --accent-red: #ff0050;
+      --light-bg: #1a1a2e;
+      --dark-bg: #12121a;
+      --text-light: #f7f7f7;
+      --text-dark: #111111;
+      --filter-light: #222;
+      --filter-dark: #222;
+      --card-light: #0f1724;
+      --card-dark: #0f1724;
+      --border-light: #555;
+      --border-dark: #555;
     }
 
-    /* Hide scrollbar for Firefox */
-    * {
-        scrollbar-width: none;
+    /* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+    body.bg-app {
+      background: url("/src/background.webp") no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      padding: 0;
+      position: relative;
+      color: var(--text-light);
     }
 
-    /* Hide scrollbar for IE and old Edge */
-    * {
-        -ms-overflow-style: none;
+    @media (max-width: 768px) {
+      body.bg-app {
+        background: url("/src/background-mobile.webp") no-repeat center center fixed;
+        background-size: cover;
+      }
     }
-}
 
-</style>
+    body.bg-app::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.6);
+      z-index: 0;
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
 
-<script>
-    (function () {
-      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
-      const saved = localStorage.getItem("userThemePreference");
-      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark" : "light";
-      const theme = saved || system;
+    [data-theme="dark"] body.bg-app::before {
+      background: rgba(0, 0, 0, 0.7);
+    }
 
-      // Apply data-theme immediately
-      document.documentElement.setAttribute("data-theme", theme);
+    /* ===== HEADER ===== */
+    header {
+      background: var(--primary-blue);
+      color: white;
+      padding: 4px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-      // Update meta theme-color immediately
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.content = THEME_COLORS[theme];
-    })();
-  </script>
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
 
+    .btn-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      width: 22px;
+      height: 3px;
+      background: white;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 1px;
+      right: -250px;
+      width: 250px;
+      height: 90vh;
+      background: #abe2ff;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      transition: 0.4s;
+      overflow-y: auto;
+      z-index: 1000;
+      border-radius: 5px 0 0 5px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.active { right: 0; }
+
+    .menu-header {
+      flex-shrink: 0;
+      height: 50px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .head-close-btn {
+      font-size: 22px;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .menu-content { flex: 1; overflow-y: auto; }
+
+    .side-links {
+      list-style: none;
+      padding: 0 10px;
+    }
+
+    .side-links i { color: #444; width: 25px; }
+    .side-links li { border-bottom: 1px solid #888; }
+    .side-links li:last-child { border: none; }
+    .side-links a { text-decoration: none; color: #111; display: block; padding: 15px 10px; }
+    .side-links a:hover { background: #87d2fa; }
+
+    .dropdown-btn {
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10px;
+      color: #111;
+    }
+
+    .dropdown-btn .fa-chevron-down { margin-left: auto; }
+    .dropdown-btn:hover { background: #77cefc; }
+
+    .submenu { display: none; padding-left: 20px; }
+    .submenu a { color: #111; border-top: 1px solid #888; }
+    .submenu.show { display: block; }
+
+    .head-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      display: none;
+      z-index: 999;
+    }
+
+    .head-overlay.show { display: block; }
+
+    @media (min-width:769px){
+      .side-menu { right: -350px; width: 350px; }
+      header { padding: 4px 30px; }
+      .btn-area { gap: 25px; }
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 65px;
+      height: 29px;
+      padding: 0 10px;
+      border-radius: 40px;
+      background: #bbb;
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .theme-toggle .icon { font-size: 18px; z-index: 2; position: absolute; }
+    .sun { color: #bbb; }
+    .moon { color: #444; }
+
+    .theme-toggle .thumb {
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #195ea8;
+      transition: transform 0.3s ease;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    #themeCheckbox:checked + .sun + .moon + .thumb { transform: translateX(33px); }
+    .theme-toggle .sun { left: 6px; }
+    .theme-toggle .moon { right: 9px; }
+
+    /* ===== COURSE LAYOUT ===== */
+    .title-boxx {
+      max-width: 100%;
+      padding: 0 20px;
+    }
+
+    .course-no {
+      max-width: 95%;
+      margin: 30px 10px;
+      padding: 10px;
+      background: rgba(230,240,250,0.8);
+      border: 2px solid #151;
+      border-radius: 15px;
+      z-index: 10;
+      position: relative;
+    }
+
+    @media (min-width: 769px) {
+      .course-no { margin: 40px 35px; max-width: 1100px; }
+    }
+
+    /* ===== TEXT ELEMENTS ===== */
+    h2 {
+      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 5px;
+      position: relative;
+      z-index: 1;
+      line-height: 35px;
+    }
+
+    h3 {
+      text-align: left;
+      color: var(--text-light);
+      margin-top: 15px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .p1 {
+      display: block;
+      margin: 10px 0 0;
+      font-size: 1rem;
+      font-weight: 450;
+      color: var(--text-light);
+      position: relative;
+      z-index: 1;
+    }
+
+    .p2 {
+      display: block;
+      margin: 10px 0 20px;
+      text-align: justify;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      font-weight: 400;
+      position: relative;
+      z-index: 1;
+      line-height: 1.5;
+    }
+
+    /* ===== PDF BOX ===== */
+    .pdf-box {
+      width: 100%;
+      max-width: 500px;
+      margin: 20px 0;
+      display: flex;
+      box-sizing: border-box;
+      gap: 8px;
+      background: var(--filter-light);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 9px;
+      position: relative;
+      z-index: 1;
+      align-items: center;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] .pdf-box { background: var(--filter-dark); border-color: var(--border-dark); }
+
+    .box-left {
+      flex: 0 0 80px;
+      width: 80px;
+      height: 90px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box-left img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .box-right {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .course-box {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pdf-box button {
+      background: var(--primary-blue);
+      color: #fff;
+      padding: 5px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      border: none;
+      transition: background 0.3s;
+    }
+
+    [data-theme="dark"] .pdf-box button { background: var(--primary-blue); color: #fff; }
+
+    .pdf-box button:hover { background: var(--accent-red); }
+    [data-theme="dark"] .pdf-box button:hover { background: #ff3366; }
+
+    .file-title {
+      margin: 0;
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.2;
+      font-weight: 400;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px;
+      margin-right: 3px;
+      margin-left: 3px;
+      background: #bbb;
+      border-radius: 4px;
+      color: var(--text-light);
+    }
+
+    [data-theme="dark"] .label { background: #555; color: #eee; }
+
+    @media (min-width: 769px) {
+      .pdf-box { gap: 20px; padding: 12px; }
+      .box-left { flex-basis: 160px; }
+      .file-title { font-size: 16px; }
+      button { padding: 10px 18px; border-width: 2px; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--card-light);
+      text-align: center;
+      padding: 0.1px;
+      margin-top: 5px;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-light);
+      border-radius: 20px 20px 0 0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] footer { background: var(--card-dark); border-color: var(--border-dark); color: #aaa; }
+
+    footer a { color: var(--primary-blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      *::-webkit-scrollbar { display: none; }
+      * { scrollbar-width: none; }
+      * { -ms-overflow-style: none; }
+    }
+  </style>
 </head>
+
 <body class="bg-app">
-<header>
-<div class="btn-area">
-<a href="#" id="shareBtn">
-    <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;" >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="22"
-             height="22"
-             viewBox="2 0 23 23"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="btn-area">
+      <a href="#" id="shareBtn">
+        <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="2 0 23 23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="18" cy="5" r="3"></circle>
             <circle cx="6" cy="12" r="3"></circle>
             <circle cx="18" cy="19" r="3"></circle>
             <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-    </button>
-</a>
+          </svg>
+        </button>
+      </a>
 
-<div class="theme-toggle-wrapper">
-  <label
-    for="themeCheckbox"
-    id="theme-toggle"
-    class="theme-toggle"
-    aria-label="Toggle Theme">
-    <input
-      type="checkbox"
-      id="themeCheckbox"
-      aria-label="Toggle dark mode"
-      hidden
-    >
-<span class="icon sun">
-    <i class="fa-solid fa-sun"></i>
-</span>
+      <div class="theme-toggle-wrapper">
+        <label for="themeCheckbox" id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+          <input type="checkbox" id="themeCheckbox" aria-label="Toggle dark mode" hidden>
+          <span class="icon sun"><i class="fa-solid fa-sun"></i></span>
+          <span class="icon moon"><i class="fa-solid fa-moon"></i></span>
+          <span class="thumb"></span>
+        </label>
+      </div>
+    </div>
 
-<span class="icon moon">
-    <i class="fa-solid fa-moon"></i>
-</span>
-    <span class="thumb"></span>
-  </label>
-</div>
-</div>
     <div class="menu-btn" onclick="openMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-</header>
+  </header>
 
-<div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
-<div class="side-menu" id="sideMenu">
-<div class="menu-header">
-        <span class="head-close-btn" onclick="closeMenu()">✕</span>
+  <!-- ===== SIDE MENU ===== -->
+  <div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <span class="head-close-btn" onclick="closeMenu()">✕</span>
     </div>
-<div class="menu-content">
+    <div class="menu-content">
 
-<ul class="side-links">
-    <li>
-        <a href="/">
-            <i class="fa-solid fa-house"></i> Home
-        </a>
-    </li>
-
-    <li>
-        <a href="study-material.html">
-            <i class="fa-solid fa-book"></i> Study Material
-        </a>
-    </li>
-
-    <li>
-        <a href="links.html">
-            <i class="fa-solid fa-link"></i> External Source
-        </a>
-    </li>
-
-    <li>
-        <a href="#">
-            <i class="fa-solid fa-graduation-cap"></i> Courses
-        </a>
-    </li>
-
-    <li>
-        <a href="library-opac.html">
-            <i class="fa-solid fa-book-open"></i> Library OPAC
-        </a>
-    </li>
-
-    <li>
+    <ul class="side-links">
+      <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="study-material.html"><i class="fa-solid fa-book"></i> Study Material</a></li>
+      <li><a href="links.html"><i class="fa-solid fa-link"></i> External Source</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="library-opac.html"><i class="fa-solid fa-book-open"></i> Library OPAC</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleUploads()">
-            <i class="fa-solid fa-upload"></i> Uploads
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-upload"></i> Uploads
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="submenu" id="uploadsMenu">
-            <a href="upload.html#resources">
-                <i class="fa-solid fa-file-lines"></i> Upload as Document
-            </a>
-
-            <a href="upload.html#images">
-                <i class="fa-solid fa-camera"></i> Upload as Image
-            </a>
+          <a href="upload.html#resources"><i class="fa-solid fa-file-lines"></i> Upload as Document</a>
+          <a href="upload.html#images"><i class="fa-solid fa-camera"></i> Upload as Image</a>
         </div>
-    </li>
-
-    <li>
-        <a href="request-course.html">
-            <i class="fa-solid fa-pen-to-square"></i> Request Subject
-        </a>
-    </li>
-
-    <li>
-        <a href="feedback.html">
-            <i class="fa-solid fa-comment"></i> Feedback
-        </a>
-    </li>
-
-    <li>
+      </li>
+      <li><a href="request-course.html"><i class="fa-solid fa-pen-to-square"></i> Request Subject</a></li>
+      <li><a href="feedback.html"><i class="fa-solid fa-comment"></i> Feedback</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleAbout()">
-            <i class="fa-solid fa-circle-info"></i> About
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-circle-info"></i> About
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
-
         <div class="submenu" id="aboutMenu">
-            <a href="about.html#about-college">
-                <i class="fa-solid fa-building-columns"></i> About College
-            </a>
-
-            <a href="about.html#cs-department">
-                <i class="fa-solid fa-computer"></i> CS Department
-            </a>
-
-            <a href="about.html#about-website">
-                <i class="fa-solid fa-globe"></i> About this Website
-            </a>
-
-            <a href="about.html#about-admin">
-                <i class="fa-solid fa-user-tie"></i> Admin
-            </a>
+          <a href="#about-college"><i class="fa-solid fa-building-columns"></i> About College</a>
+          <a href="#cs-department"><i class="fa-solid fa-computer"></i> CS Department</a>
+          <a href="#about-website"><i class="fa-solid fa-globe"></i> About this Website</a>
+          <a href="#about-admin"><i class="fa-solid fa-user-tie"></i> Admin</a>
         </div>
-    </li>
-</ul>
+      </li>
+    </ul>
 
-
+    </div>
   </div>
-</div>
 
- <div class="title-boxx">
-  <h2>Courses Offered by Department of Computer Science & Application</h2>
- </div>
+  <main id="content">
 
-
-  <div class="course-no">
-  <h3>1. BCA (Bachelor of Computer Application)</h3>
-  <p class="p1">Course Duration: 3 years <br> Total Semester: 6</p>
-  <p class="p2">
-    <span style="font-weight: 450;">Eligibility:</span>
-A candidate must have passed Higher Secondary (10+2) or an equivalent examination in any stream (Science, Arts, or Commerce). 
-Candidates with a three-year Diploma in Computer Science & Engineering (CSE) or Information Technology (IT) are also eligible.
-  </p>
-  <p class="p1">Complete Syllabus:</p>
-  <div class="course-box" data-pdf="1P7EePd_Kd6W4jyJuh2JyjnYzLSnLfLYU"></div>
- </div>
-
-
- <div class="course-no">
-  <h3>2. B.Sc IT (Bachelor of Science in Information Technology)</h3>
-  <p class="p1">Course Duration: 3 year <br> Total Semester: 6</p>
-  <p class="p2">
-   <span style="font-weight: 450;">Eligibility:</span>
-A candidate must have passed Higher Secondary (10+2) or an equivalent examination in the Science stream from a recognized board.
-  </p>
-  <p class="p1">Complete Syllabus:</p>
-  <div class="course-box" data-pdf="11HGiKuvWlEHtNo58Tum5lo4YgTPb1K_v"></div>
- </div>
-
-
- <div class="course-no">
-  <h3>3. PGDCA (Post Graduate Diploma in Computer Application)</h3>
-  <p class="p1">Course Duration: 1 year <br> Total Semester: 2</p>
-  <p class="p2">
-   <span style="font-weight: 450;">Eligibility:</span>
-    The candidate must have passed TDC in any stream (Science, Commerce, Arts). 
-    Students completing BE/B.Tech from AICTE recognized institutes are also eligible.
-  </p>
-  <p class="p1">Complete Syllabus:</p>
-  <div class="course-box" data-pdf="1I8zhJWnl7pB77nOocyB2jIrHdtX5wGsd"></div>
- </div>
-
-
- <div class="course-no">
-  <h3>4. B.Sc. in Computer Science (Major-Minor)</h3>
-  <p class="p1">Course Duration: 3 year <br> Total Semester: 6</p>    
-  <p class="p1">Complete Syllabus:</p>
-  <div class="course-box" data-pdf="1B6YCRpHR4uIxAIG87Rwi-ocHYeP63n5g"></div>
- </div>
-
-
- <div class="course-no">
-  <h3>5. Computer Application (Minor)<br>For Science / Arts / Commerce</h3>
-  <p class="p1">Course Duration: 3 year <br> Total Semester: 6</p>    
-  <p class="p1">Complete Syllabus:</p>
-  <div class="course-box" data-pdf="10JncK1-iAOjrEg5aEFH4t3XjeWYYt5TA"></div>
- </div>
-
-
- <div class="course-no">
-  <h3>6. Other Programs</h3>
-  <p class="p2">
- The Department also offers computer-related courses at the Higher Secondary level, Skill Enhancement Courses (SEC) under Bachelor Degree programs, and other similar courses. These programs provide basic computer knowledge, programming skills, and practical exposure to support higher studies and career development.
-  </p>
- </div>
-
-
-<footer>
-    <p>© 2026 Student Community Portal - Suren Das College<br>
-       <a href="about.html">About Us</a></p>
-  </footer>
-
-<script>
-/* ===== CONFIGURATION ===== */
-const SUPABASE_JSON_URL = "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/material.json";
-const THUMB_BASE_URL = "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/pdf-thumbnails/";
-const defaultLogo = "/src/pdf-thumbnail.png";
-
-/* ===== GOOGLE DRIVE HELPERS ===== */
-function triggerView(id) {
-  const url = `https://drive.google.com/file/d/${id}/view`;
-  window.open(url, "_blank", "noopener,noreferrer");
-}
-
-function triggerDownload(id) {
-  const url = `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`;
-  window.open(url, "_blank", "noopener,noreferrer");
-}
-
-/* ===== CREATE STATIC PDF CARD ===== */
-function createStaticPdfBox(item) {
-  const title     = item.title      || "Document";
-  const fileId    = item.id         || "";
-  const size      = item.size       || "";
-  const pages     = item.pages      != null ? item.pages : "";
-  const createdAt = item.created_at || "";
-  const thumbnail = THUMB_BASE_URL + fileId + ".webp";
-
-  const box = document.createElement("div");
-  box.className = "pdf-box";
-
-  box.innerHTML = `
-    <div class="box-left">
-      <img src="${thumbnail}" alt="Thumbnail" loading="lazy" onerror="this.onerror=null;this.src='${defaultLogo}'">
+    <div class="title-boxx">
+      <h2>Courses Offered by Department of Computer Science & Application</h2>
     </div>
-    <div class="box-right">
-      <div class="card-actions button-row" role="group" aria-label="Actions">
-        <button class="view-btn" type="button">View</button>
-        <button class="download-btn" type="button">Download</button>
-      </div>
-      <div class="file-title">${title}</div>
-      <div class="file-labels">
-        ${size         ? `<span class="label">${size}</span>`        : ""}
-        ${pages !== "" ? `<span class="label">${pages} pages</span>` : ""}
-        ${createdAt    ? `<span class="label">${createdAt}</span>`   : ""}
-      </div>
+
+    <div class="course-no">
+      <h3>1. BCA (Bachelor of Computer Application)</h3>
+      <p class="p1">Course Duration: 3 years <br> Total Semester: 6</p>
+      <p class="p2">
+        <span style="font-weight: 450;">Eligibility:</span>
+        A candidate must have passed Higher Secondary (10+2) or an equivalent examination in any stream (Science, Arts, or Commerce).
+        Candidates with a three-year Diploma in Computer Science & Engineering (CSE) or Information Technology (IT) are also eligible.
+      </p>
+      <p class="p1">Complete Syllabus:</p>
+      <div class="course-box" data-pdf="1P7EePd_Kd6W4jyJuh2JyjnYzLSnLfLYU"></div>
     </div>
-  `;
 
-  const img = box.querySelector("img");
-  img.onerror = function () {
-    this.onerror = null;
-    this.src = defaultLogo;
-  };
+    <div class="course-no">
+      <h3>2. B.Sc IT (Bachelor of Science in Information Technology)</h3>
+      <p class="p1">Course Duration: 3 year <br> Total Semester: 6</p>
+      <p class="p2">
+        <span style="font-weight: 450;">Eligibility:</span>
+        A candidate must have passed Higher Secondary (10+2) or an equivalent examination in the Science stream from a recognized board.
+      </p>
+      <p class="p1">Complete Syllabus:</p>
+      <div class="course-box" data-pdf="11HGiKuvWlEHtNo58Tum5lo4YgTPb1K_v"></div>
+    </div>
 
-  box.querySelector(".view-btn").addEventListener("click", () => {
-    if (!fileId) return;
-    triggerView(fileId);
-  });
+    <div class="course-no">
+      <h3>3. PGDCA (Post Graduate Diploma in Computer Application)</h3>
+      <p class="p1">Course Duration: 1 year <br> Total Semester: 2</p>
+      <p class="p2">
+        <span style="font-weight: 450;">Eligibility:</span>
+        The candidate must have passed TDC in any stream (Science, Commerce, Arts).
+        Students completing BE/B.Tech from AICTE recognized institutes are also eligible.
+      </p>
+      <p class="p1">Complete Syllabus:</p>
+      <div class="course-box" data-pdf="1I8zhJWnl7pB77nOocyB2jIrHdtX5wGsd"></div>
+    </div>
 
-  box.querySelector(".download-btn").addEventListener("click", () => {
-    if (!fileId) return;
-    triggerDownload(fileId);
-  });
+    <div class="course-no">
+      <h3>4. B.Sc. in Computer Science (Major-Minor)</h3>
+      <p class="p1">Course Duration: 3 year <br> Total Semester: 6</p>
+      <p class="p1">Complete Syllabus:</p>
+      <div class="course-box" data-pdf="1B6YCRpHR4uIxAIG87Rwi-ocHYeP63n5g"></div>
+    </div>
 
-  return box;
-}
+    <div class="course-no">
+      <h3>5. Computer Application (Minor)<br>For Science / Arts / Commerce</h3>
+      <p class="p1">Course Duration: 3 year <br> Total Semester: 6</p>
+      <p class="p1">Complete Syllabus:</p>
+      <div class="course-box" data-pdf="10JncK1-iAOjrEg5aEFH4t3XjeWYYt5TA"></div>
+    </div>
 
-/* ===== INJECT COURSE PDF CARDS ===== */
-(async function initCourseBoxes() {
+    <div class="course-no">
+      <h3>6. Other Programs</h3>
+      <p class="p2">
+        The Department also offers computer-related courses at the Higher Secondary level, Skill Enhancement Courses (SEC) under Bachelor Degree programs, and other similar courses. These programs provide basic computer knowledge, programming skills, and practical exposure to support higher studies and career development.
+      </p>
+    </div>
 
-  // Find all course-box containers that have a data-pdf attribute
-  const courseBoxes = Array.from(
-    document.querySelectorAll(".course-box[data-pdf]")
-  );
-  if (courseBoxes.length === 0) return;
+    <footer>
+      <p>© 2026 Student Community Portal - Suren Das College<br>
+         <a href="about.html">About Us</a></p>
+    </footer>
 
-  // Fetch subjects.json
-  let json = null;
-  try {
-    const res = await fetch(SUPABASE_JSON_URL);
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    json = await res.json();
-  } catch (e) {
-    console.error("course-boxes: failed to fetch material.json", e);
-    return;
-  }
+  </main>
 
-  // Extract the cs-course-syllabus files array from JSON
-  // Structure: json["cs-course-syllabus"]["files"] = [ { id, title, size, ... }, ... ]
-  const filesArray = (
-    json &&
-    json["cs-course-syllabus"] &&
-    Array.isArray(json["cs-course-syllabus"].files)
-  ) ? json["cs-course-syllabus"].files : [];
-
-  if (filesArray.length === 0) {
-    console.warn("course-boxes: no files found under cs-course-syllabus");
-    return;
-  }
-
-  // Build a lookup map: { "DRIVE_FILE_ID": { id, title, size, pages, created_at } }
-  const fileMap = {};
-  filesArray.forEach(item => {
-    if (item && item.id) {
-      fileMap[item.id] = item;
-    }
-  });
-
-  // For each course-box, look up its data-pdf value in the map
-  courseBoxes.forEach(box => {
-    const pdfId = box.dataset.pdf;
-    if (!pdfId) return;
-
-    const fileData = fileMap[pdfId];
-
-    // If id not found in JSON, skip silently — leave the div empty
-    if (!fileData || typeof fileData !== "object") {
-      console.warn(`course-boxes: no match found for id "${pdfId}"`);
-      return;
-    }
-
-    const card = createStaticPdfBox(fileData);
-    box.appendChild(card);
-  });
-
-})();
-</script>
-
-<script>
-(function () {
-  const STORAGE_KEY = "userThemePreference";
-  const THEME_COLORS = {
-    light: "#ffffff",
-    dark:  "#1a1a2e"
-  };
-  function getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
-  function getSavedTheme() {
-    return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
-  }
-  function updateMetaThemeColor(theme) {
-    let metaTag = document.querySelector('meta[name="theme-color"]');
-    if (!metaTag) {
-      metaTag = document.createElement("meta");
-      metaTag.name = "theme-color";
-      document.head.appendChild(metaTag);
-    }
-    metaTag.content = THEME_COLORS[theme];
-  }
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    updateMetaThemeColor(theme);
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.checked = theme === "dark";
-    }
-  }
-  function setTheme(theme) {
-    localStorage.setItem(STORAGE_KEY, theme);
-    applyTheme(theme);
-  }
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute("data-theme");
-    setTheme(current === "dark" ? "light" : "dark");
-  }
-  function watchSystemTheme() {
-    window.matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => {
-        if (!localStorage.getItem(STORAGE_KEY)) {
-          applyTheme(e.matches ? "dark" : "light");
-        }
-      });
-  }
-  function watchStorageChanges() {
-    window.addEventListener("storage", (e) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        applyTheme(e.newValue);
-      }
-    });
-  }
-  if (document.head) {
-    applyTheme(getSavedTheme());
-  }
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    applyTheme(getSavedTheme());
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.addEventListener("change", toggleTheme);
-    }
-  });
-} else {
-  applyTheme(getSavedTheme());
-  const checkbox = document.getElementById("themeCheckbox");
-  if (checkbox) {
-    checkbox.addEventListener("change", toggleTheme);
-  }
-}
-  watchSystemTheme();
-  watchStorageChanges();
-})();
-
-
-function openMenu(){
-    document.getElementById("sideMenu").classList.add("active");
-    document.getElementById("headOverlay").classList.add("show");
-}
-function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("active");
-    document.getElementById("headOverlay").classList.remove("show");
-}
-function toggleUploads(){
-    document.getElementById("uploadsMenu").classList.toggle("show");
-}
-function toggleAbout(){
-    document.getElementById("aboutMenu").classList.toggle("show");
-}
-document.querySelectorAll('.side-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        closeMenu();
-    });
-});
-window.addEventListener('pageshow', () => {
-    closeMenu();
-});
-</script>
-
-<script>
-document.getElementById("shareBtn")?.addEventListener(
-  "click",
-  async (event) => {
+  <!-- ===== SHARE BUTTON ===== -->
+  <script>
+  document.getElementById("shareBtn")?.addEventListener("click", async (event) => {
     event.preventDefault();
     if (navigator.share) {
       try {
@@ -941,8 +585,346 @@ document.getElementById("shareBtn")?.addEventListener(
     } else {
       alert("Sharing not supported in this browser.");
     }
+  });
+  </script>
+
+  <!-- ===== THEME TOGGLE ===== -->
+  <script>
+  (function () {
+    const STORAGE_KEY = "userThemePreference";
+    const THEME_COLORS = {
+      light: "#ffffff",
+      dark: "#1a1a2e"
+    };
+
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    function getSavedTheme() {
+      return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+    }
+
+    function updateMetaThemeColor(theme) {
+      let metaTag = document.querySelector('meta[name="theme-color"]');
+      if (!metaTag) {
+        metaTag = document.createElement("meta");
+        metaTag.name = "theme-color";
+        document.head.appendChild(metaTag);
+      }
+      metaTag.content = THEME_COLORS[theme];
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      updateMetaThemeColor(theme);
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.checked = theme === "dark";
+      }
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem(STORAGE_KEY, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    }
+
+    function watchSystemTheme() {
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    }
+
+    function watchStorageChanges() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          applyTheme(e.newValue);
+        }
+      });
+    }
+
+    if (document.head) {
+      applyTheme(getSavedTheme());
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getSavedTheme());
+        const checkbox = document.getElementById("themeCheckbox");
+        if (checkbox) {
+          checkbox.addEventListener("change", toggleTheme);
+        }
+      });
+    } else {
+      applyTheme(getSavedTheme());
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.addEventListener("change", toggleTheme);
+      }
+    }
+
+    watchSystemTheme();
+    watchStorageChanges();
+  })();
+  </script>
+
+  <!-- ===== COURSE PDF CARDS ===== -->
+  <script>
+  /* ===== CONFIGURATION ===== */
+  const SUPABASE_JSON_URL = "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/material.json";
+  const THUMB_BASE_URL = "https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/pdf-thumbnails/";
+  const defaultLogo = "/src/pdf-thumbnail.png";
+
+  /* ===== GOOGLE DRIVE HELPERS ===== */
+  function triggerView(id) {
+    const url = `https://drive.google.com/file/d/${id}/view`;
+    window.open(url, "_blank", "noopener,noreferrer");
   }
-);
-</script>
+
+  function triggerDownload(id) {
+    const url = `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  /* ===== CREATE STATIC PDF CARD ===== */
+  function createStaticPdfBox(item) {
+    const title = item.title || "Document";
+    const fileId = item.id || "";
+    const size = item.size || "";
+    const pages = item.pages !== null ? item.pages : "";
+    const createdAt = item.created_at || "";
+    const thumbnail = THUMB_BASE_URL + fileId + ".webp";
+
+    const box = document.createElement("div");
+    box.className = "pdf-box";
+
+    box.innerHTML = `
+      <div class="box-left">
+        <img src="${thumbnail}" alt="Thumbnail" loading="lazy" onerror="this.onerror=null;this.src='${defaultLogo}'>
+      </div>
+      <div class="box-right">
+        <div class="card-actions button-row" role="group" aria-label="Actions">
+          <button class="view-btn" type="button">View</button>
+          <button class="download-btn" type="button">Download</button>
+        </div>
+        <div class="file-title">${title}</div>
+        <div class="file-labels">
+          ${size ? `<span class="label">${size}</span>` : ""}
+          ${pages !== "" ? `<span class="label">${pages} pages</span>` : ""}
+          ${createdAt    ? `<span class="label">${createdAt}</span>`   : ""}
+        </div>
+      </div>
+    `;
+
+    const img = box.querySelector("img");
+    img.onerror = function () {
+      this.onerror = null;
+      this.src = defaultLogo;
+    };
+
+    box.querySelector(".view-btn").addEventListener("click", () => {
+      if (!fileId) return;
+      triggerView(fileId);
+    });
+
+    box.querySelector(".download-btn").addEventListener("click", () => {
+      if (!fileId) return;
+      triggerDownload(fileId);
+    });
+
+    return box;
+  }
+
+  /* ===== INJECT COURSE PDF CARDS ===== */
+  (async function initCourseBoxes() {
+
+    // Find all course-box containers that have a data-pdf attribute
+    const courseBoxes = Array.from(
+      document.querySelectorAll(".course-box[data-pdf]")
+    );
+    if (courseBoxes.length === 0) return;
+
+    // Fetch subjects.json
+    let json = null;
+    try {
+      const res = await fetch(SUPABASE_JSON_URL);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      json = await res.json();
+    } catch (e) {
+      console.error("course-boxes: failed to fetch material.json", e);
+      return;
+    }
+
+    // Extract the cs-course-syllabus files array from JSON
+    const filesArray = (
+      json &&
+      json["cs-course-syllabus"] &&
+      Array.isArray(json["cs-course-syllabus"].files)
+    ) ? json["cs-course-syllabus"].files : [];
+
+    if (filesArray.length === 0) {
+      console.warn("course-boxes: no files found under cs-course-syllabus");
+      return;
+    }
+
+    // Build a lookup map: { "DRIVE_FILE_ID": { id, title, size, pages, created_at } }
+    const fileMap = {};
+    filesArray.forEach(item => {
+      if (item && item.id) {
+        fileMap[item.id] = item;
+      }
+    });
+
+    // For each course-box, look up its data-pdf value in the map
+    courseBoxes.forEach(box => {
+      const pdfId = box.dataset.pdf;
+      if (!pdfId) return;
+
+      const fileData = fileMap[pdfId];
+
+      // If id not found in JSON, skip silently
+      if (!fileData || typeof fileData !== "object") {
+        console.warn(`course-boxes: no match found for id "${pdfId}"`);
+        return;
+      }
+
+      const card = createStaticPdfBox(fileData);
+      box.appendChild(card);
+    });
+
+  })();
+  </script>
+
+  <!-- ===== THEME TOGGLE ===== -->
+  <script>
+  (function () {
+    const STORAGE_KEY = "userThemePreference";
+    const THEME_COLORS = {
+      light: "#ffffff",
+      dark: "#1a1a2e"
+    };
+
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    function getSavedTheme() {
+      return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+    }
+
+    function updateMetaThemeColor(theme) {
+      let metaTag = document.querySelector('meta[name="theme-color"]');
+      if (!metaTag) {
+        metaTag = document.createElement("meta");
+        metaTag.name = "theme-color";
+        document.head.appendChild(metaTag);
+      }
+      metaTag.content = THEME_COLORS[theme];
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      updateMetaThemeColor(theme);
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.checked = theme === "dark";
+      }
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem(STORAGE_KEY, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    }
+
+    function watchSystemTheme() {
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    }
+
+    function watchStorageChanges() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          applyTheme(e.newValue);
+        }
+      });
+    }
+
+    if (document.head) {
+      applyTheme(getSavedTheme());
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getSavedTheme());
+        const checkbox = document.getElementById("themeCheckbox");
+        if (checkbox) {
+          checkbox.addEventListener("change", toggleTheme);
+        }
+      });
+    } else {
+      applyTheme(getSavedTheme());
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.addEventListener("change", toggleTheme);
+      }
+    }
+
+    watchSystemTheme();
+    watchStorageChanges();
+  })();
+  </script>
+
+  <!-- ===== MENU TOGGLES ===== -->
+  <script>
+  function openMenu() {
+    document.getElementById("sideMenu").classList.add("active");
+    document.getElementById("headOverlay").classList.add("show");
+  }
+
+  function closeMenu() {
+    document.getElementById("sideMenu").classList.remove("active");
+    document.getElementById("headOverlay").classList.remove("show");
+  }
+
+  function toggleUploads() {
+    document.getElementById("uploadsMenu").classList.toggle("show");
+  }
+
+  function toggleAbout() {
+    document.getElementById("aboutMenu").classList.toggle("show");
+  }
+
+  document.querySelectorAll('.side-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  window.addEventListener('pageshow', () => {
+    closeMenu();
+  });
+  </script>
+
 </body>
 </html>

@@ -1,588 +1,790 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Book From Suren Das College Library (OPAC)</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#ffffff"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<style>
-
-/* ===== RESET / BASE FIX ===== */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-
-/* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
-body.bg-app {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  -webkit-font-smoothing: antialiased;
-  color: #e6e9ef;
-
-  /* Default desktop background */
-  background: url("/src/background.webp") no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
-}
-
-/* Mobile background */
-@media (max-width: 768px) {
-  body.bg-app {
-    background: url("/src/background-mobile.webp") no-repeat center center fixed;
-    background-size: cover;
-  }
-}
-
-/* Black overlay */
-body.bg-app::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: -1; /* keeps overlay behind all content */
-}
-
-/* Optional wrapper padding for content */
-.overlay {
-  padding: 2rem;
-}
-
-/* container */
-.container {
-  max-width: 1100px;
-  margin: 10px;
-  padding: 10px 10px 50px 10px;
-  box-sizing: border-box;
-}
-
-@media (min-width: 769px) { .container { padding: 35px; }}
-
-/* ===== HEADER ===== */
-header{
-    background: #1b9ade;
-    color:white;
-    padding: 4px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-    animation: slideDown 1s ease;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-@keyframes slideDown {
-    from { transform: translateY(-100%); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
-}
-.btn-area{
-         display: flex;
-         align-items: center;
-         gap: 15px;
-    font-size: 18px;
-    font-weight:bold;
-}
-
-@media(min-width:769px){
-    header { padding: 4px 30px; }
-    .btn-area { gap: 25px; }
-}
-
-.theme-toggle {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 65px;
-  height: 29px;
-  padding: 0 10px;
-  border-radius: 40px;
-  background: #bbb;
-  cursor: pointer;
-  user-select: none;
-  box-sizing: border-box;
-}
-.theme-toggle .icon {
-  font-size: 18px;
-  z-index: 2;
-  position: absolute;
-}
-.sun { color: #bbb; }
-.moon { color: #444; }
-
-.theme-toggle .thumb {
-  position: absolute;
-  left: 3px;
-  top: 2px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #195ea8;
-  transition: transform 0.3s ease;
-  z-index: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-#themeCheckbox:checked + .sun + .moon + .thumb {
-  transform: translateX(33px);
-}
-.theme-toggle .sun {
-  left: 6px;
-}
-.theme-toggle .moon {
-  right: 9px;
-}
-.fa-left-long {
-  font-size: 22px;
-  color: #ddd;
-}
-
-.phead{
-  display:flex;
-  justify-content:center; 
-  text-align: center;
-  align-items: center;
-  margin: 20px auto 30px;
-  line-height: 1.3;
-}
-
-h1 { margin: 0; font-size: 20px; color: #252525; }
-
-
-table {
-  width:100%;
-  border-collapse:collapse;
-  margin-top:20px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-@media (min-width: 769px) {
-  table {width: 80%;}
-}
-
-td {
-  border: 1px solid #222;
-  padding: 10px;
-  font-size: 14px;
-  color: #111;
-  background: rgba(189, 211, 255, 0.9);
-}
-
-th {
-  background: rgba(137, 162, 250, 0.9);
-  text-align: left;
-  padding: 10px;
-  border: 1px solid #222;
-  color: #222;
-  font-weight: 500;
-}
-
-.meta p {
-  margin: 4px 0;
-  font-size: 15px
-}
-
-h2 { 
-  margin-top: 30px;
-  font-size: 18px;
-  color: #222;
-}
-
-.link-style {
-  color: #0252c9;
-  text-decoration: none;
-}
-.link-style:hover { text-decoration: underline; }
-
-.holding-st {
-  display: none;
-}
-
-.holding-st td {
-  border: 1px solid #222;
-  padding: 10px;
-  font-size: 14px;
-  color: #111;
-  background: rgba(189, 203, 255, 0.9);
-}
-
-.loading {
-  text-align: center;
-  margin: 60px 0;
-  color: #252525;
-  font-size: 17px;
-  font-weight: 450;
-}
-
-
-[data-theme="dark"] {
-color-scheme: dark;
-body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
-h1 { color: #d4e4fc; }
-h2 { color: #ccc; }
-td { border: 1px solid #757575; color: #ddd; background: rgba(32, 44, 52, 0.9); }
-th { border: 1px solid #757575; color: #ddd; background: rgba(23, 26, 79, 0.9); }
-.holding-st td { border: 1px solid #757575; color: #ddd; background: rgba(35, 45, 50, 0.9); }
-.link-style { color: #86b5fc; }
-.loading { color: #ccc; }
-
-header{ background: #074085; }
-.sun { color: #444; }
-.moon { color: #bbb; }
-}
-
-@media (max-width: 768px) {
-    /* Hide scrollbar for Chrome, Safari and Edge */
-    *::-webkit-scrollbar {
-        display: none;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Book From Suren Das College Library (OPAC)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="icon" href="/src/college-logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Styles -->
+  <style>
+    /* ===== COLOR VARIABLES ===== */
+    :root {
+      --primary-blue: #1b9ade;
+      --accent-red: #e01a5f;
+      --light-bg: #ffffff;
+      --dark-bg: #1a1a2e;
+      --text-light: #111111;
+      --text-dark: #f7f7f7;
+      --filter-light: #ddf;
+      --filter-dark: #222;
+      --card-light: #f7e7df;
+      --card-dark: #0f1724;
+      --border-light: #386c96;
+      --border-dark: #555;
+    }
+    
+    [data-theme="dark"] {
+      --primary-blue: #074085;
+      --accent-red: #ff0050;
+      --light-bg: #1a1a2e;
+      --dark-bg: #12121a;
+      --text-light: #f7f7f7;
+      --text-dark: #111111;
+      --filter-light: #222;
+      --filter-dark: #222;
+      --card-light: #0f1724;
+      --card-dark: #0f1724;
+      --border-light: #555;
+      --border-dark: #555;
     }
 
-    /* Hide scrollbar for Firefox */
-    * {
-        scrollbar-width: none;
+    /* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+    body.bg-app {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      -webkit-font-smoothing: antialiased;
+      color: #e6e9ef;
+
+      /* Default desktop background */
+      background: url("/src/background.webp") no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
     }
 
-    /* Hide scrollbar for IE and old Edge */
-    * {
-        -ms-overflow-style: none;
+    @media (max-width: 768px) {
+      body.bg-app {
+        background: url("/src/background-mobile.webp") no-repeat center center fixed;
+        background-size: cover;
+      }
     }
-}
 
-</style>
+    body.bg-app::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.6);
+      z-index: -1;
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
 
-<script>
-    (function () {
-      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
-      const saved = localStorage.getItem("userThemePreference");
-      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark" : "light";
-      const theme = saved || system;
+    [data-theme="dark"] body.bg-app::before {
+      background: rgba(0, 0, 0, 0.7);
+    }
 
-      // Apply data-theme immediately
-      document.documentElement.setAttribute("data-theme", theme);
+    /* ===== HEADER ===== */
+    header {
+      background: var(--primary-blue);
+      color: white;
+      padding: 4px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-      // Update meta theme-color immediately
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.content = THEME_COLORS[theme];
-    })();
-  </script>
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
 
+    .btn-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    @media(min-width:769px){
+      header { padding: 4px 30px; }
+      .btn-area { gap: 25px; }
+    }
+
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      width: 22px;
+      height: 3px;
+      background: white;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 1px;
+      right: -250px;
+      width: 250px;
+      height: 90vh;
+      background: #abe2ff;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      transition: 0.4s;
+      overflow-y: auto;
+      z-index: 1000;
+      border-radius: 5px 0 0 5px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.active { right: 0; }
+
+    .menu-header {
+      flex-shrink: 0;
+      height: 50px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .head-close-btn {
+      font-size: 22px;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .menu-content { flex: 1; overflow-y: auto; }
+
+    .side-links {
+      list-style: none;
+      padding: 0 10px;
+    }
+
+    .side-links i { color: #444; width: 25px; }
+    .side-links li { border-bottom: 1px solid #888; }
+    .side-links li:last-child { border: none; }
+    .side-links a { text-decoration: none; color: #111; display: block; padding: 15px 10px; }
+    .side-links a:hover { background: #87d2fa; }
+
+    .dropdown-btn {
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10px;
+      color: #111;
+    }
+
+    .dropdown-btn .fa-chevron-down { margin-left: auto; }
+    .dropdown-btn:hover { background: #77cefc; }
+
+    .submenu { display: none; padding-left: 20px; }
+    .submenu a { color: #111; border-top: 1px solid #888; }
+    .submenu.show { display: block; }
+
+    .head-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      display: none;
+      z-index: 999;
+    }
+
+    .head-overlay.show { display: block; }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 65px;
+      height: 29px;
+      padding: 0 10px;
+      border-radius: 40px;
+      background: #bbb;
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .theme-toggle .icon { font-size: 18px; z-index: 2; position: absolute; }
+    .sun { color: #bbb; }
+    .moon { color: #444; }
+
+    .theme-toggle .thumb {
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #195ea8;
+      transition: transform 0.3s ease;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    #themeCheckbox:checked + .sun + .moon + .thumb { transform: translateX(33px); }
+    .theme-toggle .sun { left: 6px; }
+    .theme-toggle .moon { right: 9px; }
+
+    /* ===== PAGE LAYOUT ===== */
+    .phead {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      margin: 20px auto 30px;
+      line-height: 1.3;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--text-light);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (min-width: 769px) { table { width: 80%; } }
+
+    td {
+      border: 1px solid var(--border-light);
+      padding: 10px;
+      font-size: 14px;
+      color: var(--text-light);
+      background: rgba(189, 211, 255, 0.9);
+    }
+
+    [data-theme="dark"] td { border-color: #757575; color: #ddd; background: rgba(32, 44, 52, 0.9); }
+
+    th {
+      background: rgba(137, 162, 250, 0.9);
+      text-align: left;
+      padding: 10px;
+      border: 1px solid var(--border-light);
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    [data-theme="dark"] th { border-color: #757575; color: #ddd; background: rgba(23, 26, 79, 0.9); }
+
+    .meta p {
+      margin: 4px 0;
+      font-size: 15px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      font-size: 18px;
+      color: var(--text-light);
+    }
+
+    .link-style {
+      color: var(--primary-blue);
+      text-decoration: none;
+    }
+
+    .link-style:hover { text-decoration: underline; }
+
+    .holding-st {
+      display: none;
+    }
+
+    .holding-st td {
+      border: 1px solid var(--border-light);
+      padding: 10px;
+      font-size: 14px;
+      color: var(--text-light);
+      background: rgba(189, 203, 255, 0.9);
+    }
+
+    [data-theme="dark"] .holding-st td { border-color: #757575; color: #ddd; background: rgba(35, 45, 50, 0.9); }
+
+    .link-style { color: var(--primary-blue); }
+
+    .loading {
+      text-align: center;
+      margin: 60px 0;
+      color: var(--text-light);
+      font-size: 17px;
+      font-weight: 450;
+    }
+
+    @media (min-width: 769px) {
+      .footer { font-size: 1.25rem; }
+    }
+
+    footer {
+      background: var(--card-light);
+      text-align: center;
+      padding: 1px;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-light);
+      border-radius: 20px 20px 0 0;
+      margin-top: auto;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] footer { background: var(--card-dark); border-color: var(--border-dark); color: #aaa; }
+
+    footer a {
+      color: var(--primary-blue);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .social-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 27px;
+      background: var(--primary-blue);
+      border: 1px solid var(--border-light);
+      color: var(--text-light);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    [data-theme="dark"] .social-btn { background: var(--primary-blue); border-color: var(--border-dark); color: #ddd; }
+
+    .social-btn:hover {
+      background: var(--accent-red);
+      transform: scale(1.03) translateY(-3px);
+      transition: transform 0s;
+    }
+
+    .social-btn[aria-label="WhatsApp"] { color: #017543; }
+    .social-btn[aria-label="Email"] { color: var(--primary-blue); }
+    .social-btn[aria-label="GitHub"] { color: #222222; }
+    .social-btn[aria-label="Instagram"] { color: #a80c74; }
+    .social-btn[aria-label="Facebook"] { color: var(--primary-blue); }
+
+    @media (min-width: 769px) {
+      .member-card { padding: 30px 25px; }
+    }
+
+    @media (max-width: 768px) {
+      *::-webkit-scrollbar { display: none; }
+      * { scrollbar-width: none; }
+      * { -ms-overflow-style: none; }
+    }
+  </style>
 </head>
+
 <body class="bg-app">
 
-<header>
-<div class="btn-area">
+  <header>
+    <div class="btn-area">
 
-<button style="background:none; border: none;" onclick="history.back()" aria-label="Go back"><i class="fa-solid fa-left-long"></i></button>
-<a href="#" id="shareBtn">
-    <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;" >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="22"
-             height="22"
-             viewBox="2 0 23 23"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+      <button style="background:none; border: none;" onclick="history.back()"><i class="fa-solid fa-left-long"></i></button>
+
+      <a href="#" id="shareBtn">
+        <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="2 0 23 23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="18" cy="5" r="3"></circle>
             <circle cx="6" cy="12" r="3"></circle>
             <circle cx="18" cy="19" r="3"></circle>
             <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-    </button>
-</a>
+          </svg>
+        </button>
+      </a>
 
-<div class="theme-toggle-wrapper">
-  <label
-    for="themeCheckbox"
-    id="theme-toggle"
-    class="theme-toggle"
-    aria-label="Toggle Theme">
-    <input
-      type="checkbox"
-      id="themeCheckbox"
-      aria-label="Toggle dark mode"
-      hidden
-    >
-<span class="icon sun">
-    <i class="fa-solid fa-sun"></i>
-</span>
+      <div class="theme-toggle-wrapper">
+        <label for="themeCheckbox" id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+          <input type="checkbox" id="themeCheckbox" aria-label="Toggle dark mode" hidden>
+          <span class="icon sun"><i class="fa-solid fa-sun"></i></span>
+          <span class="icon moon"><i class="fa-solid fa-moon"></i></span>
+          <span class="thumb"></span>
+        </label>
+      </div>
 
-<span class="icon moon">
-    <i class="fa-solid fa-moon"></i>
-</span>
-    <span class="thumb"></span>
-  </label>
-</div>
-</div>
-    <div class="menu-btn" onclick="openMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
     </div>
-</header>
+  </header>
+
+  <div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <span class="head-close-btn" onclick="closeMenu()">✕</span>
+    </div>
+    <div class="menu-content">
+
+    <ul class="side-links">
+      <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="study-material.html"><i class="fa-solid fa-book"></i> Study Material</a></li>
+      <li><a href="links.html"><i class="fa-solid fa-link"></i> External Source</a></li>
+      <li><a href="courses.html"><i class="fa-solid fa-graduation-cap"></i> Courses</a></li>
+      <li><a href="library-opac.html"><i class="fa-solid fa-book-open"></i> Library OPAC</a></li>
+      <li>
+        <div class="dropdown-btn" onclick="toggleUploads()">
+          <i class="fa-solid fa-upload"></i> Uploads
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="submenu" id="uploadsMenu">
+          <a href="upload.html#resources"><i class="fa-solid fa-file-lines"></i> Upload as Document</a>
+          <a href="upload.html#images"><i class="fa-solid fa-camera"></i> Upload as Image</a>
+        </div>
+      </li>
+      <li><a href="request-course.html"><i class="fa-solid fa-pen-to-square"></i> Request Subject</a></li>
+      <li><a href="feedback.html"><i class="fa-solid fa-comment"></i> Feedback</a></li>
+      <li>
+        <div class="dropdown-btn" onclick="toggleAbout()">
+          <i class="fa-solid fa-circle-info"></i> About
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="submenu" id="aboutMenu">
+          <a href="#about-college"><i class="fa-solid fa-building-columns"></i> About College</a>
+          <a href="#cs-department"><i class="fa-solid fa-computer"></i> CS Department</a>
+          <a href="#about-website"><i class="fa-solid fa-globe"></i> About this Website</a>
+          <a href="#about-admin"><i class="fa-solid fa-user-tie"></i> Admin</a>
+        </div>
+      </li>
+    </ul>
+
+    </div>
+  </div>
 
   <main class="container" id="main">
-  <div class="phead">
-   <h1 id="bookTitle">Loading book details...</h1>
- </div>
 
-  <div id="bookMeta" class="meta"></div>
-  <h2>Holdings:</h2>
-  <table id="holdingsTable" class="holding-st">
-    <thead>
-      <tr><th>Copy No.</th><th>Accession No.</th><th>Shelving Location</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <div class="phead">
+      <h1 id="bookTitle">Loading book details...</h1>
+    </div>
 
-  <div class="loading" id="loading">Fetching book details...</div>
-</main>
+    <div id="bookMeta" class="meta"></div>
 
-<script>
-(function () {
-  const STORAGE_KEY = "userThemePreference";
-  const THEME_COLORS = {
-    light: "#ffffff",
-    dark:  "#1a1a2e"
-  };
-  function getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
-  function getSavedTheme() {
-    return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
-  }
-  function updateMetaThemeColor(theme) {
-    let metaTag = document.querySelector('meta[name="theme-color"]');
-    if (!metaTag) {
-      metaTag = document.createElement("meta");
-      metaTag.name = "theme-color";
-      document.head.appendChild(metaTag);
+    <h2>Holdings:</h2>
+    <table id="holdingsTable" class="holding-st">
+      <thead>
+        <tr><th>Copy No.</th><th>Accession No.</th><th>Shelving Location</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="loading" id="loading">Fetching book details...</div>
+
+  </main>
+
+  <script>
+  (function () {
+    const STORAGE_KEY = "userThemePreference";
+    const THEME_COLORS = {
+      light: "#ffffff",
+      dark: "#1a1a2e"
+    };
+
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     }
-    metaTag.content = THEME_COLORS[theme];
-  }
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    updateMetaThemeColor(theme);
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.checked = theme === "dark";
+
+    function getSavedTheme() {
+      return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
     }
-  }
-  function setTheme(theme) {
-    localStorage.setItem(STORAGE_KEY, theme);
-    applyTheme(theme);
-  }
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute("data-theme");
-    setTheme(current === "dark" ? "light" : "dark");
-  }
-  function watchSystemTheme() {
-    window.matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => {
-        if (!localStorage.getItem(STORAGE_KEY)) {
-          applyTheme(e.matches ? "dark" : "light");
+
+    function updateMetaThemeColor(theme) {
+      let metaTag = document.querySelector('meta[name="theme-color"]');
+      if (!metaTag) {
+        metaTag = document.createElement("meta");
+        metaTag.name = "theme-color";
+        document.head.appendChild(metaTag);
+      }
+      metaTag.content = THEME_COLORS[theme];
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      updateMetaThemeColor(theme);
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.checked = theme === "dark";
+      }
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem(STORAGE_KEY, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    }
+
+    function watchSystemTheme() {
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    }
+
+    function watchStorageChanges() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          applyTheme(e.newValue);
         }
       });
-  }
-  function watchStorageChanges() {
-    window.addEventListener("storage", (e) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        applyTheme(e.newValue);
-      }
-    });
-  }
-  if (document.head) {
-    applyTheme(getSavedTheme());
-  }
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    applyTheme(getSavedTheme());
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.addEventListener("change", toggleTheme);
     }
-  });
-} else {
-  applyTheme(getSavedTheme());
-  const checkbox = document.getElementById("themeCheckbox");
-  if (checkbox) {
-    checkbox.addEventListener("change", toggleTheme);
-  }
-}
-  watchSystemTheme();
-  watchStorageChanges();
-})();
 
+    if (document.head) {
+      applyTheme(getSavedTheme());
+    }
 
-function openMenu(){
-    document.getElementById("sideMenu").classList.add("active");
-    document.getElementById("headOverlay").classList.add("show");
-}
-function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("active");
-    document.getElementById("headOverlay").classList.remove("show");
-}
-function toggleUploads(){
-    document.getElementById("uploadsMenu").classList.toggle("show");
-}
-function toggleAbout(){
-    document.getElementById("aboutMenu").classList.toggle("show");
-}
-document.querySelectorAll('.side-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        closeMenu();
-    });
-});
-window.addEventListener('pageshow', () => {
-    closeMenu();
-});
-</script>
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getSavedTheme());
+        const checkbox = document.getElementById("themeCheckbox");
+        if (checkbox) {
+          checkbox.addEventListener("change", toggleTheme);
+        }
+      });
+    } else {
+      applyTheme(getSavedTheme());
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.addEventListener("change", toggleTheme);
+      }
+    }
 
-<script>
-async function loadBookDetails() {
-  const params = new URLSearchParams(window.location.search);
-  const url = params.get("url");
-  const loadingEl = document.getElementById("loading");
-  const metaEl = document.getElementById("bookMeta");
-  const titleEl = document.getElementById("bookTitle");
-  const holdingsTable = document.getElementById("holdingsTable");
-  const tbody = holdingsTable.querySelector("tbody");
-  const downloadBtn = document.getElementById("downloadBtn");
+    watchSystemTheme();
+    watchStorageChanges();
+  })();
+  </script>
 
-function showLoading(message) {
-  if (!loadingEl) return;
-  loadingEl.textContent = message || '';
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  loadingEl.style.color = isDark ? '#fc3838' : '#b30707';
-}
+  <script>
+  async function loadBookDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const url = params.get("url");
+    const loadingEl = document.getElementById("loading");
+    const metaEl = document.getElementById("bookMeta");
+    const titleEl = document.getElementById("bookTitle");
+    const holdingsTable = document.getElementById("holdingsTable");
+    const tbody = holdingsTable.querySelector("tbody");
+    const downloadBtn = document.getElementById("downloadBtn");
 
-  if(!url) {
-    showLoading('No book URL provided.');
-    return;
-  }
+    function showLoading(message) {
+      if (!loadingEl) return;
+      loadingEl.textContent = message || '';
+      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      loadingEl.style.color = isDark ? '#fc3838' : '#b30707';
+    }
 
-  try {
-    const res = await fetch(`/api/bookdetails?url=${encodeURIComponent(url)}`);
-    const data = await res.json();
-
-    if(!data.success) {
-      showLoading('Failed to fetch book details. Refresh the page to see again.');
+    if (!url) {
+      showLoading('No book URL provided.');
       return;
     }
 
-    const b = data.book;
-    titleEl.textContent = b.title || "Untitled";
-
-document.getElementById("shareBtn").addEventListener("click", async (event) => {
-  event.preventDefault(); // stop the link from reloading page
-  if (navigator.share) {
     try {
-      const shareUrl = `${location.origin}/share-book?url=` + encodeURIComponent(url);
-      await navigator.share({
-        title: b.title,
-        text: " ",
-        url: shareUrl
-      });
-      console.log("Page shared successfully!");
-    } catch (err) {
-      console.error("Share failed:", err.message);
-    }
-   } else {
-    alert("Sharing not supported in this browser.");
-  }
-});
+      const res = await fetch(`/api/bookdetails?url=${encodeURIComponent(url)}`);
+      const data = await res.json();
 
-const details = [
-  ["Title", b.title],
-  ["Author", b.author ? `<a href="library-opac-browse.html?type=author&query=${encodeURIComponent(b.author)}" 
-    class="link-style" >${b.author}</a>` : ""],
-  ["Edition", b.edition],
-  ["ISBN", b.isbn],
-  ["Place & Publisher", (() => {
-      if (!b.publisher) return "";
-      const parts = b.publisher.split(/[,;]+/).map(x => x.trim()).filter(Boolean);
-      if (parts.length === 1) {
-        const pub = parts[0];
-        return `<a href="library-opac-browse.html?type=publisher&query=${encodeURIComponent(pub)}"
-                  class="link-style" >${pub}</a>`;
+      if (!data.success) {
+        showLoading('Failed to fetch book details. Refresh the page to see again.');
+        return;
+      }
+
+      const b = data.book;
+      titleEl.textContent = b.title || "Untitled";
+
+      const details = [
+        ["Title", b.title],
+        ["Author", b.author ? `<a href="library-opac-browse.html?type=author&query=${encodeURIComponent(b.author)}" class="link-style">${b.author}</a>` : ""],
+        ["Edition", b.edition],
+        ["ISBN", b.isbn],
+        ["Place & Publisher", (() => {
+          if (!b.publisher) return "";
+          const parts = b.publisher.split(/[,;]+/).map(x => x.trim()).filter(Boolean);
+          if (parts.length === 1) {
+            const pub = parts[0];
+            return `<a href="library-opac-browse.html?type=publisher&query=${encodeURIComponent(pub)}" class="link-style">${pub}</a>`;
+          } else {
+            const place = parts[0];
+            const publisher = parts.slice(1).join(", ");
+            return `
+              <a href="library-opac-browse.html?type=place&query=${encodeURIComponent(place)}" class="link-style">${place}</a>,
+              <a href="library-opac-browse.html?type=publisher&query=${encodeURIComponent(publisher)}" class="link-style">${publisher}</a>`;
+          }
+        })()],
+        ["Date of Publication", b.year ? `<a href="library-opac-browse.html?type=year&query=${encodeURIComponent(b.year)}" class="link-style">${b.year}</a>` : ""],
+        ["Pages", b.pages],
+        ["Subject Descriptors", b.subjects ? b.subjects.split(/[,;]+/).map(s => `<a href="library-opac-browse.html?type=subject&query=${encodeURIComponent(s.trim())}" class="link-style">${s.trim()}</a>`).join(", ") : ""],
+        ["Language", b.language],
+        ["Class No.", b.classNo],
+        ["Catalogue Agency", b.catalogue]
+      ].filter(row => row[1] && row[1].trim() !== "");
+
+      if (details.length) {
+        const table = document.createElement("table");
+        let html = "<tbody>";
+        for (const [k, v] of details) {
+          html += `<tr><td style="width:30%;font-weight:500;">${k}</td><td>${v}</td></tr>`;
+        }
+        html += "</tbody>";
+        table.innerHTML = html;
+        metaEl.appendChild(table);
+      }
+
+      if (Array.isArray(b.holdings) && b.holdings.length) {
+        tbody.innerHTML = b.holdings.map(h =>
+          `<tr>
+            <td>${h.copyNo || ""}</td>
+            <td>${h.accession || ""}</td>
+            <td>${h.shelving || ""}</td>
+          </tr>`
+        ).join("");
+        holdingsTable.style.display = "table";
       } else {
-        const place = parts[0];
-        const publisher = parts.slice(1).join(", ");
-        return `
-          <a href="library-opac-browse.html?type=place&query=${encodeURIComponent(place)}"
-             class="link-style" >${place}</a>,
-          <a href="library-opac-browse.html?type=publisher&query=${encodeURIComponent(publisher)}"
-             class="link-style" >${publisher}</a>`;
+        holdingsTable.style.display = "none";
       }
-  })()],
-  ["Date of Publication", b.year ? `<a href="library-opac-browse.html?type=year&query=${encodeURIComponent(b.year)}" 
-      class="link-style" >${b.year}</a>` : ""],
-  ["Pages", b.pages],
-  ["Subject Descriptors", b.subjects
-    ? b.subjects.split(/[,;]+/).map(s => 
-        `<a href="library-opac-browse.html?type=subject&query=${encodeURIComponent(s.trim())}" 
-           class="link-style" >${s.trim()}</a>`).join(", ")
-    : ""],
-  ["Language", b.language],
-  ["Class No.", b.classNo],
-  ["Catalogue Agency", b.catalogue]
 
-    ].filter(row => row[1] && row[1].trim() !== "");
+      loadingEl.style.display = "none";
 
-    if(details.length) {
-      const table = document.createElement("table");
-      let html = "<tbody>";
-      for(const [k,v] of details) {
-        html += `<tr><td style="width:30%;font-weight:500;">${k}</td><td>${v}</td></tr>`;
-      }
-      html += "</tbody>";
-      table.innerHTML = html;
-      metaEl.appendChild(table);
+    } catch (err) {
+      showLoading(`Error: ${err.message}`);
     }
-
-    if(Array.isArray(b.holdings) && b.holdings.length){
-      tbody.innerHTML = b.holdings.map(h =>
-        `<tr>
-          <td>${h.copyNo||""}</td>
-          <td>${h.accession||""}</td>
-          <td>${h.shelving||""}</td>
-        </tr>`
-      ).join("");
-      holdingsTable.style.display="table";
-    } else {
-      holdingsTable.style.display="none";
-    }
-
-    loadingEl.style.display="none";
-  } catch(err) {
-    showLoading(`Error: ${err.message}`);
   }
-}
 
-window.addEventListener("load", loadBookDetails);
+  window.addEventListener("load", loadBookDetails);
+  </script>
 
-</script>
+  <script>
+  (function () {
+    const DEFAULT_ID = "about-college";
+    const sections = Array.from(document.querySelectorAll("main .section"));
+    const links = Array.from(document.querySelectorAll(".nav2 a[href^='#]"));
+
+    function showSectionById(id) {
+      const targetId = id || DEFAULT_ID;
+      sections.forEach(sec => {
+        sec.hidden = (sec.id !== targetId);
+      });
+      links.forEach(a => {
+        const isActive = a.getAttribute("href") === "#" + targetId;
+        if (isActive) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
+      });
+      const active = document.getElementById(targetId);
+      if (active) active.focus({ preventScroll: true });
+    }
+
+    if (!location.hash) {
+      history.replaceState(null, "", location.pathname + "#" + DEFAULT_ID);
+    }
+    showSectionById((location.hash || "#" + DEFAULT_ID).slice(1));
+
+    links.forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href").slice(1);
+        history.replaceState(null, "", location.pathname + "#" + targetId);
+        showSectionById(targetId);
+      });
+    });
+
+    window.addEventListener("popstate", function () {
+      const id = (location.hash || "#" + DEFAULT_ID).slice(1);
+      showSectionById(id);
+    });
+  })();
+  </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const avatar = document.getElementById("adminAvatar");
+    const adminSection = document.getElementById("about-admin");
+
+    const thumb = avatar.dataset.thumb;
+    const gif = avatar.dataset.gif;
+
+    let gifLoaded = false;
+    let loading = false;
+
+    function playGif() {
+      if (loading || gifLoaded) {
+        avatar.src = gif;
+        return;
+      }
+
+      loading = true;
+      avatar.src = thumb;
+
+      const preload = new Image();
+
+      preload.onload = function () {
+        gifLoaded = true;
+        loading = false;
+
+        if (!adminSection.hidden) {
+          avatar.src = gif;
+        }
+      };
+
+      preload.onerror = function () {
+        loading = false;
+        avatar.src = thumb;
+      };
+
+      preload.src = gif;
+    }
+
+    function stopGif() {
+      avatar.src = thumb;
+    }
+
+    function updateAvatar() {
+
+      if (adminSection.hidden) {
+        stopGif();
+      } else {
+        playGif();
+      }
+
+    }
+
+    const observer = new MutationObserver(updateAvatar);
+
+    observer.observe(adminSection, {
+      attributes: true,
+      attributeFilter: ["hidden"]
+    });
+
+    updateAvatar();
+
+  });
+  </script>
+
 </body>
 </html>

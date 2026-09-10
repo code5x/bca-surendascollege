@@ -1,1399 +1,776 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About - College Site</title>
+  <title>About - Suren Das College</title>
   <meta name="theme-color" content="#ffffff"/>
+  <link rel="icon" href="/src/college-logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<style>
-html {
-  scroll-behavior: smooth;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-}
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Base + background */
-body.bg-app {
-  /* Desktop background */
-  background: url("/src/background.webp") no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
-}
-
-/* Mobile background */
-@media (max-width: 768px) {
-  body.bg-app {
-    background: url("/src/background-mobile.webp") no-repeat center center fixed;
-    background-size: cover;
-  }
-}
-
-body.bg-app::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: 0;
-  pointer-events: none;
-}
-
-
-
-/* ===== HEADER ===== */
-
-header {
-  display: flex;
-  flex-direction: column;
-  justify-content:space-between;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-  animation: slideDown 1s ease;
-  top: 0;
-  z-index: 100;
-  background: transparent;
-  position: sticky;
-}
-
-.main-header{
-    background: #1b9ade;
-    color:white;
-    padding: 4px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.site-header {
-  border-top: 1px solid #555;
-  background: #9fc9fc;
-  border-radius: 0 0 10px 10px;
-  overflow-x: auto;
-  overflow-y: visible;
-  padding-inline: 20px;
-  box-sizing: border-box;
-  scrollbar-width: none;
-}
-
-.nav2 {
-  display: flex;
-  flex-wrap: nowrap;
-  width: max-content;
-  gap: 20px;
-}
-
-.nav2 a {
-  flex: 0 0 auto;
-  white-space: nowrap;
-  padding: 8px 4px 12px;
-  color: #03398f;
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 450;
-}
-
-.nav2 a[aria-current="page"] {
-  text-decoration: underline;
-  text-underline-offset: 6px;
-  text-decoration-thickness: 2px;
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-100%); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
-}
-.btn-area{
-         display: flex;
-         align-items: center;
-         gap: 15px;
-    font-size: 18px;
-    font-weight:bold;
-}
-.menu-btn{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    cursor:pointer;
-}
-.menu-btn span{
-    width:22px;
-    height:3px;
-    background:white;
-}
-
-.side-menu{
-    position:fixed;
-    top:1px;
-    right:-250px;
-    width:250px;
-    height:90vh;
-    background:#abe2ff;
-    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
-    transition:0.4s;
-    overflow-y:auto;
-    z-index:1000;
-    border-radius:5px 0 0 5px;
-
-    display: flex;
-    flex-direction: column;
-}
-.menu-header{
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 10px;
-}
-.side-menu.active{
-    right:0;
-}
-.head-close-btn{
-    font-size:22px;
-    cursor:pointer;
-    color: #111;
-}
-.menu-content{
-    flex: 1;
-    overflow-y: auto;
-}
-.side-links{
-    list-style:none;
-    padding: 0 10px;
-}
-.side-links i {
-    color: #444;
-    width: 25px;
-}
-.side-links li{
-    border-bottom: 1px solid #888;
-}
-.side-links li:last-child{
-    border:none;
-}
-.side-links a{
-    text-decoration:none;
-    color:#111;
-    display:block;
-    padding: 15px 10px;
-}
-.side-links a:hover{
-    background:#87d2fa;
-}
-.dropdown-btn{
-    cursor:pointer;
-    padding:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 10px;
-    color:#111;
-}
-.dropdown-btn .fa-chevron-down {
-    margin-left: auto;
-}
-.dropdown-btn:hover{
-    background:#77cefc;
-}
-.submenu{
-    display:none;
-    padding-left:20px;
-}
-.submenu a{
-    color:#111;
-    border-top: 1px solid #888;
-}
-.submenu.show{
-    display:block;
-}
-.head-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.3);
-    display:none;
-    z-index:999;
-}
-.head-overlay.show{
-    display:block;
-}
-@media(min-width:769px){
-    .side-menu{
-        right:-350px;
-        width:350px;
+  
+  <!-- Styles -->
+  <style>
+    /* ===== COLOR VARIABLES ===== */
+    :root {
+      --primary-blue: #1b9ade;
+      --accent-red: #e01a5f;
+      --light-bg: #ffffff;
+      --dark-bg: #1a1a2e;
+      --text-light: #111111;
+      --text-dark: #f7f7f7;
+      --filter-light: #ddf;
+      --filter-dark: #222;
+      --card-light: #f7e7df;
+      --card-dark: #0f1724;
+      --border-light: #386c96;
+      --border-dark: #555;
     }
-    .main-header { padding: 4px 30px; }
-    .btn-area { gap: 25px; }
-}
-
-.theme-toggle {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 65px;
-  height: 29px;
-  padding: 0 10px;
-  border-radius: 40px;
-  background: #bbb;
-  cursor: pointer;
-  user-select: none;
-  box-sizing: border-box;
-}
-.theme-toggle .icon {
-  font-size: 18px;
-  z-index: 2;
-  position: absolute;
-}
-.sun { color: #bbb; }
-.moon { color: #444; }
-
-.theme-toggle .thumb {
-  position: absolute;
-  left: 3px;
-  top: 2px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #195ea8;
-  transition: transform 0.3s ease;
-  z-index: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-#themeCheckbox:checked + .sun + .moon + .thumb {
-  transform: translateX(33px);
-}
-.theme-toggle .sun {
-  left: 6px;
-}
-.theme-toggle .moon {
-  right: 9px;
-}
-
-
-/* Page container */
-main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 10px;
-  position: relative;
-  z-index: 1;
-  flex: 1;            /*    take up remaining space */
-}
-
-.section {
-  border: transparent;
-  padding: 5px;  
-  outline: none;
-}
-
-@media (min-width: 769px) {
- .section { padding: 35px; }
-}
-
-.section h2 {
-  margin: 0 0 15px;
-  color: #111;
-  padding: 20px 0 0 0;
-}
-
-.section h3 {
-  margin: 0 0 13px;                               
-  color: #222;
-  padding: 20px 0 0 0;
-}
-
-.section p {
-  line-height: 1.6;
-  margin: 0.5rem 0;
-  color: #323847;
-  font-size: 1rem;
-  font-weight: 450;
-  text-align: justify;
-}
-
-.section p a { 
-  text-decoration: underline;
-  color: #0c54b3; 
-}
-.section p a:hover { color: #b814c7; }
-
-
-.section[hidden] {
-  display: none !important;
-}
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 150px;
-}
-
-/* Image Grid */
-.image-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-.image-frame {
-  flex: 1 1 calc(50% - 16px); /* two per row on desktop */
-  max-width: 500px;
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #222;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* crop to fit 3:2 */
-  display: block;
-}
-
-/* On small screen, make them full width */
-@media (max-width: 768px) {
-  .image-frame {
-    flex: 1 1 100%;
-  }
-}
-
-/* Map frame */
-.map-frame {
-  margin-top: 20px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-
-/* Grid for images */
-.image-grid2 {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 8px;
-}
-
-/* Each image same size */
-.image-frame2 {
-  flex: 1 1 300px;   /* minimum width */
-  max-width: 500px; /* keeps consistent look */
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #222;
-}
-.image-frame2 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Caption style */
-.image-caption {
-  text-align: center;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  color: #333;
-  margin-bottom: 20px;
-  font-weight: 450;
-  margin-top: 30px;
-}
-
-
-.image-caption strong {
-  display: block;        /* make it sit on its own line */
-  font-size: 1.1rem;     /* increase size */
-  font-weight: 550;      /* extra bold */
-  color: #333;           /* white, stands out */
-}
-
-/* Mobile: stack vertically */
-@media (max-width: 768px) {
-  .image-grid2 {
-    flex-direction: column;
-    align-items: center;
-  }
-  .image-frame2 {
-    max-width: 100%;
-    flex: 1 1 100%;
-  }
-}
-
-@media (max-width: 500px) {
- .image-frame { max-width: 300px; }
- .image-frame2 { max-width: 300px; }
-}
-
-
-/* Big box for staff section */
-.staff-section {
-  background: #f7e7df;
-  border-radius: 15px;
-  padding: 1px 10px;
-  margin-top: 5px;
-  border: 2px solid #246149;
-/*  box-shadow: 0 6px 16px rgba(0,0,0,0.4); */
-  margin-top: 40px;
-}
-
-
-/* Staff list */
-.staff-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-/* Each staff card */
-.staff-card {
-  display: flex;
-  align-items: center;
-  background: #d2faf4;
-  border: 1px solid #096356;
-  border-radius: 12px;
-  padding: 8px;
-}
-
-/* Circular frame for photo */
-.staff-photo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 2px solid #0a706d;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #444;
-}
-.staff-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Info next to photo */
-.staff-info {
-  margin-left: 16px;
-}
-.staff-name {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #1e2440;
-}
-.staff-phone {
-  font-size: 0.86rem;
-  color: #321e4a;
-  margin-top: 5px;
-}
-
-
-@media (max-width: 768px) {
-	.section-admin {
-		margin-left: -8px;
-		margin-right: -8px;
-		margin-top: -10px;
-	}
-}
-
-    .member-card {
-		background: rgba(153, 194, 240, 0.4);
-      border: 1px solid #27324a;
-      border-radius: 14px;
-                padding: 24px 10px;
-      margin: 20px 0 40px;
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+    
+    [data-theme="dark"] {
+      --primary-blue: #074085;
+      --accent-red: #ff0050;
+      --light-bg: #1a1a2e;
+      --dark-bg: #12121a;
+      --text-light: #f7f7f7;
+      --text-dark: #111111;
+      --filter-light: #222;
+      --filter-dark: #222;
+      --card-light: #0f1724;
+      --card-dark: #0f1724;
+      --border-light: #555;
+      --border-dark: #555;
     }
 
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-
-    .lines {
-      flex: 1;
+    /* ===== BODY BACKGROUND WITH IMAGE + OVERLAY ===== */
+    body.bg-app {
       display: flex;
       flex-direction: column;
-      gap: 5px;
-    }
-
-    .divider-line {
-      height: 2px;
-      border-radius: 50px;
-      background: #2f3b56;
-    }
-
-    .admin-card .lines-left .divider-line:first-child {
-      background: linear-gradient(to right, transparent, #624dfa);
-    }
-
-    .admin-card .lines-left .divider-line:last-child {
-      background: linear-gradient(to right, transparent, #678);
-    }
-
-    .admin-card .lines-right .divider-line:first-child {
-      background: linear-gradient(to left, transparent, #624dfa);
-    }
-
-    .admin-card .lines-right .divider-line:last-child {
-      background: linear-gradient(to left, transparent, #678);
-    }
-
-    .contributor-card .lines-left .divider-line:first-child {
-      background: linear-gradient(to right, transparent, #047533);
-    }
-
-    .contributor-card .lines-left .divider-line:last-child {
-      background: linear-gradient(to right, transparent, #678);
-    }
-
-    .contributor-card .lines-right .divider-line:first-child {
-      background: linear-gradient(to left, transparent, #047533);
-    }
-
-    .contributor-card .lines-right .divider-line:last-child {
-      background: linear-gradient(to left, transparent, #678);
-    }
-
-    .divider-sep {
-      display: flex;
-      justify-content: center;
-      margin: 25px 0;
+      min-height: 100vh;
+      background: url("/src/background.webp") no-repeat center center fixed;
+      background-size: cover;
       position: relative;
-      z-index: 1;
+      color: var(--text-light);
     }
 
-    .divider-line2 {
-      width: 70%;
-      height: 2px;
+    @media (max-width: 768px) {
+      body.bg-app {
+        background: url("/src/background-mobile.webp") no-repeat center center fixed;
+        background-size: cover;
+      }
     }
 
-        .line2-admin {
-                background: linear-gradient(90deg, transparent 0%, #624dfa 50%, transparent 100%);
-        }
-
-        .line2-cont {
-                background: linear-gradient(90deg, transparent 0%, #047533 50%, transparent 100%);
-        }
-
-    .social-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #222;
-      text-align: center;
-      margin-bottom: 18px;
-      position: relative;
-      z-index: 1;
+    body.bg-app::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.6);
+      z-index: -1;
+      pointer-events: none;
+      transition: background 0.3s ease;
     }
 
-    .admin-label {
-      padding: 7px 18px;
-      border-radius: 999px;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      border: 1px solid #444;
-      color: #e2e8f0;
-      white-space: nowrap;
+    [data-theme="dark"] body.bg-app::before {
+      background: rgba(0, 0, 0, 0.7);
     }
 
-	.ad-label-ad { background: #624dfa; }
-	.co-label-co { background: #047533; }
+    /* ===== TYPOGRAPHY ===== */
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
 
-    .admin-avatar {
+    h2 { margin: 0 0 15px; color: var(--text-light); padding: 20px 0 0 0; }
+    h3 { margin: 0 0 13px; color: var(--text-light); padding: 20px 0 0 0; }
+
+    .section p { line-height: 1.6; margin: 0.5rem 0; color: var(--text-light); font-size: 1rem; font-weight: 450; text-align: justify; }
+    .section p a { text-decoration: underline; color: var(--primary-blue); }
+    .section p a:hover { color: var(--accent-red); }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--primary-blue);
+      color: white;
+      padding: 4px 20px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .avatar-frame,
-    .cont-frame {
-      width: 180px;
-      height: 180px;
-		padding: 3px;
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    .main-header {
+      background: var(--primary-blue);
+      color: white;
+      padding: 4px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      width: 22px;
+      height: 3px;
+      background: white;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 1px;
+      right: -250px;
+      width: 250px;
+      height: 90vh;
+      background: #abe2ff;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      transition: 0.4s;
+      overflow-y: auto;
+      z-index: 1000;
+      border-radius: 5px 0 0 5px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.active { right: 0; }
+
+    .menu-header {
+      flex-shrink: 0;
+      height: 50px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 10px;
+    }
+
+    .head-close-btn {
+      font-size: 22px;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .menu-content { flex: 1; overflow-y: auto; }
+
+    .side-links {
+      list-style: none;
+      padding: 0 10px;
+    }
+
+    .side-links i { color: #444; width: 25px; }
+    .side-links li { border-bottom: 1px solid #888; }
+    .side-links li:last-child { border: none; }
+    .side-links a { text-decoration: none; color: #111; display: block; padding: 15px 10px; }
+    .side-links a:hover { background: #87d2fa; }
+
+    .dropdown-btn {
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10px;
+      color: #111;
+    }
+
+    .dropdown-btn .fa-chevron-down { margin-left: auto; }
+    .dropdown-btn:hover { background: #77cefc; }
+
+    .submenu { display: none; padding-left: 20px; }
+    .submenu a { color: #111; border-top: 1px solid #888; }
+    .submenu.show { display: block; }
+
+    .head-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      display: none;
+      z-index: 999;
+    }
+
+    .head-overlay.show { display: block; }
+
+    @media (min-width:769px){
+      .side-menu { right: -350px; width: 350px; }
+      .main-header { padding: 4px 30px; }
+      .btn-area { gap: 25px; }
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 65px;
+      height: 29px;
+      padding: 0 10px;
+      border-radius: 40px;
+      background: #bbb;
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .theme-toggle .icon { font-size: 18px; z-index: 2; position: absolute; }
+    .sun { color: #bbb; }
+    .moon { color: #444; }
+
+    .theme-toggle .thumb {
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
-      background: #bddcfc;
+      background: #195ea8;
+      transition: transform 0.3s ease;
+      z-index: 1;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    .avatar-frame {
-      border: 3px solid #624dfa;
-      box-shadow: 0 0 0 6px rgba(124, 108, 255, 0.15);
+    #themeCheckbox:checked + .sun + .moon + .thumb { transform: translateX(33px); }
+    .theme-toggle .sun { left: 6px; }
+    .theme-toggle .moon { right: 9px; }
+
+    /* ===== ABOUT CONTENT ===== */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px;
+      position: relative;
+      z-index: 1;
+      flex: 1;
     }
 
-    .cont-frame {
-      border: 3px solid #047533;
-      box-shadow: 0 0 0 6px rgba(36, 195, 123, 0.15);
+    .section {
+      border: transparent;
+      padding: 5px;
+      outline: none;
     }
 
-    .avatar-frame img,
-    .cont-frame img {
+    @media (min-width: 769px) { .section { padding: 35px; } }
+
+    .section h2 { margin: 0 0 15px; color: var(--text-light); padding: 20px 0 0 0; }
+    .section h3 { margin: 0 0 13px; color: var(--text-light); padding: 20px 0 0 0; }
+
+    .section p { line-height: 1.6; margin: 0.5rem 0; color: var(--text-light); font-size: 1rem; font-weight: 450; text-align: justify; }
+    .section p a { text-decoration: underline; color: var(--primary-blue); }
+    .section p a:hover { color: var(--accent-red); }
+
+    /* ===== IMAGES ===== */
+    .image-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .image-frame {
+      flex: 1 1 calc(50% - 16px);
+      max-width: 500px;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      border-radius: 12px;
+      background: var(--card-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-theme="dark"] .image-frame { background: var(--card-dark); }
+
+    .image-frame img {
       width: 100%;
       height: 100%;
-      border-radius: 50%;
       object-fit: cover;
       display: block;
     }
 
-    .admin-name {
-      text-align: center;
-      margin-bottom: 12px;
+    @media (max-width: 768px) {
+      .image-frame { flex: 1 1 100%; }
     }
 
-    .admin-name h3 {
-      font-size: 22px;
-      font-weight: 700;
-      color: #333;
+    /* ===== MAP ===== */
+    .map-frame {
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .member-card p {
-      text-align: center;
+    .map-frame iframe {
+      width: 100%;
+      height: 400px;
+      border: 0;
     }
 
-    .admin-socials {
+    /* ===== STAFF SECTION ===== */
+    .staff-section {
+      background: var(--card-light);
+      border-radius: 15px;
+      padding: 1px 10px;
+      margin-top: 5px;
+      border: 2px solid var(--border-light);
+      margin-top: 40px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="dark"] .staff-section { background: var(--card-dark); border-color: var(--border-dark); }
+
+    .staff-list {
       display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 15px;
+      margin-bottom: 15px;
     }
 
-    .social-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
-      display: inline-flex;
+    .staff-card {
+      display: flex;
       align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      font-size: 27px;
-      background: #87c5ff;
-      border: 1px solid #555;
-      color: #e2e8f0;
+      background: var(--filter-light);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 8px;
+      transition: background 0.3s, border-color 0.3s;
     }
 
-    .social-btn:hover {
-                transform: scale(1.03) translateY(-3px);
-                transition: transform 0s;
+    [data-theme="dark"] .staff-card { background: var(--filter-dark); border-color: var(--border-dark); color: #ddd; }
+
+    .staff-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid var(--border-light);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--card-dark);
+      transition: border-color 0.3s;
     }
 
-    .social-btn[aria-label="WhatsApp"] {
-      color: #017543;
+    [data-theme="dark"] .staff-photo { border-color: var(--border-dark); background: #333; }
+
+    .staff-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .social-btn[aria-label="Email"] {
-      color: #0c48a8;
+    .staff-info {
+      margin-left: 16px;
     }
 
-    .social-btn[aria-label="GitHub"] {
-      color: #222222;
+    .staff-name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-light);
     }
 
-    .social-btn[aria-label="Instagram"] {
-      color: #a80c74;
+    [data-theme="dark"] .staff-name { color: #e0c8e0; }
+
+    .staff-phone {
+      font-size: 0.86rem;
+      color: var(--text-light);
+      margin-top: 5px;
     }
 
-    .social-btn[aria-label="Facebook"] {
-      color: #0c48a8;
+    [data-theme="dark"] .staff-phone { color: #cfd3fa; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--card-light);
+      text-align: center;
+      padding: 1px;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border-light);
+      border-radius: 20px 20px 0 0;
+      margin-top: auto;
+      transition: background 0.3s, border-color 0.3s;
     }
 
-    @media (min-width: 769px) {
-      .member-card {
-                        padding: 30px 25px;
-      }
+    [data-theme="dark"] footer { background: var(--card-dark); border-color: var(--border-dark); color: #aaa; }
 
+    footer a { color: var(--primary-blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (min-width: 769px) { footer { font-size: 1.25rem; } }
+
+    /* ===== MOBILE SCROLLBAR ===== */
+    @media (max-width: 768px) {
+      *::-webkit-scrollbar { display: none; }
+      * { scrollbar-width: none; }
+      * { -ms-overflow-style: none; }
     }
-
-
-footer {
-    background: #a7cfc9;
-    text-align: center;
-    padding: 1px;
-    color: #333;
-    font-size: 0.85rem;
-    border-top: 1px solid #333;
-    border-radius: 20px 20px 0 0;
-    margin-top: auto;
-    margin-bottom: 0px;
-
-    position: relative;
-    z-index: 10;
-}
-@media (min-width: 769px) {
-  footer {
-    font-size: 1.25rem;
-  }
-}
-
-s {
-  text-decoration-thickness: 1px;
-}
-
-[data-theme="dark"] {
-color-scheme: dark;
-body.bg-app::before  { background: rgba(0, 0, 0, 0.7); }
-footer { background: #111; color: #aaa; border-top: 1px solid #555555; }
-footer a { color: #f7c2d9; }
-.section h2 { color: #eee; }
-.section h3 { color: #ddd; }
-.section p { color: #cfd3fa; font-weight: 400; }
-.section p a { color: #8bbaf7; }
-.section p a:hover { color: #fcbcb3; }
-.image-caption { color: #cfd3fa; font-weight: 400; }
-.image-caption strong { color: #ddd; }
-.staff-section { background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.3); }
-.staff-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.3); } 
-.staff-name { color: #e0c8e0; }
-.staff-phone { color: #cfd3fa; }
-
-.site-header { background: #1a557d; border-top: 1px solid #999; }
-.nav2 a { color: #e6f4ff; }
-.main-header{ background: #074085; }
-.side-menu{ background:#1e3759; }
-.side-links a{ color:#ddd;}
-.dropdown-btn{ color: #ddd; }
-.side-links a:hover, .dropdown-btn:hover {background:#2f4a70;}
-.submenu a{ color:#ddd;}
-.head-close-btn{ color: #ddd; }
-.side-links i { color: #aaa; }
-.sun { color: #444; }
-.moon { color: #bbb; }
-
-.member-card { background: rgba(31, 55, 84, 0.4); border: 1px solid #888; }
-.admin-card .lines-left .divider-line:first-child {
-	background: linear-gradient(to right, transparent, #8272fc);
-}
-.admin-card .lines-right .divider-line:first-child {
-	background: linear-gradient(to left, transparent, #8272fc);
-}
-.line2-admin {
-	background: linear-gradient(90deg, transparent 0%, #8272fc 50%, transparent 100%);
-}
-.admin-label { border: 1px solid #999; }
-.ad-label-ad { background: #7562fc; }
-.avatar-frame { border: 3px solid #8272fc; }
-
-.contributor-card .lines-left .divider-line:first-child {
-	background: linear-gradient(to right, transparent, #039e44);
-}.contributor-card .lines-right .divider-line:first-child {
-	background: linear-gradient(to left, transparent, #039e44);
-}
-.line2-cont {
-	background: linear-gradient(90deg, transparent 0%, #039e44 50%, transparent 100%);
-}
-.co-label-co { background: #038238; }
-.cont-frame { border: 3px solid #039e44; }
-
-.avatar-frame, .cont-frame { background: #445; }
-.social-title { color: #bbb; }
-.social-btn { background: #1d2642; border: 1px solid #888; }
-.social-btn[aria-label="WhatsApp"] { color: #04b54e; }
-.social-btn[aria-label="Email"] { color: #5891ed; }
-.social-btn[aria-label="GitHub"] { color: #bbb; }
-.social-btn[aria-label="Instagram"] { color: #ff66bd; }
-.social-btn[aria-label="Facebook"] { color: #5891ed; }
-}
-
-
-@media (max-width: 768px) {
-    /* Hide scrollbar for Chrome, Safari and Edge */
-    *::-webkit-scrollbar {
-        display: none;
-    }
-
-    /* Hide scrollbar for Firefox */
-    * {
-        scrollbar-width: none;
-    }
-
-    /* Hide scrollbar for IE and old Edge */
-    * {
-        -ms-overflow-style: none;
-    }
-}
-
-</style>
-
-<script>
-    (function () {
-      const THEME_COLORS = { light: "#ffffff", dark: "#1a1a2e" };
-      const saved = localStorage.getItem("userThemePreference");
-      const system = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark" : "light";
-      const theme = saved || system;
-
-      // Apply data-theme immediately
-      document.documentElement.setAttribute("data-theme", theme);
-
-      // Update meta theme-color immediately
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.content = THEME_COLORS[theme];
-    })();
-  </script>
-
+  </style>
 </head>
+
 <body class="bg-app">
-  <!-- Header -->
 
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="main-header">
+      <div class="btn-area">
+        <a href="#" id="shareBtn">
+          <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="2 0 23 23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </button>
+        </a>
 
-<header>
+        <div class="theme-toggle-wrapper">
+          <label for="themeCheckbox" id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+            <input type="checkbox" id="themeCheckbox" aria-label="Toggle dark mode" hidden>
+            <span class="icon sun"><i class="fa-solid fa-sun"></i></span>
+            <span class="icon moon"><i class="fa-solid fa-moon"></i></span>
+            <span class="thumb"></span>
+          </label>
+        </div>
+      </div>
 
-<div class="main-header">
-<div class="btn-area">
-<a href="#" id="shareBtn">
-    <button style="color:#ffffff; background:transparent; border:none; cursor:pointer;" >
-        <svg xmlns="http://www.w3.org/2000/svg"
-             width="22"
-             height="22"
-             viewBox="2 0 23 23"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-            <circle cx="18" cy="5" r="3"></circle>
-            <circle cx="6" cy="12" r="3"></circle>
-            <circle cx="18" cy="19" r="3"></circle>
-            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-    </button>
-</a>
-<div class="theme-toggle-wrapper">
-  <label
-    for="themeCheckbox"
-    id="theme-toggle"
-    class="theme-toggle"
-    aria-label="Toggle Theme">
-    <input
-      type="checkbox"
-      id="themeCheckbox"
-      aria-label="Toggle dark mode"
-      hidden>
-<span class="icon sun">
-    <i class="fa-solid fa-sun"></i>
-</span>
-<span class="icon moon">
-    <i class="fa-solid fa-moon"></i>
-</span>
-    <span class="thumb"></span>
-  </label>
-</div>
-</div>
-    <div class="menu-btn" onclick="openMenu()">
+      <div class="menu-btn" onclick="openMenu()">
         <span></span>
         <span></span>
         <span></span>
+      </div>
     </div>
-</div>
+  </header>
 
-<div class="site-header">
- <div class="nav2">
-   <a href="#about-college">About College</a>
-   <a href="#cs-department">CS Department</a>
-   <a href="#about-website">About this Website</a>
-   <a href="#about-admin">Admin</a>
- </div>
-</div>
-</header>
-
-<div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
-<div class="side-menu" id="sideMenu">
-<div class="menu-header">
-        <span class="head-close-btn" onclick="closeMenu()">✕</span>
+  <!-- ===== SIDE MENU ===== -->
+  <div class="head-overlay" id="headOverlay" onclick="closeMenu()"></div>
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-header">
+      <span class="head-close-btn" onclick="closeMenu()">✕</span>
     </div>
-<div class="menu-content">
+    <div class="menu-content">
 
-<ul class="side-links">
-    <li>
-        <a href="/">
-            <i class="fa-solid fa-house"></i> Home
-        </a>
-    </li>
-
-    <li>
-        <a href="study-material.html">
-            <i class="fa-solid fa-book"></i> Study Material
-        </a>
-    </li>
-
-    <li>
-        <a href="links.html">
-            <i class="fa-solid fa-link"></i> External Source
-        </a>
-    </li>
-
-    <li>
-        <a href="courses.html">
-            <i class="fa-solid fa-graduation-cap"></i> Courses
-        </a>
-    </li>
-
-    <li>
-        <a href="library-opac.html">
-            <i class="fa-solid fa-book-open"></i> Library OPAC
-        </a>
-    </li>
-
-    <li>
+    <ul class="side-links">
+      <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="study-material.html"><i class="fa-solid fa-book"></i> Study Material</a></li>
+      <li><a href="links.html"><i class="fa-solid fa-link"></i> External Source</a></li>
+      <li><a href="courses.html"><i class="fa-solid fa-graduation-cap"></i> Courses</a></li>
+      <li><a href="library-opac.html"><i class="fa-solid fa-book-open"></i> Library OPAC</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleUploads()">
-            <i class="fa-solid fa-upload"></i> Uploads
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-upload"></i> Uploads
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="submenu" id="uploadsMenu">
-            <a href="upload.html#resources">
-                <i class="fa-solid fa-file-lines"></i> Upload as Document
-            </a>
-
-            <a href="upload.html#images">
-                <i class="fa-solid fa-camera"></i> Upload as Image
-            </a>
+          <a href="upload.html#resources"><i class="fa-solid fa-file-lines"></i> Upload as Document</a>
+          <a href="upload.html#images"><i class="fa-solid fa-camera"></i> Upload as Image</a>
         </div>
-    </li>
-
-    <li>
-        <a href="request-course.html">
-            <i class="fa-solid fa-pen-to-square"></i> Request Subject
-        </a>
-    </li>
-
-    <li>
-        <a href="feedback.html">
-            <i class="fa-solid fa-comment"></i> Feedback
-        </a>
-    </li>
-
-    <li>
+      </li>
+      <li><a href="request-course.html"><i class="fa-solid fa-pen-to-square"></i> Request Subject</a></li>
+      <li><a href="feedback.html"><i class="fa-solid fa-comment"></i> Feedback</a></li>
+      <li>
         <div class="dropdown-btn" onclick="toggleAbout()">
-            <i class="fa-solid fa-circle-info"></i> About
-            <i class="fa-solid fa-chevron-down"></i>
+          <i class="fa-solid fa-circle-info"></i> About
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
-
         <div class="submenu" id="aboutMenu">
-            <a href="#about-college">
-                <i class="fa-solid fa-building-columns"></i> About College
-            </a>
-
-            <a href="#cs-department">
-                <i class="fa-solid fa-computer"></i> CS Department
-            </a>
-
-            <a href="#about-website">
-                <i class="fa-solid fa-globe"></i> About this Website
-            </a>
-
-            <a href="#about-admin">
-                <i class="fa-solid fa-user-tie"></i> Admin
-            </a>
+          <a href="#about-college"><i class="fa-solid fa-building-columns"></i> About College</a>
+          <a href="#cs-department"><i class="fa-solid fa-computer"></i> CS Department</a>
+          <a href="#about-website"><i class="fa-solid fa-globe"></i> About this Website</a>
+          <a href="#about-admin"><i class="fa-solid fa-user-tie"></i> Admin</a>
         </div>
-    </li>
-</ul>
+      </li>
+    </ul>
 
-</div>
-</div>
+    </div>
+  </div>
 
-<main id="content">
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="content">
 
     <!-- About College -->
-<section id="about-college" class="section" tabindex="-1">
-  <h2>About Suren Das College (Autonomous)</h2>
-
-<p>
-Suren Das College is a higher education institute located in Hajo, Assam. It was established to provide quality education and has become a center for academic and cultural growth. The college focuses on building students’ knowledge, practical skills, and values to prepare them for future challenges.
-</p>
-<p>
-It offers undergraduate programs in Arts, Science, and Commerce, along with courses in Computer Science, vocational studies, and other skill-based programs for modern careers. Students are also encouraged to join extracurricular activities like sports, cultural events, and community services for overall development.
-</p>
-<p>
-The college has modern classrooms, a library, laboratories, and other facilities that support effective learning. It is affiliated with Gauhati University and continues to grow as an important center of higher education in Assam.
-</p>
-  <p>
-    For more information, visit
-    <a href="https://surendascollege.co.in/" target="_blank">
-     Suren Das College Official Website.
-    </a>
-  </p>
-
-  <!-- Images Section -->
-  <h3>Images</h3>
-  <div class="image-grid">
-    <div class="image-frame">
-      <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/sdc-college1.webp" alt="College Image 1" />
-    </div>
-    <div class="image-frame">
-      <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/sdc-college2.webp" alt="College Image 2" />
-    </div>
-  </div>
-
-  <!-- Google Map -->
-  <h3>Location Map</h3>
-
-<div class="map-frame">
-  <iframe
-    src="https://www.google.com/maps?q=7G5C+WJH+Suren+Das+College+Hajo+Assam+781102&hl=en&z=13&output=embed"
-    width="100%"
-    height="400"
-    style="border:0;"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-  </div>
-</section>
-
-<!-- CS Department -->
-<section id="cs-department" class="section" tabindex="-1" hidden>
-  <h2>Computer Science Department</h2>
-
-<p>
-The Computer Science Department at Suren Das College gives students a solid foundation in computer science and related fields. It offers undergraduate courses like BCA, along with programs in computer applications, programming, and information technology. Students gain skills in coding, problem-solving, and software applications, preparing them for careers in the IT field.
-</p>
-<p>
-Practical learning is supported by the computer lab, where students practice coding, work on small projects, and explore applications of their learning. Though modest, the lab provides effective hands-on experience, helping students build confidence and technical abilities.
-</p>
-
-<!-- Images of department -->
-<h3>Images of Department</h3>
-
-<!-- Second row: 2 image, centered -->
-<div class="image-caption">
-  <strong>- Computer Lab -</strong>
-Two well-equipped lab with 40+ systems and internet access for coding and practical learning.
-</div>
-<div class="image-grid2">
-  <div class="image-frame2">
-     <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/computer-lab1.webp" alt="Computer Lab 1" />
-  </div>                                                     
-    <div class="image-frame2">
-     <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/computer-lab2.webp" alt="Computer Lab 2" />
-  </div>
-</div>
-	
-<!-- Staff section -->
-<div class="staff-section">
-<h3>Staff (people)</h3>
-  <div class="staff-list">
-
-    <!-- Person 1 -->
-    <div class="staff-card">
-      <div class="staff-photo">
-        <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/professor1_mridula-devi.webp" alt="Assistant Professor 1" />
-      </div>
-      <div class="staff-info">
-        <div class="staff-name">Mridula Devi (HoD)</div>
-        <div class="staff-phone">📞 +91 70028 91892</div>
-      </div>
-    </div>
-
-    <div class="staff-card">
-      <div class="staff-photo">
-        <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/professor2_mrinal-ojah.webp" alt="Assistant Professor 2" />
-      </div>
-      <div class="staff-info">
-        <div class="staff-name">Mrinal Ojah</div>
-        <div class="staff-phone"></div>
-      </div>
-    </div>
-
-    <div class="staff-card">
-      <div class="staff-photo">
-        <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/professor3_pallab-rajbongshi.webp" alt="Assistant Professor 3" />
-      </div>
-      <div class="staff-info">
-        <div class="staff-name">Pallab Rajbongshi</div>
-        <div class="staff-phone"></div>
-      </div>
-    </div>
-<!--
-    <div class="staff-card">
-      <div class="staff-photo">
-        <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/professor4_himadri-biswasi.webp" alt="Assistant Professor 4" />
-      </div>
-      <div class="staff-info">
-        <div class="staff-name">Himadri Biswasi</div>
-        <div class="staff-phone"></div>
-      </div>
-    </div>
--->
-  </div>
-</div>
-</section>
-
-<!-- About Website -->
-<section id="about-website" class="section" tabindex="-1" hidden>
-  <h2>About this Website</h2>
-<p>
-This website is a study hub designed to give students easy access to study materials. It collects ebooks, class notes, old question papers, syllabus, assignments, and other files in one place, so students spend less time searching and more time learning. Materials are organized by subject and semester for easy navigation.
-</p>
-<p>
-The site mainly helps Computer Science students, especially BCA students, but also has general resources useful for other departments. Currently, most materials are available upto 3rd semester, and content for higher semesters will be added gradually. Students and professional can contribute by upload study notes and resources to keep the collection updated.
-</p>
-<p>
-The website works well on mobile and tablets, making study convenient anywhere. It also shares links to trusted external resources such as digital libraries, learning portals, and YouTube playlists to support extra learning and revision for every students. Students can also search books from the college library, similar to an OPAC system, so they can quickly check book availability with ease.
-</p>
-
-<h3>Our Vision</h3>
-
-<p>
-Our goal is to build a simple, reliable study platform for college students. We aim to make learning materials easy to access, encourage sharing of notes, and provide tools that solve common study problems. Over time, the site will grow with more semesters, resources, and features for both classroom learning and self-study.
-</p>
-
-<h3>Disclaimer</h3>
-
-<p>
-This is an unofficial student community website for Suren Das College learners. It is not the college’s official website and is not managed or endorsed by the college administration. All shared content is for educational purposes, and the materials belong to their respective owners. For official updates or notices, please visit the college’s official website.<br>If any copyright holder wants content removed, please provide 
-<a href="feedback.html" style="text-decoration: underline;">feedback</a>.
-</p>
-
-</section>
-
-
-<!-- Admin -->
-<section id="about-admin" class="section section-admin" tabindex="-1" hidden>
-
-    <!-- ADMIN CARD -->
-    <div class="member-card admin-card">
-      <div class="divider">
-        <div class="lines lines-left">
-          <div class="divider-line"></div>
-          <div class="divider-line"></div>
-        </div>
-        <div class="admin-label ad-label-ad">ADMIN</div>
-        <div class="lines lines-right">
-          <div class="divider-line"></div>
-          <div class="divider-line"></div>
-        </div>
-      </div>
-
-      <div class="admin-avatar">
-        <div class="avatar-frame">
-          <img
-            id="adminAvatar"
-            src="/src/admin-thumb.png"
-            data-thumb="/src/admin-thumb.png"
-            data-gif="/src/admin.gif"
-            alt="Admin Thumbnail"
-          >
-        </div>
-      </div>
-
-      <div class="admin-name">
-        <h3>Tirtha Jyoti Deka</h3>
-      </div>
+    <section id="about-college" class="section" tabindex="-1">
+      <h2>About Suren Das College (Autonomous)</h2>
 
       <p>
-        Hello! I am a BCA student (currently 3rd semester) at Suren Das College and the creator of this website. I built it to make information simple, organized, and easy to access for students and visitors. I enjoy web development, creating user-friendly designs, and exploring new ideas to improve the overall experience. This website reflects my passion for technology, and I will continue improving it over time.
+        Suren Das College is a higher education institute located in Hajo, Assam. It was established to provide quality education and has become a center for academic and cultural growth. The college focuses on building students' knowledge, practical skills, and values to prepare them for future challenges.
       </p>
 
-      <div class="divider-sep">
-        <div class="divider-line2 line2-admin"></div>
-      </div>
-      <div class="social-title">Connect</div>
+      <p>
+        It offers undergraduate programs in Arts, Science, and Commerce, along with courses in Computer Science, vocational studies, and other skill-based programs for modern careers. Students are also encouraged to join extracurricular activities like sports, cultural events, and community services for overall development.
+      </p>
 
-      <div class="admin-socials" aria-label="Social links">
-        <a class="social-btn" href="https://wa.me/+918812039066" target="_blank" aria-label="WhatsApp">
-          <i class="fa-brands fa-square-whatsapp"></i>
-        </a>
-        <a class="social-btn" href="mailto:tirthajyotideka020@gmail.com" target="_blank" aria-label="Email">
-          <i class="fa-solid fa-envelope"></i>
-        </a>
-        <a class="social-btn" href="https://github.com/code5x" target="_blank" aria-label="GitHub">
-          <i class="fa-brands fa-square-github"></i>
-        </a>
-        <a class="social-btn" href="https://instagram.com/tirtha__27" target="_blank" aria-label="Instagram">
-          <i class="fa-brands fa-square-instagram"></i>
-        </a>
-      </div>
-    </div>
+      <p>
+        The college has modern classrooms, a library, laboratories, and other facilities that support effective learning. It is affiliated with Gauhati University and continues to grow as an important center of higher education in Assam.
+      </p>
 
-    <!-- CONTRIBUTOR CARD -->
-    <div class="member-card contributor-card">
-      <div class="divider">
-        <div class="lines lines-left">
-          <div class="divider-line"></div>
-          <div class="divider-line"></div>
+      <p>
+        For more information, visit <a href="https://surendascollege.co.in/" target="_blank">Suren Das College Official Website</a>.
+      </p>
+
+      <!-- Images Section -->
+      <h3>Images</h3>
+      <div class="image-grid">
+        <div class="image-frame">
+          <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/sdc-college1.webp" alt="College Image 1" />
         </div>
-        <div class="admin-label co-label-co">CONTRIBUTOR</div>
-        <div class="lines lines-right">
-          <div class="divider-line"></div>
-          <div class="divider-line"></div>
+        <div class="image-frame">
+          <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/sdc-college2.webp" alt="College Image 2" />
         </div>
       </div>
 
-      <div class="admin-avatar">
-        <div class="cont-frame">
-          <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/contributor_bikash-pathak.webp" alt="Bikash Pathak">
+      <!-- Google Map -->
+      <h3>Location Map</h3>
+
+      <div class="map-frame">
+        <iframe
+          src="https://www.google.com/maps?q=7G5C+WJH+Suren+Das+College+Hajo+Assam+781102&hl=en&z=13&output=embed"
+          width="100%"
+          height="400"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- CS Department -->
+    <section id="cs-department" class="section" tabindex="-1" hidden>
+      <h2>Computer Science Department</h2>
+
+      <p>
+        The Computer Science Department at Suren Das College gives students a solid foundation in computer science and related fields. It offers undergraduate courses like BCA, along with programs in computer applications, programming, and information technology. Students gain skills in coding, problem-solving, and software applications, preparing them for careers in the IT field.
+      </p>
+
+      <p>
+        Practical learning is supported by the computer lab, where students practice coding, work on small projects, and explore applications of their learning. Though modest, the lab provides effective hands-on experience, helping students build confidence and technical abilities.
+      </p>
+
+      <!-- Images of department -->
+      <h3>Images of Department</h3>
+
+      <div class="image-caption">
+        <strong>- Computer Lab -</strong>
+        Two well-equipped lab with 40+ systems and internet access for coding and practical learning.
+      </div>
+
+      <div class="image-grid2">
+        <div class="image-frame2">
+          <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/computer-lab1.webp" alt="Computer Lab 1" />
+        </div>
+        <div class="image-frame2">
+          <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/computer-lab2.webp" alt="Computer Lab 2" />
         </div>
       </div>
 
-      <div class="admin-name">
-        <h3>Bikash Pathak</h3>
+      <!-- Staff section -->
+      <div class="staff-section">
+        <h3>Staff (people)</h3>
+        <div class="staff-list">
+
+          <!-- Person 1 -->
+          <div class="staff-card">
+            <div class="staff-photo">
+              <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/professor1_mridula-devi.webp" alt="Assistant Professor 1" />
+            </div>
+            <div class="staff-info">
+              <div class="staff-name">Mridula Devi (HoD)</div>
+              <div class="staff-phone">📞 +91 70028 91892</div>
+            </div>
+          </div>
+
+          <!-- Person 2 -->
+          <div class="staff-card">
+            <div class="staff-photo">
+              <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/professor2_mrinal-ojah.webp" alt="Assistant Professor 2" />
+            </div>
+            <div class="staff-info">
+              <div class="staff-name">Mrinal Ojah</div>
+              <div class="staff-phone"></div>
+            </div>
+          </div>
+
+          <!-- Person 3 -->
+          <div class="staff-card">
+            <div class="staff-photo">
+              <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/professor3_pallab-rajbongshi.webp" alt="Assistant Professor 3" />
+            </div>
+            <div class="staff-info">
+              <div class="staff-name">Pallab Rajbongshi</div>
+              <div class="staff-phone"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- About Website -->
+    <section id="about-website" class="section" tabindex="-1" hidden>
+      <h2>About this Website</h2>
+
+      <p>
+        This website is a study hub designed to give students easy access to study materials. It collects ebooks, class notes, old question papers, syllabus, assignments, and other files in one place, so students spend less time searching and more time learning.
+      </p>
+
+      <p>
+        The site mainly helps Computer Science students, especially BCA students, but also has general resources useful for other departments. Currently, most materials are available up to 3rd semester, and content for higher semesters will be added gradually. Students and professional can contribute by upload study notes and resources to keep the collection updated.
+      </p>
+
+      <p>
+        The website works well on mobile and tablets, making study convenient anywhere. It also shares links to trusted external resources such as digital libraries, learning portals, and YouTube playlists to support extra learning and revision for every student.
+      </p>
+
+      <h3>Our Vision</h3>
+
+      <p>
+        Our goal is to build a simple, reliable study platform for college students. We aim to make learning materials easy to access, encourage sharing of notes, and provide tools that solve common study problems. Over time, the site will grow with more semesters, resources, and features for both classroom learning and self-study.
+      </p>
+
+      <h3>Disclaimer</h3>
+
+      <p>
+        This is an unofficial student community website for Suren Das College learners. It is not the college's official website and is not managed or endorsed by the college administration. All shared content is for educational purposes, and the materials belong to their respective owners. For official updates or notices, please visit the college's official website.
+        <br>
+        If any copyright holder wants content removed, please use <a href="feedback.html" style="text-decoration: underline;">feedback</a>.
+      </p>
+    </section>
+
+    <!-- Admin -->
+    <section id="about-admin" class="section section-admin" tabindex="-1" hidden>
+
+      <!-- ADMIN CARD -->
+      <div class="member-card admin-card">
+        <div class="divider">
+          <div class="lines lines-left">
+            <div class="divider-line"></div>
+            <div class="divider-line"></div>
+          </div>
+          <div class="admin-label ad-label-ad">ADMIN</div>
+          <div class="lines lines-right">
+            <div class="divider-line"></div>
+            <div class="divider-line"></div>
+          </div>
+        </div>
+
+        <div class="admin-avatar">
+          <div class="avatar-frame">
+            <img
+              id="adminAvatar"
+              src="/src/admin-thumb.png"
+              data-thumb="/src/admin-thumb.png"
+              data-gif="/src/admin.gif"
+              alt="Admin Thumbnail"
+            >
+          </div>
+        </div>
+
+        <div class="admin-name">
+          <h3>Tirtha Jyoti Deka</h3>
+        </div>
+
+        <p>
+          Hello! I am a BCA student (currently 3rd semester) at Suren Das College and the creator of this website. I built it to make information simple, organized, and easy to access for students and visitors. I enjoy web development, creating user-friendly designs, and exploring new ideas to improve the overall experience. This website reflects my passion for technology, and I will continue improving it over time.
+        </p>
+
+        <div class="divider-sep">
+          <div class="divider-line2 line2-admin"></div>
+        </div>
+        <div class="social-title">Connect</div>
+
+        <div class="admin-socials" aria-label="Social links">
+          <a class="social-btn" href="https://wa.me/+918812039066" target="_blank" aria-label="WhatsApp">
+            <i class="fa-brands fa-square-whatsapp"></i>
+          </a>
+          <a class="social-btn" href="mailto:tirthajyotideka020@gmail.com" target="_blank" aria-label="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+          <a class="social-btn" href="https://github.com/code5x" target="_blank" aria-label="GitHub">
+            <i class="fa-brands fa-square-github"></i>
+          </a>
+          <a class="social-btn" href="https://instagram.com/tirtha__27" target="_blank" aria-label="Instagram">
+            <i class="fa-brands fa-square-instagram"></i>
+          </a>
+        </div>
       </div>
 
-      <div class="divider-sep">
-        <div class="divider-line2 line2-cont"></div>
+      <!-- CONTRIBUTOR CARD -->
+      <div class="member-card contributor-card">
+        <div class="divider">
+          <div class="lines lines-left">
+            <div class="divider-line"></div>
+            <div class="divider-line"></div>
+          </div>
+          <div class="admin-label co-label-co">CONTRIBUTOR</div>
+          <div class="lines lines-right">
+            <div class="divider-line"></div>
+            <div class="divider-line"></div>
+          </div>
+        </div>
+
+        <div class="admin-avatar">
+          <div class="cont-frame">
+            <img src="https://ryrnyvzlmjdgqulqusxo.supabase.co/storage/v1/object/public/uploads/wp-contents/misc/contributor_bikash-pathak.webp" alt="Bikash Pathak">
+          </div>
+        </div>
+
+        <div class="admin-name">
+          <h3>Bikash Pathak</h3>
+        </div>
+
+        <div class="divider-sep">
+          <div class="divider-line2 line2-cont"></div>
+        </div>
+        <div class="social-title">Connect</div>
+
+        <div class="admin-socials" aria-label="Social links">
+          <a class="social-btn" href="https://wa.me/+917099366900" target="_blank" aria-label="WhatsApp">
+            <i class="fa-brands fa-square-whatsapp"></i>
+          </a>
+          <a class="social-btn" href="https://github.com/bikash23m" target="_blank" aria-label="GitHub">
+            <i class="fa-brands fa-square-github"></i>
+          </a>
+          <a class="social-btn" href="https://www.facebook.com/bikasa.pathaka.mana" target="_blank" aria-label="Facebook">
+            <i class="fa-brands fa-square-facebook"></i>
+          </a>
+          <a class="social-btn" href="https://www.instagram.com/bikaaxh" target="_blank" aria-label="Instagram">
+            <i class="fa-brands fa-square-instagram"></i>
+          </a>
+        </div>
       </div>
-      <div class="social-title">Connect</div>
 
-      <div class="admin-socials" aria-label="Social links">
-        <a class="social-btn" href="https://wa.me/+917099366900" target="_blank" aria-label="WhatsApp">
-          <i class="fa-brands fa-square-whatsapp"></i>
-        </a>
-        <a class="social-btn" href="https://github.com/bikash23m" target="_blank" aria-label="GitHub">
-          <i class="fa-brands fa-square-github"></i>
-        </a>
-        <a class="social-btn" href="https://www.facebook.com/bikasa.pathaka.mana" target="_blank" aria-label="Facebook">
-          <i class="fa-brands fa-square-facebook"></i>
-        </a>
-        <a class="social-btn" href="https://www.instagram.com/bikaaxh" target="_blank" aria-label="Instagram">
-          <i class="fa-brands fa-square-instagram"></i>
-        </a>
-      </div>
-    </div>
+    </section>
 
-</section>
+  </main>
 
-<script>
-  function delayRedirect(event, url) {
-    // stop the normal link behavior
-    event.preventDefault();
-
-    // wait 0.5 seconds, then redirect
-    setTimeout(function() {
-      window.open(url, "_blank"); // open in new tab (like your target="_blank")
-    }, 500);
-  }
-</script>
-</section>
-
-</main>
-
-<footer>
+  <!-- ===== FOOTER ===== -->
+  <footer>
     <p>© 2026 Student Community Portal - Suren Das College</p>
   </footer>
 
-<script>
-(function () {
-  const STORAGE_KEY = "userThemePreference";
-  const THEME_COLORS = {
-    light: "#ffffff",
-    dark:  "#1a1a2e"
-  };
-  function getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  }
-  function getSavedTheme() {
-    return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
-  }
-  function updateMetaThemeColor(theme) {
-    let metaTag = document.querySelector('meta[name="theme-color"]');
-    if (!metaTag) {
-      metaTag = document.createElement("meta");
-      metaTag.name = "theme-color";
-      document.head.appendChild(metaTag);
-    }
-    metaTag.content = THEME_COLORS[theme];
-  }
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    updateMetaThemeColor(theme);
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.checked = theme === "dark";
-    }
-  }
-  function setTheme(theme) {
-    localStorage.setItem(STORAGE_KEY, theme);
-    applyTheme(theme);
-  }
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute("data-theme");
-    setTheme(current === "dark" ? "light" : "dark");
-  }
-  function watchSystemTheme() {
-    window.matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => {
-        if (!localStorage.getItem(STORAGE_KEY)) {
-          applyTheme(e.matches ? "dark" : "light");
-        }
-      });
-  }
-  function watchStorageChanges() {
-    window.addEventListener("storage", (e) => {
-      if (e.key === STORAGE_KEY && e.newValue) {
-        applyTheme(e.newValue);
-      }
-    });
-  }
-  if (document.head) {
-    applyTheme(getSavedTheme());
-  }
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    applyTheme(getSavedTheme());
-    const checkbox = document.getElementById("themeCheckbox");
-    if (checkbox) {
-      checkbox.addEventListener("change", toggleTheme);
-    }
-  });
-} else {
-  applyTheme(getSavedTheme());
-  const checkbox = document.getElementById("themeCheckbox");
-  if (checkbox) {
-    checkbox.addEventListener("change", toggleTheme);
-  }
-}
-  watchSystemTheme();
-  watchStorageChanges();
-})();
-
-
-function openMenu(){
-    document.getElementById("sideMenu").classList.add("active");
-    document.getElementById("headOverlay").classList.add("show");
-}
-function closeMenu(){
-    document.getElementById("sideMenu").classList.remove("active");
-    document.getElementById("headOverlay").classList.remove("show");
-}
-function toggleUploads(){
-    document.getElementById("uploadsMenu").classList.toggle("show");
-}
-function toggleAbout(){
-    document.getElementById("aboutMenu").classList.toggle("show");
-}
-document.querySelectorAll('.side-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        closeMenu();
-    });
-});
-window.addEventListener('pageshow', () => {
-    closeMenu();
-});
-</script>
-
-<script>
-document.getElementById("shareBtn")?.addEventListener(
-  "click",
-  async (event) => {
+  <!-- ===== SHARE BUTTON ===== -->
+  <script>
+  document.getElementById("shareBtn")?.addEventListener("click", async (event) => {
     event.preventDefault();
     if (navigator.share) {
       try {
@@ -1408,57 +785,179 @@ document.getElementById("shareBtn")?.addEventListener(
     } else {
       alert("Sharing not supported in this browser.");
     }
+  });
+  </script>
+
+  <!-- ===== THEME TOGGLE ===== -->
+  <script>
+  (function () {
+    const STORAGE_KEY = "userThemePreference";
+    const THEME_COLORS = {
+      light: "#ffffff",
+      dark: "#1a1a2e"
+    };
+
+    function getSystemTheme() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    function getSavedTheme() {
+      return localStorage.getItem(STORAGE_KEY) || getSystemTheme();
+    }
+
+    function updateMetaThemeColor(theme) {
+      let metaTag = document.querySelector('meta[name="theme-color"]');
+      if (!metaTag) {
+        metaTag = document.createElement("meta");
+        metaTag.name = "theme-color";
+        document.head.appendChild(metaTag);
+      }
+      metaTag.content = THEME_COLORS[theme];
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      updateMetaThemeColor(theme);
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.checked = theme === "dark";
+      }
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem(STORAGE_KEY, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      setTheme(current === "dark" ? "light" : "dark");
+    }
+
+    function watchSystemTheme() {
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem(STORAGE_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+          }
+        });
+    }
+
+    function watchStorageChanges() {
+      window.addEventListener("storage", (e) => {
+        if (e.key === STORAGE_KEY && e.newValue) {
+          applyTheme(e.newValue);
+        }
+      });
+    }
+
+    if (document.head) {
+      applyTheme(getSavedTheme());
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(getSavedTheme());
+        const checkbox = document.getElementById("themeCheckbox");
+        if (checkbox) {
+          checkbox.addEventListener("change", toggleTheme);
+        }
+      });
+    } else {
+      applyTheme(getSavedTheme());
+      const checkbox = document.getElementById("themeCheckbox");
+      if (checkbox) {
+        checkbox.addEventListener("change", toggleTheme);
+      }
+    }
+
+    watchSystemTheme();
+    watchStorageChanges();
+  })();
+  </script>
+
+  <!-- ===== MENU TOGGLES ===== -->
+  <script>
+  function openMenu() {
+    document.getElementById("sideMenu").classList.add("active");
+    document.getElementById("headOverlay").classList.add("show");
   }
-);
-</script>
+
+  function closeMenu() {
+    document.getElementById("sideMenu").classList.remove("active");
+    document.getElementById("headOverlay").classList.remove("show");
+  }
+
+  function toggleUploads() {
+    document.getElementById("uploadsMenu").classList.toggle("show");
+  }
+
+  function toggleAbout() {
+    document.getElementById("aboutMenu").classList.toggle("show");
+  }
+
+  document.querySelectorAll('.side-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  window.addEventListener('pageshow', () => {
+    closeMenu();
+  });
+  </script>
 
   <script>
-(function () {
-  const DEFAULT_ID = "about-college";
-  const sections = Array.from(document.querySelectorAll("main .section"));
-  const links = Array.from(document.querySelectorAll(".nav2 a[href^='#']"));
+  (function () {
+    const DEFAULT_ID = "about-college";
+    const sections = Array.from(document.querySelectorAll("main .section"));
+    const links = Array.from(document.querySelectorAll(".nav2 a[href^='#]"));
 
-  function showSectionById(id) {
-    const targetId = id || DEFAULT_ID;
-    sections.forEach(sec => {
-      sec.hidden = (sec.id !== targetId);
+    function showSectionById(id) {
+      const targetId = id || DEFAULT_ID;
+      sections.forEach(sec => {
+        sec.hidden = (sec.id !== targetId);
+      });
+      links.forEach(a => {
+        const isActive = a.getAttribute("href") === "#" + targetId;
+        if (isActive) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
+      });
+      const active = document.getElementById(targetId);
+      if (active) active.focus({ preventScroll: true });
+    }
+
+    // Ensure default section on first load
+    if (!location.hash) {
+      history.replaceState(null, "", location.pathname + "#" + DEFAULT_ID);
+    }
+    showSectionById((location.hash || "#" + DEFAULT_ID).slice(1));
+
+    // When user clicks nav links, stop default behavior
+    links.forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("href").slice(1);
+
+        // Instead of pushing new history entry, just replace the current one
+        history.replaceState(null, "", location.pathname + "#" + targetId);
+
+        showSectionById(targetId);
+      });
     });
-    links.forEach(a => {
-      const isActive = a.getAttribute("href") === "#" + targetId;
-      if (isActive) a.setAttribute("aria-current", "page");
-      else a.removeAttribute("aria-current");
+
+    // Handle back/forward
+    window.addEventListener("popstate", function () {
+      const id = (location.hash || "#" + DEFAULT_ID).slice(1);
+      showSectionById(id);
     });
-    const active = document.getElementById(targetId);
-    if (active) active.focus({ preventScroll: true });
-  }
+  })();
+  </script>
 
-  // Ensure default section on first load
-  if (!location.hash) {
-    history.replaceState(null, "", location.pathname + "#" + DEFAULT_ID);
-  }
-  showSectionById((location.hash || "#" + DEFAULT_ID).slice(1));
-
-  // When user clicks nav links, stop default behavior
-  links.forEach(link => {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute("href").slice(1);
-
-      // Instead of pushing new history entry, just replace the current one
-      history.replaceState(null, "", location.pathname + "#" + targetId);
-
-      showSectionById(targetId);
-    });
-  });
-
-  // Handle back/forward (but here only matters if user goes back to another page)
-  window.addEventListener("popstate", function () {
-    const id = (location.hash || "#" + DEFAULT_ID).slice(1);
-    showSectionById(id);
-  });
-})();
-
-document.addEventListener("DOMContentLoaded", () => {
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
 
     const avatar = document.getElementById("adminAvatar");
     const adminSection = document.getElementById("about-admin");
@@ -1470,50 +969,46 @@ document.addEventListener("DOMContentLoaded", () => {
     let loading = false;
 
     function playGif() {
+      if (loading || gifLoaded) {
+        avatar.src = gif;
+        return;
+      }
 
-        if (loading || gifLoaded) {
-            avatar.src = gif;
-            return;
+      loading = true;
+      // Keep PNG visible
+      avatar.src = thumb;
+
+      const preload = new Image();
+
+      preload.onload = function () {
+        gifLoaded = true;
+        loading = false;
+
+        // Only show GIF if Admin section is still active
+        if (!adminSection.hidden) {
+          avatar.src = gif;
         }
+      };
 
-        loading = true;
-
-        // Keep PNG visible
+      preload.onerror = function () {
+        loading = false;
         avatar.src = thumb;
+      };
 
-        const preload = new Image();
-
-        preload.onload = function () {
-
-            gifLoaded = true;
-            loading = false;
-
-            // Only show GIF if Admin section is still active
-            if (!adminSection.hidden) {
-                avatar.src = gif;
-            }
-
-        };
-
-        preload.onerror = function () {
-            loading = false;
-            avatar.src = thumb;
-        };
-
-        preload.src = gif;
+      preload.src = gif;
     }
 
     function stopGif() {
-        avatar.src = thumb;
+      avatar.src = thumb;
     }
 
     function updateAvatar() {
 
-        if (adminSection.hidden) {
-            stopGif();
-        } else {
-            playGif();
-        }
+      if (adminSection.hidden) {
+        stopGif();
+      } else {
+        playGif();
+      }
 
     }
 
@@ -1521,14 +1016,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const observer = new MutationObserver(updateAvatar);
 
     observer.observe(adminSection, {
-        attributes: true,
-        attributeFilter: ["hidden"]
+      attributes: true,
+      attributeFilter: ["hidden"]
     });
 
     updateAvatar();
 
-});
+  });
+  </script>
 
-</script>
 </body>
 </html>
